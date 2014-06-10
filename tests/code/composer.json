@@ -1,0 +1,17 @@
+{
+    "name": "behat",
+    "description": "Behat",
+    "require": {
+        "behat/behat": "2.4.*",
+        "behat/mink": "1.5@stable",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-browserkit-driver": "*",
+        "drupal/drupal-extension": "*"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
+    }
+}

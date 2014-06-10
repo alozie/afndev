@@ -1,0 +1,18 @@
+# behat.yml
+default:
+  paths:
+    features:   'features'
+    bootstrap:  'features/bootstrap'
+  extensions:
+    Behat\MinkExtension\Extension:
+      default_session: selenium2
+      goutte: ~
+    Drupal\DrupalExtension\Extension:
+      blackbox: ~
+      drush: ~
+      basic_auth:
+        username: drupal
+        password: drupal
+
+imports:
+  - behat.local.yml
