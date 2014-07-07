@@ -1,57 +1,57 @@
-# Project Name
+# PROJECT NAME
 
-The [Website Description](http://website.com/) is a type of site.
+_QUICK PROJECT OVERVIEW_
 
-## Local Environment Setup
+## Documentation
 
-All code is developed from a [GitHub repository](https://github.com/acquia-pso/project-repo/). **No direct changes should be pushed to the Acquia repository.**
+- Link to Discovery Report
+- Link to Architecture Document
+- Links to other valuable documentation (Confluence pages, requirements docs, etc)
 
-Each developer should [fork](https://help.github.com/articles/fork-a-repo) the primary Git repository for their work. All developers should then checkout a local copy of the `dev` branch to begin work -
 
-    git clone git@github.com:username/project-repo.git -b dev
-    git remote add upstream git@github.com:acquia-pso/project-repo.git
+## Team 
 
-For any work, [pull requests](https://help.github.com/articles/using-pull-requests) must be created for individual tasks and submitted for review -
+- **Acquia Technical Architect:** TA NAME <<EMAIL@acquia.com>>
+- **Acquia Engagement Manager:** EM NAME <<EMAIL@acquia.com>>
+- **Development Lead:** DL NAME <<EMAIL@EMAIL.com>>
+- **CLIENT-CONTACT:** NAME <<EMAIL@EMAIL.com>>
+- ...
 
-    git checkout dev
-    git pull upstream dev
-    git push origin dev
-    git checkout -b <new-issue-branch> dev
 
-## Deployment
+## Environments
 
-The deployment process follows a simplified Gitflow workflow -
+<!-- Customize this section to ensure it matches your project's setup -->
 
-1. All pull requests are submitted against the `dev` branch.
-2. All recent changes are merged to a release branch (e.g. `releases/sprint/11`) via a PR, then deployed to the staging environment.
-3. After client testing, successful changes are merged to the `master` branch via a PR, tagged, then deployed to the production environment.
+### Source Control
 
-The GitHub repository is automatically synced to the Acquia repository through a background Jenkins process. Tags, however, are not managed automatically and must be pushed manually -
+<!-- Specify source control system (git/svn/etc) and any/all locations. Outline -->
 
-    git remote add acquia docrootname@server.hosting.acquia.com:project-repo.git
-    git push acquia --tags
+### Dev
 
-### Releases
+<!-- <http://INSERT_DEV_URL> -->
 
-Releases are tagged with the branch name, current date, and release number -
+Used primarily for basic integration. The `dev` branch is deployed here and automatically updated. NOTE: This environment has a limited database that may not accurately represent issues found in production.
 
-    <branch>-<date>-<release #>
 
-1. The *branch* is the branch from which this tag was created, e.g. `uat`.
-2. The *date* is the current date in `Y-m-d` format, e.g. `2014-04-12`.
-3. The *release #* is an incremented number to represent multiple tags created on a specific date, starting at `1`.
+### Stage
 
-### Hotfixes
+<!-- <http://INSERT_STAGE_URL> -->
 
-Any emergency bug fixes can be pushed to the appropriate branch (usually `uat` or `master`) and deployed directly to the required environment.
+Used for internal testing by the development team and UAT . The current release branch is deployed here and automatically updated.
 
-### Environments
 
-- Dev - Used primarily for basic integration. The `dev` branch is deployed here and automatically updated. NOTE: This environment has a limited database that may not accurately represent issues found in production.
-- Stage - Used for internal testing by the development team. The current release branch is deployed here and automatically updated.
-- Perf - Temporarily created for performance testing. This will likely be deleted in the future.
-- RA
-- Prod - The public-facing, production environment.
+### Prod
+
+<!-- <http://INSERT_PROD_URL> -->
+
+The public-facing, production environment.
+
+
+
+    
+## Configurations
+
+<!-- Any special setup overview -->
 
 ## Directory Structure
 
@@ -99,3 +99,70 @@ explains each of their purposes and example contents.
 - **tests**
 
     All test files should be placed into this directory.
+    
+
+### Local Environment Setup
+
+All code is developed from a [GitHub repository](https://github.com/acquia-pso/project-repo/). **No direct changes should be pushed to the Acquia repository.**
+
+Each developer should [fork](https://help.github.com/articles/fork-a-repo) the primary Git repository for their work. All developers should then checkout a local copy of the `dev` branch to begin work -
+
+    git clone git@github.com:username/project-repo.git -b dev
+    git remote add upstream git@github.com:acquia-pso/project-repo.git
+
+For any work, [pull requests](https://help.github.com/articles/using-pull-requests) must be created for individual tasks and submitted for review -
+
+    git checkout dev
+    git pull upstream dev
+    git push origin dev
+    git checkout -b <new-issue-branch> dev
+    
+    
+### External Systems
+
+<!-- Customize this section with details on additional configurations that are required to develop -->
+
+- SSO
+- VPN
+- etc
+
+
+### External Tools
+
+<!-- Call out all external tools in use here and any relevant usage specifics-->
+
+- Compass
+- Grunt
+- Behat
+- etc
+
+    
+
+## Workflow
+
+<!-- Customize the workflow details to match the agreed upon workflow for this project-->
+
+
+## Testing Requirements
+
+<!-- Customize this section to cover testing requirements; include details on automated code review processes, behat integration, unit testing, etc. -->
+
+Each developer is expected to fully test their own code according to the following standards before submitting a pull request. 
+
+    
+## Deployment
+
+<!-- Customize this section based on the client's deployment. Specifically, How Github and Acquia's repo are kept in sync.  -->
+
+
+### Releases
+
+<!-- Specify how releases are tagged and deployed. Include any specific rollback processes as well. -->
+
+
+### Hotfixes
+
+<!-- Specify the process for creating and deploying hotfixes. -->
+
+
+
