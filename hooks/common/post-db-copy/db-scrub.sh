@@ -10,7 +10,7 @@ site="$1"
 target_env="$2"
 db_name="$3"
 source_env="$4"
-SCRIPTS="/var/www/html/$site.$target_env/scripts"
+SCRIPTS="/var/www/html/$site.$target_env/hooks/scripts"
 
 # Check that this is not production
 if [ "$target_env" != "prod" ]; then
