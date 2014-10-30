@@ -1,1 +1,97 @@
+# Ignore configuration files that may contain sensitive information.
+docroot/sites/*/settings.*.php
+build
+build.properties
+
+# Ignore paths that contain user-generated content.
+docroot/sites/*/files
+docroot/sites/*/private
+
+# Local testing config
+test/behat/local.yml
+docroot/sites/*.local
+docroot/sites/*/local.settings.php
+docroot/sites/local.sites.php
+
+# Drush FirePHP files
+docroot/FirePHPCore
+
+# OS X
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpathk
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# PHPStorm
+.idea/
+
+#XHProf
+xhprof_*
+
+#Composer vendor
+vendor/
+vendor/.git
+
+#Sass
+.sass-cache
+*.css.map
+
+#Netbeans IDE
+nbproject
+nbproject/*
+
