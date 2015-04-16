@@ -1,5 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
 docroot/sites/*/settings.*.php
+sites/*/settings.*.php
 build
 build.properties
 
@@ -8,7 +9,7 @@ docroot/sites/*/files
 docroot/sites/*/private
 
 # Local testing config
-test/behat/local.yml
+tests/behat/local.yml
 docroot/sites/*.local
 docroot/sites/*/local.settings.php
 docroot/sites/local.sites.php
@@ -43,7 +44,6 @@ $RECYCLE.BIN/
 *.pydevproject
 .project
 .metadata
-bin/**
 tmp/**
 tmp/**/*
 *.tmp

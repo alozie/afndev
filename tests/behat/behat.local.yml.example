@@ -9,20 +9,41 @@ default:
     Behat\MinkExtension\Extension:
       # configure the base url for your site
       base_url: 'http://site.dev'
+      # set default command for "Show last response" step.
+      show_cmd: "open %s"
+      # set path for media files used by steps.
+      files_path: "%behat.paths.base%/media"
       # ADDITIONAL OPTIONS FOR WEB DRIVERS
       # use the following 3 lines to user phantomjs
       # browser_name: phantomjs
       # selenium2:
       #   wd_host: "http://localhost:8643/wd/hub"
-      # 
+      #   browser: chrome
+      #
       # use the following two lines for chromedriver
       # selenium2:
       #   browser: chrome
+      #
+      # use the following three lines to configure zombie.js.
+      # zombie:
+      #   node_modules_path: /usr/lib/node_modules/
+      #   auto_server: false
+      #
+      # use the following lines to disable SSL authentication for goutte.
+      # goutte:
+      #   guzzle_parameters:
+      #     redirect.disable: true
+      #     ssl.certificate_authority: system
+      #     curl.options:
+      #       CURLOPT_SSL_VERIFYPEER: false
+      #       CURLOPT_SSL_VERIFYHOST: false
+      #       CURLOPT_CERTINFO: false
+      #       CURLOPT_TIMEOUT: 120
     Drupal\DrupalExtension\Extension:
       # Set this drush alias in your aliases.drushrc.php file to match
       # the base_url set above. Leave off the preceding '@'.
       drush:
-        alias: 'dev.site'
+        alias: '@self'
       region_map:
         Content: "div.content"
         Header: "header"
@@ -34,3 +55,5 @@ default:
         message_selector: '.messages'
         error_message_selector: '.messages.error'
         success_message_selector: '.messages.status'
+      text:
+        log_out: "Log out"

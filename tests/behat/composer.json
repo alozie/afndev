@@ -1,0 +1,32 @@
+{
+    "name": "behat",
+    "description": "Behat",
+    "require": {
+        "behat/behat": "2.4.*",
+        "behat/mink": "1.5@stable",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-zombie-driver": "*",
+        "behat/mink-browserkit-driver": "*",
+        "drupal/drupal-extension": "*",
+        "phploc/phploc": "2.0.*@dev",
+        "sebastian/phpcpd": "2.0.*@dev",
+        "phpunit/phpunit": "3.7.27",
+        "covex-nn/phpcb": "1.0.*@dev",
+        "squizlabs/php_codesniffer": "1.5.*",
+        "pdepend/pdepend": "1.1.*",
+        "phpmd/phpmd": "1.*",
+        "drush/drush": "6.*"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/Behat/MinkExtension.git"
+      }
+    ]
+}
