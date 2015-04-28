@@ -1,6 +1,46 @@
 <?php
 
 /**
+ * Sample site protection configuration.
+ *
+ * - Block access to non-whitelisted users on all pages of non-production Acquia
+ * environments.
+ * - Require basic auth with the potential username / password combinations of
+ *   - Editor / Password
+ *   - Admin / P455w0rd
+ */
+
+$conf['ah_restricted_paths'] = array(
+  '*',
+);
+
+$conf['ah_whitelist'] = array(
+  '36.222.120.*',
+  '107.0.255.128/27',
+);
+
+$conf['ah_basic_auth_credentials'] = array(
+  'Editor' => 'Password',
+  'Admin' => 'P455w0rd',
+);
+
+if (file_exists('/var/www/site-php')) {
+  require('/var/www/site-php/{site}/{site}-settings.inc');
+
+  if(!defined('DRUPAL_ROOT')) {
+    define('DRUPAL_ROOT', getcwd());
+  }
+
+  if (file_exists(DRUPAL_ROOT . '/sites/acquia.inc')) {
+    if (isset($_ENV['AH_NON_PRODUCTION']) && $_ENV['AH_NON_PRODUCTION']) {
+      require DRUPAL_ROOT . '/sites/acquia.inc';
+      ac_protect_this_site();
+    }
+  }
+}
+
+
+/**
  * @file
  * Utility methods for use in protecting an environment via basic auth or IP whitelist.
  */
