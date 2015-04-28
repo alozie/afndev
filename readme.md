@@ -5,7 +5,7 @@ This repository is intended be be used as a template for all new Professional Se
 * Installation
 * Directory Structure
     
-## Installtion
+## Installation
 
 When beginning a new Drupal project, do the follow:
 
@@ -58,10 +58,11 @@ explains each of their purposes and example contents.
 - **tests**
 
     All test files should be placed into this directory.
-    tests/
-        ├── behat
-        │   ├── behat.yml
-        │   └── features
-        |   └── media
-        ├── jmeter
+    
+        tests/
+            ├── behat
+            │   ├── behat.yml
+            │   └── features
+            |   └── media
+            ├── jmeter
 
