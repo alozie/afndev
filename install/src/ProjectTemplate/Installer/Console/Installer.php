@@ -111,7 +111,18 @@ class Installer extends Command {
     $this->progress = $this->getHelper('progress');
 
     // @todo Add validation to make sure this really is machine readable!
+
     $question = new Question('What is the machine name of this project? ');
+    $question->setValidator(function ($answer) {
+      // regex for valid php variable name from http://php.net/manual/en/language.variables.basics.php
+      $pattern = '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
+      if (!preg_match($pattern, $answer)) {
+        throw new \RuntimeException(
+            'Please enter a valid machine name (hint: can\'t contain spaces)'
+        );
+      }
+      return $answer;
+    });
     $this->projectName = $helper->ask($input, $output, $question);
 
     $question = new Question('What is the human-readable name of this project? ');
