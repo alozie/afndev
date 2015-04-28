@@ -2,9 +2,9 @@
 
 The project template has an installer which will do the following:
 
-* Create new project directory
-* Add Ubuia virtual box
-* Build a specified make file
+* Create new project directory. It will be a sibling of the project template repository.
+* (optionally) Add Ubuia virtual box
+* (optionally) Build a specified make file
 * Include custom settings in settings.php
 * Add a testing framework
 
