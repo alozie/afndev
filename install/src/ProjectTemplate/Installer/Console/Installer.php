@@ -240,11 +240,10 @@ class Installer extends Command {
     // Add Ubuia Vagrant box repository and then remove the .git files.
     $vm_dir_name = 'box';
     $this->remove("{$this->newProjectDirectory}/$vm_dir_name");
-    $this->git('clone', array(
+    $this->git('clone --bare', array(
       "git@github.com:acquia-pso/ubuia.git",
       "{$this->newProjectDirectory}/$vm_dir_name"
     ));
-    $this->remove("{$this->newProjectDirectory}/$vm_dir_name/.git");
   }
 
   /**
