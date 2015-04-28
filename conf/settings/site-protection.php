@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Sample site protection configuration.
+ * Sample site protection configuration. See site-protection.md for full
+ * documentation on options and usage.
  *
  * - Block access to non-whitelisted users on all pages of non-production Acquia
  * environments.
