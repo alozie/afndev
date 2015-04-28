@@ -109,9 +109,7 @@ class Installer extends Command {
 
     // Instantiate file progress helper.
     $this->progress = $this->getHelper('progress');
-
-    // @todo Add validation to make sure this really is machine readable!
-
+    
     $question = new Question('What is the machine name of this project? ');
     $question->setValidator(function ($answer) {
       // regex for valid php variable name from http://php.net/manual/en/language.variables.basics.php
