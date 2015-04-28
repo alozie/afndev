@@ -1,5 +1,7 @@
-# Local configuration.
-default:
+imports:
+  - behat.yml
+
+local:
   context:
     parameters:
       environment:
@@ -7,12 +9,14 @@ default:
         screenshot_dir: '/Users/username/Desktop/test'
   extensions:
     Behat\MinkExtension\Extension:
+      javascript_session: selenium2
+      zombie:
+        node_modules_path: /usr/local/lib/node_modules/
+        auto_server: false
       # configure the base url for your site
       base_url: 'http://site.dev'
       # set default command for "Show last response" step.
       show_cmd: "open %s"
-      # set path for media files used by steps.
-      files_path: "%behat.paths.base%/media"
       # ADDITIONAL OPTIONS FOR WEB DRIVERS
       # use the following 3 lines to user phantomjs
       # browser_name: phantomjs
@@ -39,21 +43,11 @@ default:
       #       CURLOPT_SSL_VERIFYHOST: false
       #       CURLOPT_CERTINFO: false
       #       CURLOPT_TIMEOUT: 120
+      selenium2:
+        wd_host: http://127.0.0.1:4444/wd/hub
     Drupal\DrupalExtension\Extension:
-      # Set this drush alias in your aliases.drushrc.php file to match
-      # the base_url set above. Leave off the preceding '@'.
+      drupal:
+        # This must be an absolute path.
+        drupal_root: "/Users/matthew.grasmick/Sites/clients/doj/repo/docroot"
       drush:
         alias: '@self'
-      region_map:
-        Content: "div.content"
-        Header: "header"
-        Footer: "footer"
-        NodeBodyField: "div.form-item-body-und-0-value"
-        NodeVideosField: "#field-videos-values"
-        NodeMainImageField: "div.field-name-field-image"
-      selectors:
-        message_selector: '.messages'
-        error_message_selector: '.messages.error'
-        success_message_selector: '.messages.status'
-      text:
-        log_out: "Log out"

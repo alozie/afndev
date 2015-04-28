@@ -1,18 +1,12 @@
-# behat.yml
 default:
   paths:
-    features:   'features'
-    bootstrap:  'features/bootstrap'
+    features: 'features'
   extensions:
     Behat\MinkExtension\Extension:
-      default_session: selenium2
+      default_session: goutte
+      javascript_session: selenium2
       goutte: ~
+      files_path: "%behat.paths.base%/media"
     Drupal\DrupalExtension\Extension:
       blackbox: ~
-      drush: ~
-      basic_auth:
-        username: drupal
-        password: drupal
-
-imports:
-  - behat.local.yml
+      api_driver: "drupal"
