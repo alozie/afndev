@@ -1,0 +1,14 @@
+{
+    "name": "acquia-pso/project-template",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "David Stoline",
+            "email": "drupal@davidstoline.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+      "phpunit/phpunit": "4.6.*"
+    }
+}
