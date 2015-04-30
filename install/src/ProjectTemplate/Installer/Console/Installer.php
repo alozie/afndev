@@ -58,6 +58,18 @@ class Installer extends Command {
   public $config;
 
   /**
+   * The commandline input.
+   * @var InputInterface
+   */
+  protected $input;
+
+  /**
+   * The commandline output.
+   * @var OutputInterface
+   */
+  protected $output;
+
+  /**
    * @param \Symfony\Component\Filesystem\Filesystem $fs
    * @param string|null $name
    */
@@ -105,6 +117,11 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function interact(InputInterface $input, OutputInterface $output) {
+
+    // store the input and output for use in other functions
+    $this->input = $input;
+    $this->output = $output;
+
     $helper = $this->getHelper('question');
 
     // Instantiate file progress helper.
@@ -119,6 +136,27 @@ class Installer extends Command {
             'Please enter a valid machine name (hint: can\'t contain spaces)'
         );
       }
+
+      // check if the proposed directory already exists.
+      $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $answer;
+      if ($this->fs->exists($newProjectDirectory)) {
+        $helper = $this->getHelper('question');
+        $input = $this->input;
+        $output = $this->output;
+
+        // confirm it is okay to overwrite the directory
+        $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? (y/n)', $newProjectDirectory), 0);
+        $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
+        if (!$overwrite_confirmed) {
+          throw new \RuntimeException(
+              'Please choose another machine name (hint: The machine name will be used as the name of the new project).'
+          );
+        }
+      }
+
+      // set the new project directory name
+      $this->newProjectDirectory = $newProjectDirectory;
+
       return $answer;
     });
     $this->projectName = $helper->ask($input, $output, $question);
@@ -174,8 +212,6 @@ class Installer extends Command {
     // Create a progress bar.
     $this->progress->start($output, 100);
 
-    // Set the new project directory to be a sibling of the current project.
-    $this->newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->projectName;
     $this->createProject($input, $output, $this->progress);
     $this->progress->advance(20);
 
