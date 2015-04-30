@@ -28,7 +28,7 @@ see: [https://help.github.com/articles/github-flavored-markdown](https://help.gi
 
 ## Who writes this?
 
-This is a collaborative document writen by Acquia's Professional Services organization. If you are a member of PS, please feel free to put in a pull request if you think your changes / additions are controversial, or just commit if they aren't.
+This is a collaborative document written by Acquia's Professional Services organization. If you are a member of PS, please feel free to put in a pull request if you think your changes / additions are controversial, or just commit if they aren't.
 
 If you are a partner developer and see some areas for improvement, any comments, questions, and additional writing is appreciated.
 
@@ -101,17 +101,17 @@ Each developer should setup a GitHub account that follows several key guidelines
 
 ## Project Setup
 
-Each developer should [fork](https://help.github.com/articles/fork-a-repo) the primary Git repository for their work. All developers should then checkout a local copy of the dev branch to begin work -
+Each developer should [fork](https://help.github.com/articles/fork-a-repo) the primary Git repository for their work. All developers should then checkout a local copy of the master branch to begin work -
 
-    git clone git@github.com:username/project-repo.git -b dev
+    git clone git@github.com:username/project-repo.git -b master
     git remote add upstream git@github.com:acquia-pso/project-repo.git
 
 For any work, pull requests must be created for individual tasks and submitted for review. Before submitting a pull request, be sure to [sync the local branch](https://help.github.com/articles/syncing-a-fork) with the upstream primary branch -
 
-    git checkout dev
-    git pull upstream dev
-    git push origin dev
-    git checkout -b <new-issue-branch> dev
+    git checkout master
+    git pull upstream master
+    git push origin master
+    git checkout -b <new-issue-branch> master
 
 ## Workflow
 
@@ -200,7 +200,7 @@ In order to automatically [integrate with Jira](https://confluence.atlassian.com
     ## [Jira Issue Number]: [Pull request title]
 
     ### Changes
-    - [Description for non-devlepers.]
+    - [Description for non-developers.]
     - [Another thing in the PR]
 
     ### Technical Details
