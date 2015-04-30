@@ -196,7 +196,7 @@ class Installer extends Command {
     $this->cleanUp($input, $output);
 
     // Display completion messages.
-    $this->writeProgressMessage("<info>You should now have a working copy of the project configured in the folder {$this->$newProjectDirectory}.</info>", $output, $this->progress);
+    $this->writeProgressMessage("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>", $output, $this->progress);
 
     if ($this->config['starter_settings']['enable']) {
       // @todo Modify settings.php to include this. Also include other partials.
