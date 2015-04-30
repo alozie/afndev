@@ -26,6 +26,7 @@ $includes = array(
   'testing' => TRUE,
   'akamai' => FALSE,
   'edit-domain' => FALSE,
+  'site-protection' => FALSE,
 );
 foreach ($includes as $key => $enabled) {
   if ($enabled) {
