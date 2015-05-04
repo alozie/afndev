@@ -33,7 +33,9 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
          *
          * @see ip_address()
          */
-        $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_TRUE_CLIENT_IP'];
+        if (!empty($_SERVER['HTTP_TRUE_CLIENT_IP'])) {
+          $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_TRUE_CLIENT_IP'];
+        }
       }
   }
 }
