@@ -7,6 +7,7 @@ The project template has an installer which will do the following:
 * (optionally) Build a specified make file
 * Include custom settings in settings.php
 * Add a testing framework
+* Remove installation artifacts
 
 ## Installation
 

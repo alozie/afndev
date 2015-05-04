@@ -2,9 +2,6 @@
 
 This repository is intended be be used as a template for all new Professional Services projects.
 
-* Installation
-* Directory Structure
-    
 ## Installation
 
 When beginning a new Drupal project, do the follow:
@@ -23,7 +20,7 @@ explains each of their purposes and example contents.
 
 - **conf**
 
-    This director contains site-level configuration files.
+    This directory contains site-level configuration files.
     _Examples: .htaccess, robots.txt, *.settings.php_
 
 - **docs**
@@ -42,17 +39,12 @@ explains each of their purposes and example contents.
 
 - **sites**
 
-    Each individual site (other than all/) should be contained within this directory. As this is copied into place for the new build, any files in this directory will be moved to the build. The entire directory is copied to the build, so custom modules or additional configuration files can be included here. In addition, any *.make files included in the top-level of each site folder will be executed. For example -
+    Each individual site (other than all/) should be contained within this directory. Example:
 
         sites/
         ├── default
-        │   ├── default.make
         │   └── settings.php
-        ├── example.com
-        │   ├── example.com.make
-        │   └── settings.php
-        └── example.net
-            ├── example.net.make
+        └── example.com
             └── settings.php
 
 - **tests**
@@ -63,6 +55,7 @@ explains each of their purposes and example contents.
             ├── behat
             │   ├── behat.yml
             │   └── features
-            |   └── media
+            │   │      └── Example.feature
+            │   └── media
             ├── jmeter
 
