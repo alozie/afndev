@@ -38,7 +38,7 @@ explains each of their purposes and example contents.
         sites/
         ├── default
         │   └── settings.php
-        └── example.com
+        └── multisite.example.com
             └── settings.php
 
 - **tests**
