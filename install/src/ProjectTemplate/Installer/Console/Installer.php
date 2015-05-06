@@ -133,6 +133,14 @@ class Installer extends Command {
     $this->createProject($input, $output, $this->progress);
     $this->progress->advance(30);
 
+    if ($this->config['upstream_repository']['enable']) {
+      $this->addRemoteRepository($input, $output, $this->config['upstream_repository']['name'], $this->config['upstream_repository']['url']);
+    }
+
+    if ($this->config['fork_repository']['enable']) {
+      $this->addRemoteRepository($input, $output, $this->config['fork_repository']['name'], $this->config['fork_repository']['url']);
+    }
+
     // Add Vagrant VM.
     if ($this->config['vm']['enable']) {
       $this->addVm($input, $output);
@@ -181,6 +189,20 @@ class Installer extends Command {
     $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
     $this->remove($this->newProjectDirectory . '/.git');
     $this->git('init', array($this->newProjectDirectory));
+    $this->git('add *', array($this->newProjectDirectory));
+  }
+
+  /**
+   * Adds a new remote for the project.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   * @param $name
+   * @param $url
+   */
+  protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
+    $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
+    $this->git("remote add {$name} {$url}", array($this->newProjectDirectory));
   }
 
   /**

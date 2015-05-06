@@ -9,6 +9,16 @@ vm:
   enable: true
   dir_name: 'box'
 
+upstream_repository:
+  enable: true
+  name: 'upstream'
+  url: 'https://github.com/acquia-pso/[project].git'
+
+fork_repository:
+  enable: true
+  name: 'origin'
+  url: 'https://github.com/[user]/[project].git'
+
 testing_framework:
   enable: true
   driver: 'Zombie.js'
