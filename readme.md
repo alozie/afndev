@@ -29,13 +29,7 @@ explains each of their purposes and example contents.
 
 - **scripts**
 
-    This directory contains a variety of utility scrips that are not part of the build process. The current script types are `prebuild` and `postbuild`. These run before Drush make operations and after, respectively. Within each directory, any number of scripts is supported. As long as the file is executable, it can also be of any language. For example -
-
-        scripts/
-        ├── postbuild/
-        │   └── post.sh
-        └── prebuild/
-            └── pre.sh
+    This directory contains a variety of utility scripts that are not part of the build process. These scripts may do things like generate release notes, execute local tests, pull a fresh db to a local machine, etc.
 
 - **sites**
 
