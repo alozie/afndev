@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "26d0253317c349e90dd71788932f42ae",
+    "hash": "0b5439b9bb281326548254b68ed4abaa",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -363,23 +364,68 @@
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
             "time": "2014-11-03 19:48:45"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "2.8.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
+                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2015-04-24 07:03:44"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "symfony/yaml": 20,
         "knplabs/github-api": 20,
         "symfony/process": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
