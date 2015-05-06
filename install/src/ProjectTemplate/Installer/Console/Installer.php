@@ -107,11 +107,11 @@ class Installer extends Command {
       $output = $this->output;
 
       // Confirm it is okay to overwrite the directory.
-      $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? (y/n)', $newProjectDirectory), 0);
+      $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? ', $newProjectDirectory), 0);
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
       if (!$overwrite_confirmed) {
         throw new \RuntimeException(
-            'Please choose another machine name (hint: The machine name will be used as the name of the new project).'
+            'Please choose another machine name.'
         );
       }
     }
@@ -136,7 +136,6 @@ class Installer extends Command {
     // Add Vagrant VM.
     if ($this->config['vm']['enable']) {
       $this->addVm($input, $output);
-      $this->addVmConfig($input, $output);
       $this->progress->advance(30);
     }
 
@@ -156,7 +155,7 @@ class Installer extends Command {
 
     if ($this->config['vm']['enable']) {
       $this->writeProgressMessage("<info>Please follow the Quick Start Guide at http://www.drupalvm.com/ from within `{$this->config['project']['machine_name']}/box` to set up Drupal VM</info>", $output, $this->progress);
-      // TODO - Automatically install role dependencies if Ansible is installed.
+      // @todo Automatically install role dependencies if Ansible is installed.
     }
 
     $this->progress->advance(10);
@@ -178,8 +177,6 @@ class Installer extends Command {
     $this->writeProgressMessage('<info>Copying Project Template into the new directory...</info>', $output, $this->progress);
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
-    // @todo Project user to confirm that overwriting is ok!
-
     $mirror_options = array('override' => TRUE);
     $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
     $this->remove($this->newProjectDirectory . '/.git');
@@ -204,8 +201,11 @@ class Installer extends Command {
     $this->git('clone', array(
       "git@github.com:geerlingguy/drupal-vm.git",
       "{$this->newProjectDirectory}/$vm_dir",
-    ));
-    $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
+      ),
+      array('bare' => NULL)
+    );
+
+    $this->addVmConfig($input, $output);
   }
 
   /**
@@ -240,8 +240,9 @@ class Installer extends Command {
     $vm_config['drupal_core_path'] = $docroot;
 
     // Update the path to make file.
-    $make_file = $this->config['make_file'];
+    $make_file = $this->config['project']['make_file'];
     $vm_config['drush_makefile_path'] = '/scripts/make/' . $make_file;
+    // Remove makefile extension.
     $vm_config['drupal_install_profile'] = preg_replace('(\.make|\.yml)', '', $make_file);
 
     // Update other important settings.
@@ -249,7 +250,7 @@ class Installer extends Command {
     $vm_config['extra_apt_packages'] = [];
 
     // Write adjusted config.yml to disk.
-    file_put_contents("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config));
+    $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config));
   }
 
   /**
@@ -257,6 +258,9 @@ class Installer extends Command {
    *
    * @param InputInterface $input
    * @param OutputInterface $output
+   *
+   * @return bool
+   *   Returns FALSE if testing framework was not installed.
    */
   protected function installTestingFramework(InputInterface $input, OutputInterface $output) {
 
@@ -266,13 +270,12 @@ class Installer extends Command {
       return FALSE;
     }
 
-    $this->writeProgressMessage("<info>Installing composer dependencies for testing framework...</info>", $output, $this->progress);
-
     // @todo Write drupal_root, base_url, and other settings to local.yml.
     // @todo Provide default behat profiles for dev and stg envs on ACE.
     // @todo Install behat runner module?
 
     /*
+    $this->writeProgressMessage("<info>Installing composer dependencies for testing framework...</info>", $output, $this->progress);
     $options = array(
       'working-dir' => 'tests/behat'
     );
@@ -329,9 +332,15 @@ class Installer extends Command {
 
   /**
    * @param string $command
+   *   The binary to call. E.g., 'git'.
    * @param array $arguments
+   *   An array of arguments. E.g., 'pull origin/master'.
    * @param array $options
+   *   An array of options in one of the following formats:
+   *     array('bare' => NULL, 'tags' => 'smoke') will translate into
+   *     `command --bare --tags=smoke`
    * @return mixed
+   *   Returns the command output.
    *
    * @todo Replace this with a real implementation of Symfony command class.
    */
@@ -372,14 +381,6 @@ class Installer extends Command {
     }
 
     return $this->fs->mkdir($dir, 0755);
-  }
-
-  /**
-   * @param string $dir
-   * @return bool
-   */
-  public function chdir($dir) {
-    return chdir($dir);
   }
 
   /**

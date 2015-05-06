@@ -2,7 +2,8 @@ project:
   machine_name: 'ps_project'
   human_name: 'PS Project'
   local_url: 'drupal.dev'
-  make_file: 'project.make.yml'
+  # Located in /scripts/make.
+  make_file: 'standard.make.yml'
 
 vm:
   enable: true
@@ -13,8 +14,7 @@ testing_framework:
   driver: 'Zombie.js'
   # driver: 'Selenium2 / Phantom.js'
 
+# These map to /conf/settings/[key].settings.php partials.
 starter_settings:
   enable: true
   akamai: true
-
-make_file: standard.make.yml
