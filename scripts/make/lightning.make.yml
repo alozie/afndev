@@ -1,0 +1,12 @@
+---
+api: 2
+
+core: 7.x
+
+projects:
+
+  lightning:
+    version: 1.x-dev
+
+includes:
+  contrib: contrib.make.yml
