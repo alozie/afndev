@@ -9,6 +9,6 @@ regex="^BRI-[0-9]\+ - [^ ].\{15,\}"
 msg_test=`grep -e ''"$regex"'' "$1"`
 if [ "$msg_test" == "" ]; then
   echo "Invalid commit message."
-  echo "Valide example: BRI-135 - Add the new picture field to the article feature"
+  echo "Valid example: BRI-135 - Add the new picture field to the article feature"
   exit 1;
 fi
