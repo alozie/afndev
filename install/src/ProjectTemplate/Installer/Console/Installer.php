@@ -8,10 +8,13 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Dumper;
 use Github\Client;
 
 class Installer extends Command {
@@ -26,18 +29,6 @@ class Installer extends Command {
    * @var object
    */
   protected $progress;
-
-  /**
-   * The machine name of the new project to create.
-   * @var string
-   */
-  public $projectName;
-
-  /**
-   * The human readable name of the project to create.
-   * @var string
-   */
-  public $projectTitle;
 
   /**
    * The current project directory path on the local machine.
@@ -78,24 +69,11 @@ class Installer extends Command {
     // Instantiate file system component.
     $this->fs = $fs;
 
-    // Set defaults for configuration array.
-    $this->config = array(
-      'ubuia' => TRUE,
-      'testing_framework' => array(
-        'enable' => TRUE,
-        // Default to second item in select list prompt, which is 'Zombie.js'.
-        'javascript_session' => 1,
-      ),
-      'starter_settings' => array(
-        'enable' => TRUE,
-        'akamai' => TRUE,
-      ),
-      // Default to first item in select list prompt, which is 'standard'.
-      'make-file' => 0,
-    );
-
     // Determine system path of the current project.
     $this->currentProjectDirectory = realpath(dirname(__FILE__) . '/../../../../../');
+
+    // Load default configuration from config.yml.
+    $this->config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
   }
 
   /**
@@ -104,12 +82,7 @@ class Installer extends Command {
   protected function configure() {
     $this
       ->setName('install')
-      ->setDescription('Create a new project using the Acquia PS Project Template.')
-      ->addArgument(
-        'make-file',
-        InputArgument::OPTIONAL,
-        'Custom make file to run in docroot'
-      );
+      ->setDescription('Create a new project using the Acquia PS Project Template.');
   }
 
   /**
@@ -117,88 +90,34 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function interact(InputInterface $input, OutputInterface $output) {
-
-    // store the input and output for use in other functions
+    // Store the input and output for use in other functions.
     $this->input = $input;
     $this->output = $output;
 
-    $helper = $this->getHelper('question');
-
     // Instantiate file progress helper.
     $this->progress = $this->getHelper('progress');
-    
-    $question = new Question('What is the machine name of this project? ');
-    $question->setValidator(function ($answer) {
-      // regex for valid php variable name from http://php.net/manual/en/language.variables.basics.php
-      $pattern = '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
-      if (!preg_match($pattern, $answer)) {
+
+    $helper = $this->getHelper('question');
+
+    // Check if the proposed directory already exists.
+    $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
+    if ($this->fs->exists($newProjectDirectory)) {
+      $helper = $this->getHelper('question');
+      $input = $this->input;
+      $output = $this->output;
+
+      // Confirm it is okay to overwrite the directory.
+      $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? (y/n)', $newProjectDirectory), 0);
+      $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
+      if (!$overwrite_confirmed) {
         throw new \RuntimeException(
-            'Please enter a valid machine name (hint: can\'t contain spaces)'
+            'Please choose another machine name (hint: The machine name will be used as the name of the new project).'
         );
       }
-
-      // check if the proposed directory already exists.
-      $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $answer;
-      if ($this->fs->exists($newProjectDirectory)) {
-        $helper = $this->getHelper('question');
-        $input = $this->input;
-        $output = $this->output;
-
-        // confirm it is okay to overwrite the directory
-        $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? (y/n)', $newProjectDirectory), 0);
-        $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
-        if (!$overwrite_confirmed) {
-          throw new \RuntimeException(
-              'Please choose another machine name (hint: The machine name will be used as the name of the new project).'
-          );
-        }
-      }
-
-      // set the new project directory name
-      $this->newProjectDirectory = $newProjectDirectory;
-
-      return $answer;
-    });
-    $this->projectName = $helper->ask($input, $output, $question);
-
-    $question = new Question('What is the human-readable name of this project? ');
-    $this->projectTitle = $helper->ask($input, $output, $question);
-
-    // Prompt for options related to virtual machine.
-    $question = new ConfirmationQuestion('Include Ubuia Vagrant box? ', $this->config['ubuia']);
-    $this->config['ubuia'] = $helper->ask($input, $output, $question);
-
-    // Prompt for options related to testing framework.
-    $question = new ConfirmationQuestion('Include the PS Automated Testing Framework? ', $this->config['testing_framework']);
-    $this->config['testing_framework']['enable'] = $helper->ask($input, $output, $question);
-    if ($this->config['testing_framework']['enable']) {
-      $question = new Question('What will the local URL of the website be? ');
-      $this->config['local_url'] = $helper->ask($input, $output, $question);
-
-      $question = new ChoiceQuestion(
-        'Which javascript session driver should be used for Behat testing?',
-        array('Selenium2 / Phantom.js', 'Zombie.js'),
-        $this->config['testing_framework']['javascript_session']
-      );
-      $this->config['testing_framework']['javascript_session'] = $helper->ask($input, $output, $question);
     }
 
-    $question = new ConfirmationQuestion('Include a starter settings.php file? ', $this->config['starter_settings']['enable']);
-    $this->config['starter_settings']['enable'] = $helper->ask($input, $output, $question);
-
-    // Prompt for options related to starter settings.php file.
-    $question = new ConfirmationQuestion('Add Akamai integration? ', $this->config['starter_settings']['akamai']);
-    $this->config['starter_settings']['akamai'] = $helper->ask($input, $output, $question);
-
-    $make_file = $input->getArgument('make-file');
-    if (!$make_file) {
-      $question = new ChoiceQuestion(
-        'You did not specify a custom make file. Which default make file should be used?',
-        array('standard', 'lightning'),
-        $this->config['make-file']
-      );
-      $this->config['make-file'] = $helper->ask($input, $output, $question);
-    }
+    // Set the new project directory name.
+    $this->newProjectDirectory = $newProjectDirectory;
   }
 
   /**
@@ -208,25 +127,21 @@ class Installer extends Command {
    * @throws \Symfony\Component\Filesystem\Exception\IOException
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
-
     // Create a progress bar.
     $this->progress->start($output, 100);
 
     $this->createProject($input, $output, $this->progress);
-    $this->progress->advance(20);
+    $this->progress->advance(30);
 
-    // Add Ubuia.
-    if ($this->config['ubuia']) {
-      $this->addUbuia($input, $output);
+    // Add Vagrant VM.
+    if ($this->config['vm']['enable']) {
+      $this->addVm($input, $output);
+      $this->addVmConfig($input, $output);
+      $this->progress->advance(30);
     }
-    $this->progress->advance(20);
-
-    // Download Drupal by executing makefile.
-    $this->buildMakeFile($input, $output);
-    $this->progress->advance(20);
 
     $this->installTestingFramework($input, $output);
-    $this->progress->advance(20);
+    $this->progress->advance(30);
 
     // Clean up new project.
     $this->cleanUp($input, $output);
@@ -236,14 +151,16 @@ class Installer extends Command {
 
     if ($this->config['starter_settings']['enable']) {
       // @todo Modify settings.php to include this. Also include other partials.
-      $this->writeProgressMessage("<info>Please include {$this->projectName}/conf/base.settings.php in your settings.php file.</info>", $output, $this->progress);
-    }
-    if ($this->config['ubuia']) {
-      $this->writeProgressMessage("<info>Please run `vagrant up` from within `{$this->projectName}/box` and then install Drupal via `drush site-install`</info>", $output, $this->progress);
+      $this->writeProgressMessage("<info>Please include {$this->config['project']['machine_name']}/conf/base.settings.php in your settings.php file.</info>", $output, $this->progress);
     }
 
-    $this->progress->advance(20);
-    $this->progress->clear();
+    if ($this->config['vm']['enable']) {
+      $this->writeProgressMessage("<info>Please follow the Quick Start Guide at http://www.drupalvm.com/ from within `{$this->config['project']['machine_name']}/box` to set up Drupal VM</info>", $output, $this->progress);
+      // TODO - Automatically install role dependencies if Ansible is installed.
+    }
+
+    $this->progress->advance(10);
+    $this->progress->finish();
   }
 
   /**
@@ -270,59 +187,69 @@ class Installer extends Command {
   }
 
   /**
-   * Download the Ubuia repository to the new project.
+   * Download Drupal VM for the project.
    *
    * This is accomplished through a `git clone` to the 'box' directory. The
    * '.git' directory is then removed from 'box'.
    *
-   * @todo Possibly change this to download only latest release.
-   *
    * @param InputInterface $input
    * @param OutputInterface $output
    */
-  protected function addUbuia(InputInterface $input, OutputInterface $output) {
-    $this->writeProgressMessage('<info>Cloning Ubuia from GitHub...</info>', $output, $this->progress);
-    // Add Ubuia Vagrant box repository and then remove the .git files.
-    $vm_dir_name = 'box';
-    $this->remove("{$this->newProjectDirectory}/$vm_dir_name");
-    $this->git('clone --bare', array(
-      "git@github.com:acquia-pso/ubuia.git",
-      "{$this->newProjectDirectory}/$vm_dir_name"
+  protected function addVm(InputInterface $input, OutputInterface $output) {
+    $this->writeProgressMessage('<info>Cloning Drupal VM from GitHub...</info>', $output, $this->progress);
+
+    // Add Drupal VM Vagrant box repository and then remove the .git files.
+    $vm_dir = $this->config['vm']['dir_name'];
+    $this->remove("{$this->newProjectDirectory}/$vm_dir");
+    $this->git('clone', array(
+      "git@github.com:geerlingguy/drupal-vm.git",
+      "{$this->newProjectDirectory}/$vm_dir",
     ));
+    $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
   }
 
   /**
-   * Builds the chosen make file to the new project's docroot.
-   *
-   * The make file will be copied to the new project as well.
+   * Configure Drupal VM for the project.
    *
    * @param InputInterface $input
    * @param OutputInterface $output
    */
-  protected function buildMakeFile(InputInterface $input, OutputInterface $output) {
-    $options = array(
-      'no-gitinfofile' => NULL,
-      'concurrency' => 8,
-      'force-complete' => NULL,
+  protected function addVmConfig(InputInterface $input, OutputInterface $output) {
+    $vm_dir = $this->config['vm']['dir_name'];
+
+    // Load the example configuration file included with Drupal VM.
+    $vm_config = Yaml::parse(file_get_contents("{$this->newProjectDirectory}/$vm_dir/example.config.yml"));
+
+    // Add the scripts directory to synced folders list.
+    $vm_config['vagrant_synced_folders'][] = array(
+      'local_path' => "{$this->newProjectDirectory}/scripts",
+      'destination' => '/scripts',
+      'id' => 'project_template_scripts',
+      'type' => 'nfs',
     );
-    $build_path = "{$this->newProjectDirectory}/docroot";
 
-    // Make sure that the build path does not exist before building.
-    $this->remove($build_path);
+    // Use the docroot as the site's primary synced folder.
+    $docroot = "/var/www/{$this->config['project']['machine_name']}";
+    $vm_config['vagrant_synced_folders'][0]['local_path'] = "{$this->newProjectDirectory}/docroot";
+    $vm_config['vagrant_synced_folders'][0]['destination'] = $docroot;
 
-    // Build custom make file.
-    $make_file = $input->getArgument('make-file');
-    if (!$make_file) {
-      $make_file = "{$this->newProjectDirectory}/install/{$this->config['make-file']}.make";
-    }
+    // Update domain configuration.
+    $vm_config['vagrant_hostname'] = $this->config['project']['local_url'];
+    $vm_config['drupal_domain'] = $this->config['project']['local_url'];
+    $vm_config['drupal_site_name'] = $this->config['project']['human_name'];
+    $vm_config['drupal_core_path'] = $docroot;
 
-    $this->writeProgressMessage("<info>Building $make_file to $build_path...</info>", $output, $this->progress);
-    $this->drush('make', array($make_file, $build_path), $options);
+    // Update the path to make file.
+    $make_file = $this->config['make_file'];
+    $vm_config['drush_makefile_path'] = '/scripts/make/' . $make_file;
+    $vm_config['drupal_install_profile'] = preg_replace('(\.make|\.yml)', '', $make_file);
 
-    // Copy make file to the scripts directory.
-    $new_make_file = "{$this->newProjectDirectory}/scripts/" . basename($make_file);
-    $this->fs->copy($make_file, $new_make_file);
-    // @todo Also copy contrib.make and any other drush make includes.
+    // Update other important settings.
+    $vm_config['drupal_enable_modules'] = [];
+    $vm_config['extra_apt_packages'] = [];
+
+    // Write adjusted config.yml to disk.
+    file_put_contents("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config));
   }
 
   /**
@@ -342,7 +269,6 @@ class Installer extends Command {
     $this->writeProgressMessage("<info>Installing composer dependencies for testing framework...</info>", $output, $this->progress);
 
     // @todo Write drupal_root, base_url, and other settings to local.yml.
-    // @todo If ubuia enabled, write ubuia.yml to testing dir.
     // @todo Provide default behat profiles for dev and stg envs on ACE.
     // @todo Install behat runner module?
 

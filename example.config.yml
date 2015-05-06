@@ -1,0 +1,20 @@
+project:
+  machine_name: 'ps_project'
+  human_name: 'PS Project'
+  local_url: 'drupal.dev'
+  make_file: 'project.make.yml'
+
+vm:
+  enable: true
+  dir_name: 'box'
+
+testing_framework:
+  enable: true
+  driver: 'Zombie.js'
+  # driver: 'Selenium2 / Phantom.js'
+
+starter_settings:
+  enable: true
+  akamai: true
+
+make_file: standard.make.yml

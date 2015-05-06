@@ -3,6 +3,7 @@ docroot/sites/*/settings.*.php
 sites/*/settings.*.php
 build
 build.properties
+config.yml
 
 # Ignore paths that contain user-generated content.
 docroot/sites/*/files
