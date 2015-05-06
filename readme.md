@@ -1,13 +1,13 @@
 # PROJECT Template
 
-This repository is intended be be used as a template for all new Professional Services projects.
+This repository is the template for all new Professional Services projects.
 
 ## Installation
 
-When beginning a new Drupal project, do the follow:
+When beginning a new Drupal project, do the following:
 
-* Clone the Project Template to a local directory
-* Follow in the instructions in /install/readme.md. This will create a repository on your local machine for the new project, and handle building dependencies.
+* Clone this Project Template reposistory to a local directory
+* Follow the instructions in /install/readme.md. This will create a repository on your local machine for the new project, and handle building dependencies.
 
 ## Directory Structure
 
@@ -16,7 +16,7 @@ explains each of their purposes and example contents.
 
 - **bin**
 
-    Currently this directory contains only the scripts required for the build process.
+    This directory contains scripts required for the build process.
 
 - **conf**
 
@@ -25,11 +25,11 @@ explains each of their purposes and example contents.
 
 - **docs**
 
-    The overall documentation is included within this directory.
+    This directory contains overall documentation.
 
 - **scripts**
 
-    The current script types are `prebuild` and `postbuild`. These run before Drush make operations and after, respectively. Within each directory, any number of scripts is supported. As long as the file is executable, it can also be of any language. For example -
+    This directory contains a variety of utility scrips that are not part of the build process. The current script types are `prebuild` and `postbuild`. These run before Drush make operations and after, respectively. Within each directory, any number of scripts is supported. As long as the file is executable, it can also be of any language. For example -
 
         scripts/
         ├── postbuild/
@@ -39,7 +39,7 @@ explains each of their purposes and example contents.
 
 - **sites**
 
-    Each individual site (other than all/) should be contained within this directory. Example:
+    This directory contains each individual site (other than all/). Example:
 
         sites/
         ├── default
@@ -49,8 +49,8 @@ explains each of their purposes and example contents.
 
 - **tests**
 
-    All test files should be placed into this directory.
-    
+    This directory contains all test files.
+
         tests/
             ├── behat
             │   ├── behat.yml
