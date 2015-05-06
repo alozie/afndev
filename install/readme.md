@@ -3,23 +3,18 @@
 The project template has an installer which will do the following:
 
 * Create new project directory. It will be a sibling of the project template repository.
-* (optionally) Add Ubuia virtual box
-* (optionally) Build a specified make file
+* (optionally) Add Drupal VM for a local development environment
+* (optionally) Add a testing framework
 * Include custom settings in settings.php
-* Add a testing framework
 * Remove installation artifacts
 
 ## Installation
 
-From this repository's root directory, run:
+From this repository's root directory:
 
-    composer install --working-dir=install
-    php bin/project-template-installer install
-
-This will guide you through the installation process. To specify a custom make
-file for installation, pass the make file location as an argument:
-
-    php bin/project-template-installer install [make-file]
+  1. Copy `example.config.yml` to `config.yml` and configure the settings for your project.
+  2. Run `composer install --working-dir=install` to install dependencies.
+  3. Run `php bin/project-template-installer install` to create your project.
 
 ## Under the hood
 
