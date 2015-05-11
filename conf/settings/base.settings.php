@@ -6,12 +6,19 @@
  * Acquia Cloud settings.
  */
 if (file_exists('/var/www/site-php')) {
-  require "/var/www/site-php/$ac_client_id/$ac_client_id-settings.inc";
+  require "/var/www/site-php/$ac_subscription/$ac_domain-settings.inc";
 }
 
 if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  // Dynamically set base url based on Acquia environment varaible.
-  $base_url = "https://{$_ENV['AH_SITE_NAME']}.prod.acquia-sites.com";
+  switch ($ac_domain) {
+    case 'default':
+      // Dynamically set base url based on Acquia environment varaible.
+      $base_url = "https://{$_ENV['AH_SITE_NAME']}.prod.acquia-sites.com";
+      break;
+    case 'multisite.example.com':
+      $base_url = 'http://multisite.example.com';
+      break;
+  }
 }
 
 /**
