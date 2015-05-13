@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Examples on how to implement common theming patterns.
+ */
+
+
+/**
+ * Implements hook_theme().
+ */
+function acquia_examples_theme($existing, $type, $theme, $path) {
+  if ($type == 'module') {
+    return array(
+      // This example uses a template structure. We pass the template a render array and this render array is processed by the template.
+      'acquia_examples_example_pane' => array(
+        'render element' => 'content',
+        'template' => 'acquia-examples-example-pane',
+        'path' => drupal_get_path('module', 'acquia_examples') . '/templates',
+      ),
+    );
+  }
+  return array();
+}
+
+/*
+ * Implements hook_ctools_plugin_directory.
+ *
+ * This tells ctools to look for layouts and panels (content types) inside the plugins folder.
+ */
+function acquia_examples_ctools_plugin_directory($module, $plugin_type) {
+  if (in_array($module, array('ctools', 'panels')) && !empty($plugin_type)) {
+    return "plugins/$plugin_type";
+  }
+}
+
+/**
+ * Implements hook_preprocess_hook().
+ */
+function acquia_examples_preprocess_acquia_examples_example_pane(&$variables) {
+  // Add a library.
+  drupal_add_library('system', 'jquery.cookie');
+
+  // Add a JS file.
+  drupal_add_js(drupal_get_path('module', 'acquia_examples') . '/js/acquia_examples.js');
+
+  // Add a variable that will be available as Drupal.settings.acquiaExamples.
+  drupal_add_js(array('acquiaExamples' => 'Example Setting'), 'setting');
+
+}
