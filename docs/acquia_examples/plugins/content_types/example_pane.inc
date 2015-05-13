@@ -71,10 +71,6 @@ function acquia_examples_example_pane_content_type_render($subtype, $conf, $pane
 
 /**
  * Returns an edit form for a entity.
- *
- * Rendered entity use entity types machine name as subtype name.
- *
- * @see bean_panels_bean_panels_view_get_content_types()
  */
 function acquia_examples_example_pane_content_type_edit_form($form, &$form_state) {
   $conf = $form_state['conf'];
