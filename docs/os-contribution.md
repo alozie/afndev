@@ -1,32 +1,50 @@
-# Criteria and process for open source contribution of project work.
 
-## Questions to Ask
-### Why are we Open Sourcing
-Transparency
-Glory
-We actually think others will use what we're releasing
+# What not to release
+- Use-case specific functionality (i.e., stuff no one else will really care about)
+    - when in doubt, release
+- Confidential or security sensitive information
+    - definitions will depend upon applicable NDA or security agreements
 
-### What...
-are we Open Sourcing
-Site archive
-Modules
-Distribution
-is the process we need to follow to release something?
+# What to release
 
-Is there an NDA or other consideration about what email address developers should use in commits?
-code review
-legal review
+## Patches to core or contrib
+- should always be contributed, if appropriate for public release
+- make use of organization crediting
 
-### Where are we Open Sourcing it?
-- where are you developing now?
-- Drupal.org
-  - canonical source for Drupal modules
-  - module ownership can be a challenge
-    - d.o expects modules to be owned by individuals
-- GitHub
-- somewhere else
+## Modules (or other)
 
-### How...
-much effort are we willing to put into this?
-are we going to deal with this once we've Open Sourced it?
-Who's going to respond in the issue queue? Can developers do it or does the organization require official review of text?
+### recommendation
+- release to d.o
+- team should select who should own the module based on contribution to it's creation and abiilty/interest in on-going ownership
+- make use of organization crediting
+- benefits
+    + greater community visibility 
+    + able to make use of D.O packaging and testing bots
+- drawbacks
+    + organization does not have ownership of the module
+
+### alternatives
+
+#### organization ownership on D.O
+- benefits
+    + organization cannot loose control of the module
+    + can serve NDA processes
+- drawbacks
+    + organization users are not really supported on D.O; requires assistance from Drupal Association staff
+
+#### releasing on GitHub with D.O project page
+- benefits
+    + organization ownership is guaranteed
+    + GitHub project flows (Pull Requests, etc.)
+- drawbacks
+    + frowned upon by D.O and part of community
+- conderations
+    + should issues be handled on D.O, GitHub, or both?
+        * recommendation: issues should be tracked on GitHub to integrate best with the workfow
+
+
+# Other factors
+## Organization credit on d.o
+- Engagement Managers should organizational credit participation with the client
+- If the client is participating, client organization should be credited for all issues and modules released
+- Otherwise, credit Acquia
