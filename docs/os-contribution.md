@@ -16,6 +16,7 @@
 ### recommendation
 - release to d.o
 - team should select who should own the module based on contribution to it's creation and abiilty/interest in on-going ownership
+    + ensure that maintainer transitioning is included in the process for off-boarding of staff
 - make use of organization crediting
 - benefits
     + greater community visibility 
