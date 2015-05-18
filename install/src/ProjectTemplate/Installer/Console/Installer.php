@@ -166,6 +166,9 @@ class Installer extends Command {
     $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
     $this->remove($this->newProjectDirectory . '/.git');
     $this->git('init', array($this->newProjectDirectory));
+    // Install .git hooks into the new project
+    $mirror_options = array('override' => TRUE);
+    $this->fs->mirror($this->currentProjectDirectory . '/git/hooks', $this->newProjectDirectory . '/.git/hooks', NULL, $mirror_options);
   }
 
   /**
