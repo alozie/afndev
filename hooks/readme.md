@@ -59,7 +59,7 @@ To get an idea of the power of Cloud Hooks, let's run the "Hello, Cloud!" script
         Hello, Cloud!
         [05:28:34] Finished hook: post-code-deploy
 
-You can use the Code drop-down list to put your Dev enviroment back to whatever it was previously deploying.
+You can use the Code drop-down list to put your Dev environment back to whatever it was previously deploying.
 
 ## The Cloud Hooks directory
 
@@ -119,7 +119,7 @@ Usage: post-code-deploy site target-env source-branch deployed-tag repo-url repo
 * source-branch: The code branch or tag being deployed. See below.
 * deployed-tag: The code branch or tag being deployed. See below.
 * repo-url: The URL of your code repository.
-* repo-type: The version control system your site is uing; "git" or "svn".
+* repo-type: The version control system your site is using; "git" or "svn".
 
 The meaning of source-branch and deployed-tag depends on whether you use drag-drop to move code from one environment to another or whether you select a new branch or tag for an environment from the Code drop-down list:
 
@@ -130,6 +130,14 @@ The meaning of source-branch and deployed-tag depends on whether you use drag-dr
 Example: If the Dev environment is deploying the master branch and you drag Dev code to Stage, the code-deploy arguments will be like:
 
     post-code-deploy mysite test master tags/2011-11-05 mysite@svn-3.devcloud.hosting.acquia.com:mysite.git git
+
+### post-code-update
+
+The post-code-update hook runs in response to code commits. When you push commits to a Git branch, the post-code-update hooks runs for each environment that is currently running that branch.
+
+The arguments for post-code-update are the same as for post-code-deploy, with the source-branch and deployed-tag arguments both set to the name of the environment receiving the new code.
+
+post-code-update only runs if your site is using a Git repository. It does not support SVN.
 
 ### post-db-copy
 
