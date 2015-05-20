@@ -38,7 +38,7 @@ function acquia_examples_example_pane_content_type_render($subtype, $conf, $pane
     );
   }
 
-  if (isset($conf['link'])) {
+  if (isset($conf['link_text']) && isset($conf['link_url'])) {
     $block->content['link'] = array(
       '#theme' => 'link',
       '#text' => $conf['link_text'],
