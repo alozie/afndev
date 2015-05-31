@@ -120,12 +120,9 @@ class Installer extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $this->createProject($input, $output);
 
-    if ($this->config['upstream_repository']['enable']) {
-      $this->addRemoteRepository($input, $output, $this->config['upstream_repository']['name'], $this->config['upstream_repository']['url']);
-    }
-
-    if ($this->config['fork_repository']['enable']) {
-      $this->addRemoteRepository($input, $output, $this->config['fork_repository']['name'], $this->config['fork_repository']['url']);
+    //load repositories
+    foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
+      $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
     }
 
     // Add Vagrant VM.
@@ -219,7 +216,6 @@ class Installer extends Command {
     // @todo We need to make it clear which make file was built in the new
     // repository, perhaps by removing other make files or copying the used
     // file into a new location.
->>>>>>> 0cc31554b4bf21077dada9dc9dab94ff3d1d8572
   }
 
   /**
