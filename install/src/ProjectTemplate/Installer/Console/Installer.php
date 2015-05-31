@@ -25,12 +25,6 @@ class Installer extends Command {
   protected $fs;
 
   /**
-   * A progress helper.
-   * @var object
-   */
-  protected $progress;
-
-  /**
    * The current project directory path on the local machine.
    * @var string
    */
@@ -94,9 +88,6 @@ class Installer extends Command {
     $this->input = $input;
     $this->output = $output;
 
-    // Instantiate file progress helper.
-    $this->progress = $this->getHelper('progress');
-
     $helper = $this->getHelper('question');
 
     // Check if the proposed directory already exists.
@@ -127,11 +118,7 @@ class Installer extends Command {
    * @throws \Symfony\Component\Filesystem\Exception\IOException
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
-    // Create a progress bar.
-    $this->progress->start($output, 100);
-
-    $this->createProject($input, $output, $this->progress);
-    $this->progress->advance(30);
+    $this->createProject($input, $output);
 
     if ($this->config['upstream_repository']['enable']) {
       $this->addRemoteRepository($input, $output, $this->config['upstream_repository']['name'], $this->config['upstream_repository']['url']);
@@ -144,30 +131,28 @@ class Installer extends Command {
     // Add Vagrant VM.
     if ($this->config['vm']['enable']) {
       $this->addVm($input, $output);
-      $this->progress->advance(30);
     }
 
+    // Download Drupal by executing makefile.
+    $this->buildMakeFile($input, $output);
+
     $this->installTestingFramework($input, $output);
-    $this->progress->advance(30);
 
     // Clean up new project.
     $this->cleanUp($input, $output);
 
     // Display completion messages.
-    $this->writeProgressMessage("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>", $output, $this->progress);
+    $output->writeln("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>");
 
     if ($this->config['starter_settings']['enable']) {
       // @todo Modify settings.php to include this. Also include other partials.
-      $this->writeProgressMessage("<info>Please include {$this->config['project']['machine_name']}/conf/base.settings.php in your settings.php file.</info>", $output, $this->progress);
+      $output->writeln("<info>Please include {$this->config['project']['machine_name']}/conf/base.settings.php in your settings.php file.</info>");
     }
 
     if ($this->config['vm']['enable']) {
-      $this->writeProgressMessage("<info>Please follow the Quick Start Guide at http://www.drupalvm.com/ from within `{$this->config['project']['machine_name']}/box` to set up Drupal VM</info>", $output, $this->progress);
+      $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
       // @todo Automatically install role dependencies if Ansible is installed.
     }
-
-    $this->progress->advance(10);
-    $this->progress->finish();
   }
 
   /**
@@ -181,8 +166,8 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function createProject(InputInterface $input, OutputInterface $output) {
-    $this->writeProgressMessage("<info>Creating directory {$this->newProjectDirectory}.</info>", $output, $this->progress);
-    $this->writeProgressMessage('<info>Copying Project Template into the new directory...</info>', $output, $this->progress);
+    $output->writeln("<info>Creating directory {$this->newProjectDirectory}.</info>");
+    $output->writeln('<info>Copying Project Template into the new directory...</info>');
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
     $mirror_options = array('override' => TRUE);
@@ -203,6 +188,38 @@ class Installer extends Command {
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
     $this->git("remote add {$name} {$url}", array($this->newProjectDirectory));
+    // Install .git hooks into the new project
+    $mirror_options = array('override' => TRUE);
+    $this->fs->mirror($this->currentProjectDirectory . '/git/hooks', $this->newProjectDirectory . '/.git/hooks', NULL, $mirror_options);
+  }
+
+  /**
+   * Builds the chosen make file to the new project's docroot.
+   *
+   * The make file will be copied to the new project as well.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function buildMakeFile(InputInterface $input, OutputInterface $output) {
+    $options = array(
+      'no-gitinfofile' => NULL,
+      'concurrency' => 8,
+      'force-complete' => NULL,
+    );
+    $build_path = "{$this->newProjectDirectory}/docroot";
+    // Make sure that the build path does not exist before building.
+    $this->remove($build_path);
+    // Build custom make file.
+    $make_file = "{$this->newProjectDirectory}/scripts/{$this->config['project']['make_file']}";
+
+    $output->writeln("<info>Building $make_file to $build_path...</info>");
+    $this->drush('make', array($make_file, $build_path), $options);
+
+    // @todo We need to make it clear which make file was built in the new
+    // repository, perhaps by removing other make files or copying the used
+    // file into a new location.
+>>>>>>> 0cc31554b4bf21077dada9dc9dab94ff3d1d8572
   }
 
   /**
@@ -215,7 +232,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function addVm(InputInterface $input, OutputInterface $output) {
-    $this->writeProgressMessage('<info>Cloning Drupal VM from GitHub...</info>', $output, $this->progress);
+    $output->writeln('<info>Cloning Drupal VM from GitHub...</info>');
 
     // Add Drupal VM Vagrant box repository and then remove the .git files.
     $vm_dir = $this->config['vm']['dir_name'];
@@ -223,9 +240,8 @@ class Installer extends Command {
     $this->git('clone', array(
       "git@github.com:geerlingguy/drupal-vm.git",
       "{$this->newProjectDirectory}/$vm_dir",
-      ),
-      array('bare' => NULL)
-    );
+    ));
+    $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
   }
@@ -263,7 +279,7 @@ class Installer extends Command {
 
     // Update the path to make file.
     $make_file = $this->config['project']['make_file'];
-    $vm_config['drush_makefile_path'] = '/scripts/make/' . $make_file;
+    $vm_config['drush_makefile_path'] = '/scripts/' . $make_file;
     // Remove makefile extension.
     $vm_config['drupal_install_profile'] = preg_replace('(\.make|\.yml)', '', $make_file);
 
@@ -273,6 +289,8 @@ class Installer extends Command {
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config));
+
+    $output->writeln("<info>Drupal VM was installed to `{$this->config['project']['machine_name']}/box`.</info>");
   }
 
   /**
@@ -297,7 +315,7 @@ class Installer extends Command {
     // @todo Install behat runner module?
 
     /*
-    $this->writeProgressMessage("<info>Installing composer dependencies for testing framework...</info>", $output, $this->progress);
+    $output->writeln("<info>Installing composer dependencies for testing framework...</info>");
     $options = array(
       'working-dir' => 'tests/behat'
     );
@@ -312,7 +330,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function cleanUp(InputInterface $input, OutputInterface $output) {
-    $this->writeProgressMessage("<info>Cleaning up install files...</info>", $output, $this->progress);
+    $output->writeln("<info>Cleaning up install files...</info>");
 
     // Clean up files specific to installation process.
     $this->remove(array(
@@ -360,7 +378,7 @@ class Installer extends Command {
    * @param array $options
    *   An array of options in one of the following formats:
    *     array('bare' => NULL, 'tags' => 'smoke') will translate into
-   *     `command --bare --tags=smoke`
+   *     `--bare --tags=smoke`
    * @return mixed
    *   Returns the command output.
    *
@@ -379,9 +397,12 @@ class Installer extends Command {
       }
     }
 
-    $process = new Process("$binary {$command} {$string_options} {$arguments}");
+    $command = "$binary {$command} {$string_options} {$arguments}";
+    $process = new Process($command);
     $process->setTimeout(3600);
-    $process->run();
+    $process->run(function ($type, $buffer) {
+      print $buffer;
+    });
 
     if (!$process->isSuccessful()) {
       throw new \RuntimeException($process->getErrorOutput());
@@ -428,10 +449,8 @@ class Installer extends Command {
    * @param OutputInterface $output
    * @param ProgressHelper $progress
    */
-  protected function writeProgressMessage($message, $output, $progress) {
-    $progress->clear();
+  protected function writeProgressMessage($message, $output) {
     $output->writeln('');
     $output->writeln($message);
-    $progress->display();
   }
 }
