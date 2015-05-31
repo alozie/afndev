@@ -11,8 +11,8 @@ vm:
 
 git:
   hooks:
-    -commit-msg
-    -pre-commit
+    - commit-msg
+    - pre-commit
   remotes:
     origin: 'git@github.com:[user]/[project].git'
     upstream: 'git@github.com:acquia-pso/[project].git'

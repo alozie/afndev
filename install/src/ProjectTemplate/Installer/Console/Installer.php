@@ -120,11 +120,6 @@ class Installer extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $this->createProject($input, $output);
 
-    //load repositories
-    foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
-      $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
-    }
-
     // Add Vagrant VM.
     if ($this->config['vm']['enable']) {
       $this->addVm($input, $output);
@@ -137,6 +132,9 @@ class Installer extends Command {
 
     // Clean up new project.
     $this->cleanUp($input, $output);
+
+    // Initialize Git
+    $this->initializeGit($input, $output);
 
     // Display completion messages.
     $output->writeln("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>");
@@ -163,15 +161,48 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function createProject(InputInterface $input, OutputInterface $output) {
-    $output->writeln("<info>Creating directory {$this->newProjectDirectory}.</info>");
     $output->writeln('<info>Copying Project Template into the new directory...</info>');
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
     $mirror_options = array('override' => TRUE);
     $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
+
+    $output->writeln('<info>Removing Project Templates git directory</info>');
     $this->remove($this->newProjectDirectory . '/.git');
-    $this->git('init', array($this->newProjectDirectory));
-    $this->git('add *', array($this->newProjectDirectory));
+  }
+
+  /**
+   * Performs Git actions needed for project.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function initializeGit(InputInterface $input, OutputInterface $output) {
+    $output->writeln('<info>Initializing new project git repository</info>');
+    $this->git("init", array($this->newProjectDirectory));
+
+    $output->writeln('<info>Adding files to Git repo</info>');
+    $this->git("-C {$this->newProjectDirectory} add", array("."));
+
+    $output->writeln('<info>Creating the initial commit</info>');
+    $this->git("-C {$this->newProjectDirectory} commit -a -m 'Initial project commit'");
+
+    // Install .git hooks into the new project
+    if (!empty($this->config['git']['hooks'])) {
+      $output->writeln('<info>Creating Git hooks directory</info>');
+      $this->fs->mkdir($this->newProjectDirectory . '/.git/hooks');
+
+      // Copy the desirable hooks
+      foreach ($this->config['git']['hooks'] as $hook) {
+        $output->writeln('<info>Copying Git hook '.$hook.'</info>');
+        $this->fs->copy($this->currentProjectDirectory . '/git/hooks/'.$hook, $this->newProjectDirectory . '/.git/hooks/'.$hook, TRUE);
+      }
+    }
+
+    // Load repositories
+    foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
+      $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
+    }
   }
 
   /**
@@ -184,10 +215,7 @@ class Installer extends Command {
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
-    $this->git("remote add {$name} {$url}", array($this->newProjectDirectory));
-    // Install .git hooks into the new project
-    $mirror_options = array('override' => TRUE);
-    $this->fs->mirror($this->currentProjectDirectory . '/git/hooks', $this->newProjectDirectory . '/.git/hooks', NULL, $mirror_options);
+    $this->git("-C {$this->newProjectDirectory} remote add",  array($name, $url));
   }
 
   /**
