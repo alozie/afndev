@@ -141,7 +141,7 @@ class Installer extends Command {
 
     if ($this->config['starter_settings']['enable']) {
       // @todo Modify settings.php to include this. Also include other partials.
-      $output->writeln("<info>Please include {$this->config['project']['machine_name']}/conf/base.settings.php in your settings.php file.</info>");
+      $output->writeln("<info>Please include {$this->config['project']['machine_name']}/sites/all/settings/base.settings.php in your settings.php file.</info>");
     }
 
     if ($this->config['vm']['enable']) {

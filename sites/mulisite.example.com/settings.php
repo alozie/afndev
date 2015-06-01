@@ -1,5 +1,5 @@
 <?php
 
-// TODO: Set this to the proper Acquia subscription.
+// @todo Set this to the proper Acquia subscription.
 $ac_domain = 'multisite_example';
-require_once '../../conf/settings/base.settings.php';
+require_once '../all/settings/base.settings.php';
