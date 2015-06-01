@@ -9,6 +9,15 @@ vm:
   enable: true
   dir_name: 'box'
 
+git:
+  hooks:
+    - commit-msg
+    - pre-commit
+  remotes:
+    origin: 'git@github.com:[user]/[project].git'
+    upstream: 'git@github.com:acquia-pso/[project].git'
+    acquia: '[project-user]@[project-host].prod.hosting.acquia.com:[project-name].git'
+
 testing_framework:
   enable: true
   driver: 'Zombie.js'
