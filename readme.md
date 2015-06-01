@@ -6,50 +6,20 @@ This repository is the template for all new Professional Services projects.
 
 When beginning a new Drupal project, do the following:
 
-* Clone this Project Template reposistory to a local directory
-* Follow the instructions in /install/readme.md. This will create a repository on your local machine for the new project, and handle building dependencies.
+* Clone this Project Template repository to a local directory
+* Follow the instructions in `/install/readme.md`. This will create a repository on your local machine for the new project, and handle building dependencies.
 
 ## Directory Structure
 
-The overall working structure is made up of a few directories. The following
-explains each of their purposes and example contents.
+The following is an overview of the purpose of each top level directory:
 
-- **bin**
-
-    This directory contains scripts required for the build process.
-
-- **conf**
-
-    This directory contains site-level configuration files.
-    _Examples: .htaccess, robots.txt, *.settings.php_
-
-- **docs**
-
-    This directory contains overall documentation.
-
-- **scripts**
-
-    This directory contains a variety of utility scripts that are not part of the build process. These scripts may do things like generate release notes, execute local tests, pull a fresh db to a local machine, etc.
-
-- **sites**
-
-    This directory contains each individual site (other than all/). Example:
-
-        sites/
-        ├── default
-        │   └── settings.php
-        └── multisite.example.com
-            └── settings.php
-
-- **tests**
-
-    This directory contains all test files.
-
-        tests/
-            ├── behat
-            │   ├── behat.yml
-            │   └── features
-            │   │      └── Example.feature
-            │   └── media
-            ├── jmeter
-
+    root
+      ├── bin     - Contains scripts required for the build process.
+      ├── box     - Contains the virtual machine.
+      ├── docroot - The drupal docroot.
+      ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
+      ├── hooks   - Contains [Acquia Cloud hooks](https://docs.acquia.com/cloud/manage/cloud-hooks).
+      ├── install - Contains Project Template Installer, which will be removed after installation.
+      ├── scripts - Contains a variety of utility scripts that are not part of the build process.
+      ├── sites   - The Drupal "sites" directory, symlinked to docroot/sites.
+      ├── tests   - Contains all test files.
