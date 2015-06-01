@@ -1,5 +1,3 @@
-# features/drupal.feature
-# 
 @javascript
 Feature: Selenium Test
   In order to test if Selenium is working
@@ -9,3 +7,5 @@ Feature: Selenium Test
   Scenario: Load a page
     Given I am on "/"
     Then I should see the text "Welcome"
+
+# @todo Add @api example.

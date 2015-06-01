@@ -48,6 +48,6 @@ local:
     Drupal\DrupalExtension\Extension:
       drupal:
         # This must be an absolute path.
-        drupal_root: "/Users/matthew.grasmick/Sites/clients/doj/repo/docroot"
+        drupal_root: "/my/project/repo"
       drush:
         alias: '@self'
