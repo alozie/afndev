@@ -1,0 +1,22 @@
+project:
+  machine_name: 'ps_project'
+  human_name: 'PS Project'
+  local_url: 'http://localhost/'
+  make_file: 'project.make.yml'
+
+vm:
+  enable: true
+  dir_name: 'box'
+
+git:
+  hooks:
+    - commit-msg
+    - pre-commit
+
+testing_framework:
+  enable: true
+  javascript_driver: 'selenium2'
+
+# These map to /conf/settings/[key].settings.php partials.
+starter_settings:
+  enable: true

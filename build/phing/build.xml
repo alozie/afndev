@@ -296,9 +296,19 @@
            returnProperty="behatPass"/>
   </target>
 
+  <!-- Configure the project template installer. -->
+  <target name="configure-installer"
+          description="Generates config.yml file for installer to use.">
+    <exec command="cp build/travis.config.yml config.yml"
+          dir="${repo.root}"
+          logoutput="true"
+          checkreturn="true" />
+  </target>
+
   <!-- Run the project template installer. -->
   <target name="run-installer"
-          description="Runs the project template installer">
+          description="Runs the project template installer"
+          depends="configure-installer">
     <exec command="php ${composer.bin}/project-template-installer install --overwrite"
           dir="${repo.root}"
           logoutput="true"

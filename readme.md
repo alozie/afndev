@@ -16,6 +16,7 @@ The following is an overview of the purpose of each top level directory:
     root
       ├── bin     - Contains scripts required for the build process.
       ├── box     - Contains the virtual machine.
+      ├── build   - Contains build files for CI solutions. E.g., phing configuration.
       ├── docroot - The drupal docroot.
       ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
