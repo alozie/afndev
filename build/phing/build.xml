@@ -20,7 +20,7 @@
   <resolvepath propertyName="repo.root" file="${repo.root.relative}"/>
 
   <property name="docroot"
-            value="${repo.root}/docroot"
+            value="${repo.root}/tmp/docroot"
             override="true"/>
   <property name="drupal.profile"
             value="standard"

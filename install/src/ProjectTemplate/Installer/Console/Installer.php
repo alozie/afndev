@@ -125,8 +125,6 @@ class Installer extends Command {
     }
 
     // Set the new project directory name.
-    // @todo Allow this directory location to be overridden for Travis CI.
-    // Travis does not allow us to access a sibling directory.
     $this->newProjectDirectory = $newProjectDirectory;
   }
 
@@ -196,7 +194,7 @@ class Installer extends Command {
     $output->writeln('<info>Initializing new project git repository</info>');
     $this->git("init", array($this->newProjectDirectory));
 
-    // Install .git hooks into the new project
+    // Install .git hooks into the new project.
     if (!empty($this->config['git']['hooks'])) {
       $output->writeln('<info>Creating Git hooks directory</info>');
       $this->fs->mkdir($this->newProjectDirectory . '/.git/hooks');
@@ -208,9 +206,11 @@ class Installer extends Command {
       }
     }
 
-    // Load repositories
-    foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
-      $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
+    // Load repositories.
+    if (!empty($this->config['git']['remotes'])) {
+      foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
+        $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
+      }
     }
   }
 
