@@ -19,8 +19,9 @@
   <property name="repo.root.relative" value="${project.basedir}/../.."/>
   <resolvepath propertyName="repo.root" file="${repo.root.relative}"/>
 
+  <!-- @todo Make this value dynamic based on travis.config.yml -->
   <property name="docroot"
-            value="${repo.root}/tmp/docroot"
+            value="${repo.root}/tmp/ps_project/docroot"
             override="true"/>
   <property name="drupal.profile"
             value="standard"
