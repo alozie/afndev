@@ -1,6 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
-docroot/sites/*/settings.*.php
-sites/*/settings.*.php
+docroot/sites/*/local.settings.php
+sites/*/local.settings.php
 build
 build.properties
 config.yml

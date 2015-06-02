@@ -1,7 +1,5 @@
 <?php
 
-// @todo Include settings from https://github.com/acquia/PS-Tools/tree/master/scripts/site-protection.
-
 /**
  * Acquia Cloud settings.
  */
@@ -12,7 +10,7 @@ if (file_exists('/var/www/site-php')) {
 if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
   switch ($ac_domain) {
     case 'default':
-      // Dynamically set base url based on Acquia environment varaible.
+      // Dynamically set base url based on Acquia environment variable.
       $base_url = "https://{$_ENV['AH_SITE_NAME']}.prod.acquia-sites.com";
       break;
     case 'multisite.example.com':
@@ -42,6 +40,6 @@ foreach ($includes as $key => $enabled) {
 /**
  * Settings for local development.
  */
-if (file_exists(__DIR__ . '/settings.local.php')) {
-  require __DIR__ . '/settings.local.php';
+if (file_exists(DRUPAL_ROOT . '/sites/default/local.settings.php')) {
+  require DRUPAL_ROOT . '/sites/default/local.settings.php';
 }
