@@ -1,7 +1,7 @@
 # Ignore configuration files that may contain sensitive information.
 docroot/sites/*/local.settings.php
 sites/*/local.settings.php
-build.properties
+build/phing/build.properties
 config.yml
 
 # Ignore paths that contain user-generated content.

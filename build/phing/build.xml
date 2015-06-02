@@ -7,9 +7,9 @@
 <project name="project-template" default="build" phingVersion="2.8.2">
 
   <!-- Custom task classes -->
-  <includepath classpath="${project.basedir}/phing/includes"/>
-  <taskdef name="behat" classname="phing_includes.BehatTask"/>
-  <taskdef name="drush" classname="phing_includes.DrushTask"/>
+  <includepath classpath="${project.basedir}/phingcludes"/>
+  <taskdef name="behat" classname="phingcludes.BehatTask"/>
+  <taskdef name="drush" classname="phingcludes.DrushTask"/>
 
   <!--               -->
   <!--  Properties   -->
@@ -52,7 +52,7 @@
   <property name="account.mail" value="root@[127.0.0.1]"/>
 
   <!-- Drush, Composer & Behat -->
-  <property name="composer.bin" value="${repo.root}/build/bin"/>
+  <property name="composer.bin" value="${repo.root}/bin"/>
   <property name="drush.bin" value="${composer.bin}/drush" override="true"/>
   <property name="drush.root" value="${docroot}"/>
   <property name="drush.source" value="@${phing.project.name}.dev"
@@ -122,7 +122,7 @@
 
   <target name="build:local"
           description="Build the project without removing uncommitted changes."
-          depends="make:local, overwrite:profile-files, install">
+          depends="make, install">
     <property name="build.local" value="1" />
   </target>
 
@@ -140,7 +140,7 @@
 
   <target name="build:full:no-clean"
           description="Build the project without removing local changes, install Drupal, run validation and tests."
-          depends="make:local, install, run-tests"/>
+          depends="make, install, run-tests"/>
 
   <target name="run-tests" description="Runs code validation and tests on an installed Drupal codebase."
           depends="validate:all, test:all"/>
@@ -190,17 +190,12 @@
           description="Run drush make"
           depends="rm-docroot">
 
-    <!-- Run Acquia specific pre-make build tasks -->
-    <import file="${repo.root}/build/acsf/phing/acsf_pre_make.build.xml" optional="true" />
-
     <drush command="make" assume="yes" verbose="TRUE">
       <option name="concurrency">8</option>
       <param>"${drupal.makefile}"</param>
       <param>"${docroot}"</param>
     </drush>
 
-    <!-- Run Acquia specific post-make build tasks -->
-    <import file="${repo.root}/build/acsf/phing/acsf_post_make.build.xml" optional="true" />
   </target>
 
   <target name="validate:lint" description="Runs a php lint against the codebase.">
@@ -268,8 +263,6 @@
       <param>"${drupal.profile}"</param>
     </drush>
 
-    <!-- Run Acquia Cloud Site Factory specific post install tasks. -->
-    <import file="${repo.root}/build/acsf/phing/acsf_post_install.build.xml" optional="true" />
   </target>
 
   <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
@@ -303,8 +296,12 @@
            returnProperty="behatPass"/>
   </target>
 
-  <target name="post-commit" description="Runs tasks on travis after a commit.">
-    <!-- Run travis specific tasks after successful commits. -->
-    <import file="${repo.root}/build/acsf/phing/acsf_post_commit.build.xml" optional="true" />
+  <!-- Run the project template installer. -->
+  <target name="run-installer"
+          description="Runs the project template installer">
+    <exec command="php ${composer.bin}/project-template-installer install --overwrite"
+          dir="${repo.root}"
+          logoutput="true"
+          checkreturn="true" />
   </target>
 </project>

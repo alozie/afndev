@@ -76,7 +76,12 @@ class Installer extends Command {
   protected function configure() {
     $this
       ->setName('install')
-      ->setDescription('Create a new project using the Acquia PS Project Template.');
+      ->setDescription('Create a new project using the Acquia PS Project Template.')
+      ->addOption(
+        'overwrite',
+        null,
+        InputOption::VALUE_NONE,
+        'If set, the target directory will be overwritten without prompt');
   }
 
   /**
@@ -92,11 +97,7 @@ class Installer extends Command {
 
     // Check if the proposed directory already exists.
     $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
-    if ($this->fs->exists($newProjectDirectory)) {
-      $helper = $this->getHelper('question');
-      $input = $this->input;
-      $output = $this->output;
-
+    if ($this->fs->exists($newProjectDirectory) && !$input->getOption('overwrite')) {
       // Confirm it is okay to overwrite the directory.
       $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? ', $newProjectDirectory), 0);
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
@@ -352,7 +353,6 @@ class Installer extends Command {
     // Clean up files specific to installation process.
     $this->remove(array(
       "{$this->newProjectDirectory}/src/ProjectTemplate",
-      "{$this->newProjectDirectory}/install.md",
       "{$this->newProjectDirectory}/install",
     ));
   }

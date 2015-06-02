@@ -462,4 +462,3 @@ class BehatTask extends Task
     return $return != 0;
   }
 }
-23.235.39.133

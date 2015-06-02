@@ -13,7 +13,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $_ENV['AH_SITE_GROUP'] = 'projectid';
 
     $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'];
-    require 'conf/settings/base.settings.php';
+    require 'sites/all/settings/base.settings.php';
 
     // Base_url
     $this->assertContains('projectid.prod.acquia-sites.com', $base_url);
