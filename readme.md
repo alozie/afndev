@@ -14,15 +14,16 @@ When beginning a new Drupal project, do the following:
 The following is an overview of the purpose of each top level directory:
 
     root
-      ├── bin     - Contains scripts required for the build process.
+      ├── bin     - Contains binaries built by Composer, as well as installation binaries.
       ├── box     - Contains the virtual machine.
-      ├── build   - Contains build files for CI solutions. E.g., phing configuration.
+      ├── build   - Contains build config files for CI solutions. E.g., phing configuration.
       ├── docroot - The drupal docroot.
+      ├── docs    - Contains high level project documentation. 
       ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
       ├── install - Contains Project Template Installer, which will be removed after installation.
+      ├── patches - Contains private patches to be used by scripts/project.make.yml.
       ├── scripts - Contains a variety of utility scripts that are not part of the build process.
-      ├── sites   - The Drupal "sites" directory, symlinked to docroot/sites.
       ├── tests   - Contains all test files.
 
 # Contributing
