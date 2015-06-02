@@ -10,9 +10,6 @@ local:
   extensions:
     Behat\MinkExtension\Extension:
       javascript_session: selenium2
-      zombie:
-        node_modules_path: /usr/local/lib/node_modules/
-        auto_server: false
       # configure the base url for your site
       base_url: 'http://site.dev'
       # set default command for "Show last response" step.
@@ -45,6 +42,7 @@ local:
       #       CURLOPT_TIMEOUT: 120
       selenium2:
         wd_host: http://127.0.0.1:4444/wd/hub
+        browser: chrome
     Drupal\DrupalExtension\Extension:
       drupal:
         # This must be an absolute path.
