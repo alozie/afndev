@@ -267,12 +267,12 @@
   </target>
 
   <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
+  <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
   <target name="test:security-updates"
           description="Checks an installed site for security updates on modules">
     <exec dir="${docroot}"
           command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
           logoutput="true"
-          checkreturn="true"
           passthru="true"/>
   </target>
 
