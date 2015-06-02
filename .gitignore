@@ -1,7 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
 docroot/sites/*/local.settings.php
 sites/*/local.settings.php
-build
 build.properties
 config.yml
 
@@ -11,7 +10,6 @@ docroot/sites/*/private
 
 # Local testing config
 tests/behat/local.yml
-docroot/sites/*.local
 docroot/sites/*/local.settings.php
 docroot/sites/local.sites.php
 
