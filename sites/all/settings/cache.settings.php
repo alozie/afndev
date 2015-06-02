@@ -31,8 +31,8 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
   }
 
   // Memcache for caching on Acquia Cloud.
-  $conf['cache_backends'][] = 'sites/all/modules/memcache/memcache.inc';
-  $conf['lock_inc'] = 'sites/all/modules/memcache/memcache-lock.inc';
+  $conf['cache_backends'][] = DRUPAL_ROOT . '/sites/all/modules/contrib/memcache/memcache.inc';
+  $conf['lock_inc'] =  DRUPAL_ROOT . '/sites/all/modules/contrib/memcache/memcache-lock.inc';
   $conf['memcache_stampede_protection'] = TRUE;
   $conf['cache_default_class'] = 'MemCacheDrupal';
 
