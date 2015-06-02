@@ -81,7 +81,12 @@ class Installer extends Command {
         'overwrite',
         null,
         InputOption::VALUE_NONE,
-        'If set, the target directory will be overwritten without prompt');
+        'If set, the target directory will be overwritten without prompt')
+      ->addOption(
+        'temporary',
+        null,
+        InputOption::VALUE_NONE,
+        "If set, the project will be installed to the current repository's temp directory");
   }
 
   /**
@@ -95,9 +100,20 @@ class Installer extends Command {
 
     $helper = $this->getHelper('question');
 
+    // If the "temporary" flag has been set, install the project to the
+    // current repository's "tmp" directory. This may be required for installing
+    // via continuous integration, where access outside of project repo is
+    // restricted.
+    if ($input->getOption('temporary')) {
+      $newProjectDirectory = $this->currentProjectDirectory . '/tmp/' . $this->config['project']['machine_name'];
+    }
+    // Otherwise, make the new project a sibling of the current repo dir.
+    else {
+      $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
+    }
+
     // Check if the proposed directory already exists.
-    $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
-    if ($this->fs->exists($newProjectDirectory) && !$input->getOption('overwrite')) {
+    if ($this->fs->exists($newProjectDirectory) && !$input->getOption('overwrite') && !$input->getOption('temporary')) {
       // Confirm it is okay to overwrite the directory.
       $confirm_overwrite = new ConfirmationQuestion(sprintf('This operation will overwrite files in %s. Continue? ', $newProjectDirectory), 0);
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);

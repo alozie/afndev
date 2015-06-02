@@ -318,7 +318,7 @@
   <target name="run-pt-installer"
           description="Runs the project template installer"
           depends="configure-pt-installer">
-    <exec command="php ${composer.bin}/project-template-installer install --overwrite"
+    <exec command="php ${composer.bin}/project-template-installer install --temporary"
           dir="${repo.root}"
           logoutput="true"
           checkreturn="true" />
