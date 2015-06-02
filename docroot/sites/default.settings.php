@@ -565,7 +565,3 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * Remove the leading hash signs to disable.
  */
 # $conf['allow_authorize_operations'] = FALSE;
-
-// @todo Set this to the proper Acquia subscription.
-$ac_domain = 'default_example';
-require_once DRUPAL_ROOT . '/sites/all/settings/base.settings.php';

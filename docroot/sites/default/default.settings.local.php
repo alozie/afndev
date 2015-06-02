@@ -1,5 +1,7 @@
 <?php
 
+$base_url = "http://project-template.localhost";
+
 $databases['default']['default'] = array(
   'driver' => 'mysql',
   'host' => 'localhost',
