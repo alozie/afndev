@@ -340,7 +340,7 @@ class Installer extends Command {
   protected function installTestingFramework(InputInterface $input, OutputInterface $output) {
 
     if (!$this->config['testing_framework']['enable']) {
-      $this->remove( "{$this->newProjectDirectory}/tests");
+      $this->remove("{$this->newProjectDirectory}/tests");
 
       return FALSE;
     }
@@ -348,15 +348,14 @@ class Installer extends Command {
     // @todo Provide default behat profiles for dev and stg envs on ACE.
     // @todo Install behat runner module?
     $output->writeln("<info>Configuring Behat yml files...</info>");
-    $behat_dir = $this->currentProjectDirectory . '/tests/behat';
-    $behat_config = Yaml::parse(file_get_contents("$behat_dir/example.local.yml"));
+    $behat_config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
 
     $behat_config['local']['extensions']['Drupal\DrupalExtension\Extension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
     $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['base_url'] = $this->config['project']['local_url'];
     $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
 
     // Write adjusted config.yml to disk.
-    $this->fs->dumpFile("$behat_dir/local.yml", Yaml::dump($behat_config));
+    $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config));
   }
 
   /**
