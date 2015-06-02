@@ -11,7 +11,7 @@ local:
     Behat\MinkExtension\Extension:
       javascript_session: selenium2
       # configure the base url for your site
-      base_url: 'http://site.dev'
+      base_url: 'http://project-template.localhost'
       # set default command for "Show last response" step.
       show_cmd: "open %s"
       # ADDITIONAL OPTIONS FOR WEB DRIVERS

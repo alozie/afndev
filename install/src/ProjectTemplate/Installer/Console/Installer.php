@@ -120,11 +120,6 @@ class Installer extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $this->createProject($input, $output);
 
-    // Add Vagrant VM.
-    if ($this->config['vm']['enable']) {
-      $this->addVm($input, $output);
-    }
-
     // Download Drupal by executing makefile.
     $this->buildMakeFile($input, $output);
 
@@ -145,6 +140,7 @@ class Installer extends Command {
     }
 
     if ($this->config['vm']['enable']) {
+      $this->addVm($input, $output);
       $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
       // @todo Automatically install role dependencies if Ansible is installed.
     }
@@ -180,12 +176,6 @@ class Installer extends Command {
   protected function initializeGit(InputInterface $input, OutputInterface $output) {
     $output->writeln('<info>Initializing new project git repository</info>');
     $this->git("init", array($this->newProjectDirectory));
-
-    $output->writeln('<info>Adding files to Git repo</info>');
-    $this->git("-C {$this->newProjectDirectory} add", array("."));
-
-    $output->writeln('<info>Creating the initial commit</info>');
-    $this->git("-C {$this->newProjectDirectory} commit -a -m 'Initial project commit'");
 
     // Install .git hooks into the new project
     if (!empty($this->config['git']['hooks'])) {
@@ -268,6 +258,8 @@ class Installer extends Command {
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
+
+    // @todo Initialize the new vagrant machine.
   }
 
   /**
@@ -334,17 +326,18 @@ class Installer extends Command {
       return FALSE;
     }
 
-    // @todo Write drupal_root, base_url, and other settings to local.yml.
     // @todo Provide default behat profiles for dev and stg envs on ACE.
     // @todo Install behat runner module?
+    $output->writeln("<info>Configuring Behat yml files...</info>");
+    $behat_dir = $this->currentProjectDirectory . '/tests/behat';
+    $behat_config = Yaml::parse(file_get_contents("$behat_dir/example.local.yml"));
 
-    /*
-    $output->writeln("<info>Installing composer dependencies for testing framework...</info>");
-    $options = array(
-      'working-dir' => 'tests/behat'
-    );
-    $this->composer('install', array(), $options);
-    */
+    $behat_config['local']['extensions']['Drupal\DrupalExtension\Extension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
+    $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['base_url'] = $this->config['project']['local_url'];
+    $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
+
+    // Write adjusted config.yml to disk.
+    $this->fs->dumpFile("$behat_dir/local.yml", Yaml::dump($vm_config));
   }
 
   /**

@@ -14,7 +14,7 @@ From this repository's root directory:
 
   1. Copy `example.config.yml` to `config.yml` and configure the settings for your project.
      `cp example.config.yml config.yml`
-  2. Run `composer install --working-dir=install` to install dependencies.
+  2. Run `composer install --working-dir=install` from the root directory
   3. Run `php bin/project-template-installer install` to create your project.
 
 ## Under the hood
