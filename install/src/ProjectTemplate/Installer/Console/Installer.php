@@ -356,7 +356,7 @@ class Installer extends Command {
     $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
 
     // Write adjusted config.yml to disk.
-    $this->fs->dumpFile("$behat_dir/local.yml", Yaml::dump($vm_config));
+    $this->fs->dumpFile("$behat_dir/local.yml", Yaml::dump($behat_config));
   }
 
   /**
@@ -372,6 +372,8 @@ class Installer extends Command {
     $this->remove(array(
       "{$this->newProjectDirectory}/src/ProjectTemplate",
       "{$this->newProjectDirectory}/install",
+      "{$this->newProjectDirectory}/config.yml",
+      "{$this->newProjectDirectory}/example.config.yml",
     ));
   }
 
