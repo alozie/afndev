@@ -13,8 +13,7 @@ env:
 notifications:
   email:
     - matthew.grasmick@acquia.com
-  slack:
-    secure: ''
+  slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP
 
 before_install:
   - sudo apt-get update -qq
