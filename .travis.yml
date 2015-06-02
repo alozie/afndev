@@ -21,7 +21,10 @@ before_install:
   - composer selfupdate
 
 install:
+  # The project contains two composer.json files, one for the new project
+  # and one for the installer.
   - composer install --prefer-source
+  - composer install --working-dir=install
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/bin
 
 before_script:
