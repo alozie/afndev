@@ -217,7 +217,7 @@
           description="Sniffs custom code to ensure it meets standards.">
 
     <phpcodesniffer
-        standard="${repo.root}/build/vendor/drupal/coder/coder_sniffer/Drupal/"
+        standard="${repo.root}/vendor/drupal/coder/coder_sniffer/Drupal/"
         showSniffs="true"
         showWarnings="true"
         haltonerror="true"
