@@ -62,7 +62,7 @@
             value="${phing.project.name}.aliases.drushrc.php"
             override="true"/>
   <property name="behat.config"
-            value="${docroot}/tests/behat/local.yml"/>
+            value="${repo.root}/tmp/ps_project/tests/behat/local.yml"/>
   <property name="behat.profile"
             value="local"/>
   <property name="phantomjs.bin"
