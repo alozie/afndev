@@ -5,4 +5,6 @@
 GIT_ROOT=$(git rev-parse --show-toplevel)
 cd $GIT_ROOT/sites/all
 
-drush make $GIT_ROOT/scripts/contrib.make -y --no-core --no-gitinfofile --contrib-destination=. --concurrency=8
+echo "Building contrib projects..."
+drush make $GIT_ROOT/scripts/project.make.yml -y --no-core --no-gitinfofile --contrib-destination=. --concurrency=8
+echo "Complete"
