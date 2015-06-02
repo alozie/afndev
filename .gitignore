@@ -8,6 +8,9 @@ config.yml
 docroot/sites/*/files
 docroot/sites/*/private
 
+# Ignore build artifacts
+bin/*
+
 # Local testing config
 tests/behat/local.yml
 docroot/sites/*/local.settings.php

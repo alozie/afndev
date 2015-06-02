@@ -299,7 +299,7 @@
   <!-- Configure the project template installer. -->
   <target name="configure-installer"
           description="Generates config.yml file for installer to use.">
-    <exec command="cp build/travis.config.yml config.yml"
+    <exec command="cp build/travis/travis.config.yml config.yml"
           dir="${repo.root}"
           logoutput="true"
           checkreturn="true" />

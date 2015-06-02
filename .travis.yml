@@ -9,7 +9,7 @@ cache:
   apt: true
 
 env:
-  - COMPOSER_BIN_DIR=$TRAVIS_BUILD_DIR/build/bin BEHAT_PARAMS='{"extensions":{"Behat\\MinkExtension":{"base_url":"http://localhost/"}}}'
+  - COMPOSER_BIN_DIR=$TRAVIS_BUILD_DIR/bin BEHAT_PARAMS='{"extensions":{"Behat\\MinkExtension":{"base_url":"http://localhost/"}}}'
 
 notifications:
   email:
@@ -23,8 +23,8 @@ before_install:
   - composer selfupdate
 
 install:
-  - composer install --working-dir=build --prefer-source
-  - export PATH=$PATH:$TRAVIS_BUILD_DIR/build/bin
+  - composer install --prefer-source
+  - export PATH=$PATH:$TRAVIS_BUILD_DIR/bin
 
 before_script:
   # Create a mock mail system so Drupal install can send email somewhere.
