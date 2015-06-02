@@ -118,29 +118,29 @@
 
   <target name="build"
           description="Build the project and install Drupal."
-          depends="git-reset, make, install"/>
+          depends="git-reset, run-pt-installer, install-drupal"/>
 
   <target name="build:local"
           description="Build the project without removing uncommitted changes."
-          depends="make, install">
+          depends="make, install-drupal">
     <property name="build.local" value="1" />
   </target>
 
   <target name="build:with-validation"
           description="Build the project, install, then run code validation."
-          depends="git-reset, make, install, validate:all"/>
+          depends="git-reset, make, install-drupal, validate:all"/>
 
   <target name="build:with-tests"
           description="Build the project, install, then run tests."
-          depends="git-reset, make, install, test:all"/>
+          depends="git-reset, make, install-drupal, test:all"/>
 
   <target name="build:full"
           description="Build the project, install Drupal, run validation and tests."
-          depends="git-reset, make, install, run-tests"/>
+          depends="git-reset, make, install-drupal, run-tests"/>
 
   <target name="build:full:no-clean"
           description="Build the project without removing local changes, install Drupal, run validation and tests."
-          depends="make, install, run-tests"/>
+          depends="make, install-drupal, run-tests"/>
 
   <target name="run-tests" description="Runs code validation and tests on an installed Drupal codebase."
           depends="validate:all, test:all"/>
@@ -250,7 +250,7 @@
   </target>
 
   <!-- Install Drupal. -->
-  <target name="install"
+  <target name="install-drupal"
           description="Installs Drupal">
 
     <drush command="site-install" assume="yes" verbose="TRUE">
@@ -296,8 +296,17 @@
            returnProperty="behatPass"/>
   </target>
 
+  <!-- Execute PHPUnit tests. -->
+  <target name="test:phpunit"
+          description="Checks an installed site for security updates on modules">
+    <exec dir="${docroot}/tests/phpunit"
+          command="phpunit ./*"
+          logoutput="true"
+          checkreturn="true"/>
+  </target>
+
   <!-- Configure the project template installer. -->
-  <target name="configure-installer"
+  <target name="configure-pt-installer"
           description="Generates config.yml file for installer to use.">
     <exec command="cp build/travis/travis.config.yml config.yml"
           dir="${repo.root}"
@@ -306,9 +315,9 @@
   </target>
 
   <!-- Run the project template installer. -->
-  <target name="run-installer"
+  <target name="run-pt-installer"
           description="Runs the project template installer"
-          depends="configure-installer">
+          depends="configure-pt-installer">
     <exec command="php ${composer.bin}/project-template-installer install --overwrite"
           dir="${repo.root}"
           logoutput="true"

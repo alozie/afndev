@@ -109,6 +109,8 @@ class Installer extends Command {
     }
 
     // Set the new project directory name.
+    // @todo Allow this directory location to be overridden for Travis CI.
+    // Travis does not allow us to access a sibling directory.
     $this->newProjectDirectory = $newProjectDirectory;
   }
 
