@@ -324,6 +324,10 @@ class Installer extends Command {
     $vm_config['drupal_enable_modules'] = [];
     $vm_config['extra_apt_packages'] = [];
 
+    // Do not execute subsequent drush make within the VM since files are in docroot
+    $vm_config['build_makefile'] = FALSE;
+    $vm_config['install_site'] = TRUE;
+
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
 
