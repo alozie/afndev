@@ -140,7 +140,11 @@ class Installer extends Command {
     // Download Drupal by executing makefile.
     $this->buildMakeFile($input, $output);
 
+    // Set up testing framework(s).
     $this->installTestingFramework($input, $output);
+
+    // Configure documentation.
+    $this->initializeDocumentation($input, $output);
 
     // Clean up new project.
     $this->cleanUp($input, $output);
@@ -183,6 +187,36 @@ class Installer extends Command {
 
     $output->writeln('<info>Removing Project Templates git directory</info>');
     $this->remove($this->newProjectDirectory . '/.git');
+  }
+
+  /**
+   * Performs the actions needed to set up the project's documentation.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function initializeDocumentation(InputInterface $input, OutputInterface $output) {
+    $output->writeln('<info>Initializing new project documentation directory</info>');
+
+    // Copy a clone of docs
+    $mirror_options = array('override' => TRUE);
+    $this->fs->mirror($this->newProjectDirectory . '/docs', $this->newProjectDirectory . '/docs-temp', NULL, $mirror_options);
+
+    // Empty directory, but leave for project-specific documentation needs
+    $this->fs->remove($this->newProjectDirectory . '/docs/*');
+
+    // Install .git hooks into the new project.
+    if (!empty($this->config['docs'])) {
+      // Copy the desirable hooks
+      foreach ($this->config['docs'] as $doc) {
+        $output->writeln('<info>Copying doc '.$doc.'</info>');
+        $this->fs->copy($this->newProjectDirectory . '/docs-temp/'.$doc.'.md', $this->newProjectDirectory . '/.git/hooks/'.$doc.'.md', TRUE);
+      }
+    }
+
+    // Remove temp dir
+    $this->fs->remove($this->newProjectDirectory . '/docs-temp');
+
   }
 
   /**

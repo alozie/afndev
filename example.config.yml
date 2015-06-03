@@ -5,6 +5,14 @@ project:
   # Located in /scripts/make.
   make_file: 'project.make.yml'
 
+# staging the table of contents
+docs:
+  - developer-guide
+  - drupal-architecture-template
+  - readme
+  - os-contribution
+  - theming
+
 vm:
   enable: true
   dir_name: 'box'
