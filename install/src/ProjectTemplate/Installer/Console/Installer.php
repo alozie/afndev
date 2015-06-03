@@ -149,6 +149,9 @@ class Installer extends Command {
     // Clean up new project.
     $this->cleanUp($input, $output);
 
+    // Create table of contents
+    $this->initializeTableOfContents($input, $output);
+
     // Initialize Git
     $this->initializeGit($input, $output);
 
@@ -205,9 +208,9 @@ class Installer extends Command {
     $this->fs->remove($this->newProjectDirectory . '/docs');
     $this->fs->mkdir($this->newProjectDirectory . '/docs');
 
-    // Install .git hooks into the new project.
+    // Look for configured docs.
     if (!empty($this->config['docs'])) {
-      // Copy the desirable hooks
+      // Copy the defined documents
       foreach ($this->config['docs'] as $doc => $description) {
         $output->writeln('<info>Copying doc '.$description.'</info>');
         $this->fs->copy($this->newProjectDirectory . '/docs-temp/'.$doc.'.md', $this->newProjectDirectory . '/docs/'.$doc.'.md', TRUE);
@@ -260,6 +263,35 @@ class Installer extends Command {
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
     $this->git("-C {$this->newProjectDirectory} remote add",  array($name, $url));
+  }
+
+  /**
+   * Generates table of contents.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function initializeTableOfContents(InputInterface $input, OutputInterface $output) {
+    $output->writeln('<info>Initializing new project-specific table of contents</info>');
+
+    // Clear out the readme
+    $this->fs->remove($this->newProjectDirectory.'/docs/readme.md');
+
+    // Generate the TOC
+    $readme_contents = '# Table of Contents';
+
+    // Start out with creating entries for docs
+    if (!empty($this->config['docs'])) {
+      $readme_contents .= "\n\n## Docs";
+      // Create a line per doc
+      foreach ($this->config['docs'] as $doc => $description) {
+        //* [Github](https://github.com/acquia-pso/PROJECT)
+        $readme_contents .= "\n* [".$description."](docs/".$doc.".md)";
+      }
+    }
+
+    // Write out contents
+    $this->fs->dumpFile($this->newProjectDirectory.'/docs/readme.md', $readme_contents);
   }
 
   /**

@@ -1,3 +1,3 @@
-# Documentation
+# Table of Contents
 
 
