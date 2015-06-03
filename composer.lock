@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fa1cacedef962eafe34443fb72fc691a",
+    "hash": "11c747059c5b72d0124ef3fccc9d001c",
     "packages": [
         {
             "name": "behat/behat",
@@ -464,53 +464,6 @@
                 "zombie"
             ],
             "time": "2013-04-13 23:52:11"
-        },
-        {
-            "name": "covex-nn/phpcb",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/covex-nn/PHP_CodeBrowser.git",
-                "reference": "f03291ba267baaad3ec1a3cde87ccedaa0b9fa35"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/covex-nn/PHP_CodeBrowser/zipball/f03291ba267baaad3ec1a3cde87ccedaa0b9fa35",
-                "reference": "f03291ba267baaad3ec1a3cde87ccedaa0b9fa35",
-                "shasum": ""
-            },
-            "require": {
-                "phpunit/php-file-iterator": "~1.3",
-                "symfony/console": ">=2.2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "bin": [
-                "bin/phpcb"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-fork": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "src/"
-            ],
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "A code browser that augments the code with information from various QA tools.",
-            "abandoned": "mayflower/php-codebrowser",
-            "time": "2013-11-12 21:58:07"
         },
         {
             "name": "d11wtq/boris",
@@ -3178,8 +3131,7 @@
     "stability-flags": {
         "behat/mink": 0,
         "phploc/phploc": 20,
-        "sebastian/phpcpd": 20,
-        "covex-nn/phpcb": 20
+        "sebastian/phpcpd": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
