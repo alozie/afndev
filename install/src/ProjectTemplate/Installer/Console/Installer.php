@@ -278,11 +278,11 @@ class Installer extends Command {
     $this->fs->remove($this->newProjectDirectory.'/docs/readme.md');
 
     // Generate the TOC
-    $readme_contents = '# Table of Contents';
+    $readme_contents = '## Table of Contents';
 
     // Start out with creating entries for docs
     if (!empty($this->config['docs'])) {
-      $readme_contents .= "\n\n## Docs";
+      $readme_contents .= "\n\n### Docs";
       // Create a line per doc
       foreach ($this->config['docs'] as $doc => $description) {
         //* [Github](https://github.com/acquia-pso/PROJECT)
