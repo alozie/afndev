@@ -178,6 +178,7 @@ class Installer extends Command {
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
     $mirror_options = array('override' => TRUE);
+    $this->fs->remove($this->newProjectDirectory);
     $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
 
     $output->writeln('<info>Removing Project Templates git directory</info>');
@@ -242,6 +243,7 @@ class Installer extends Command {
       'force-complete' => NULL,
     );
     $build_path = "{$this->newProjectDirectory}/docroot";
+
     // Make sure that the build path does not exist before building.
     $this->remove($build_path);
     // Build custom make file.
@@ -250,9 +252,9 @@ class Installer extends Command {
     $output->writeln("<info>Building $make_file to $build_path...</info>");
     $this->drush('make', array($make_file, $build_path), $options);
 
-    // @todo We need to make it clear which make file was built in the new
-    // repository, perhaps by removing other make files or copying the used
-    // file into a new location.
+    // We deleted the docroot and rebuilt it, so we'll need to copy files from
+    // docroot/sites back into the new project.
+    $this->fs->mirror("{$this->currentProjectDirectory}/docroot/sites", "{$this->newProjectDirectory}/docroot/sites", NULL, array('override' => TRUE));
   }
 
   /**
@@ -323,7 +325,7 @@ class Installer extends Command {
     $vm_config['extra_apt_packages'] = [];
 
     // Write adjusted config.yml to disk.
-    $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config));
+    $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
 
     $output->writeln("<info>Drupal VM was installed to `{$this->config['project']['machine_name']}/box`.</info>");
   }
@@ -345,7 +347,6 @@ class Installer extends Command {
       return FALSE;
     }
 
-    // @todo Provide default behat profiles for dev and stg envs on ACE.
     // @todo Install behat runner module?
     $output->writeln("<info>Configuring Behat yml files...</info>");
     $behat_config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
@@ -355,7 +356,7 @@ class Installer extends Command {
     $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
 
     // Write adjusted config.yml to disk.
-    $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config));
+    $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config, 4, 2));
   }
 
   /**

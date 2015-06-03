@@ -17,6 +17,8 @@ class InstallerTest extends PHPUnit_Framework_TestCase
 
   public function testCreateProject() {
     $this->assertFileExists($this->newProjectDirectory);
+    $this->assertFileExists($this->newProjectDirectory . '/docroot/sites/all/drush');
+    $this->assertFileExists($this->newProjectDirectory . '/docroot/sites/all/settings');
   }
 
   public function testBuildMakeFile() {
@@ -24,8 +26,13 @@ class InstallerTest extends PHPUnit_Framework_TestCase
   }
 
   public function testInstallTestingFramework() {
-    // @todo Assert values insite of local.yml.
+    // Assert that a local.yml file was created in the new project.
     $this->assertFileExists($this->newProjectDirectory . '/tests/behat/local.yml');
+    $behat_config = Yaml::parse(file_get_contents("{$this->newProjectDirectory}/tests/behat/local.yml"));
+
+    // Assert that its values were modified to match values defined in
+    // project's config.yml file.
+    $this->assertEquals($behat_config['local']['extensions']['Behat\MinkExtension\Extension']['base_url'], $this->config['project']['local_url']);
   }
 
   public function testCleanUp() {
