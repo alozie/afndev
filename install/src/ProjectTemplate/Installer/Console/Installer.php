@@ -199,18 +199,18 @@ class Installer extends Command {
     $output->writeln('<info>Initializing new project documentation directory</info>');
 
     // Copy a clone of docs
-    $mirror_options = array('override' => TRUE);
-    $this->fs->mirror($this->newProjectDirectory . '/docs', $this->newProjectDirectory . '/docs-temp', NULL, $mirror_options);
+    $this->fs->mirror($this->newProjectDirectory . '/docs', $this->newProjectDirectory . '/docs-temp');
 
     // Empty directory, but leave for project-specific documentation needs
-    $this->fs->remove($this->newProjectDirectory . '/docs/*');
+    $this->fs->remove($this->newProjectDirectory . '/docs');
+    $this->fs->mkdir($this->newProjectDirectory . '/docs');
 
     // Install .git hooks into the new project.
     if (!empty($this->config['docs'])) {
       // Copy the desirable hooks
-      foreach ($this->config['docs'] as $doc) {
-        $output->writeln('<info>Copying doc '.$doc.'</info>');
-        $this->fs->copy($this->newProjectDirectory . '/docs-temp/'.$doc.'.md', $this->newProjectDirectory . '/.git/hooks/'.$doc.'.md', TRUE);
+      foreach ($this->config['docs'] as $doc => $description) {
+        $output->writeln('<info>Copying doc '.$description.'</info>');
+        $this->fs->copy($this->newProjectDirectory . '/docs-temp/'.$doc.'.md', $this->newProjectDirectory . '/docs/'.$doc.'.md', TRUE);
       }
     }
 

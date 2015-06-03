@@ -7,11 +7,10 @@ project:
 
 # staging the table of contents
 docs:
-  - developer-guide
-  - drupal-architecture-template
-  - readme
-  - os-contribution
-  - theming
+  developer-guide: 'Developer Guide'
+  drupal-architecture-template: 'Architecture Template'
+  os-contribution: 'Open Source Contribution Guidelines'
+  theming: 'Front End Handbook'
 
 vm:
   enable: true
