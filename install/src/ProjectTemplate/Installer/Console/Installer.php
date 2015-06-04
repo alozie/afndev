@@ -208,6 +208,10 @@ class Installer extends Command {
 
     $output->writeln('<info>Removing Project Templates git directory</info>');
     $this->remove($this->newProjectDirectory . '/.git');
+
+    // Replace project template readme with a project one
+    $output->writeln('<info>Creating project-specific onboarding readme</info>');
+    $this->fs->copy($this->newProjectDirectory . '/project.readme.md', $this->newProjectDirectory . '/readme.md', TRUE);
   }
 
   /**
@@ -473,6 +477,7 @@ class Installer extends Command {
             "{$this->newProjectDirectory}/install",
             "{$this->newProjectDirectory}/config.yml",
             "{$this->newProjectDirectory}/example.config.yml",
+            "{$this->newProjectDirectory}/project.readme.md",
           )
       );
   }
