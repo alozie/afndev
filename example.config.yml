@@ -8,6 +8,7 @@ project:
 vm:
   enable: true
   dir_name: 'box'
+  bootstrap: true
 
 git:
   hooks:

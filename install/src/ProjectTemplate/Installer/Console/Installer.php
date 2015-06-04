@@ -335,6 +335,55 @@ class Installer extends Command {
   }
 
   /**
+   * Load the VM on the host machine.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function bootstrapVm(InputInterface $input, OutputInterface $output) {
+
+    if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
+      $output->writeln('<info>Bootstrapping Drupal VM...</info>');
+
+      // Check for virtualbox
+      $output->writeln('<info>Checking for virtualbox</info>');
+      $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
+      if($result == '-bash: vboxmanage: command not found'){
+        $output->writeln('<info>Unmet dependency, please install virtualbox</info>');
+        return;
+      }
+
+      // Check for vagrant
+      $output->writeln('<info>Checking for vagrant</info>');
+      $result = strtolower($this->customCommand('vagrant', 'global-status'));
+      if($result == '-bash: vagrant: command not found'){
+        $output->writeln('<info>Unmet dependency, please install vagrant</info>');
+        return;
+      }
+
+      // Check for ansible
+      $output->writeln('<info>Checking for ansible</info>');
+      $result = strtolower($this->customCommand('ansible', '', array(), array('version')));
+      if($result == '-bash: ansible: command not found'){
+        $output->writeln('<info>Unmet dependency, please install ansible</info>');
+        return;
+      }
+
+      // Load ansible reqs
+      $output->writeln('<info>Loading ansible requirements, you will be prompted for your password</info>');
+      $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install'), array('role-file'=>$this->newProjectDirectory.'/box/provisioning/requirements.txt')));
+
+      // Load host manager
+      $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
+
+      // Run Vagrant up
+      //TO DO - RUN IN DIRECTORY
+      $result = strtolower($this->customCommand('vagrant', 'up', array(), array()));
+
+    }
+  }
+
+  /**
    * Install a testing framework for the new project.
    *
    * @param InputInterface $input
