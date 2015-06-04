@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace ProjectTemplate\Installer\Console;
 
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +20,9 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Github\Client;
-
+/**
+ *
+ */
 class Installer extends Command {
 
   /**
@@ -26,30 +32,35 @@ class Installer extends Command {
 
   /**
    * The current project directory path on the local machine.
+   *
    * @var string
    */
   public $currentProjectDirectory;
 
   /**
    * The new project directory path on the local machine.
+   *
    * @var string
    */
   public $newProjectDirectory;
 
   /**
    * An array of installation configuration options.
+   *
    * @var array
    */
   public $config;
 
   /**
    * The commandline input.
+   *
    * @var InputInterface
    */
   protected $input;
 
   /**
    * The commandline output.
+   *
    * @var OutputInterface
    */
   protected $output;
@@ -59,6 +70,7 @@ class Installer extends Command {
    * @param string|null $name
    */
   public function __construct(Filesystem $fs, $name = NULL) {
+
     parent::__construct($name);
     // Instantiate file system component.
     $this->fs = $fs;
@@ -74,19 +86,22 @@ class Installer extends Command {
    * @see http://symfony.com/doc/current/components/console/introduction.html#creating-a-basic-command
    */
   protected function configure() {
+
     $this
-      ->setName('install')
-      ->setDescription('Create a new project using the Acquia PS Project Template.')
-      ->addOption(
-        'overwrite',
-        null,
-        InputOption::VALUE_NONE,
-        'If set, the target directory will be overwritten without prompt')
-      ->addOption(
-        'temporary',
-        null,
-        InputOption::VALUE_NONE,
-        "If set, the project will be installed to the current repository's temp directory");
+            ->setName('install')
+            ->setDescription('Create a new project using the Acquia PS Project Template.')
+            ->addOption(
+              'overwrite',
+              NULL,
+              InputOption::VALUE_NONE,
+              'If set, the target directory will be overwritten without prompt'
+            )
+            ->addOption(
+              'temporary',
+              NULL,
+              InputOption::VALUE_NONE,
+              "If set, the project will be installed to the current repository's temp directory"
+            );
   }
 
   /**
@@ -94,6 +109,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function interact(InputInterface $input, OutputInterface $output) {
+
     // Store the input and output for use in other functions.
     $this->input = $input;
     $this->output = $output;
@@ -119,8 +135,8 @@ class Installer extends Command {
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
       if (!$overwrite_confirmed) {
         throw new \RuntimeException(
-            'Please choose another machine name.'
-        );
+              'Please choose another machine name.'
+          );
       }
     }
 
@@ -135,6 +151,7 @@ class Installer extends Command {
    * @throws \Symfony\Component\Filesystem\Exception\IOException
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
+
     $this->createProject($input, $output);
 
     // Download Drupal by executing makefile.
@@ -149,10 +166,10 @@ class Installer extends Command {
     // Clean up new project.
     $this->cleanUp($input, $output);
 
-    // Create table of contents
+    // Create table of contents.
     $this->initializeTableOfContents($input, $output);
 
-    // Initialize Git
+    // Initialize Git.
     $this->initializeGit($input, $output);
 
     // Display completion messages.
@@ -181,6 +198,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function createProject(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Copying Project Template into the new directory...</info>');
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
@@ -199,25 +217,26 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function initializeDocumentation(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Initializing new project documentation directory</info>');
 
-    // Copy a clone of docs
+    // Copy a clone of docs.
     $this->fs->mirror($this->newProjectDirectory . '/docs', $this->newProjectDirectory . '/docs-temp');
 
-    // Empty directory, but leave for project-specific documentation needs
+    // Empty directory, but leave for project-specific documentation needs.
     $this->fs->remove($this->newProjectDirectory . '/docs');
     $this->fs->mkdir($this->newProjectDirectory . '/docs');
 
     // Look for configured docs.
     if (!empty($this->config['docs'])) {
-      // Copy the defined documents
+      // Copy the defined documents.
       foreach ($this->config['docs'] as $doc => $description) {
-        $output->writeln('<info>Copying doc '.$description.'</info>');
-        $this->fs->copy($this->newProjectDirectory . '/docs-temp/'.$doc.'.md', $this->newProjectDirectory . '/docs/'.$doc.'.md', TRUE);
+        $output->writeln('<info>Copying doc ' . $description . '</info>');
+        $this->fs->copy($this->newProjectDirectory . '/docs-temp/' . $doc . '.md', $this->newProjectDirectory . '/docs/' . $doc . '.md', TRUE);
       }
     }
 
-    // Remove temp dir
+    // Remove temp dir.
     $this->fs->remove($this->newProjectDirectory . '/docs-temp');
 
   }
@@ -229,6 +248,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function initializeGit(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Initializing new project git repository</info>');
     $this->git("init", array($this->newProjectDirectory));
 
@@ -237,16 +257,16 @@ class Installer extends Command {
       $output->writeln('<info>Creating Git hooks directory</info>');
       $this->fs->mkdir($this->newProjectDirectory . '/.git/hooks');
 
-      // Copy the desirable hooks
+      // Copy the desirable hooks.
       foreach ($this->config['git']['hooks'] as $hook) {
-        $output->writeln('<info>Copying Git hook '.$hook.'</info>');
-        $this->fs->copy($this->currentProjectDirectory . '/git/hooks/'.$hook, $this->newProjectDirectory . '/.git/hooks/'.$hook, TRUE);
+        $output->writeln('<info>Copying Git hook ' . $hook . '</info>');
+        $this->fs->copy($this->currentProjectDirectory . '/git/hooks/' . $hook, $this->newProjectDirectory . '/.git/hooks/' . $hook, TRUE);
       }
     }
 
     // Load repositories.
     if (!empty($this->config['git']['remotes'])) {
-      foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
+      foreach ($this->config['git']['remotes'] as $remote_name => $remote_url) {
         $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
       }
     }
@@ -261,8 +281,9 @@ class Installer extends Command {
    * @param $url
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
+
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
-    $this->git("-C {$this->newProjectDirectory} remote add",  array($name, $url));
+    $this->git("-C {$this->newProjectDirectory} remote add", array($name, $url));
   }
 
   /**
@@ -272,26 +293,27 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function initializeTableOfContents(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Initializing new project-specific table of contents</info>');
 
-    // Clear out the readme
-    $this->fs->remove($this->newProjectDirectory.'/docs/readme.md');
+    // Clear out the readme.
+    $this->fs->remove($this->newProjectDirectory . '/docs/readme.md');
 
-    // Generate the TOC
+    // Generate the TOC.
     $readme_contents = '## Table of Contents';
 
-    // Start out with creating entries for docs
+    // Start out with creating entries for docs.
     if (!empty($this->config['docs'])) {
       $readme_contents .= "\n\n### Docs";
-      // Create a line per doc
+      // Create a line per doc.
       foreach ($this->config['docs'] as $doc => $description) {
-        //* [Github](https://github.com/acquia-pso/PROJECT)
-        $readme_contents .= "\n* [".$description."](docs/".$doc.".md)";
+        // * [Github](https://github.com/acquia-pso/PROJECT)
+        $readme_contents .= "\n* [" . $description . "](docs/" . $doc . ".md)";
       }
     }
 
-    // Write out contents
-    $this->fs->dumpFile($this->newProjectDirectory.'/docs/readme.md', $readme_contents);
+    // Write out contents.
+    $this->fs->dumpFile($this->newProjectDirectory . '/docs/readme.md', $readme_contents);
   }
 
   /**
@@ -303,6 +325,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function buildMakeFile(InputInterface $input, OutputInterface $output) {
+
     $options = array(
       'no-gitinfofile' => NULL,
       'concurrency' => 8,
@@ -333,15 +356,18 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function addVm(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Cloning Drupal VM from GitHub...</info>');
 
     // Add Drupal VM Vagrant box repository and then remove the .git files.
     $vm_dir = $this->config['vm']['dir_name'];
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
-    $this->git('clone', array(
-      "git@github.com:geerlingguy/drupal-vm.git",
-      "{$this->newProjectDirectory}/$vm_dir",
-    ));
+    $this->git(
+          'clone', array(
+            "git@github.com:geerlingguy/drupal-vm.git",
+            "{$this->newProjectDirectory}/$vm_dir",
+          )
+      );
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
@@ -356,6 +382,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function addVmConfig(InputInterface $input, OutputInterface $output) {
+
     $vm_dir = $this->config['vm']['dir_name'];
 
     // Load the example configuration file included with Drupal VM.
@@ -390,7 +417,7 @@ class Installer extends Command {
     $vm_config['drupal_enable_modules'] = [];
     $vm_config['extra_apt_packages'] = [];
 
-    // Do not execute subsequent drush make within the VM since files are in docroot
+    // Do not execute subsequent drush make within the VM since files are in docroot.
     $vm_config['build_makefile'] = FALSE;
     $vm_config['install_site'] = TRUE;
 
@@ -436,15 +463,18 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function cleanUp(InputInterface $input, OutputInterface $output) {
+
     $output->writeln("<info>Cleaning up install files...</info>");
 
     // Clean up files specific to installation process.
-    $this->remove(array(
-      "{$this->newProjectDirectory}/src/ProjectTemplate",
-      "{$this->newProjectDirectory}/install",
-      "{$this->newProjectDirectory}/config.yml",
-      "{$this->newProjectDirectory}/example.config.yml",
-    ));
+    $this->remove(
+          array(
+            "{$this->newProjectDirectory}/src/ProjectTemplate",
+            "{$this->newProjectDirectory}/install",
+            "{$this->newProjectDirectory}/config.yml",
+            "{$this->newProjectDirectory}/example.config.yml",
+          )
+      );
   }
 
   /**
@@ -454,6 +484,7 @@ class Installer extends Command {
    * @return mixed
    */
   protected function composer($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('composer', $command, $arguments, $options);
   }
 
@@ -464,6 +495,7 @@ class Installer extends Command {
    * @return mixed
    */
   protected function git($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('git', $command, $arguments, $options);
   }
 
@@ -474,24 +506,28 @@ class Installer extends Command {
    * @return mixed
    */
   protected function drush($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('drush', $command, $arguments, $options);
   }
 
   /**
    * @param string $command
    *   The binary to call. E.g., 'git'.
-   * @param array $arguments
+   * @param array $argumentsAn
+   *   array of arguments. E.g., 'pull origin/master'.
    *   An array of arguments. E.g., 'pull origin/master'.
-   * @param array $options
+   * @param array $optionsAn
+   *   array of options in one of the following formats:
    *   An array of options in one of the following formats:
-   *     array('bare' => NULL, 'tags' => 'smoke') will translate into
-   *     `--bare --tags=smoke`
+   *    array('bare' => NULL, 'tags' => 'smoke') will translate into
+   *    `--bare --tags=smoke`
    * @return mixed
    *   Returns the command output.
    *
    * @todo Replace this with a real implementation of Symfony command class.
    */
   protected function customCommand($binary, $command, array $arguments = array(), array $options = array()) {
+
     $arguments = implode(' ', $arguments);
     $string_options = '';
 
@@ -507,9 +543,11 @@ class Installer extends Command {
     $command = "$binary {$command} {$string_options} {$arguments}";
     $process = new Process($command);
     $process->setTimeout(3600);
-    $process->run(function ($type, $buffer) {
-      print $buffer;
-    });
+    $process->run(
+          function ($type, $buffer) {
+              print $buffer;
+          }
+      );
 
     if (!$process->isSuccessful()) {
       throw new \RuntimeException($process->getErrorOutput());
@@ -538,6 +576,7 @@ class Installer extends Command {
    * @return mixed
    */
   public function remove($files) {
+
     return $this->fs->remove($files);
   }
 
@@ -548,6 +587,7 @@ class Installer extends Command {
    * @return mixed
    */
   public function symlink($originDir, $targetDir, $copyOnWindows = FALSE) {
+
     return $this->fs->symlink($originDir, $targetDir, $copyOnWindows = FALSE);
   }
 
@@ -557,7 +597,9 @@ class Installer extends Command {
    * @param ProgressHelper $progress
    */
   protected function writeProgressMessage($message, $output) {
+
     $output->writeln('');
     $output->writeln($message);
   }
+
 }

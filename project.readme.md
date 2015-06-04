@@ -36,7 +36,6 @@ This document outlines technical onboarding for the PROJECT NAME project.
 ## Development Prerequisites
 
 ### Environment
-* Mac OS X 10.9.x (Mavericks)
 * VirtualBox [download](https://www.virtualbox.org/wiki/Downloads)
 * Vagrant [download](http://www.vagrantup.com/downloads.html)
 * Ansible [download](http://docs.ansible.com/intro_installation.html)
