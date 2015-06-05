@@ -279,8 +279,8 @@ class Installer extends Command {
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
+    $this->bootstrapVm($input, $output);
 
-    // @todo Initialize the new vagrant machine.
   }
 
   /**
@@ -348,7 +348,7 @@ class Installer extends Command {
       // Check for virtualbox
       $output->writeln('<info>Checking for virtualbox</info>');
       $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
-      if($result == '-bash: vboxmanage: command not found'){
+      if ($result == '-bash: vboxmanage: command not found') {
         $output->writeln('<info>Unmet dependency, please install virtualbox</info>');
         return;
       }
@@ -356,29 +356,34 @@ class Installer extends Command {
       // Check for vagrant
       $output->writeln('<info>Checking for vagrant</info>');
       $result = strtolower($this->customCommand('vagrant', 'global-status'));
-      if($result == '-bash: vagrant: command not found'){
+      if ($result == '-bash: vagrant: command not found') {
         $output->writeln('<info>Unmet dependency, please install vagrant</info>');
         return;
       }
 
       // Check for ansible
       $output->writeln('<info>Checking for ansible</info>');
-      $result = strtolower($this->customCommand('ansible', '', array(), array('version')));
-      if($result == '-bash: ansible: command not found'){
+      $result = strtolower($this->customCommand('ansible', '--version'));
+      if ($result == '-bash: ansible: command not found') {
         $output->writeln('<info>Unmet dependency, please install ansible</info>');
         return;
       }
 
-      // Load ansible reqs
-      $output->writeln('<info>Loading ansible requirements, you will be prompted for your password</info>');
-      $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install'), array('role-file'=>$this->newProjectDirectory.'/box/provisioning/requirements.txt')));
+      if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
+        // Load ansible reqs
+        $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
+        $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
+        $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
+      }
+
 
       // Load host manager
+      $output->writeln('<info>Loading host manager</info>');
       $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
 
-      // Run Vagrant up
-      //TO DO - RUN IN DIRECTORY
-      $result = strtolower($this->customCommand('vagrant', 'up', array(), array()));
+      // Run Vagrant up from VM dir
+      $output->writeln('<info>Bootstrapping VM</info>');
+      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . ' && vagrant up )', ''));
 
     }
   }

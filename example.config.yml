@@ -8,7 +8,10 @@ project:
 vm:
   enable: true
   dir_name: 'box'
+  # This bootstraps the virtual machine.
   bootstrap: true
+  # This loads the necessary ansible requirements. May interfere with other VMs
+  rebuild_requirements: true
 
 git:
   hooks:
