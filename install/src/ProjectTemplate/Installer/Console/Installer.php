@@ -88,20 +88,18 @@ class Installer extends Command {
   protected function configure() {
 
     $this
-            ->setName('install')
-            ->setDescription('Create a new project using the Acquia PS Project Template.')
-            ->addOption(
-              'overwrite',
-              NULL,
-              InputOption::VALUE_NONE,
-              'If set, the target directory will be overwritten without prompt'
-            )
-            ->addOption(
-              'temporary',
-              NULL,
-              InputOption::VALUE_NONE,
-              "If set, the project will be installed to the current repository's temp directory"
-            );
+      ->setName('install')
+      ->setDescription('Create a new project using the Acquia PS Project Template.')
+      ->addOption(
+        'overwrite',
+        NULL,
+        InputOption::VALUE_NONE,
+        'If set, the target directory will be overwritten without prompt')
+      ->addOption(
+        'temporary',
+        NULL,
+        InputOption::VALUE_NONE,
+        "If set, the project will be installed to the current repository's temp directory");
   }
 
   /**
@@ -375,8 +373,8 @@ class Installer extends Command {
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
+    $this->bootstrapVm($input, $output);
 
-    // @todo Initialize the new vagrant machine.
   }
 
   /**
@@ -429,6 +427,59 @@ class Installer extends Command {
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
 
     $output->writeln("<info>Drupal VM was installed to `{$this->config['project']['machine_name']}/box`.</info>");
+  }
+
+  /**
+   * Load the VM on the host machine.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function bootstrapVm(InputInterface $input, OutputInterface $output) {
+
+    if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
+      $output->writeln('<info>Bootstrapping Drupal VM...</info>');
+
+      // Check for virtualbox.
+      $output->writeln('<info>Checking for virtualbox</info>');
+      $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
+      if ($result == '-bash: vboxmanage: command not found') {
+        $output->writeln('<info>Unmet dependency, please install virtualbox</info>');
+        return;
+      }
+
+      // Check for vagrant.
+      $output->writeln('<info>Checking for vagrant</info>');
+      $result = strtolower($this->customCommand('vagrant', 'global-status'));
+      if ($result == '-bash: vagrant: command not found') {
+        $output->writeln('<info>Unmet dependency, please install vagrant</info>');
+        return;
+      }
+
+      // Check for ansible.
+      $output->writeln('<info>Checking for ansible</info>');
+      $result = strtolower($this->customCommand('ansible', '--version'));
+      if ($result == '-bash: ansible: command not found') {
+        $output->writeln('<info>Unmet dependency, please install ansible</info>');
+        return;
+      }
+
+      if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
+        // Load ansible reqs.
+        $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
+        $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
+        $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
+      }
+
+      // Load host manager.
+      $output->writeln('<info>Loading host manager</info>');
+      $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
+
+      // Run Vagrant up from VM dir.
+      $output->writeln('<info>Bootstrapping VM</info>');
+      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . ' && vagrant up )', ''));
+
+    }
   }
 
   /**
