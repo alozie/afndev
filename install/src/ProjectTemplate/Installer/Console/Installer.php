@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace ProjectTemplate\Installer\Console;
 
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +20,9 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Github\Client;
-
+/**
+ *
+ */
 class Installer extends Command {
 
   /**
@@ -26,30 +32,35 @@ class Installer extends Command {
 
   /**
    * The current project directory path on the local machine.
+   *
    * @var string
    */
   public $currentProjectDirectory;
 
   /**
    * The new project directory path on the local machine.
+   *
    * @var string
    */
   public $newProjectDirectory;
 
   /**
    * An array of installation configuration options.
+   *
    * @var array
    */
   public $config;
 
   /**
    * The commandline input.
+   *
    * @var InputInterface
    */
   protected $input;
 
   /**
    * The commandline output.
+   *
    * @var OutputInterface
    */
   protected $output;
@@ -79,12 +90,12 @@ class Installer extends Command {
       ->setDescription('Create a new project using the Acquia PS Project Template.')
       ->addOption(
         'overwrite',
-        null,
+        NULL,
         InputOption::VALUE_NONE,
         'If set, the target directory will be overwritten without prompt')
       ->addOption(
         'temporary',
-        null,
+        NULL,
         InputOption::VALUE_NONE,
         "If set, the project will be installed to the current repository's temp directory");
   }
@@ -145,7 +156,7 @@ class Installer extends Command {
     // Clean up new project.
     $this->cleanUp($input, $output);
 
-    // Initialize Git
+    // Initialize Git.
     $this->initializeGit($input, $output);
 
     // Display completion messages.
@@ -200,16 +211,16 @@ class Installer extends Command {
       $output->writeln('<info>Creating Git hooks directory</info>');
       $this->fs->mkdir($this->newProjectDirectory . '/.git/hooks');
 
-      // Copy the desirable hooks
+      // Copy the desirable hooks.
       foreach ($this->config['git']['hooks'] as $hook) {
-        $output->writeln('<info>Copying Git hook '.$hook.'</info>');
-        $this->fs->copy($this->currentProjectDirectory . '/git/hooks/'.$hook, $this->newProjectDirectory . '/.git/hooks/'.$hook, TRUE);
+        $output->writeln('<info>Copying Git hook ' . $hook . '</info>');
+        $this->fs->copy($this->currentProjectDirectory . '/git/hooks/' . $hook, $this->newProjectDirectory . '/.git/hooks/' . $hook, TRUE);
       }
     }
 
     // Load repositories.
     if (!empty($this->config['git']['remotes'])) {
-      foreach ($this->config['git']['remotes'] as $remote_name=>$remote_url) {
+      foreach ($this->config['git']['remotes'] as $remote_name => $remote_url) {
         $this->addRemoteRepository($input, $output, $remote_name, $remote_url);
       }
     }
@@ -225,7 +236,7 @@ class Installer extends Command {
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
-    $this->git("-C {$this->newProjectDirectory} remote add",  array($name, $url));
+    $this->git("-C {$this->newProjectDirectory} remote add", array($name, $url));
   }
 
   /**
@@ -324,7 +335,7 @@ class Installer extends Command {
     $vm_config['drupal_enable_modules'] = [];
     $vm_config['extra_apt_packages'] = [];
 
-    // Do not execute subsequent drush make within the VM since files are in docroot
+    // Do not execute subsequent drush make within the VM since files are in docroot.
     $vm_config['build_makefile'] = FALSE;
     $vm_config['install_site'] = TRUE;
 
@@ -345,7 +356,7 @@ class Installer extends Command {
     if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
       $output->writeln('<info>Bootstrapping Drupal VM...</info>');
 
-      // Check for virtualbox
+      // Check for virtualbox.
       $output->writeln('<info>Checking for virtualbox</info>');
       $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
       if ($result == '-bash: vboxmanage: command not found') {
@@ -353,7 +364,7 @@ class Installer extends Command {
         return;
       }
 
-      // Check for vagrant
+      // Check for vagrant.
       $output->writeln('<info>Checking for vagrant</info>');
       $result = strtolower($this->customCommand('vagrant', 'global-status'));
       if ($result == '-bash: vagrant: command not found') {
@@ -361,7 +372,7 @@ class Installer extends Command {
         return;
       }
 
-      // Check for ansible
+      // Check for ansible.
       $output->writeln('<info>Checking for ansible</info>');
       $result = strtolower($this->customCommand('ansible', '--version'));
       if ($result == '-bash: ansible: command not found') {
@@ -370,18 +381,17 @@ class Installer extends Command {
       }
 
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
-        // Load ansible reqs
+        // Load ansible reqs.
         $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
         $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
         $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
       }
 
-
-      // Load host manager
+      // Load host manager.
       $output->writeln('<info>Loading host manager</info>');
       $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
 
-      // Run Vagrant up from VM dir
+      // Run Vagrant up from VM dir.
       $output->writeln('<info>Bootstrapping VM</info>');
       $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . ' && vagrant up )', ''));
 
@@ -548,4 +558,5 @@ class Installer extends Command {
     $output->writeln('');
     $output->writeln($message);
   }
+
 }
