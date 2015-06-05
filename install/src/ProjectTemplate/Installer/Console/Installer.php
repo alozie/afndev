@@ -70,6 +70,7 @@ class Installer extends Command {
    * @param string|null $name
    */
   public function __construct(Filesystem $fs, $name = NULL) {
+
     parent::__construct($name);
     // Instantiate file system component.
     $this->fs = $fs;
@@ -85,6 +86,7 @@ class Installer extends Command {
    * @see http://symfony.com/doc/current/components/console/introduction.html#creating-a-basic-command
    */
   protected function configure() {
+
     $this
       ->setName('install')
       ->setDescription('Create a new project using the Acquia PS Project Template.')
@@ -105,6 +107,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function interact(InputInterface $input, OutputInterface $output) {
+
     // Store the input and output for use in other functions.
     $this->input = $input;
     $this->output = $output;
@@ -130,8 +133,8 @@ class Installer extends Command {
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
       if (!$overwrite_confirmed) {
         throw new \RuntimeException(
-            'Please choose another machine name.'
-        );
+              'Please choose another machine name.'
+          );
       }
     }
 
@@ -146,15 +149,23 @@ class Installer extends Command {
    * @throws \Symfony\Component\Filesystem\Exception\IOException
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
+
     $this->createProject($input, $output);
 
     // Download Drupal by executing makefile.
     $this->buildMakeFile($input, $output);
 
+    // Set up testing framework(s).
     $this->installTestingFramework($input, $output);
+
+    // Configure documentation.
+    $this->initializeDocumentation($input, $output);
 
     // Clean up new project.
     $this->cleanUp($input, $output);
+
+    // Create table of contents.
+    $this->initializeTableOfContents($input, $output);
 
     // Initialize Git.
     $this->initializeGit($input, $output);
@@ -185,6 +196,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function createProject(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Copying Project Template into the new directory...</info>');
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
@@ -194,6 +206,41 @@ class Installer extends Command {
 
     $output->writeln('<info>Removing Project Templates git directory</info>');
     $this->remove($this->newProjectDirectory . '/.git');
+
+    // Replace project template readme with a project one
+    $output->writeln('<info>Creating project-specific onboarding readme</info>');
+    $this->fs->copy($this->newProjectDirectory . '/project.readme.md', $this->newProjectDirectory . '/readme.md', TRUE);
+  }
+
+  /**
+   * Performs the actions needed to set up the project's documentation.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function initializeDocumentation(InputInterface $input, OutputInterface $output) {
+
+    $output->writeln('<info>Initializing new project documentation directory</info>');
+
+    // Copy a clone of docs.
+    $this->fs->mirror($this->newProjectDirectory . '/docs', $this->newProjectDirectory . '/docs-temp');
+
+    // Empty directory, but leave for project-specific documentation needs.
+    $this->fs->remove($this->newProjectDirectory . '/docs');
+    $this->fs->mkdir($this->newProjectDirectory . '/docs');
+
+    // Look for configured docs.
+    if (!empty($this->config['docs'])) {
+      // Copy the defined documents.
+      foreach ($this->config['docs'] as $doc => $description) {
+        $output->writeln('<info>Copying doc ' . $description . '</info>');
+        $this->fs->copy($this->newProjectDirectory . '/docs-temp/' . $doc . '.md', $this->newProjectDirectory . '/docs/' . $doc . '.md', TRUE);
+      }
+    }
+
+    // Remove temp dir.
+    $this->fs->remove($this->newProjectDirectory . '/docs-temp');
+
   }
 
   /**
@@ -203,6 +250,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function initializeGit(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Initializing new project git repository</info>');
     $this->git("init", array($this->newProjectDirectory));
 
@@ -235,8 +283,39 @@ class Installer extends Command {
    * @param $url
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
+
     $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
     $this->git("-C {$this->newProjectDirectory} remote add", array($name, $url));
+  }
+
+  /**
+   * Generates table of contents.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function initializeTableOfContents(InputInterface $input, OutputInterface $output) {
+
+    $output->writeln('<info>Initializing new project-specific table of contents</info>');
+
+    // Clear out the readme.
+    $this->fs->remove($this->newProjectDirectory . '/docs/readme.md');
+
+    // Generate the TOC.
+    $readme_contents = '## Table of Contents';
+
+    // Start out with creating entries for docs.
+    if (!empty($this->config['docs'])) {
+      $readme_contents .= "\n\n### Docs";
+      // Create a line per doc.
+      foreach ($this->config['docs'] as $doc => $description) {
+        // * [Github](https://github.com/acquia-pso/PROJECT)
+        $readme_contents .= "\n* [" . $description . "](docs/" . $doc . ".md)";
+      }
+    }
+
+    // Write out contents.
+    $this->fs->dumpFile($this->newProjectDirectory . '/docs/readme.md', $readme_contents);
   }
 
   /**
@@ -248,6 +327,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function buildMakeFile(InputInterface $input, OutputInterface $output) {
+
     $options = array(
       'no-gitinfofile' => NULL,
       'concurrency' => 8,
@@ -278,15 +358,18 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function addVm(InputInterface $input, OutputInterface $output) {
+
     $output->writeln('<info>Cloning Drupal VM from GitHub...</info>');
 
     // Add Drupal VM Vagrant box repository and then remove the .git files.
     $vm_dir = $this->config['vm']['dir_name'];
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
-    $this->git('clone', array(
-      "git@github.com:geerlingguy/drupal-vm.git",
-      "{$this->newProjectDirectory}/$vm_dir",
-    ));
+    $this->git(
+          'clone', array(
+            "git@github.com:geerlingguy/drupal-vm.git",
+            "{$this->newProjectDirectory}/$vm_dir",
+          )
+      );
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
@@ -301,6 +384,7 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function addVmConfig(InputInterface $input, OutputInterface $output) {
+
     $vm_dir = $this->config['vm']['dir_name'];
 
     // Load the example configuration file included with Drupal VM.
@@ -434,15 +518,19 @@ class Installer extends Command {
    * @param OutputInterface $output
    */
   protected function cleanUp(InputInterface $input, OutputInterface $output) {
+
     $output->writeln("<info>Cleaning up install files...</info>");
 
     // Clean up files specific to installation process.
-    $this->remove(array(
-      "{$this->newProjectDirectory}/src/ProjectTemplate",
-      "{$this->newProjectDirectory}/install",
-      "{$this->newProjectDirectory}/config.yml",
-      "{$this->newProjectDirectory}/example.config.yml",
-    ));
+    $this->remove(
+          array(
+            "{$this->newProjectDirectory}/src/ProjectTemplate",
+            "{$this->newProjectDirectory}/install",
+            "{$this->newProjectDirectory}/config.yml",
+            "{$this->newProjectDirectory}/example.config.yml",
+            "{$this->newProjectDirectory}/project.readme.md",
+          )
+      );
   }
 
   /**
@@ -452,6 +540,7 @@ class Installer extends Command {
    * @return mixed
    */
   protected function composer($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('composer', $command, $arguments, $options);
   }
 
@@ -462,6 +551,7 @@ class Installer extends Command {
    * @return mixed
    */
   protected function git($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('git', $command, $arguments, $options);
   }
 
@@ -472,24 +562,28 @@ class Installer extends Command {
    * @return mixed
    */
   protected function drush($command, array $arguments = array(), array $options = array()) {
+
     $this->customCommand('drush', $command, $arguments, $options);
   }
 
   /**
    * @param string $command
    *   The binary to call. E.g., 'git'.
-   * @param array $arguments
+   * @param array $argumentsAn
+   *   array of arguments. E.g., 'pull origin/master'.
    *   An array of arguments. E.g., 'pull origin/master'.
-   * @param array $options
+   * @param array $optionsAn
+   *   array of options in one of the following formats:
    *   An array of options in one of the following formats:
-   *     array('bare' => NULL, 'tags' => 'smoke') will translate into
-   *     `--bare --tags=smoke`
+   *    array('bare' => NULL, 'tags' => 'smoke') will translate into
+   *    `--bare --tags=smoke`
    * @return mixed
    *   Returns the command output.
    *
    * @todo Replace this with a real implementation of Symfony command class.
    */
   protected function customCommand($binary, $command, array $arguments = array(), array $options = array()) {
+
     $arguments = implode(' ', $arguments);
     $string_options = '';
 
@@ -505,9 +599,11 @@ class Installer extends Command {
     $command = "$binary {$command} {$string_options} {$arguments}";
     $process = new Process($command);
     $process->setTimeout(3600);
-    $process->run(function ($type, $buffer) {
-      print $buffer;
-    });
+    $process->run(
+          function ($type, $buffer) {
+              print $buffer;
+          }
+      );
 
     if (!$process->isSuccessful()) {
       throw new \RuntimeException($process->getErrorOutput());
@@ -536,6 +632,7 @@ class Installer extends Command {
    * @return mixed
    */
   public function remove($files) {
+
     return $this->fs->remove($files);
   }
 
@@ -546,6 +643,7 @@ class Installer extends Command {
    * @return mixed
    */
   public function symlink($originDir, $targetDir, $copyOnWindows = FALSE) {
+
     return $this->fs->symlink($originDir, $targetDir, $copyOnWindows = FALSE);
   }
 
@@ -555,6 +653,7 @@ class Installer extends Command {
    * @param ProgressHelper $progress
    */
   protected function writeProgressMessage($message, $output) {
+
     $output->writeln('');
     $output->writeln($message);
   }
