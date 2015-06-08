@@ -17,7 +17,7 @@ This directory should not contain any test files. Those exist in the
   * `.travis.yml`
   * `composer.json`
   * `install/composer.json`
-  * `build/travis/travis.config.yml`, which is copied to `config.yml` by Travis CI
+  * `build/travis/travis.config.yml`, which is copied to `config.yml` by Phing
 1. The phing `build` target is executed, causing Project Template to run its
   installer and create a new project in `tmp/ps_project`. Drupal is installed
   to the MySQL DB. Notable files involved include:
