@@ -20,8 +20,11 @@
   <resolvepath propertyName="repo.root" file="${repo.root.relative}"/>
 
   <!-- @todo Make this value dynamic based on travis.config.yml -->
+  <property name="installed-project.root"
+            value="${repo.root}/tmp/ps_project"
+            override="true"/>
   <property name="docroot"
-            value="${repo.root}/tmp/ps_project/docroot"
+            value="${installed-project.root}/docroot"
             override="true"/>
   <property name="drupal.profile"
             value="standard"
@@ -63,7 +66,7 @@
             value="${phing.project.name}.aliases.drushrc.php"
             override="true"/>
   <property name="behat.config"
-            value="${repo.root}/tmp/ps_project/tests/behat/local.yml"/>
+            value="${installed-project.root}/tests/behat/local.yml"/>
   <property name="behat.profile"
             value="local"/>
   <property name="phantomjs.bin"
@@ -151,7 +154,7 @@
           depends="validate:lint, validate:phpcs, validate:phpmd"/>
 
   <target name="test:all" description="Runs all tests against Drupal."
-          depends="test:security-updates, test:behat"/>
+          depends="test:security-updates, test:behat, test:phpunit"/>
 
   <target name="git-reset"
           description="Cleanup build artifacts">
@@ -276,7 +279,7 @@
   <!-- Execute PHPUnit tests. -->
   <target name="test:phpunit"
           description="Checks an installed site for security updates on modules">
-    <exec dir="${docroot}/tests/phpunit"
+    <exec dir="${installed-project.root}/tests/phpunit"
           command="phpunit ./*"
           logoutput="true"
           checkreturn="true"/>

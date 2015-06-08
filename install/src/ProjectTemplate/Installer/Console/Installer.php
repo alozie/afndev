@@ -526,7 +526,6 @@ class Installer extends Command {
           array(
             "{$this->newProjectDirectory}/src/ProjectTemplate",
             "{$this->newProjectDirectory}/install",
-            "{$this->newProjectDirectory}/config.yml",
             "{$this->newProjectDirectory}/example.config.yml",
             "{$this->newProjectDirectory}/project.readme.md",
           )
