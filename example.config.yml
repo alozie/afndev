@@ -34,7 +34,7 @@ testing_framework:
   javascript_driver: 'selenium2'
   # javascript_driver: 'Selenium2 / Phantom.js'
 
-# These map to /conf/settings/[key].settings.php partials.
+# These map to /docroot/sites/all/settings/[key].settings.php partials.
 starter_settings:
   enable: true
   akamai: true
