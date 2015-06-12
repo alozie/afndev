@@ -1,0 +1,125 @@
+<?php
+/**
+ * @file
+ * Examples on how to implement common theming patterns.
+ */
+
+
+/**
+ * Implements hook_theme().
+ */
+function acquia_examples_theme($existing, $type, $theme, $path) {
+  if ($type == 'module') {
+    return array(
+      // This example uses a template structure. We pass the template a render array and this render array is processed by the template.
+      'acquia_examples_example_pane' => array(
+        'render element' => 'content',
+        'template' => 'acquia-examples-example-pane',
+        'path' => drupal_get_path('module', 'acquia_examples') . '/templates',
+      ),
+    );
+  }
+  return array();
+}
+
+/*
+ * Implements hook_ctools_plugin_directory.
+ *
+ * This tells ctools to look for layouts and panels (content types) inside the plugins folder.
+ */
+function acquia_examples_ctools_plugin_directory($module, $plugin_type) {
+  if (in_array($module, array('ctools', 'panels')) && !empty($plugin_type)) {
+    return "plugins/$plugin_type";
+  }
+}
+
+/**
+ * Implements hook_library().
+ */
+function acquia_examples_library() {
+
+  $libraries['example_library'] = array(
+    'title' => 'Example Library',
+    'website' => 'http://www.example.com/exampleLibrary',
+    'version' => '1.0',
+    'js' => array(
+      drupal_get_path('module', 'acquia_examples') . '/js/example_library.js' => array(
+        'type' => 'file',
+        'scope' => 'header',
+        'group' => JS_LIBRARY,
+        // This tells the system that this will be on every page and influences aggregation.
+        'every_page' => TRUE,
+        // This tells the system to aggregate this js.
+        'preprocess' => TRUE,
+      ),
+    )
+  );
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function acquia_examples_block_info() {
+  $blocks['acquia_examples_block'] = array(
+    'info' => t('Acquia Examples Block'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * This will only apply to the one block.
+ */
+function acquia_examples_block_view($delta = '') {
+  $block = array();
+
+  if ($delta === 'acquia_examples_block') {
+    $block['subject'] = t('Example Block');
+    $block['content'] = array(
+      '#type' => 'markup',
+      '#markup' => t('hello world'),
+      '#attached' => array(
+        'js' => array(
+          // Module file.
+          drupal_get_path('module', 'acquia_examples') . '/js/acquia_examples.js',
+          // External file.
+          'http://example.com/other_library.js' => array(
+            'type' => 'external',
+          ),
+          // Add a setting.
+          array(
+            'type' => 'setting',
+            'data' => array(
+              'acquiaExamples' => array('Example Setting from Block'),
+            ),
+          ),
+        ),
+        'library' => array(
+          array('acquia_examples', 'example_library'),
+        ),
+      ),
+    );
+  }
+
+  return $block;
+}
+
+/**
+ * Implements hook_preprocess_hook().
+ *
+ * This will run on every page.
+ */
+function acquia_examples_preprocess_page(&$variables) {
+  // Add a library.
+  drupal_add_library('acquia_examples', 'example_library');
+
+  // Add a JS file.
+  drupal_add_js(drupal_get_path('module', 'acquia_examples') . '/js/acquia_examples.js');
+
+  // Add a variable that will be available as Drupal.settings.acquiaExamples.
+  // Because the setting is an array, it will be combined with the block in hook_block_view() used in this module.
+  drupal_add_js(array('acquiaExamples' => array('Example Setting from Page')), 'setting');
+
+}
