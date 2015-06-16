@@ -4,7 +4,7 @@ Author: Grant Gaudet
 
 ### Purpose
 
-This cloud hook posts a notification to Slack chat room after a code delpoyment
+This cloud hook posts a notification to Slack chat room after a code deployment
 has been performed on Acquia Cloud.
 
 ### Example Scenario
