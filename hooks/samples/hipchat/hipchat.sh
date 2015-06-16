@@ -17,10 +17,10 @@ deployed_tag="$4"
 repo_url="$5"
 repo_type="$6"
 
-# Load the Slack webhook URL (which is not stored in this repo).
+# Load the HipChat webhook URL (which is not stored in this repo).
 . $HOME/hipchat_settings
 
-# Post deployment notice to Slack
+# Post deployment notice to HipChat
 
 if [ "$source_branch" != "$deployed_tag" ]; then
   curl --header "content-type: application/json" --header "Authorization: Bearer $AUTH_TOKEN" -X POST \

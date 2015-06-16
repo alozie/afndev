@@ -17,8 +17,8 @@ has been performed on Acquia Cloud.
 Installation Steps (assumes HipChat subscription setup and Acquia Cloud Hooks installed in repo):
 
 * See the API documentation at https://www.hipchat.com/docs/apiv2 and https://www.hipchat.com/docs/apiv2/method/send_room_notification
-* Visit https://YOURCOMPANY.hipchat.com/rooms/tokens/{ROOM_ID} create your notification token `AUTH_TOKEN`.
-* Store the AUTH_TOKEN and the ROOM_ID in `$HOME/slack_settings` file on your Acquia Cloud Server (see hipchat_settings file).
+* Visit https://YOURCOMPANY.hipchat.com/rooms/tokens/ROOM_ID create your notification token `AUTH_TOKEN`.
+* Store the AUTH_TOKEN and the ROOM_ID in `$HOME/hipchat_settings` file on your Acquia Cloud Server (see hipchat_settings file).
 * Set the execution bit to on e.g. `chmod a+x hipchat_settings`
 * Add `hipchat.sh` to dev, test, prod or common __post-cody-deploy__ hook.
 
