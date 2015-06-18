@@ -2,13 +2,20 @@ imports:
   - behat.yml
 
 local:
-  context:
-    parameters:
-      environment:
-      # absolute path to local directory to store screenshots - do not include trailing slash
-        screenshot_dir: '/Users/username/Desktop/test'
+  suites:
+    default:
+      contexts:
+        - FeatureContext:
+          parameters:
+            environment:
+              # absolute path to local directory to store screenshots - do not include trailing slash
+              screenshot_dir: '/Users/username/Desktop/test'
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
   extensions:
-    Behat\MinkExtension\Extension:
+    Behat\MinkExtension:
       javascript_session: selenium2
       # configure the base url for your site
       base_url: 'http://project-template.localhost'
@@ -43,7 +50,7 @@ local:
       selenium2:
         wd_host: http://127.0.0.1:4444/wd/hub
         browser: chrome
-    Drupal\DrupalExtension\Extension:
+    Drupal\DrupalExtension:
       drupal:
         # This must be an absolute path.
         drupal_root: "/my/project/repo"

@@ -1,19 +1,21 @@
 <?php
-use Drupal\DrupalExtension\Context\DrupalContext,
+use Drupal\DrupalExtension\Context\RawDrupalContext,
     Drupal\DrupalExtension\Event\EntityEvent,
     Drupal\Component\Utility\Random;
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Context\Step,
     Behat\Behat\Context\Step\Given,
+    Behat\Behat\Tester\Exception\PendingException,
+    Behat\Behat\Context\SnippetAcceptingContext,
     Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
-class FeatureContext extends DrupalContext {
+class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext {
   /**
    * @var $output
    *   Command line output.
    */
   protected $output;
-  public function __construct(array $parameters) {
+  public function __construct() {
     // Initiliaze subcontexts.
     // $this->useContext('OgContext', new OgContext($parameters));
   }

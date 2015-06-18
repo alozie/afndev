@@ -1,12 +1,20 @@
 default:
-  paths:
-    features: 'features'
+  suites:
+    default:
+      paths:
+        - %paths.base%/features
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
   extensions:
-    Behat\MinkExtension\Extension:
+    Behat\MinkExtension:
       default_session: goutte
       javascript_session: selenium2
       goutte: ~
-      files_path: "%behat.paths.base%/media"
-    Drupal\DrupalExtension\Extension:
+      files_path: "%paths.base%/media"
+    Drupal\DrupalExtension:
       blackbox: ~
       api_driver: "drupal"

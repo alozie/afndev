@@ -503,9 +503,9 @@ class Installer extends Command {
     $output->writeln("<info>Configuring Behat yml files...</info>");
     $behat_config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
 
-    $behat_config['local']['extensions']['Drupal\DrupalExtension\Extension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
-    $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['base_url'] = $this->config['project']['local_url'];
-    $behat_config['local']['extensions']['Behat\MinkExtension\Extension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
+    $behat_config['local']['extensions']['Drupal\DrupalExtension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
+    $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'] = $this->config['project']['local_url'];
+    $behat_config['local']['extensions']['Behat\MinkExtension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config, 4, 2));

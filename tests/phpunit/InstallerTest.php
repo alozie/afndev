@@ -32,7 +32,7 @@ class InstallerTest extends PHPUnit_Framework_TestCase
 
     // Assert that its values were modified to match values defined in
     // project's config.yml file.
-    $this->assertEquals($behat_config['local']['extensions']['Behat\MinkExtension\Extension']['base_url'], $this->config['project']['local_url']);
+    $this->assertEquals($behat_config['local']['extensions']['Behat\MinkExtension']['base_url'], $this->config['project']['local_url']);
   }
 
   public function testCleanUp() {
