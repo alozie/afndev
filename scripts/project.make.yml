@@ -8,7 +8,7 @@ defaults:
 projects:
   drupal:
     type: core
-    version: 7.36
+    version: 7.38
     patch:
       # Files displayed by default setting not respected.
       # https://www.drupal.org/node/1520716#comment-6456630
@@ -39,16 +39,16 @@ projects:
     version: 2.5
 
   memcache:
-    version: 1.0
+    version: 1.5
 
   security_review:
-    version: 1.1
+    version: 1.2
 
   stage_file_proxy:
-    version: 1.6
+    version: 1.7
 
   transliteration:
-    version: 3.1
+    version: 3.2
 
   views:
-    version: 3.8
+    version: 3.11

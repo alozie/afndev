@@ -50,6 +50,9 @@ before_script:
   # Create Database
   - mysql -e 'CREATE DATABASE travis_ci_pt;'
 
+  # Clear drush release history cache, to pick up new releases.
+  - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
+
   # Build the codebase
   - phing -f build/phing/build.xml build
 
