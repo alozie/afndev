@@ -8,16 +8,16 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
       $conf['cache'] = TRUE;
 
       // When using varnish, set cache_lifetime to 0.
-      // @See https://backlog.acquia.com/browse/NN-7868 and
+      // @see https://backlog.acquia.com/browse/NN-7868 and
       // https://confluence.acquia.com/display/support/Caching+Bible
       // Setting this to 0 allows direct cache clears to clear caches that
       // have not yet reached expiration.
-      // Sites with large amounts of content creation/edits could benifit from
+      // Sites with large amounts of content creation/edits could benefit from
       // setting this to a non-zero value as it impacts the block cache as well.
       $conf['cache_lifetime'] = 0;
 
-      // Set default cache expiration to 30 minutes.
-      $conf['page_cache_maximum_age'] = 1800;
+      // Set default cache expiration to 6 hrs.
+      $conf['page_cache_maximum_age'] = 21600;
 
       $conf['block_cache'] = TRUE;
       // Allows Block to be cached on sites with hook_node_grant() implementations

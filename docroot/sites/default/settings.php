@@ -566,6 +566,32 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  */
 # $conf['allow_authorize_operations'] = FALSE;
 
-// @todo Set this to the proper Acquia subscription.
+// Set this to the proper Acquia subscription. Subsequent includes rely
+// upon this variable being set correctly.
+// @todo Set $ac_domain via value in config.yml.
 $ac_domain = 'default_example';
+
+// Includes required Acquia configuration and set $base_url correctly.
 require_once DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
+
+// Includes default caching settings.
+require_once DRUPAL_ROOT . '/sites/all/settings/cache.settings.php';
+
+// Includes default cron configuration.
+require_once DRUPAL_ROOT . '/sites/all/settings/cron.settings.php';
+
+// Includes configuration for public and private file systems, composer_manager.
+require_once DRUPAL_ROOT . '/sites/all/settings/files.settings.php';
+
+// Includes configuration useful for running automated tests.
+require_once DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
+
+// Includes settings for using a CDN. See include file for config details.
+// require_once DRUPAL_ROOT . '/sites/all/settings/cdn.settings.php';
+
+// Include settings for having a separate "edit domain" for authenticated
+// traffic. Requires setting additioanl configuration within include file.
+// require_once DRUPAL_ROOT . '/sites/all/settings/edit-domain.settings.php';
+
+// Includes functions for protecting a site via ip, password, etc.
+// require_once DRUPAL_ROOT . '/sites/all/settings/site-protection.settings.php';
