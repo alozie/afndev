@@ -52,8 +52,10 @@ This document outlines technical onboarding for the PROJECT NAME project.
 * Use of branches and pull requests
 
 ### Installing VM
+Make sure to set up your environment first. You should successfully install VirtualBox, Vagrant via the download links above.
+* Run either `brew install ansible` (if you have homebrew) or `sudo pip install ansible`(if you have pip)
 * Run `vagrant plugin install vagrant-hostsupdater`
-* Run `sudo ansible-galaxy install -r requirements.txt` from box directory
+* Run `sudo ansible-galaxy install -r provisioning/requirements.txt` from box directory
 * Run `vagrant up` from box directory
 
 ### Development Workflow
