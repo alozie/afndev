@@ -173,12 +173,7 @@ class Installer extends Command {
     // Display completion messages.
     $output->writeln("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>");
 
-    if ($this->config['starter_settings']['enable']) {
-      // @todo Modify settings.php to include this. Also include other partials.
-      $output->writeln("<info>Please include {$this->config['project']['machine_name']}/sites/all/settings/base.settings.php in your settings.php file.</info>");
-    }
-
-    if ($this->config['vm']['enable']) {
+    if ($this->config['vm']) {
       $this->addVm($input, $output);
       $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
       // @todo Automatically install role dependencies if Ansible is installed.
@@ -493,7 +488,7 @@ class Installer extends Command {
    */
   protected function installTestingFramework(InputInterface $input, OutputInterface $output) {
 
-    if (!$this->config['testing_framework']['enable']) {
+    if (!$this->config['testing_framework']) {
       $this->remove("{$this->newProjectDirectory}/tests");
 
       return FALSE;
@@ -505,7 +500,7 @@ class Installer extends Command {
 
     $behat_config['local']['extensions']['Drupal\DrupalExtension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
     $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'] = $this->config['project']['local_url'];
-    $behat_config['local']['extensions']['Behat\MinkExtension']['javascript_session'] = $this->config['testing_framework']['javascript_driver'];
+    $behat_config['local']['extensions']['Behat\MinkExtension']['javascript_session'] = $this->config['testing_framework']['behat']['javascript_driver'];
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config, 4, 2));

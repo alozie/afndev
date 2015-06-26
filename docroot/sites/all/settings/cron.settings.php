@@ -1,6 +1,6 @@
 <?php
 
-// Disable acquia_spi.
+// Disable acquia_spi by default.
 $conf['acquia_spi_use_cron'] = FALSE;
 
 // If we're in the Acquia Cloud, require setting and set up a few variables.

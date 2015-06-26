@@ -12,10 +12,10 @@ The project template has an installer which will do the following:
 
 From this repository's root directory:
 
-  1. Copy `example.config.yml` to `config.yml` and configure the settings for your project.
-     `cp example.config.yml config.yml`
-  2. Run `composer install --working-dir=install` from the root directory
-  3. Run `php bin/project-template-installer install` to create your project.
+  1. Run `cp example.config.yml config.yml` to create your configuration file.
+  1. Modify `config.yml` with values for your new project.
+  1. Run `composer install --working-dir=install` from the root directory
+  1. Run `php bin/project-template-installer install` to create your project.
 
 ## Under the hood
 

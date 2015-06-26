@@ -1,38 +1,53 @@
 project:
+  # Will determine directory name for new repo.
   machine_name: 'ps_project'
   human_name: 'PS Project'
   local_url: 'drupal.dev'
-  # Located in /scripts/make.
+  # The machine name of your subscription on Acquia Cloud. E.g., if your dev
+  # env URL on Acquia Cloud is http://psprojectdev.prod.acquia-sites.com/
+  # then your acquia_subname is "psproject". This value is used to correctly
+  # configure settings in settings.php includes.
+  acquia_subname: 'psproject'
+  # Located in /scripts/make. Will be used to build Drupal dependencies.
   make_file: 'project.make.yml'
 
-# staging the table of contents
+# The following documents will be copied into the new repository. Comment-out
+# any line to prevent it from being copied.
 docs:
   developer-guide: 'Developer Guide'
   drupal-architecture-template: 'Architecture Template'
   os-contribution: 'Open Source Contribution Guidelines'
   theming: 'Front End Handbook'
 
+# Configuration for the Ansible Drupal VM. To prevent inclusion on a vm, remove
+# the "vm" key.
 vm:
-  enable: true
   dir_name: 'box'
-  # This bootstraps the virtual machine.
+  # This provisions and launches the virtual machine. Note that dependencies
+  # (vagrant, ansible, virtual box) must be installed for this work.
   bootstrap: true
-  # This loads the necessary ansible requirements. May interfere with other VMs
+  # This loads the necessary ansible requirements.
   rebuild_requirements: true
 
+# Configuration settings for new git repository.
 git:
+  # These git hooks will be installed in .git/hooks.
   hooks:
     - commit-msg
     - pre-commit
+  # The following remotes will be configured. You must replace the bracketed
+  # values below. They are not tokenized.
   remotes:
     origin: 'git@github.com:[user]/[project].git'
     upstream: 'git@github.com:acquia-pso/[project].git'
     acquia: '[project-user]@[project-host].prod.hosting.acquia.com:[project-name].git'
 
+# The testing framework is limited to the `tests` directory, and includes
+# example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
+# this from being copied, remove the 'testing_framework' key.
 testing_framework:
-  enable: true
-  javascript_driver: 'selenium2'
-  # javascript_driver: 'Selenium2 / Phantom.js'
+  behat:
+    javascript_driver: 'selenium2'
 
 # These map to /docroot/sites/all/settings/[key].settings.php partials.
 starter_settings:
