@@ -452,11 +452,14 @@ class Installer extends Command {
       }
 
       // Check for ansible.
-      $output->writeln('<info>Checking for ansible</info>');
-      $result = strtolower($this->customCommand('ansible', '--version'));
-      if ($result == '-bash: ansible: command not found') {
+      try{
+        $output->writeln('<info>Checking for ansible</info>');
+        $this->customCommand('ansible', '--version');
+      }
+
+     catch (\RuntimeException $re) {
         $output->writeln('<info>Unmet dependency, please install ansible</info>');
-        return;
+        exit(1);
       }
 
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
