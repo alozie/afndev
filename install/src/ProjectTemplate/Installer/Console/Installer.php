@@ -79,7 +79,8 @@ class Installer extends Command {
     $this->currentProjectDirectory = realpath(dirname(__FILE__) . '/../../../../../');
 
     // Load default configuration from config.yml.
-    $this->config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
+    $parser = new Parser();
+    $this->config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
   }
 
   /**
@@ -383,7 +384,8 @@ class Installer extends Command {
     $vm_dir = $this->config['vm']['dir_name'];
 
     // Load the example configuration file included with Drupal VM.
-    $vm_config = Yaml::parse(file_get_contents("{$this->newProjectDirectory}/$vm_dir/example.config.yml"));
+    $parser = new Parser();
+    $vm_config = $parser->parse(file_get_contents("{$this->newProjectDirectory}/$vm_dir/example.config.yml"));
 
     // Add the scripts directory to synced folders list.
     $vm_config['vagrant_synced_folders'][] = array(
@@ -502,7 +504,9 @@ class Installer extends Command {
 
     // @todo Install behat runner module?
     $output->writeln("<info>Configuring Behat yml files...</info>");
-    $behat_config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
+
+    $parser = new Parser();
+    $behat_config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
 
     $behat_config['local']['extensions']['Drupal\DrupalExtension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
     $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'] = $this->config['project']['local_url'];
