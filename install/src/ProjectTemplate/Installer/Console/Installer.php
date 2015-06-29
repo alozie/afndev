@@ -408,7 +408,7 @@ class Installer extends Command {
     $make_file = $this->config['project']['make_file'];
     $vm_config['drush_makefile_path'] = '/scripts/' . $make_file;
     // Remove makefile extension.
-    $vm_config['drupal_install_profile'] = preg_replace('(\.make|\.yml)', '', $make_file);
+    $vm_config['drupal_install_profile'] = $this->config['install_profile'];
 
     // Update other important settings.
     $vm_config['drupal_enable_modules'] = [];

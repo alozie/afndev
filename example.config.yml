@@ -10,6 +10,8 @@ project:
   acquia_subname: 'psproject'
   # Located in /scripts/make. Will be used to build Drupal dependencies.
   make_file: 'project.make.yml'
+  # Please ensure your profile is also in your make file.
+  install_profile: 'standard'
 
 # The following documents will be copied into the new repository. Comment-out
 # any line to prevent it from being copied.
