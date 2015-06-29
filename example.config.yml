@@ -30,6 +30,7 @@ vm:
   bootstrap: true
   # This loads the necessary ansible requirements.
   rebuild_requirements: true
+  drush_version: 6.6.0
 
 # Configuration settings for new git repository.
 git:

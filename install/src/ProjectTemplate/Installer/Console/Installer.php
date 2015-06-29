@@ -418,6 +418,9 @@ class Installer extends Command {
     $vm_config['build_makefile'] = FALSE;
     $vm_config['install_site'] = TRUE;
 
+    // Set the installed version of drush
+    $vm_config['drush_version'] = $this->config['vm']['drush_version'];
+
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
 
