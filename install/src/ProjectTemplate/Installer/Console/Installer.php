@@ -279,7 +279,7 @@ class Installer extends Command {
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
 
-    $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
+    $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output);
     $this->git("-C {$this->newProjectDirectory} remote add", array($name, $url));
   }
 
