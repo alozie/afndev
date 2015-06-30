@@ -11,6 +11,7 @@ docroot/sites/*/private
 # Ignore build artifacts
 bin/*
 tmp
+install/bin
 
 # Local testing config
 tests/behat/local.yml

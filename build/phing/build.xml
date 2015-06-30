@@ -21,7 +21,7 @@
 
   <!-- @todo Make this value dynamic based on travis.config.yml -->
   <property name="installed-project.root"
-            value="${repo.root}/tmp/ps_project"
+            value="${repo.root}/tmp/psproject"
             override="true"/>
   <property name="docroot"
             value="${installed-project.root}/docroot"
@@ -58,6 +58,7 @@
 
   <!-- Drush, Composer & Behat -->
   <property name="composer.bin" value="${repo.root}/bin"/>
+  <property name="installed-project.composer.bin" value="${installed-project.root}/bin"/>
   <property name="drush.bin" value="${composer.bin}/drush" override="true"/>
   <property name="drush.root" value="${docroot}"/>
   <property name="drush.source" value="@${phing.project.name}.dev"
@@ -280,7 +281,7 @@
   <target name="test:phpunit"
           description="Checks an installed site for security updates on modules">
     <exec dir="${installed-project.root}/tests/phpunit"
-          command="phpunit ./*"
+          command="${installed-project.composer.bin}/phpunit ./*"
           logoutput="true"
           checkreturn="true"/>
   </target>
@@ -288,7 +289,7 @@
   <!-- Configure the project template installer. -->
   <target name="configure-pt-installer"
           description="Generates config.yml file for installer to use.">
-    <exec command="cp build/travis/travis.config.yml config.yml"
+    <exec command="cp example.config.yml config.yml"
           dir="${repo.root}"
           logoutput="true"
           checkreturn="true" />

@@ -10,9 +10,6 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.drush/cache
 
-env:
-  - COMPOSER_BIN_DIR=$TRAVIS_BUILD_DIR/bin'
-
 notifications:
   email:
     - matthew.grasmick@acquia.com

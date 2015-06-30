@@ -12,7 +12,7 @@ class InstallerTest extends PHPUnit_Framework_TestCase
   public function __construct() {
     $this->currentProjectDirectory = realpath(dirname(__FILE__) . '/../../');
     $this->config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
-    $this->newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
+    $this->newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['acquia_subname'];
   }
 
   public function testCreateProject() {
