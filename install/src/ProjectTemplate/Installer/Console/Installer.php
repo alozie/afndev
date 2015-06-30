@@ -408,8 +408,9 @@ class Installer extends Command {
     $vm_config['vagrant_synced_folders'][0]['destination'] = $mount_point;
 
     // Update domain configuration.
-    $vm_config['vagrant_hostname'] = $this->config['project']['local_url'];
-    $vm_config['drupal_domain'] = $this->config['project']['local_url'];
+    $local_url = parse_url($this->config['project']['local_url']);
+    $vm_config['vagrant_hostname'] = $local_url['host'];
+    $vm_config['drupal_domain'] = $local_url['host'];
     $vm_config['drupal_site_name'] = $this->config['project']['human_name'];
     $vm_config['drupal_core_path'] = $mount_point . '/docroot';
     $vm_config['drupal_major_version'] = $this->config['vm']['drupal_major_version'];
@@ -460,6 +461,8 @@ class Installer extends Command {
         if ($parsed_version[0]!='4' and $parsed_version[1]!='3') {
           $output->writeln('<info>Unmet dependency, please upgrade virtualbox to version 4.3.x</info>');
           return;
+        } else {
+          $output->writeln('<info>Virtualbox version is currently supported.</info>');
         }
       }
 
@@ -470,11 +473,14 @@ class Installer extends Command {
         $output->writeln('<info>Unmet dependency, please install vagrant 1.7.2 or higher</info>');
         return;
       } else {
-        $parsed_version = explode(".", array_pop(explode(' ', $result)));
+        $parsed_version = explode(' ', $result);
+        $parsed_version = explode(".", $parsed_version[1]);
         // Check major and minor version.
         if ($parsed_version[0]!='1' and $parsed_version[1]!='7' and intval($parsed_version[2])>2) {
           $output->writeln('<info>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</info>');
           return;
+        } else {
+          $output->writeln('<info>Vagrant version is currently supported.</info>');
         }
       }
 
@@ -484,11 +490,14 @@ class Installer extends Command {
         $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</info>');
         return;
       } else {
-        $parsed_version = explode(".", array_pop(explode(' ', $result)));
+        $parsed_version = explode(' ', $result);
+        $parsed_version = explode(".", $parsed_version[1]);
         // Check major and minor version.
         if ($parsed_version[0]!='1' and $parsed_version[1]!='9' and intval($parsed_version[2])>2) {
           $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</info>');
           return;
+        } else {
+          $output->writeln('<info>Ansible version is currently supported.</info>');
         }
       }
 
