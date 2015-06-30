@@ -1,0 +1,6 @@
+name = Acquia Examples - Panel Layout
+description = Example showing how to make a panel layout
+core = 7.x
+package = Acquia Professional Services Examples
+dependencies[] = ctools
+dependencies[] = panels

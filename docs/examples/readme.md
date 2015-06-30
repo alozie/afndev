@@ -1,0 +1,14 @@
+# Introduction
+The purpose of these examples is to provide a starting point for common custom development tasks. There are many ways to approach implementing features in Drupal and these examples show some common solutions.
+
+These modules are working examples. It's recommended that you copy the module and test that it works and then begin to modify the files to fit your need.
+
+_NOTICE: ctools is particularly fussy. If you rename or delete installed plugins, you will likely need to empty the `cache` table manually and then run `drush cc all` to rebuild the tables. If you don't do this, you may encounter white-screens and errors._
+
+## Modules
+These example modules demonstrate how to create and theme custom components including panels. This also demonstrates how to work with javascript, libraries, and other assets.
+
+## Themes
+The theming examples focus on the theme build process and foundational structure of the theme. There are many ways to approach frontend theming. For now, the examples do not assume any particular approach to creating the CSS or Javascript or particular markdown.
+
+As such, this is NOT a base theme. This is intended as a structure to get a project started using common build process tools.
