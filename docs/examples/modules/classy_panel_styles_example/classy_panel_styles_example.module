@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function classy_panel_styles_example_ctools_plugin_api($owner, $api) {
+  if ($owner == 'classy_panel_styles' && $api == 'classy_panel_styles') {
+    return array('version' => 1);
+  }
+}

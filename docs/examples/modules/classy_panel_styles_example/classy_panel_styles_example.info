@@ -1,0 +1,6 @@
+name = Acquia Examples - Classy Panel Styles
+description = Example showing how to save classy panel styles
+core = 7.x
+package = Acquia Professional Services Examples
+dependencies[] = ctools
+dependencies[] = classy_panel_styles
