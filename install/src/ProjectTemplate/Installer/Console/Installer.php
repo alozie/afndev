@@ -365,7 +365,7 @@ class Installer extends Command {
     // Add Drupal VM Vagrant box repository and then remove the .git files.
     $vm_dir = $this->config['vm']['dir_name'];
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
-    // We are intentionally pinning to a specific release for stability. 
+    // We are intentionally pinning to a specific release for stability.
     $this->git(
           'clone', array(
             '1.9.4',
@@ -418,7 +418,7 @@ class Installer extends Command {
     $make_file = $this->config['project']['make_file'];
     $vm_config['drush_makefile_path'] = '/scripts/' . $make_file;
     // Remove makefile extension.
-    $vm_config['drupal_install_profile'] = $this->config['install_profile'];
+    $vm_config['drupal_install_profile'] = $this->config['project']['install_profile'];
 
     // Update other important settings.
     $vm_config['drupal_enable_modules'] = [];
