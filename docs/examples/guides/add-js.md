@@ -1,9 +1,7 @@
 # Javascript in Drupal
 
 ## References
-- acquia_examples.module
-- js/acquia_examples.js
-- js/example_library.js
+- modules/add_js_example/add_js_example.module
 
 ## Quick Overview
 To add javascript in Drupal, we recommend the use of `#attached` in render arrays when javascript is associated with specific content like blocks and panels. See `acquia_examples_block_view()`.

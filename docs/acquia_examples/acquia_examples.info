@@ -1,6 +1,0 @@
-name = Acquia Examples
-description = Example code for Professional Services projects
-core = 7.x
-package = Acquia Professional Services
-dependencies[] = ctools
-dependencies[] = panels

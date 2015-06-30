@@ -1,0 +1,4 @@
+name = Acquia Examples - Add Javascript
+description = Example showing how to add javascript and libraries
+core = 7.x
+package = Acquia Professional Services Examples

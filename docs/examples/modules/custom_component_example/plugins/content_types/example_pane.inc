@@ -17,11 +17,11 @@ $plugin = array(
  *
  * @see ctools_content_render()
  */
-function acquia_examples_example_pane_content_type_render($subtype, $conf, $panel_args, $context) {
+function custom_component_example_example_pane_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
 
   $block->content = array(
-    '#theme' => 'acquia_examples_example_pane',
+    '#theme' => 'custom_component_example_example_pane',
   );
 
   if (isset($conf['description'])) {
@@ -72,7 +72,7 @@ function acquia_examples_example_pane_content_type_render($subtype, $conf, $pane
 /**
  * Returns an edit form for a entity.
  */
-function acquia_examples_example_pane_content_type_edit_form($form, &$form_state) {
+function custom_component_example_example_pane_content_type_edit_form($form, &$form_state) {
   $conf = $form_state['conf'];
 
   if (isset($conf['image'])) {
@@ -136,7 +136,7 @@ function acquia_examples_example_pane_content_type_edit_form($form, &$form_state
     '#required' => TRUE,
   );
 
-  $form['#validate'][] = 'acquia_examples_example_pane_content_type_edit_form_validate';
+  $form['#validate'][] = 'custom_component_example_example_pane_content_type_edit_form_validate';
 
   return $form;
 }
@@ -144,7 +144,7 @@ function acquia_examples_example_pane_content_type_edit_form($form, &$form_state
 /**
  * Save magazine pane.
  */
-function acquia_examples_example_pane_content_type_edit_form_submit(&$form, &$form_state) {
+function custom_component_example_example_pane_content_type_edit_form_submit(&$form, &$form_state) {
   global $user;
 
   // Upload and save image.
@@ -191,7 +191,7 @@ function acquia_examples_example_pane_content_type_edit_form_submit(&$form, &$fo
  * @param $form
  * @param $form_state
  */
-function acquia_examples_example_pane_content_type_edit_form_validate(&$form, &$form_state) {
+function custom_component_example_example_pane_content_type_edit_form_validate(&$form, &$form_state) {
 
 }
 
@@ -200,6 +200,6 @@ function acquia_examples_example_pane_content_type_edit_form_validate(&$form, &$
  *
  * Returns the administrative title for a type.
  */
-function acquia_examples_example_pane_content_type_admin_title($entity_type, $conf, $contexts) {
+function custom_component_example_example_pane_content_type_admin_title($entity_type, $conf, $contexts) {
   return t('Example Pane: @name', array('@name' => $conf['name']));
 }
