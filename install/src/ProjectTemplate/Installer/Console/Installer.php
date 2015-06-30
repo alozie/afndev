@@ -365,9 +365,10 @@ class Installer extends Command {
     // Add Drupal VM Vagrant box repository and then remove the .git files.
     $vm_dir = $this->config['vm']['dir_name'];
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
+    // We are intentionally pinning to a specific release for stability. 
     $this->git(
           'clone', array(
-            '1.9.3',
+            '1.9.4',
             "git@github.com:geerlingguy/drupal-vm.git",
             "{$this->newProjectDirectory}/$vm_dir",
           ),
