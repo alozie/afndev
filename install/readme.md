@@ -8,6 +8,13 @@ The project template has an installer which will do the following:
 * Include custom settings in settings.php
 * Remove installation artifacts
 
+## Prerequisites
+  1. Install the latest version of VirtualBox.  Make sure that you have at least
+     4.3.28. 
+  1. Install the latest version of Vagrant. 
+  1. If you are on OSX or Linux install ansible.  
+     Run either `brew install ansible` (if you have homebrew) or `sudo pip install ansible`(if you have pip)
+
 ## Installation
 
 From this repository's root directory:

@@ -79,7 +79,8 @@ class Installer extends Command {
     $this->currentProjectDirectory = realpath(dirname(__FILE__) . '/../../../../../');
 
     // Load default configuration from config.yml.
-    $this->config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
+    $parser = new Parser();
+    $this->config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/config.yml"));
   }
 
   /**
@@ -279,7 +280,7 @@ class Installer extends Command {
    */
   protected function addRemoteRepository(InputInterface $input, OutputInterface $output, $name, $url) {
 
-    $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output, $this->progress);
+    $this->writeProgressMessage("<info>Adding remote repository {$name}.</info>", $output);
     $this->git("-C {$this->newProjectDirectory} remote add", array($name, $url));
   }
 
@@ -383,7 +384,8 @@ class Installer extends Command {
     $vm_dir = $this->config['vm']['dir_name'];
 
     // Load the example configuration file included with Drupal VM.
-    $vm_config = Yaml::parse(file_get_contents("{$this->newProjectDirectory}/$vm_dir/example.config.yml"));
+    $parser = new Parser();
+    $vm_config = $parser->parse(file_get_contents("{$this->newProjectDirectory}/$vm_dir/example.config.yml"));
 
     // Add the scripts directory to synced folders list.
     $vm_config['vagrant_synced_folders'][] = array(
@@ -408,7 +410,7 @@ class Installer extends Command {
     $make_file = $this->config['project']['make_file'];
     $vm_config['drush_makefile_path'] = '/scripts/' . $make_file;
     // Remove makefile extension.
-    $vm_config['drupal_install_profile'] = preg_replace('(\.make|\.yml)', '', $make_file);
+    $vm_config['drupal_install_profile'] = $this->config['install_profile'];
 
     // Update other important settings.
     $vm_config['drupal_enable_modules'] = [];
@@ -417,6 +419,9 @@ class Installer extends Command {
     // Do not execute subsequent drush make within the VM since files are in docroot.
     $vm_config['build_makefile'] = FALSE;
     $vm_config['install_site'] = TRUE;
+
+    // Set the installed version of drush
+    $vm_config['drush_version'] = $this->config['vm']['drush_version'];
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
@@ -452,11 +457,14 @@ class Installer extends Command {
       }
 
       // Check for ansible.
-      $output->writeln('<info>Checking for ansible</info>');
-      $result = strtolower($this->customCommand('ansible', '--version'));
-      if ($result == '-bash: ansible: command not found') {
+      try{
+        $output->writeln('<info>Checking for ansible</info>');
+        $this->customCommand('ansible', '--version');
+      }
+
+     catch (\RuntimeException $re) {
         $output->writeln('<info>Unmet dependency, please install ansible</info>');
-        return;
+        exit(1);
       }
 
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
@@ -496,7 +504,9 @@ class Installer extends Command {
 
     // @todo Install behat runner module?
     $output->writeln("<info>Configuring Behat yml files...</info>");
-    $behat_config = Yaml::parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
+
+    $parser = new Parser();
+    $behat_config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
 
     $behat_config['local']['extensions']['Drupal\DrupalExtension']['drupal']['drupal_root'] = "{$this->newProjectDirectory}/docroot";
     $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'] = $this->config['project']['local_url'];
