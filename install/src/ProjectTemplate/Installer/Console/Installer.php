@@ -164,9 +164,6 @@ class Installer extends Command {
     // Configure documentation.
     $this->initializeDocumentation($input, $output);
 
-    // Clean up new project.
-    $this->cleanUp($input, $output);
-
     // Create table of contents.
     $this->initializeTableOfContents($input, $output);
 
@@ -181,6 +178,11 @@ class Installer extends Command {
       $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
       // @todo Automatically install role dependencies if Ansible is installed.
     }
+
+    $this->installComposerDependencies();
+
+    // Clean up new project.
+    $this->cleanUp($input, $output);
   }
 
   /**
@@ -519,6 +521,13 @@ class Installer extends Command {
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config, 4, 2));
+  }
+
+  /**
+   * Install composer dependencies in new project directory.
+   */
+  protected function installComposerDependencies() {
+    $this->composer('install', array(), array('working-dir' => $this->newProjectDirectory));
   }
 
   /**
