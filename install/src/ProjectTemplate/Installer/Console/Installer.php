@@ -415,6 +415,10 @@ class Installer extends Command {
     $vm_config['drupal_core_path'] = $mount_point;
     $vm_config['drupal_major_version'] = $this->config['vm']['drupal_major_version'];
 
+    // Set apache vhosts by project, not to DrupalVM default.
+    $vm_config['apache_vhosts'][1]['servername'] = 'xhprof.' . $local_url['host'];
+    $vm_config['apache_vhosts'][2]['servername'] = 'pimpmylog.' . $local_url['host'];
+
     // Update the path to make file.
     $make_file = $this->config['project']['make_file'];
     $vm_config['drush_makefile_path'] = '/scripts/' . $make_file;
