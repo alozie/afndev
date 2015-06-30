@@ -448,35 +448,52 @@ class Installer extends Command {
     if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
       $output->writeln('<info>Bootstrapping Drupal VM...</info>');
 
-      // Check for virtualbox.
+      // Check for virtualbox version 4.3.x.
       $output->writeln('<info>Checking for virtualbox</info>');
-      $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
+      $result = strtolower($this->customCommand('VBoxManage', '-v', array()));
       if ($result == '-bash: vboxmanage: command not found') {
-        $output->writeln('<info>Unmet dependency, please install virtualbox</info>');
+        $output->writeln('<info>Unmet dependency, please install virtualbox 4.3.x</info>');
         return;
+      } else {
+        $parsed_version = explode(".", $result);
+        // Check major and minor version.
+        if ($parsed_version[0]!='4' and $parsed_version[1]!='3') {
+          $output->writeln('<info>Unmet dependency, please upgrade virtualbox to version 4.3.x</info>');
+          return;
+        }
       }
 
-      // Check for vagrant.
+      // Check for vagrant 1.7.2 or higher.
       $output->writeln('<info>Checking for vagrant</info>');
-      $result = strtolower($this->customCommand('vagrant', 'global-status'));
+      $result = strtolower($this->customCommand('vagrant', '-v'));
       if ($result == '-bash: vagrant: command not found') {
-        $output->writeln('<info>Unmet dependency, please install vagrant</info>');
+        $output->writeln('<info>Unmet dependency, please install vagrant 1.7.2 or higher</info>');
         return;
+      } else {
+        $parsed_version = explode(".", array_pop(explode(' ', $result)));
+        // Check major and minor version.
+        if ($parsed_version[0]!='1' and $parsed_version[1]!='7' and intval($parsed_version[2])>2) {
+          $output->writeln('<info>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</info>');
+          return;
+        }
       }
 
-      // Check for ansible.
-      try{
-        $output->writeln('<info>Checking for ansible</info>');
-        $this->customCommand('ansible', '--version');
+      // Check for ansible version 1.9.2 or higher.
+      $result = strtolower($this->customCommand('ansible', '--version'));
+      if ($result == '-bash: ansible: command not found') {
+        $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</info>');
+        return;
+      } else {
+        $parsed_version = explode(".", array_pop(explode(' ', $result)));
+        // Check major and minor version.
+        if ($parsed_version[0]!='1' and $parsed_version[1]!='9' and intval($parsed_version[2])>2) {
+          $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</info>');
+          return;
+        }
       }
 
-     catch (\RuntimeException $re) {
-        $output->writeln('<info>Unmet dependency, please install ansible</info>');
-        exit(1);
-      }
-
+      // Load ansible reqs.
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
-        // Load ansible reqs.
         $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
         $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
         $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
