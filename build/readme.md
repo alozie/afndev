@@ -17,15 +17,25 @@ This directory should not contain any test files. Those exist in the
   * `.travis.yml`
   * `composer.json`
   * `install/composer.json`
-  * `build/travis/travis.config.yml`, which is copied to `config.yml` by Phing
+  * `example.config.yml`, which is copied to `config.yml` by Phing
 1. The phing `build` target is executed, causing Project Template to run its
-  installer and create a new project in `tmp/ps_project`. Drupal is installed
+  installer and create a new project in `tmp/psproject`. Drupal is installed
   to the MySQL DB. Notable files involved include:
   * `config.yml` created from the previous step
   * `build/phing/build.xml`
 1. The phing `run-tests` target is executed, which runs various validations 
   tools to verify that the code meets PHP and Drupal coding standards. Notable 
   files involved include:
-  * `tests/behat/example.local.yml` which is copied to `tmp/ps_project/tests/behat/local.yml` by the installer
+  * `tests/behat/example.local.yml` which is copied to `tmp/psproject/tests/behat/local.yml` by the installer
   * All tests located in `tests`
   * `build/phing/build.xml`
+
+## Troubleshooting
+
+### Phing
+
+To manually test a phing target, run the following commands:
+````
+composer install
+./bin/phing -f build/phing/build.xml run-pt-installer
+````

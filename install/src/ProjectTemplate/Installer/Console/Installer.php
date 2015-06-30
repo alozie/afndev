@@ -120,11 +120,13 @@ class Installer extends Command {
     // via continuous integration, where access outside of project repo is
     // restricted.
     if ($input->getOption('temporary')) {
-      $newProjectDirectory = $this->currentProjectDirectory . '/tmp/' . $this->config['project']['machine_name'];
+      $newProjectDirectory = $this->currentProjectDirectory . '/tmp/' . $this->config['project']['acquia_subname'];
+      $output->writeln("<info>Removing {$newProjectDirectory}</info>");
+      $this->fs->remove($this->newProjectDirectory);
     }
     // Otherwise, make the new project a sibling of the current repo dir.
     else {
-      $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['machine_name'];
+      $newProjectDirectory = dirname($this->currentProjectDirectory) . '/' . $this->config['project']['acquia_subname'];
     }
 
     // Check if the proposed directory already exists.
@@ -134,7 +136,7 @@ class Installer extends Command {
       $overwrite_confirmed = $helper->ask($input, $output, $confirm_overwrite);
       if (!$overwrite_confirmed) {
         throw new \RuntimeException(
-              'Please choose another machine name.'
+              'Please choose another acquia_subname value in config.yml.'
           );
       }
     }
@@ -162,9 +164,6 @@ class Installer extends Command {
     // Configure documentation.
     $this->initializeDocumentation($input, $output);
 
-    // Clean up new project.
-    $this->cleanUp($input, $output);
-
     // Create table of contents.
     $this->initializeTableOfContents($input, $output);
 
@@ -179,6 +178,11 @@ class Installer extends Command {
       $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
       // @todo Automatically install role dependencies if Ansible is installed.
     }
+
+    $this->installComposerDependencies();
+
+    // Clean up new project.
+    $this->cleanUp($input, $output);
   }
 
   /**
@@ -193,15 +197,14 @@ class Installer extends Command {
    */
   protected function createProject(InputInterface $input, OutputInterface $output) {
 
-    $output->writeln('<info>Copying Project Template into the new directory...</info>');
+    $output->writeln("<info>Cloning Project Template into {$this->newProjectDirectory}</info>");
 
     // Clone Acquia's PSO Project Template repository and then remove the .git files.
-    $mirror_options = array('override' => TRUE);
     $this->fs->remove($this->newProjectDirectory);
-    $this->fs->mirror($this->currentProjectDirectory, $this->newProjectDirectory, NULL, $mirror_options);
-
-    $output->writeln('<info>Removing Project Templates git directory</info>');
-    $this->remove($this->newProjectDirectory . '/.git');
+    $this->fs->mkdir($this->newProjectDirectory);
+    // Extract repository files (without .git dir) to new directory.
+    $this->executeProcess("git archive HEAD | tar -x -C {$this->newProjectDirectory}");
+    $this->fs->copy($this->currentProjectDirectory . '/config.yml', $this->newProjectDirectory . '/config.yml');
 
     // Replace project template readme with a project one
     $output->writeln('<info>Creating project-specific onboarding readme</info>');
@@ -233,6 +236,8 @@ class Installer extends Command {
         $this->fs->copy($this->newProjectDirectory . '/docs-temp/' . $doc . '.md', $this->newProjectDirectory . '/docs/' . $doc . '.md', TRUE);
       }
     }
+
+    // @todo Symlink "/docs/readme" to new repo root.
 
     // Remove temp dir.
     $this->fs->remove($this->newProjectDirectory . '/docs-temp');
@@ -362,15 +367,16 @@ class Installer extends Command {
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
     $this->git(
           'clone', array(
+            '1.9.3',
             "git@github.com:geerlingguy/drupal-vm.git",
             "{$this->newProjectDirectory}/$vm_dir",
-          )
+          ),
+          array('branch' => NULL)
       );
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
     $this->addVmConfig($input, $output);
     $this->bootstrapVm($input, $output);
-
   }
 
   /**
@@ -396,15 +402,16 @@ class Installer extends Command {
     );
 
     // Use the docroot as the site's primary synced folder.
-    $docroot = "/var/www/{$this->config['project']['machine_name']}";
+    $mount_point = "/var/www/{$this->config['project']['acquia_subname']}";
     $vm_config['vagrant_synced_folders'][0]['local_path'] = "{$this->newProjectDirectory}/docroot";
-    $vm_config['vagrant_synced_folders'][0]['destination'] = $docroot;
+    $vm_config['vagrant_synced_folders'][0]['destination'] = $mount_point;
 
     // Update domain configuration.
     $vm_config['vagrant_hostname'] = $this->config['project']['local_url'];
     $vm_config['drupal_domain'] = $this->config['project']['local_url'];
     $vm_config['drupal_site_name'] = $this->config['project']['human_name'];
-    $vm_config['drupal_core_path'] = $docroot;
+    $vm_config['drupal_core_path'] = $mount_point . '/docroot';
+    $vm_config['drupal_major_version'] = $this->config['vm']['drupal_major_version'];
 
     // Update the path to make file.
     $make_file = $this->config['project']['make_file'];
@@ -426,7 +433,7 @@ class Installer extends Command {
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/$vm_dir/config.yml", Yaml::dump($vm_config, 4, 2));
 
-    $output->writeln("<info>Drupal VM was installed to `{$this->config['project']['machine_name']}/box`.</info>");
+    $output->writeln("<info>Drupal VM was installed to `{$this->config['project']['acquia_subname']}/box`.</info>");
   }
 
   /**
@@ -517,6 +524,13 @@ class Installer extends Command {
   }
 
   /**
+   * Install composer dependencies in new project directory.
+   */
+  protected function installComposerDependencies() {
+    $this->composer('install', array(), array('working-dir' => $this->newProjectDirectory));
+  }
+
+  /**
    * Remove installation artifacts from the new project.
    *
    * @param InputInterface $input
@@ -544,7 +558,6 @@ class Installer extends Command {
    * @return mixed
    */
   protected function composer($command, array $arguments = array(), array $options = array()) {
-
     $this->customCommand('composer', $command, $arguments, $options);
   }
 
@@ -566,18 +579,15 @@ class Installer extends Command {
    * @return mixed
    */
   protected function drush($command, array $arguments = array(), array $options = array()) {
-
-    $this->customCommand('drush', $command, $arguments, $options);
+    $this->customCommand($this->currentProjectDirectory . '/install/bin/drush', $command, $arguments, $options);
   }
 
   /**
    * @param string $command
    *   The binary to call. E.g., 'git'.
-   * @param array $argumentsAn
-   *   array of arguments. E.g., 'pull origin/master'.
+   * @param array $arguments
    *   An array of arguments. E.g., 'pull origin/master'.
-   * @param array $optionsAn
-   *   array of options in one of the following formats:
+   * @param array $options
    *   An array of options in one of the following formats:
    *    array('bare' => NULL, 'tags' => 'smoke') will translate into
    *    `--bare --tags=smoke`
@@ -601,13 +611,28 @@ class Installer extends Command {
     }
 
     $command = "$binary {$command} {$string_options} {$arguments}";
+
+    return $this->executeProcess($command);
+  }
+
+
+  /**
+   * Executes a command process directly.
+   *
+   * @param string $command
+   *   The command to run.
+   *
+   * @return string
+   *   The command output.
+   */
+  protected function executeProcess($command) {
     $process = new Process($command);
     $process->setTimeout(3600);
     $process->run(
-          function ($type, $buffer) {
-              print $buffer;
-          }
-      );
+      function ($type, $buffer) {
+        print $buffer;
+      }
+    );
 
     if (!$process->isSuccessful()) {
       throw new \RuntimeException($process->getErrorOutput());
