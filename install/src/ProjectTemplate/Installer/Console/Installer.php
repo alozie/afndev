@@ -412,7 +412,7 @@ class Installer extends Command {
     $vm_config['vagrant_hostname'] = $local_url['host'];
     $vm_config['drupal_domain'] = $local_url['host'];
     $vm_config['drupal_site_name'] = $this->config['project']['human_name'];
-    $vm_config['drupal_core_path'] = $mount_point . '/docroot';
+    $vm_config['drupal_core_path'] = $mount_point;
     $vm_config['drupal_major_version'] = $this->config['vm']['drupal_major_version'];
 
     // Update the path to make file.
