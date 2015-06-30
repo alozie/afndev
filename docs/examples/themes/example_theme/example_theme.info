@@ -1,0 +1,31 @@
+name = Example Theme
+description = An Example Framework for a Theme
+core = 7.x
+engine = phptemplate
+screenshot = img/screenshot.png
+
+; ========================================
+; Regions
+; ========================================
+
+regions[page_top] = Page top
+regions[navigation] = Navigation
+regions[featured] = Featured
+regions[highlighted] = Highlighted
+regions[sidebar_first] = Sidebar first
+regions[content] = Content
+regions[sidebar_second] = Sidebar second
+regions[footer] = Footer
+regions[page_bottom] = Page bottom
+
+; ========================================
+; Styles
+; ========================================
+
+stylesheets[all][] = css/styles.css
+
+; ========================================
+; Scripts
+; ========================================
+
+scripts[] = js/scripts.js
