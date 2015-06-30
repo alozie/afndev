@@ -2,6 +2,8 @@
 
 // Site settings
 var localDev = 'example.dev';
+//var bowerLibraries = [];
+var bowerLibraries = ['./bower_components/normalize.css/normalize.css'];
 
 // Add libraries for the gulp file.
 
@@ -15,8 +17,11 @@ var browserSync = require('browser-sync').create();
 
 // Compile scss to css.
 gulp.task('sass', function () {
-  return gulp.src('./sass/styles.scss')
+  var sources = bowerLibraries.concat(['./sass/styles.scss']);
+
+  return gulp.src(sources)
     .pipe(sass({outputStyle : 'expanded'}))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest('./css'));
 });
 

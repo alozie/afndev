@@ -1,0 +1,13 @@
+{
+  "name": "example_theme",
+  "version": "0.0.0",
+  "authors": [
+    "Acquia"
+  ],
+  "devDependencies": {
+    "mathsass": "~0.9.5"
+  },
+  "dependencies": {
+    "normalize.css": "~3.0.3"
+  }
+}

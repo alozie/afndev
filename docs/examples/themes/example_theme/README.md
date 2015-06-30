@@ -6,6 +6,15 @@ As such, this is NOT a base theme. This is intended as a structure to get a proj
 ## Build Tools
 The build tools in this example theme use node.js based tools. This includes a node based build tool Gulp as well as a node.js based version of SASS. This simplifies the process over some alternatives since fewer tools must be installed.
 
+### TLDR
+- `brew install node` _(OSX only)_
+- `npm install --global gulp`
+- `npm install --global bower`
+- `npm install`
+- `bower install`
+- `gulp`
+
+
 ### Node.js
 To install node.js, see [nodejs.org](https://nodejs.org/)
 
@@ -52,6 +61,27 @@ The simplest set up is to run `gulp`. This will run the default task.
 
 #### Customizing and configuring Gulp
 The `gulpfile.js` file is the settings file for Gulp. This is where all of the libraries are loaded and the tasks defined. There is more documentation in that file.
+
+### Bower (Package manager for frontend libraries)
+Bower works similarly to npm. It will download libraries used for the build process as well as those intended for use directly in the theme.
+
+Bower uses `bower.json` to store information about the libraries it uses.
+
+#### Installing
+See [http://bower.io/](http://bower.io/)
+
+Run `npm install --global bower` to install globally.
+
+#### Adding libraries that are used by SASS
+To install a library run `bower install <my-library> --save-dev`. This is similar to npm.
+
+This library should then be added to `sass/_init.scss` so that it is loaded.
+
+#### Adding libraries used by client directly
+To install a library run `bower install <my-library> --save`. This is similar to npm.
+
+Since this is not a SASS library, it will need to be aggregated with the rest of the generated CSS files. To do this, we edit the `gulpfile.js` configuration. There is a list of libraries in a setting `bowerLibraries`. Adding the library to this list will load the CSS before the project's CSS.
+
 
 ## Drupal Theme
 The Drupal theme is intended as a base structure that will be customized per project.

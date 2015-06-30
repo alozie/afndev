@@ -1,18 +1,21 @@
 //
-// Import variables
+// Import variables.
 //
 
 @import 'variables';
 
 //
-// Import libraries like susy grid system
+// Import libraries like susy grid system.
 //
 
-// grid
-//@import 'susy';
+// Mathsass, this adds functions like pow().
+@import '../bower_components/mathsass/dist/math';
+
+// Normalize.css.
+
 
 //
-// Import custom mixins & placeholders
+// Import custom mixins & placeholders.
 //
 
 @import 'mixins';
