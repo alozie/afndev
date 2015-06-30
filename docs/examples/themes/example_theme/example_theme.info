@@ -2,7 +2,7 @@ name = Example Theme
 description = An Example Framework for a Theme
 core = 7.x
 engine = phptemplate
-screenshot = img/screenshot.png
+screenshot = screenshot.png
 
 ; ========================================
 ; Regions

@@ -65,7 +65,7 @@ function add_js_example_block_view($delta = '') {
       '#attached' => array(
         'js' => array(
           // Module file.
-          drupal_get_path('module', 'acquia_examples') . '/js/acquia_examples.js',
+          drupal_get_path('module', 'add_js_example') . '/js/example.js',
           // External file.
           'http://example.com/other_library.js' => array(
             'type' => 'external',
@@ -79,7 +79,7 @@ function add_js_example_block_view($delta = '') {
           ),
         ),
         'library' => array(
-          array('acquia_examples', 'example_library'),
+          array('add_js_example', 'example_library'),
         ),
       ),
     );
