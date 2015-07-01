@@ -33,8 +33,30 @@ vm:
   bootstrap: false
   # This loads the necessary ansible requirements.
   rebuild_requirements: true
+  # Sets Drush Version. Currently Acquia Cloud uses 6.6.0.
   drush_version: 6.6.0
+  # Informs the VM which version of Drupal to run.
   drupal_major_version: 7
+  # Comment out any extra VM utilities you don't want to install. If you don't want
+  # to install *any* extras, make set this value to an empty set, e.g. `[]`.
+  installed_extras:
+    # GUI for database utility, [local_url]/adminer.
+    #- adminer
+    # Catches mail generated from local system, [local_url]:8025.
+    - mailhog
+    # Local memcache instance
+    - memcached
+    # GUI for log utility, pimpmylog.[local_url].
+    - pimpmylog
+    # Local SOLR instance, [local_url]:8443/solr.
+    - solr
+    # Local Varnish instance.
+    - varnish
+    # Turn on Xdebug.
+    - xdebug
+    # Local XHProf instance, xhprof.[local_url].
+    - xhprof
+
 
 # Configuration settings for new git repository.
 git:

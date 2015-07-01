@@ -415,6 +415,9 @@ class Installer extends Command {
     $vm_config['php_version'] = '5.5';
     $vm_config['solr_version'] = '4.5.1';
 
+    // Specify the VM extras you wish you install for this project.
+    $vm_config['installed_extras'] = $this->config['vm']['installed_extras'];
+
     // Update domain configuration.
     $local_url = parse_url($this->config['project']['local_url']);
     $vm_config['vagrant_hostname'] = $local_url['host'];
