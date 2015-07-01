@@ -368,7 +368,7 @@ class Installer extends Command {
     // We are intentionally pinning to a specific release for stability.
     $this->git(
           'clone', array(
-            '1.9.4',
+            '1.9.5',
             "git@github.com:geerlingguy/drupal-vm.git",
             "{$this->newProjectDirectory}/$vm_dir",
           ),
@@ -406,6 +406,14 @@ class Installer extends Command {
     $mount_point = "/var/www/{$this->config['project']['acquia_subname']}";
     $vm_config['vagrant_synced_folders'][0]['local_path'] = "{$this->newProjectDirectory}/docroot";
     $vm_config['vagrant_synced_folders'][0]['destination'] = $mount_point;
+
+    // Use the projects key to separate multiple DrupalVM instances.
+    $vm_config['vagrant_machine_name'] = $this->config['project']['acquia_subname'];
+
+    // Mimic Acquia Cloud configuration.
+    $vm_config['vagrant_box'] = 'geerlingguy/ubuntu1204';
+    $vm_config['php_version'] = '5.5';
+    $vm_config['solr_version'] = '4.5.1';
 
     // Update domain configuration.
     $local_url = parse_url($this->config['project']['local_url']);
