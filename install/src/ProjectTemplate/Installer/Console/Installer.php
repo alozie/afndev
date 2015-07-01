@@ -418,6 +418,9 @@ class Installer extends Command {
     // Specify the VM extras you wish you install for this project.
     $vm_config['installed_extras'] = $this->config['vm']['installed_extras'];
 
+    // Specify project specific global Composer packages.
+    $vm_config['composer_global_packages'] = $this->config['vm']['composer_global_packages'];
+
     // Update domain configuration.
     $local_url = parse_url($this->config['project']['local_url']);
     $vm_config['vagrant_hostname'] = $local_url['host'];

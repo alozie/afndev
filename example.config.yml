@@ -37,6 +37,17 @@ vm:
   drush_version: 6.6.0
   # Informs the VM which version of Drupal to run.
   drupal_major_version: 7
+  # Load project-specific Composer libraries.
+  composer_global_packages:
+    # Load Behat libraries.
+    - { name: 'behat/behat', release: '3.0.*' }
+    - { name: 'behat/mink', release: '1.6@stable' }
+    - { name: 'behat/mink-extension', release: '*' }
+    - { name: 'behat/mink-goutte-driver', release: '*' }
+    - { name: 'behat/mink-selenium2-driver', release: '*' }
+    - { name: 'behat/mink-zombie-driver', release: '*' }
+    - { name: 'behat/mink-browserkit-driver', release: '*' }
+    - { name: 'drupal/drupal-extension', release: '*' }
   # Comment out any extra VM utilities you don't want to install. If you don't want
   # to install *any* extras, make set this value to an empty set, e.g. `[]`.
   installed_extras:
