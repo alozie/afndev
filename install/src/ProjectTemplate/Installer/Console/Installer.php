@@ -457,13 +457,13 @@ class Installer extends Command {
       $output->writeln('<info>Checking for virtualbox</info>');
       $result = strtolower($this->customCommand('VBoxManage', '-v', array()));
       if ($result == '-bash: vboxmanage: command not found') {
-        $output->writeln('<info>Unmet dependency, please install virtualbox 4.3.x</info>');
+        $output->writeln('<error>Unmet dependency, please install virtualbox 4.3.x</error>');
         return;
       } else {
         $parsed_version = explode(".", $result);
         // Check major and minor version.
         if ($parsed_version[0]!='4' and $parsed_version[1]!='3') {
-          $output->writeln('<info>Unmet dependency, please upgrade virtualbox to version 4.3.x</info>');
+          $output->writeln('<comment>Unmet dependency, please upgrade virtualbox to version 4.3.x</comment>');
           return;
         } else {
           $output->writeln('<info>Virtualbox version is currently supported.</info>');
@@ -474,34 +474,34 @@ class Installer extends Command {
       $output->writeln('<info>Checking for vagrant</info>');
       $result = strtolower($this->customCommand('vagrant', '-v'));
       if ($result == '-bash: vagrant: command not found') {
-        $output->writeln('<info>Unmet dependency, please install vagrant 1.7.2 or higher</info>');
+        $output->writeln('<error>Unmet dependency, please install vagrant 1.7.2 or higher</error>');
         return;
       } else {
         $parsed_version = explode(' ', $result);
         $parsed_version = explode(".", $parsed_version[1]);
         // Check major and minor version.
         if ($parsed_version[0]!='1' and $parsed_version[1]!='7' and intval($parsed_version[2])>2) {
-          $output->writeln('<info>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</info>');
+          $output->writeln('<error>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</error>');
           return;
         } else {
-          $output->writeln('<info>Vagrant version is currently supported.</info>');
+          $output->writeln('<comment>Vagrant version is currently supported.</comment>');
         }
       }
 
       // Check for ansible version 1.9.2 or higher.
       $result = strtolower($this->customCommand('ansible', '--version'));
       if ($result == '-bash: ansible: command not found') {
-        $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</info>');
+        $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</error>');
         return;
       } else {
         $parsed_version = explode(' ', $result);
         $parsed_version = explode(".", $parsed_version[1]);
         // Check major and minor version.
         if ($parsed_version[0]!='1' and $parsed_version[1]!='9' and intval($parsed_version[2])>2) {
-          $output->writeln('<info>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</info>');
+          $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</error>');
           return;
         } else {
-          $output->writeln('<info>Ansible version is currently supported.</info>');
+          $output->writeln('<comment>Ansible version is currently supported.</comment>');
         }
       }
 
