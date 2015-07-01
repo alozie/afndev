@@ -8,7 +8,6 @@ defaults:
 projects:
   drupal:
     type: core
-    version: 7.38
     patch:
       # Files displayed by default setting not respected.
       # https://www.drupal.org/node/1520716#comment-6456630
@@ -26,29 +25,12 @@ projects:
       # https://www.drupal.org/node/2211429#comment-10033677
       - https://www.drupal.org/files/issues/drupal-image-style-not-found-2211429-4.patch
 
-  acquia_purge:
-   version: 1.1
-
-  acquia_connector:
-    version: 2.15
-
-  entitycache:
-    version: 1.2
-
-  features:
-    version: 2.5
-
-  memcache:
-    version: 1.5
-
-  security_review:
-    version: 1.2
-
-  stage_file_proxy:
-    version: 1.7
-
-  transliteration:
-    version: 3.2
-
-  views:
-    version: 3.11
+  acquia_purge: []
+  acquia_connector: []
+  entitycache: []
+  features: []
+  memcache: []
+  security_review: []
+  stage_file_proxy: []
+  transliteration: []
+  views: []
