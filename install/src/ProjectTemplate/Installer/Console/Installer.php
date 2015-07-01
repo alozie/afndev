@@ -363,7 +363,7 @@ class Installer extends Command {
     $output->writeln('<info>Cloning Drupal VM from GitHub...</info>');
 
     // Add Drupal VM Vagrant box repository and then remove the .git files.
-    $vm_dir = $this->config['vm']['dir_name'];
+    $vm_dir = 'box';
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
     // We are intentionally pinning to a specific release for stability.
     $this->git(
@@ -388,7 +388,7 @@ class Installer extends Command {
    */
   protected function addVmConfig(InputInterface $input, OutputInterface $output) {
 
-    $vm_dir = $this->config['vm']['dir_name'];
+    $vm_dir = 'box';
 
     // Load the example configuration file included with Drupal VM.
     $parser = new Parser();
@@ -408,11 +408,16 @@ class Installer extends Command {
     $vm_config['vagrant_synced_folders'][0]['destination'] = $mount_point;
 
     // Update domain configuration.
-    $vm_config['vagrant_hostname'] = $this->config['project']['local_url'];
-    $vm_config['drupal_domain'] = $this->config['project']['local_url'];
+    $local_url = parse_url($this->config['project']['local_url']);
+    $vm_config['vagrant_hostname'] = $local_url['host'];
+    $vm_config['drupal_domain'] = $local_url['host'];
     $vm_config['drupal_site_name'] = $this->config['project']['human_name'];
-    $vm_config['drupal_core_path'] = $mount_point . '/docroot';
+    $vm_config['drupal_core_path'] = $mount_point;
     $vm_config['drupal_major_version'] = $this->config['vm']['drupal_major_version'];
+
+    // Set apache vhosts by project, not to DrupalVM default.
+    $vm_config['apache_vhosts'][1]['servername'] = 'xhprof.' . $local_url['host'];
+    $vm_config['apache_vhosts'][2]['servername'] = 'pimpmylog.' . $local_url['host'];
 
     // Update the path to make file.
     $make_file = $this->config['project']['make_file'];
@@ -448,37 +453,62 @@ class Installer extends Command {
     if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
       $output->writeln('<info>Bootstrapping Drupal VM...</info>');
 
-      // Check for virtualbox.
+      // Check for virtualbox version 4.3.x.
       $output->writeln('<info>Checking for virtualbox</info>');
-      $result = strtolower($this->customCommand('VBoxManage', 'list', array('vms')));
+      $result = strtolower($this->customCommand('VBoxManage', '-v', array()));
       if ($result == '-bash: vboxmanage: command not found') {
-        $output->writeln('<info>Unmet dependency, please install virtualbox</info>');
+        $output->writeln('<error>Unmet dependency, please install virtualbox 4.3.x</error>');
         return;
+      } else {
+        $parsed_version = explode(".", $result);
+        // Check major and minor version.
+        if ($parsed_version[0]!='4' and $parsed_version[1]!='3') {
+          $output->writeln('<comment>Unmet dependency, please upgrade virtualbox to version 4.3.x</comment>');
+          return;
+        } else {
+          $output->writeln('<info>Virtualbox version is currently supported.</info>');
+        }
       }
 
-      // Check for vagrant.
+      // Check for vagrant 1.7.2 or higher.
       $output->writeln('<info>Checking for vagrant</info>');
-      $result = strtolower($this->customCommand('vagrant', 'global-status'));
+      $result = strtolower($this->customCommand('vagrant', '-v'));
       if ($result == '-bash: vagrant: command not found') {
-        $output->writeln('<info>Unmet dependency, please install vagrant</info>');
+        $output->writeln('<error>Unmet dependency, please install vagrant 1.7.2 or higher</error>');
         return;
+      } else {
+        $parsed_version = explode(' ', $result);
+        $parsed_version = explode(".", $parsed_version[1]);
+        // Check major and minor version.
+        if ($parsed_version[0]!='1' and $parsed_version[1]!='7' and intval($parsed_version[2])>2) {
+          $output->writeln('<error>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</error>');
+          return;
+        } else {
+          $output->writeln('<comment>Vagrant version is currently supported.</comment>');
+        }
       }
 
-      // Check for ansible.
-      try{
-        $output->writeln('<info>Checking for ansible</info>');
-        $this->customCommand('ansible', '--version');
+      // Check for ansible version 1.9.2 or higher.
+      $result = strtolower($this->customCommand('ansible', '--version'));
+      if ($result == '-bash: ansible: command not found') {
+        $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</error>');
+        return;
+      } else {
+        $parsed_version = explode(' ', $result);
+        $parsed_version = explode(".", $parsed_version[1]);
+        // Check major and minor version.
+        if ($parsed_version[0]!='1' and $parsed_version[1]!='9' and intval($parsed_version[2])>2) {
+          $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</error>');
+          return;
+        } else {
+          $output->writeln('<comment>Ansible version is currently supported.</comment>');
+        }
       }
 
-     catch (\RuntimeException $re) {
-        $output->writeln('<info>Unmet dependency, please install ansible</info>');
-        exit(1);
-      }
-
+      // Load ansible reqs.
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
-        // Load ansible reqs.
         $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
-        $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
+        $role_file = $this->newProjectDirectory . '/box/provisioning/requirements.txt';
         $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
       }
 
@@ -488,7 +518,7 @@ class Installer extends Command {
 
       // Run Vagrant up from VM dir.
       $output->writeln('<info>Bootstrapping VM</info>');
-      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . ' && vagrant up )', ''));
+      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/box && vagrant up )', ''));
 
     }
   }
