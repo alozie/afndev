@@ -363,7 +363,7 @@ class Installer extends Command {
     $output->writeln('<info>Cloning Drupal VM from GitHub...</info>');
 
     // Add Drupal VM Vagrant box repository and then remove the .git files.
-    $vm_dir = $this->config['vm']['dir_name'];
+    $vm_dir = 'box';
     $this->remove("{$this->newProjectDirectory}/$vm_dir");
     // We are intentionally pinning to a specific release for stability.
     $this->git(
@@ -388,7 +388,7 @@ class Installer extends Command {
    */
   protected function addVmConfig(InputInterface $input, OutputInterface $output) {
 
-    $vm_dir = $this->config['vm']['dir_name'];
+    $vm_dir = 'box';
 
     // Load the example configuration file included with Drupal VM.
     $parser = new Parser();
@@ -508,7 +508,7 @@ class Installer extends Command {
       // Load ansible reqs.
       if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
         $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
-        $role_file = $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . '/provisioning/requirements.txt';
+        $role_file = $this->newProjectDirectory . '/box/provisioning/requirements.txt';
         $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
       }
 
@@ -518,7 +518,7 @@ class Installer extends Command {
 
       // Run Vagrant up from VM dir.
       $output->writeln('<info>Bootstrapping VM</info>');
-      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/' . $this->config['vm']['dir_name'] . ' && vagrant up )', ''));
+      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/box && vagrant up )', ''));
 
     }
   }

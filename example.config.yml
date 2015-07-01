@@ -26,9 +26,6 @@ docs:
 # Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
 # the "vm" key.
 vm:
-  # This is the name of the directory, within the new repository, that will
-  # contain the virtual machine configuration.
-  dir_name: 'box'
   # If true, this provisions and launches the virtual machine as part of the
   # installation process. Note that dependencies (vagrant, ansible, virtual box)
   # must be installed for this work.
