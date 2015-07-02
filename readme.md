@@ -31,7 +31,7 @@ For full instructions on how to configure and install the packaged VM, see [Drup
 ### Documentation Templates
 
 The following default documentation is included in Project Template:
-* [Onboarding](/docs/onboarding)
+* [Onboarding](/docs/onboarding.md)
 * [Developer Guide](/docs/developer-guide.md)
 * [Architecture Template](/docs/drupal-architecture-template.md)
 * [Open Source Contribution Guide](os-contribution.md)
