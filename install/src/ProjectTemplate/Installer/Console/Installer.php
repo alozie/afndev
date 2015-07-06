@@ -170,9 +170,6 @@ class Installer extends Command {
     // Initialize Git.
     $this->initializeGit($input, $output);
 
-    // Display completion messages.
-    $output->writeln("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>");
-
     if ($this->config['vm']) {
       $this->addVm($input, $output);
     }
@@ -181,6 +178,10 @@ class Installer extends Command {
 
     // Clean up new project.
     $this->cleanUp($input, $output);
+
+    // Display completion messages.
+    $output->writeln("<info>You should now have a working copy of the project configured in the folder {$this->newProjectDirectory}.</info>");
+    $output->writeln("<info>Please review the `Next Steps` section of {$this->currentProjectDirectory}/install/readme.md to enhance the template with your project-specific needs.</info>");
   }
 
   /**
