@@ -34,9 +34,9 @@ The following default documentation is included in Project Template:
 * [Onboarding](/docs/onboarding.md)
 * [Developer Guide](/docs/developer-guide.md)
 * [Architecture Template](/docs/drupal-architecture-template.md)
-* [Open Source Contribution Guide](os-contribution.md)
-* [Project Readme](/docs/readme)
-* [Theming Guide](/docs/theming)
+* [Open Source Contribution Guide](/docs/os-contribution.md)
+* [Project Readme](/docs/readme.md)
+* [Theming Guide](/docs/theming.md)
 
 ### Git Hooks
 
