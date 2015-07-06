@@ -19,7 +19,7 @@ the following dependencies:
 
 * Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
 * Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
-* [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html. 
+* [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html). 
   * OSX instructions: `brew install ansible`
   * Linux instructions:
     * `sudo easy_install pip`
