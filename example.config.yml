@@ -31,8 +31,10 @@ vm:
   # must be installed for this work.
   # @see /box
   bootstrap: false
-  # This loads the necessary ansible requirements.
+  # This loads the necessary ansible requirements for bootstrapping the VM.
   rebuild_requirements: true
+  # Setting the IP address, if running multiple VMs concurrently.
+  vagrant_ip: 192.168.88.88
   # Sets Drush Version. Currently Acquia Cloud uses 6.6.0.
   drush_version: 6.6.0
   # Informs the VM which version of Drupal to run.
