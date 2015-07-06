@@ -6,6 +6,7 @@ project:
   # settings.php includes. This will also determine the the directory name
   # of the new repository.
   acquia_subname: 'psproject'
+  # This is the human readable name for the project.
   human_name: 'PS Project'
   # This is used for configuring your local $base_url.
   local_url: 'http://localhost/'
@@ -18,9 +19,13 @@ project:
 # The following documents will be copied into the new repository. Comment-out
 # any line to prevent it from being copied.
 docs:
+  # This provides Acquia-specific development standards.
   developer-guide: 'Developer Guide'
+  # This provides a sample template for a project-specific technical architecture document.
   drupal-architecture-template: 'Architecture Template'
+  # This provides a sample template for project-specific open source contribution guidelines.
   os-contribution: 'Open Source Contribution Guidelines'
+  # This provides Acquia-specific front-end standards.
   theming: 'Front End Handbook'
 
 # Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
@@ -79,21 +84,21 @@ git:
     - commit-msg
     # Runs PHP Code Sniffer prior to local git commits.
     - pre-commit
-  # The following remotes will be configured. You must replace the bracketed
-  # values below. They are not tokenized.
-  # @todo Tokenize the tokens!
+  # The following list of remotes can be configured for your project needs. The example list below is provided
+  # only for placeholder. Keys should be the remote. The value for the key should be your specific repository.
   remotes:
+    # Example GitHub placeholder. You can copy this for your fork (e.g. 'origin') and your project (e.g. 'upstream').
     github: 'git@github.com:[user]/[project].git'
+    # Example Acquia Cloud placeholder. Please change the tokens below for your Acquia Cloud sub.
     acquia: '[project-user]@[project-host].prod.hosting.acquia.com:[project-name].git'
 
 # The testing framework is limited to the `tests` directory, and includes
 # example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
 # this from being copied, remove the 'testing_framework' key.
 testing_framework:
+  # Behat-specific configuration.
   behat:
+    # Select the javascript driver for use within Behat testing.
+    # Supported values include: selenium2, zombie
+    # For help determining the most relevant driver: http://mink.behat.org/en/latest/guides/drivers.html.
     javascript_driver: 'selenium2'
-
-# These map to /docroot/sites/all/settings/[key].settings.php partials.
-starter_settings:
-  enable: true
-  akamai: true

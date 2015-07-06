@@ -374,7 +374,7 @@ class Installer extends Command {
       );
     $this->remove("{$this->newProjectDirectory}/$vm_dir/.git");
 
-    $this->addVmConfig($input, $output);
+    $this->configureVm($input, $output);
     $this->bootstrapVm($input, $output);
   }
 
@@ -384,7 +384,7 @@ class Installer extends Command {
    * @param InputInterface $input
    * @param OutputInterface $output
    */
-  protected function addVmConfig(InputInterface $input, OutputInterface $output) {
+  protected function configureVm(InputInterface $input, OutputInterface $output) {
 
     $vm_dir = 'box';
 
@@ -404,6 +404,18 @@ class Installer extends Command {
     $mount_point = "/var/www/{$this->config['project']['acquia_subname']}";
     $vm_config['vagrant_synced_folders'][0]['local_path'] = "{$this->newProjectDirectory}/docroot";
     $vm_config['vagrant_synced_folders'][0]['destination'] = $mount_point;
+
+    // Specify that no CRON tasks are setup.
+    $vm_config['drupalvm_cron_jobs'] = array(
+      array(
+        // Provide CRON a name.
+        'name' => 'Local Drupal CRON',
+        // A duration between CRON tasks.
+        'minute' => '*/60',
+        // The CRON job to execute.
+        'job' => 'drush -r {{ drupal_core_path }} core-cron',
+      )
+    );
 
     // Use the projects key to separate multiple DrupalVM instances.
     $vm_config['vagrant_machine_name'] = $this->config['project']['acquia_subname'];
@@ -458,6 +470,129 @@ class Installer extends Command {
   }
 
   /**
+   * Check the dependencies needed for the VM to load on the host machine.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   */
+  protected function checkVmDependencies(InputInterface $input, OutputInterface $output) {
+    // We need to do a full audit before returning. As such, we should check for errors more broadly.
+    $has_errors = FALSE;
+
+    $output->writeln('<info>Checking the Drupal VM dependencies...</info>');
+
+    // Check for virtualbox version 4.3.x.
+    $output->writeln('<info>Checking for virtualbox</info>');
+    $result = strtolower($this->customCommand('VBoxManage', '-v', array()));
+    if ($result == '-bash: vboxmanage: command not found') {
+      $output->writeln('<error>Unmet dependency, please install virtualbox 4.3.x</error>');
+      return;
+    }
+    else {
+      $parsed_version = explode(".", $result);
+      // Check major and minor version.
+      if ($parsed_version[0] != '4' and $parsed_version[1] != '3') {
+        $output->writeln('<comment>Unmet dependency, please upgrade virtualbox to version 4.3.x</comment>');
+        $has_errors = TRUE;
+      }
+      else {
+        $output->writeln('<info>Virtualbox version is currently supported.</info>');
+      }
+    }
+
+    // Check for vagrant 1.7.2 or higher.
+    $output->writeln('<info>Checking for vagrant</info>');
+    $result = strtolower($this->customCommand('vagrant', '-v'));
+    if ($result == '-bash: vagrant: command not found') {
+      $output->writeln('<error>Unmet dependency, please install vagrant 1.7.2 or higher</error>');
+      $has_errors = TRUE;
+    }
+    else {
+      $parsed_version = explode(' ', $result);
+      $parsed_version = explode(".", $parsed_version[1]);
+      // Check major and minor version.
+      if ($parsed_version[0] != '1' and $parsed_version[1] != '7' and intval($parsed_version[2]) > 2) {
+        $output->writeln('<error>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</error>');
+        $has_errors = TRUE;
+      }
+      else {
+        $output->writeln('<comment>Vagrant version is currently supported.</comment>');
+      }
+    }
+
+    // Check for ansible version 1.9.2 or higher.
+    $result = strtolower($this->customCommand('ansible', '--version'));
+    if ($result == '-bash: ansible: command not found') {
+      $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</error>');
+      $has_errors = TRUE;
+    }
+    else {
+      $parsed_version = explode(' ', $result);
+      $parsed_version = explode(".", $parsed_version[1]);
+      // Check major and minor version.
+      if ($parsed_version[0] != '1' and $parsed_version[1] != '9' and intval($parsed_version[2]) > 2) {
+        $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</error>');
+        $has_errors = TRUE;
+      }
+      else {
+        $output->writeln('<comment>Ansible version is currently supported.</comment>');
+      }
+    }
+
+    // Check for duplicate machine names and duplicate IP within VirtualBox.
+    $output->writeln('<info>Checking for duplicant virtualbox host names and IPs</info>');
+    $result = $this->executeProcess('vboxmanage list vms', FALSE);
+    $existing_hosts = explode("\n", strtolower($result));
+    $local_url = parse_url($this->config['project']['local_url']);
+    foreach ($existing_hosts as $existing_host) {
+      if ($existing_host) {
+        $host_name = explode(" ", $existing_host);
+        $host_name = str_replace('"', '', $host_name[0]);
+        // Check host.
+        if (strtolower($host_name) == strtolower($local_url['host'])) {
+          $output->writeln('<error>You already have a virtual machine host with the name ' . $host_name . '.</error>');
+          $output->writeln('<comment>You will not be able to run these virtual machines concurrently. Please update the local_url configuration to use something unique.</comment>');
+          $has_errors = TRUE;
+        }
+
+        // Load the IP(s) that are associated to the existing VMs
+        $result = $this->executeProcess('vboxmanage guestproperty enumerate ' . $host_name, FALSE);
+        if ($result) {
+          $host_ips = explode("\n", strtolower($result));
+          foreach ($host_ips as $host_ip) {
+            //$output->writeln('<comment>Checking \'' . $host_ip . '\'</comment>');
+            if ($host_ip and strpos($host_ip, '/v4/ip')) {
+              // Key/values are comma-separated.
+              $ip_address = explode(", ", $host_ip);
+              // The IP address value is stored in the second value in the form of 'value: xxx.yyy.zzz.qqq'.
+              // Split the key from the value.
+              $ip_address = explode(": ", $ip_address[1]);
+              // Grab the value itself.
+              $ip_address = $ip_address[1];
+
+              // Check it against the specified IP.
+              if ($ip_address == $this->config['vm']['vagrant_ip']) {
+                $output->writeln('<error>The ' . $host_name . ' virtual machine host already has the IP ' . $ip_address . '.</error>');
+                $output->writeln('<comment>You will not be able to run these virtual machines concurrently. Please update the vm > vagrant_ip configuration to use something unique.</comment>');
+                $has_errors = TRUE;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Print out message to the user to review the output generated above.
+    if ($has_errors) {
+      $output->writeln('<error>Errors were generated during the installation process. Please review the errors and manually bootstrap the VM.</error>');
+      $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
+    }
+
+    // Return whether or not there were issues found that would impede the VM.
+    return $has_errors;
+  }
+
+  /**
    * Load the VM on the host machine.
    *
    * @param InputInterface $input
@@ -467,126 +602,28 @@ class Installer extends Command {
 
     if (!empty($this->config['vm']['bootstrap']) and $this->config['vm']['bootstrap']) {
 
-      // We need to do a full audit before returning. As such, we should check for errors more broadly.
-      $has_errors = FALSE;
+      // Check VM dependencies.
+      $has_errors = $this->checkVmDependencies($input, $output);
 
-      $output->writeln('<info>Bootstrapping Drupal VM...</info>');
+      // If all dependencies are met, load the VM.
+      if (!$has_errors) {
+        $output->writeln('<info>Bootstrapping Drupal VM...</info>');
 
-      // Check for virtualbox version 4.3.x.
-      $output->writeln('<info>Checking for virtualbox</info>');
-      $result = strtolower($this->customCommand('VBoxManage', '-v', array()));
-      if ($result == '-bash: vboxmanage: command not found') {
-        $output->writeln('<error>Unmet dependency, please install virtualbox 4.3.x</error>');
-        return;
-      } else {
-        $parsed_version = explode(".", $result);
-        // Check major and minor version.
-        if ($parsed_version[0]!='4' and $parsed_version[1]!='3') {
-          $output->writeln('<comment>Unmet dependency, please upgrade virtualbox to version 4.3.x</comment>');
-          $has_errors = TRUE;
-        } else {
-          $output->writeln('<info>Virtualbox version is currently supported.</info>');
+        // Load ansible reqs.
+        if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
+          $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
+          $role_file = $this->newProjectDirectory . '/box/provisioning/requirements.txt';
+          $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
         }
+
+        // Load host manager.
+        $output->writeln('<info>Loading host manager</info>');
+        $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
+
+        // Run Vagrant up from VM dir.
+        $output->writeln('<info>Bootstrapping VM</info>');
+        $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/box && vagrant up )', ''));
       }
-
-      // Check for vagrant 1.7.2 or higher.
-      $output->writeln('<info>Checking for vagrant</info>');
-      $result = strtolower($this->customCommand('vagrant', '-v'));
-      if ($result == '-bash: vagrant: command not found') {
-        $output->writeln('<error>Unmet dependency, please install vagrant 1.7.2 or higher</error>');
-        $has_errors = TRUE;
-      } else {
-        $parsed_version = explode(' ', $result);
-        $parsed_version = explode(".", $parsed_version[1]);
-        // Check major and minor version.
-        if ($parsed_version[0]!='1' and $parsed_version[1]!='7' and intval($parsed_version[2])>2) {
-          $output->writeln('<error>Unmet dependency, please upgrade vagrant to version 1.7.2 or higher</error>');
-          $has_errors = TRUE;
-        } else {
-          $output->writeln('<comment>Vagrant version is currently supported.</comment>');
-        }
-      }
-
-      // Check for ansible version 1.9.2 or higher.
-      $result = strtolower($this->customCommand('ansible', '--version'));
-      if ($result == '-bash: ansible: command not found') {
-        $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To install, run `sudo pip install ansible`.</error>');
-        $has_errors = TRUE;
-      } else {
-        $parsed_version = explode(' ', $result);
-        $parsed_version = explode(".", $parsed_version[1]);
-        // Check major and minor version.
-        if ($parsed_version[0]!='1' and $parsed_version[1]!='9' and intval($parsed_version[2])>2) {
-          $output->writeln('<error>Unmet dependency, please install ansible 1.9.2 or higher. To upgrade, run `sudo pip install ansible -U`.</error>');
-          $has_errors = TRUE;
-        } else {
-          $output->writeln('<comment>Ansible version is currently supported.</comment>');
-        }
-      }
-
-      // Check for duplicate machine names and duplicate IP within VirtualBox.
-      $result = $this->executeProcess('vboxmanage list vms', FALSE);
-      $existing_hosts = explode("\n", strtolower($result));
-      $local_url = parse_url($this->config['project']['local_url']);
-      foreach ($existing_hosts as $existing_host) {
-        if ($existing_host) {
-          $host_name = explode(" ", $existing_host);
-          $host_name = str_replace('"', '', $host_name[0]);
-          // Check host.
-          if (strtolower($host_name) == strtolower($local_url['host'])) {
-            $output->writeln('<error>You already have a virtual machine host with the name ' . $host_name . '.</error>');
-            $output->writeln('<comment>You will not be able to run these virtual machines concurrently. Please update the local_url configuration to use something unique.</comment>');
-            $has_errors = TRUE;
-          }
-
-          // Load the IP(s) that are associated to the existing VMs
-          $result = $this->executeProcess('vboxmanage guestproperty enumerate ' . $host_name, FALSE);
-          if ($result) {
-            $host_ips = explode("\n", strtolower($result));
-            foreach ($host_ips as $host_ip) {
-              //$output->writeln('<comment>Checking \'' . $host_ip . '\'</comment>');
-              if ($host_ip and strpos($host_ip, '/v4/ip')) {
-                // Key/values are comma-separated.
-                $ip_address = explode(", ", $host_ip);
-                // The IP address value is stored in the second value in the form of 'value: xxx.yyy.zzz.qqq'.
-                // Split the key from the value.
-                $ip_address = explode(": ", $ip_address[1]);
-                // Grab the value itself.
-                $ip_address = $ip_address[1];
-
-                // Check it against the specified IP.
-                if ($ip_address == $this->config['vm']['vagrant_ip']) {
-                  $output->writeln('<error>The ' . $host_name . ' virtual machine host already has the IP ' . $ip_address . '.</error>');
-                  $output->writeln('<comment>You will not be able to run these virtual machines concurrently. Please update the vm > vagrant_ip configuration to use something unique.</comment>');
-                  $has_errors = TRUE;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      if ($has_errors) {
-        $output->writeln('<error>Errors were generated during the installation process. Please review the errors and manually bootstrap the VM.</error>');
-        $output->writeln("<info>To set up the Drupal VM, follow the Quick Start Guide at http://www.drupalvm.com</info>");
-        return;
-      }
-
-      // Load ansible reqs.
-      if (!empty($this->config['vm']['rebuild_requirements']) and $this->config['vm']['rebuild_requirements']) {
-        $output->writeln('<info>Loading ansible requirements. NOTE - you will be prompted to enter your sudo password</info>');
-        $role_file = $this->newProjectDirectory . '/box/provisioning/requirements.txt';
-        $result = strtolower($this->customCommand('sudo', 'ansible-galaxy', array('install --force'), array('role-file' => $role_file)));
-      }
-
-      // Load host manager.
-      $output->writeln('<info>Loading host manager</info>');
-      $result = strtolower($this->customCommand('vagrant', 'plugin install', array('vagrant-hostsupdater')));
-
-      // Run Vagrant up from VM dir.
-      $output->writeln('<info>Bootstrapping VM</info>');
-      $result = strtolower($this->customCommand('(cd ' . $this->newProjectDirectory . '/box && vagrant up )', ''));
-
     }
   }
 

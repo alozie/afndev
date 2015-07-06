@@ -24,8 +24,7 @@ This document outlines technical onboarding for the PROJECT NAME project.
 * Web Server: [http://project.dev](http://project.dev)
 * XHProf: [http://xhprof.project.dev](http://xhprof.project.dev)
 * Pimp My Log: [http://pimpmylog.project.dev](http://pimpmylog.project.dev)
-* PHPMyAdmin: [http://phpmyadmin.project.dev](http://phpmyadmin.project.dev)
-* SOLR: [http://solr.project.dev](http://solr.project.dev)
+* SOLR: [http://project.dev:8443/solr](http://project.dev:8443/solr)
 
 ### Remote
 * Dev: [http://projectdev.prod.acquia-sites.com](http://projectdev.prod.acquia-sites.com)
@@ -50,6 +49,9 @@ This document outlines technical onboarding for the PROJECT NAME project.
 ## Onboarding
 * Fork repo to your own repository
 * Use of branches and pull requests
+* Set up remote to upstream, `git remote add upstream ...`
+* Review the readme.md for [Git Hooks](git/readme.md)
+* Set up hooks, `cp git/* .git/hooks`
 
 ### Installing VM
 Make sure to set up your environment first. You should successfully install VirtualBox, Vagrant via the download links above.
