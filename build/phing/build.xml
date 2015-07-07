@@ -304,4 +304,15 @@
           logoutput="true"
           checkreturn="true" />
   </target>
+
+  <!-- Set up the environment for validation. -->
+  <target name="setup:validate:all"
+          description="Sets up the environment for validation."
+          depends="git-reset, run-pt-installer" />
+
+  <!-- Set up the environment for testing. -->
+  <target name="setup:test:all"
+          description="Sets up the environment for testing."
+          depends="build" />
+
 </project>
