@@ -654,7 +654,8 @@ class Installer extends Command {
     }
 
     // @todo Install behat runner module?
-    $output->writeln("<info>Configuring Behat yml files...</info>");
+    // Create local Behat configuration.
+    $output->writeln("<info>Configuring Local Behat yml files...</info>");
 
     $parser = new Parser();
     $behat_config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.local.yml"));
@@ -665,6 +666,18 @@ class Installer extends Command {
 
     // Write adjusted config.yml to disk.
     $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/local.yml", Yaml::dump($behat_config, 4, 2));
+
+    $output->writeln("<info>Configuring Drupal VM Behat yml files...</info>");
+
+    // Create VM-specific Behat configuration.
+    $parser = new Parser();
+    $behat_config = $parser->parse(file_get_contents("{$this->currentProjectDirectory}/tests/behat/example.vm.yml"));
+    $behat_config['vm']['extensions']['Drupal\DrupalExtension']['drupal']['drupal_root'] = "/var/www/{$this->config['project']['acquia_subname']}";
+    $behat_config['vm']['extensions']['Behat\MinkExtension']['base_url'] = $this->config['project']['local_url'];
+    $behat_config['vm']['extensions']['Behat\MinkExtension']['javascript_session'] = $this->config['testing_framework']['behat']['javascript_driver'];
+
+    // Write adjusted config.yml to disk.
+    $this->fs->dumpFile("{$this->newProjectDirectory}/tests/behat/vm.yml", Yaml::dump($behat_config, 4, 2));
   }
 
   /**
