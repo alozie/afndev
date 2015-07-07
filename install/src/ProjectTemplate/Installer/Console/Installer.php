@@ -401,6 +401,14 @@ class Installer extends Command {
       'type' => 'nfs',
     );
 
+    // Add the tests directory to the synced folders list.
+    $vm_config['vagrant_synced_folders'][] = array(
+      'local_path' => "{$this->newProjectDirectory}/tests",
+      'destination' => '/tests',
+      'id' => 'project_template_tests',
+      'type' => 'nfs',
+    );
+
     // Use the docroot as the site's primary synced folder.
     $mount_point = "/var/www/{$this->config['project']['acquia_subname']}";
     $vm_config['vagrant_synced_folders'][0]['local_path'] = "{$this->newProjectDirectory}/docroot";
