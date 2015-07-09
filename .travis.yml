@@ -10,6 +10,10 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.drush/cache
 
+env:
+  - TEST_SUITE=validate:all
+  - TEST_SUITE=test:all
+
 notifications:
   email:
     - matthew.grasmick@acquia.com
@@ -50,9 +54,9 @@ before_script:
   # Clear drush release history cache, to pick up new releases.
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 
-  # Build the codebase
-  - phing -f build/phing/build.xml build
+  # Build the codebase and finish setup.
+  - phing -f build/phing/build.xml setup:$TEST_SUITE
 
 script:
   # Run tests
-  - phing -f build/phing/build.xml run-tests
+  - phing -f build/phing/build.xml $TEST_SUITE
