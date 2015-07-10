@@ -37,7 +37,7 @@
             value="${repo.root}/scripts/project.make.yml"
             override="true"/>
   <property name="drupal.base_url"
-            value="http://localhost/"/>
+            value="http://127.0.0.1:8080/"/>
 
   <property name="modules.custom.path"
             value="${repo.root}/docroot/sites/all/custom/modules"
@@ -267,6 +267,12 @@
   </target>
 
   <target name="test:behat" description="Behat testing" depends="phantomjs:launch">
+    <exec executable="${drush.bin}" dir="${docroot}" spawn="true">
+      <arg line="runserver ${drupal.base_url}"/>
+    </exec>
+    <waitfor maxwait="10" maxwaitunit="second">
+      <http url="http://127.0.0.1:8080"/>
+    </waitfor>
     <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
     <behat executable="${composer.bin}/behat"
            config="${behat.config}"
