@@ -571,6 +571,9 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 // @todo Set $ac_domain via value in config.yml.
 $ac_domain = 'default_example';
 
+// Primary modules directory.
+$module_dir = 'sites/all/modules';
+
 // Includes required Acquia configuration and set $base_url correctly.
 require_once DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
 
