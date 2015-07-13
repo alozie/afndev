@@ -8,7 +8,7 @@ project:
   acquia_subname: 'psproject'
   human_name: 'PS Project'
   # This is used for configuring your local $base_url.
-  local_url: 'http://localhost/'
+  local_url: 'http://127.0.0.1:8080/'
   # This is the default makefile that will be used to build dependencies.
   # You do not need to change this. It is located in /scripts.
   make_file: 'project.make.yml'
