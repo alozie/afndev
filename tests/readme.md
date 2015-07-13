@@ -1,6 +1,8 @@
 # Testing
 
-This directory contains all projects tests, grouped by testing technology.
+This directory contains all projects tests, grouped by testing technology. For
+all configuration related to builds that actually run these tests, please see
+the [build](/build) directory.
 
     tests
     ├── behat   - contains all Behat tests
