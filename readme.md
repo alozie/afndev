@@ -46,13 +46,27 @@ Please see the [Git Hooks Readme](/hooks/readme.md) for more information.
 
 ### Testing Framework
 
-A set of example tests and default configuration for the following testing technologies are included:
+The project template includes both [example tests](/tests) and also [example
+build configurations](/build) for Travis CI.
 
+#### Example Tests
+A set of example tests for the following testing technologies are included in the [tests](/tests) directory.
 * Behat
 * PHPUnit
 * Jmeter
 
-Please see the [Tests Readme](/tests/readme.md) for more information.
+#### Example Builds
+A starter configuration for running builds on Travis CI is included. The
+configuration lives in [.travis.yml] and [build]. At a high level, the build
+will do the following:
+* Execute a Travis CI build when a Pull Request is submitted to GitHub.
+** Set up a LAMP stack on Travis environment
+** Build dependencies (e.g., composer)
+** Run phing targets. Phing targets include:
+*** make           - executes drush make on [/scripts/project.make.yml]
+*** install-drupal - installs Drupal to Travis environment via `drush si` 
+*** validate:all   - runs code validation (e.g., code sniffer)
+*** test:all       - executes Behat and PHPUnit tests against installed Drupal instance
 
 ## Directory Structure
 
