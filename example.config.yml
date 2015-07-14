@@ -6,6 +6,7 @@ project:
   # settings.php includes. This will also determine the the directory name
   # of the new repository.
   acquia_subname: 'psproject'
+  # This is the human readable name for the project.
   human_name: 'PS Project'
   # This is used for configuring your local $base_url.
   local_url: 'http://127.0.0.1:8080/'
@@ -18,9 +19,13 @@ project:
 # The following documents will be copied into the new repository. Comment-out
 # any line to prevent it from being copied.
 docs:
+  # This provides Acquia-specific development standards.
   developer-guide: 'Developer Guide'
+  # This provides a sample template for a project-specific technical architecture document.
   drupal-architecture-template: 'Architecture Template'
+  # This provides a sample template for project-specific open source contribution guidelines.
   os-contribution: 'Open Source Contribution Guidelines'
+  # This provides Acquia-specific front-end standards.
   theming: 'Front End Handbook'
 
 # Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
@@ -31,10 +36,45 @@ vm:
   # must be installed for this work.
   # @see /box
   bootstrap: false
-  # This loads the necessary ansible requirements.
+  # This loads the necessary ansible requirements for bootstrapping the VM.
   rebuild_requirements: true
+  # Setting the IP address, if running multiple VMs concurrently.
+  vagrant_ip: 192.168.88.88
+  # Sets Drush Version. Currently Acquia Cloud uses 6.6.0.
   drush_version: 6.6.0
+  # Informs the VM which version of Drupal to run.
   drupal_major_version: 7
+  # Load project-specific Composer libraries.
+  composer_global_packages:
+    # Load Behat libraries.
+    - { name: 'behat/behat', release: '3.0.*' }
+    - { name: 'behat/mink', release: '1.6@stable' }
+    - { name: 'behat/mink-extension', release: '*' }
+    - { name: 'behat/mink-goutte-driver', release: '*' }
+    - { name: 'behat/mink-selenium2-driver', release: '*' }
+    - { name: 'behat/mink-zombie-driver', release: '*' }
+    - { name: 'behat/mink-browserkit-driver', release: '*' }
+    - { name: 'drupal/drupal-extension', release: '*' }
+  # Comment out any extra VM utilities you don't want to install. If you don't want
+  # to install *any* extras, make set this value to an empty set, e.g. `[]`.
+  installed_extras:
+    # GUI for database utility, [local_url]/adminer.
+    #- adminer
+    # Catches mail generated from local system, [local_url]:8025.
+    - mailhog
+    # Local memcache instance
+    - memcached
+    # GUI for log utility, pimpmylog.[local_url].
+    - pimpmylog
+    # Local SOLR instance, [local_url]:8443/solr.
+    - solr
+    # Local Varnish instance.
+    - varnish
+    # Turn on Xdebug.
+    - xdebug
+    # Local XHProf instance, xhprof.[local_url].
+    - xhprof
+
 
 # Configuration settings for new git repository.
 git:
@@ -44,21 +84,21 @@ git:
     - commit-msg
     # Runs PHP Code Sniffer prior to local git commits.
     - pre-commit
-  # The following remotes will be configured. You must replace the bracketed
-  # values below. They are not tokenized.
-  # @todo Tokenize the tokens!
+  # The following list of remotes can be configured for your project needs. The example list below is provided
+  # only for placeholder. Keys should be the remote. The value for the key should be your specific repository.
   remotes:
+    # Example GitHub placeholder. You can copy this for your fork (e.g. 'origin') and your project (e.g. 'upstream').
     github: 'git@github.com:[user]/[project].git'
+    # Example Acquia Cloud placeholder. Please change the tokens below for your Acquia Cloud sub.
     acquia: '[project-user]@[project-host].prod.hosting.acquia.com:[project-name].git'
 
 # The testing framework is limited to the `tests` directory, and includes
 # example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
 # this from being copied, remove the 'testing_framework' key.
 testing_framework:
+  # Behat-specific configuration.
   behat:
+    # Select the javascript driver for use within Behat testing.
+    # Supported values include: selenium2, zombie
+    # For help determining the most relevant driver: http://mink.behat.org/en/latest/guides/drivers.html.
     javascript_driver: 'selenium2'
-
-# These map to /docroot/sites/all/settings/[key].settings.php partials.
-starter_settings:
-  enable: true
-  akamai: true
