@@ -129,10 +129,6 @@ $conf['ah_paths_skip_auth'] = array();
  */
 if (isset($_ENV['AH_NON_PRODUCTION']) && $_ENV['AH_NON_PRODUCTION']) {
 
-  if(!defined('DRUPAL_ROOT')) {
-    define('DRUPAL_ROOT', getcwd());
-  }
-
   if (file_exists(DRUPAL_ROOT . '/sites/acquia.inc')) {
     require DRUPAL_ROOT . '/sites/acquia.inc';
     ac_protect_this_site();
