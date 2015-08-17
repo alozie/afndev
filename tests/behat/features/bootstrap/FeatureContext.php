@@ -21,12 +21,16 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   }
   /**
    * @BeforeSuite
+   *
+   * Truncate the watchdog table so we can check for errors later.
    */
   public static function prepare($event) {
     db_truncate('watchdog')->execute();
   }
   /**
-   * Run after every scenario.
+   * @AfterScenario
+   *
+   * Check for PHP notices and errors.
    */
   public function afterScenario($event) {
     $log = db_select('watchdog', 'w')
