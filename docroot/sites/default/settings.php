@@ -598,3 +598,6 @@ require_once DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
 
 // Includes functions for protecting a site via ip, password, etc.
 // require_once DRUPAL_ROOT . '/sites/all/settings/site-protection.settings.php';
+
+// Includes settings for Acquia Search (via apachesolr).
+// require_once DRUPAL_ROOT . '/sites/all/settings/search.settings.php';
