@@ -1,0 +1,85 @@
+<project name="setup" default="build">
+
+  <!-- This is run when a project is cloned to a new environment. -->
+  <target name="setup:all" description="Sets up a brand-new project by building dependencies, installing drupal, etc."
+      depends="setup:git-hooks, setup:behat, setup:make">
+  </target>
+
+  <!-- Delete the docroot directory. Used prior to running Drush make. -->
+  <target name="setup:rm-docroot" description="Remove the docroot folder.">
+    <if>
+      <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      <then>
+        <chmod file="${docroot}/sites/default" mode="0775"/>
+      </then>
+    </if>
+    <delete dir="${docroot}" failonerror="false" quiet="true" />
+  </target>
+
+  <!-- Drush make the build using a recursive strategy -->
+  <target name="setup:make" description="Rebuild core and contrib based on project's make.yml." depends="setup:rm-docroot">
+
+    <!-- Rebuild core -->
+    <drush command="make" assume="yes">
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${docroot}"</param>
+      <option name="projects">drupal</option>
+      <option name="concurrency">8</option>
+      <option name="no-gitinfofile"></option>
+    </drush>
+
+    <!-- Restore deleted docroot/sites . -->
+    <delete dir="${docroot}/sites" />
+    <symlink target="${repo.root}/sites" link="${docroot}/sites" />
+
+    <!-- Rebuild contrib -->
+    <drush command="make" assume="yes">
+      <option name="concurrency">8</option>
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${docroot}"</param>
+      <option name="no-core"></option>
+      <option name="no-gitinfofile"></option>
+      <option name="contrib-destination">sites/all</option>
+    </drush>
+  </target>
+
+  <!-- Install Drupal. -->
+  <target name="setup:install-drupal"
+          description="Installs Drupal using credentials from build.yml.">
+    <drush command="site-install" assume="yes" verbose="TRUE">
+      <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
+      <option name="site-name">"${project.human_name}"</option>
+      <option name="debug" />
+      <option name="site-mail">"${drupal.account.mail}"</option>
+      <option name="account-name">"${drupal.account.name}"</option>
+      <option name="account-mail">"${drupal.account.mail}"</option>
+      <param>"${project.install_profile}"</param>
+    </drush>
+  </target>
+
+  <target name="setup:sync-db" description="Overwrites local database with upstream database from Acquia Cloud.">
+    <property name="db.source" value="stg" />
+    <drush command="sql-drop" assume="yes"></drush>
+    <drush command="sql-sync" assume="yes">
+      <param>"${db.source}"</param>
+      <param>"@self"</param>
+      <!-- This key is defined in /sites/all/drush/drushrc.php. -->
+      <option name="structure-tables-key">"lightweight"</option>
+    </drush>
+  </target>
+
+  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory.">
+      <copy todir="${repo.root}/.git/hooks">
+        <fileset dir="${repo.root}/git/hooks"></fileset>
+      </copy>
+  </target>
+
+  <target name="setup:behat" description="Configures a local.yml file for executing Behat tests.">
+    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
+</project>

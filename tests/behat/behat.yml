@@ -14,7 +14,6 @@ default:
       default_session: goutte
       javascript_session: selenium2
       goutte: ~
-      selenium2: ~
       files_path: "%paths.base%/media"
     Drupal\DrupalExtension:
       blackbox: ~

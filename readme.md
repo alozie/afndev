@@ -24,7 +24,7 @@ When beginning a new Drupal project, do the following:
 
 ### Virtual Machine
 
-Project Template ships with the [Drupal VM](https://github.com/geerlingguy/drupal-vm), a simple virtual machine built on Ansible and Vagrant. The project template installer will generate all of the necessary vagrant configuration files in the `box` directory by default. 
+Project Template ships with the [Drupal VM](https://github.com/geerlingguy/drupal-vm), a simple virtual machine built on Ansible and Vagrant. The project template installer will generate all of the necessary vagrant configuration files in the `box` directory by default.
 
 For full instructions on how to configure and install the packaged VM, see [Drupal VM](https://github.com/geerlingguy/drupal-vm) documentation.
 
@@ -60,13 +60,13 @@ A starter configuration for running builds on Travis CI is included. The
 configuration lives in [.travis.yml] and [build]. At a high level, the build
 will do the following:
 * Execute a Travis CI build when a Pull Request is submitted to GitHub.
-** Set up a LAMP stack on Travis environment
-** Build dependencies (e.g., composer)
-** Run phing targets. Phing targets include:
-*** make           - executes drush make on [/scripts/project.make.yml]
-*** install-drupal - installs Drupal to Travis environment via `drush si` 
-*** validate:all   - runs code validation (e.g., code sniffer)
-*** test:all       - executes Behat and PHPUnit tests against installed Drupal instance
+  * Set up a LAMP stack on Travis environment
+  * Build dependencies (e.g., composer)
+  * Run phing targets. Phing targets include:
+    * make           - executes drush make on [/scripts/project.make.yml]
+    * install-drupal - installs Drupal to Travis environment via `drush si`
+    * validate:all   - runs code validation (e.g., code sniffer)
+    * test:all       - executes Behat and PHPUnit tests against installed Drupal instance
 
 ## Directory Structure
 
@@ -77,7 +77,7 @@ The following is an overview of the purpose of each top level directory:
       ├── box     - Contains the virtual machine.
       ├── build   - Contains build config files for CI solutions. E.g., phing configuration.
       ├── docroot - The drupal docroot.
-      ├── docs    - Contains high level project documentation. 
+      ├── docs    - Contains high level project documentation.
       ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
       ├── install - Contains Project Template Installer, which will be removed after installation.

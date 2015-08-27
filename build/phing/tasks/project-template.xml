@@ -1,0 +1,43 @@
+<!-- THESE TARGETS ARE FOR USE IN PROJECT TEMPLATE ONLY, NOT FOR CHILD PROJECTS
+     CREATED VIA PROJECT TEMPLATE. -->
+<project name="project-template" default="build">
+
+  <!-- Runs all project template related targets. -->
+  <target name="pt:all" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
+
+  <!-- Creates new configuration files from example.*.yml files. -->
+  <target name="pt:configure" description="Generates default .yml configuration files based on provided example files.">
+    <copy todir="${repo.root}">
+      <fileset dir="${repo.root}/install">
+        <include name="example.project.yml" />
+        <include name="example.make.yml" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+
+    <!-- Rename files by removing "example" prefix. -->
+    <move file="${repo.root}/example.make.yml" tofile="${repo.root}/make.yml" />
+    <move file="${repo.root}/example.project.yml" tofile="${repo.root}/project.yml" />
+  </target>
+
+  <!-- Create a new project directory based on current repository. -->
+  <target name="pt:create" description="Create a new project based on local repository." depends="setup:rm-docroot">
+    <!-- Remove from existing directory. -->
+    <phingcall target="setup:rm-docroot">
+      <property name="docroot" value="${pt.new.dir}/docroot" />
+    </phingcall>
+
+    <!-- (re)Create project directory. -->
+    <mkdir dir="${pt.new.dir}" />
+    <copy todir="${pt.new.dir}" >
+      <fileset dir="${repo.root}" casesensitive="false" defaultexcludes="false" excludes=".cvsignore SCCS SCCS/** vssver.scc .svn .svn/** ._* .DS_Store .darcs .darcs/** .git .git/** .gitattributes .gitmodules .idea .idea/** .editorconfig">
+        <exclude name="install/**" />
+      </fileset>
+    </copy>
+    <gitinit repository="${pt.new.dir}" />
+    <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
+    <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
+  </target>
+</project>

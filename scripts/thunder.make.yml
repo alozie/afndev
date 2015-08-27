@@ -4,17 +4,14 @@ core: 7.x
 projects:
   zen:
     type: theme
-    subdir: 
     version: ~
 
   basic:
     type: theme
-    subdir: 
     version: ~
 
   thunder:
     type: theme
-    subdir: 
     download:
       type: git
       url: git@github.com:acquia-pso/thunder-subthemes.git

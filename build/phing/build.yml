@@ -1,0 +1,28 @@
+# This file contains environment-specific settings required for executing
+# Phing tests. Non-environment-specific config should be in config.yml in the
+# project root.
+
+# Database Credentials. By default, these match Travis CI creds.
+db:
+  username: root
+  name: drupal
+  host: localhost
+  port: 3306
+  password: mamp
+
+# Drupal Account Credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: password
+  account.mail: no-reply@acquia.com
+
+pt:
+  new.dir: ${repo.root}/../${project.acquia_subname}
+
+# File and Directory locations.
+docroot: ${repo.root}/docroot
+composer.bin: ${repo.root}/bin
+drush.bin: ${composer.bin}/drush
+drush.cmd: ${drush.bin} -r ${docroot}
+drush.file: ${phing.project.name}.aliases.drushrc.php
+drush.root: ${docroot}
