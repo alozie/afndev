@@ -1,7 +1,7 @@
 <project name="setup" default="build">
 
   <!-- This is run when a project is cloned to a new environment. -->
-  <target name="setup:all" description="Sets up a brand-new project by building dependencies, installing drupal, etc."
+  <target name="setup:build-files" description="Generates all required files for a full build. E.g., generates config files, builds via `drush make`, etc."
       depends="setup:git-hooks, setup:behat, setup:make">
   </target>
 

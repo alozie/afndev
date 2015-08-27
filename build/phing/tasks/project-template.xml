@@ -3,7 +3,7 @@
 <project name="project-template" default="build">
 
   <!-- Runs all project template related targets. -->
-  <target name="pt:all" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
+  <target name="pt:new-project" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
 
   <!-- Creates new configuration files from example.*.yml files. -->
   <target name="pt:configure" description="Generates default .yml configuration files based on provided example files.">
@@ -39,5 +39,28 @@
     <gitinit repository="${pt.new.dir}" />
     <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
+  </target>
+
+  <!-- This target is meant to test Project Template itself on TravisCI.
+       A few things to note:
+       - We do not bootstrap the VM. It is not possible on TravisCI.
+       - We do not run validate:* targets, since they can be run in parallel.
+  -->
+  <target name="pt:self-test" description="Runs tests against acquia-pso/project-template proper.">
+    <if>
+      <equals arg1="${env.TRAVIS_REPO_SLUG}" arg2="acquia-pso/project-template" />
+      <then>
+        <phingcall target="pt:new-project" />
+        <phingcall target="setup:build-files" />
+        <phingcall target="setup:install-drupal" />
+        <phingcall target="vm:download" />
+        <phingcall target="vm:configure" />
+        <phingcall target="test:all" />
+      </then>
+      <else>
+        <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>
+        <echo>Please don't call "pt:self-test" anymore.</echo>
+      </else>
+    </if>
   </target>
 </project>

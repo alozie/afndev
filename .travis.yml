@@ -19,7 +19,11 @@ mysql:
 env:
   matrix:
     - TEST_SUITE=validate:all
-    - TEST_SUITE=test:all
+    - TEST_SUITE=pt:self-test
+    # - TEST_SUIT=setup:build-files
+    # - TEST_SUIT=setup:sync-db
+    # - TEST_SUIT=setup:install-drupal
+    # - TEST_SUIT=setup:tests:all
   global:
     secure: "nejyf8CI6gXkpetXe7Uaj+RvAMfM9FVGBz7LmZOTJHPA/yAwwhXGTCCPzM3sd18EQZegLcLo/SDRBJVOXGcERYEVkmfouYgsZIc72ds2BzLV0ukyVCf+Vjk2epkfnFpZPmjCSbrNVhFgdbjf8PGIl7v6HjQK6mBHg1PbLC6Pcvc="
 
