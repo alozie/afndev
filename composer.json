@@ -1,6 +1,16 @@
 {
   "name": "acquia-pso/project-template",
   "license": "proprietary",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/grasmash/phing"
+    },
+    {
+      "type": "pear",
+      "url": "http://pear.php.net"
+    }
+  ],
   "require": {
     "behat/behat":                  "3.0.*",
     "behat/mink":                   "1.6@stable",
@@ -16,10 +26,12 @@
     "phpunit/phpunit":              "4.6.*",
     "squizlabs/php_codesniffer":    "2.*",
     "pdepend/pdepend":              "1.1.*",
-    "phing/phing":                  "2.11.*",
+    "phing/phing":                  "dev-yaml-support",
     "jakoch/phantomjs-installer":   "1.9.8",
     "phpmd/phpmd":                  "1.*",
-    "drush/drush":                  "7.*"
+    "drush/drush":                  "7.*",
+    "pear-pear.php.net/HTTP_Request2": "2.2.*",
+    "pear-pear.php.net/VersionControl_Git": "0.4.*"
   },
   "config": {
     "bin-dir": "bin"
