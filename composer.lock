@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7f4fa82855a491d461683931b75fca89",
+    "hash": "5bb9835b93aca56d1882a324741cee24",
     "packages": [
         {
             "name": "behat/behat",
@@ -1473,16 +1473,16 @@
         },
         {
             "name": "phing/phing",
-            "version": "dev-yaml-support",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/grasmash/phing.git",
-                "reference": "7a8342532beb158c3e0b8ab550ca72b4f42eb4d0"
+                "url": "https://github.com/phingofficial/phing.git",
+                "reference": "4136999a6bd941de492b7188228ac308187dcdbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/grasmash/phing/zipball/daca98ad9da8d6319db5460fbc488c5c05f64ba5",
-                "reference": "7a8342532beb158c3e0b8ab550ca72b4f42eb4d0",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/4136999a6bd941de492b7188228ac308187dcdbc",
+                "reference": "4136999a6bd941de492b7188228ac308187dcdbc",
                 "shasum": ""
             },
             "require": {
@@ -1529,7 +1529,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.11.x-dev"
+                    "dev-master": "2.13.x-dev"
                 }
             },
             "autoload": {
@@ -1537,6 +1537,7 @@
                     "classes/phing/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "classes"
             ],
@@ -1561,12 +1562,7 @@
                 "task",
                 "tool"
             ],
-            "support": {
-                "issues": "https://www.phing.info/trac/report",
-                "irc": "irc://irc.freenode.net/phing",
-                "source": "https://github.com/grasmash/phing/tree/yaml-support"
-            },
-            "time": "2015-08-24 20:36:16"
+            "time": "2015-08-28 09:49:33"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
