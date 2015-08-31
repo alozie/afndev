@@ -9,10 +9,3 @@ projects:
   basic:
     type: theme
     version: ~
-
-  thunder:
-    type: theme
-    download:
-      type: git
-      url: git@github.com:acquia-pso/thunder-subthemes.git
-      branch: 7.x

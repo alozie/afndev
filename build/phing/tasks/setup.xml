@@ -28,9 +28,12 @@
       <option name="no-gitinfofile"></option>
     </drush>
 
-    <!-- Restore deleted docroot/sites . -->
-    <delete dir="${docroot}/sites" />
-    <symlink target="${repo.root}/sites" link="${docroot}/sites" />
+    <!-- Restore symlinks to subdirectories /sites . -->
+    <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
+    <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
+    <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
+    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/bustom" />
+    <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
 
     <!-- Rebuild contrib -->
     <drush command="make" assume="yes">

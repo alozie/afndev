@@ -21,10 +21,7 @@ class ProjectTemplateTest extends PHPUnit_Framework_TestCase
    */
   public function testProjectTemplateCreate() {
     $this->assertFileExists($this->newProjectDirectory);
-    $this->assertFileExists($this->newProjectDirectory . '/docroot/sites/all/drush');
-    $this->assertFileExists($this->newProjectDirectory . '/docroot/sites/all/settings');
     $this->assertFileNotExists($this->newProjectDirectory . '/install');
-    $this->assertFileNotExists($this->newProjectDirectory . '/src/ProjectTemplate');
   }
 
   /**
@@ -43,7 +40,7 @@ class ProjectTemplateTest extends PHPUnit_Framework_TestCase
   public function testSetupBehat() {
     // Assert that a local.yml file was created in the new project.
     $this->assertFileExists($this->projectDirectory . '/tests/behat/local.yml');
-    $behat_config = Yaml::parse(file_get_contents("{$this->newProjectDirectory}/tests/behat/local.yml"));
+    $behat_config = Yaml::parse(file_get_contents("{$this->projectDirectory}/tests/behat/local.yml"));
 
     // Assert that its values were modified to match values defined in
     // project's config.yml file.

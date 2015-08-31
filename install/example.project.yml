@@ -15,14 +15,6 @@ project:
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
 
-# The following documents will be copied into the new repository. Comment-out
-# any line to prevent it from being copied.
-docs:
-  developer-guide: 'Developer Guide'
-  drupal-architecture-template: 'Architecture Template'
-  os-contribution: 'Open Source Contribution Guidelines'
-  theming: 'Front End Handbook'
-
 # Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
 # the "vm" key.
 vm:
@@ -44,12 +36,6 @@ git:
     - commit-msg
     # Runs PHP Code Sniffer prior to local git commits.
     - pre-commit
-  # The following remotes will be configured. You must replace the bracketed
-  # values below. They are not tokenized.
-  # @todo Tokenize the tokens!
-  remotes:
-    github: 'git@github.com:[user]/[project].git'
-    acquia: '[project-user]@[project-host].prod.hosting.acquia.com:[project-name].git'
 
 # The testing framework is limited to the `tests` directory, and includes
 # example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
@@ -57,8 +43,3 @@ git:
 testing_framework:
   behat:
     javascript_driver: 'selenium2'
-
-# These map to /docroot/sites/all/settings/[key].settings.php partials.
-starter_settings:
-  enable: true
-  akamai: true

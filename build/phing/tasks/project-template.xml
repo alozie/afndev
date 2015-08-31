@@ -5,12 +5,15 @@
   <!-- Runs all project template related targets. -->
   <target name="pt:new-project" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
 
-  <!-- Creates new configuration files from example.*.yml files. -->
+  <!-- Creates new configuration files from example.*.yml files.
+       Note: this target must be called by itself first. Other targets must be
+       executed separately so that they may load the correct configuration   -->
   <target name="pt:configure" description="Generates default .yml configuration files based on provided example files.">
     <copy todir="${repo.root}">
       <fileset dir="${repo.root}/install">
         <include name="example.project.yml" />
         <include name="example.make.yml" />
+        <include name="example.local.yml" />
       </fileset>
       <filterchain>
         <expandproperties />
@@ -20,6 +23,7 @@
     <!-- Rename files by removing "example" prefix. -->
     <move file="${repo.root}/example.make.yml" tofile="${repo.root}/make.yml" />
     <move file="${repo.root}/example.project.yml" tofile="${repo.root}/project.yml" />
+    <move file="${repo.root}/example.local.yml" tofile="${repo.root}/local.yml" />
   </target>
 
   <!-- Create a new project directory based on current repository. -->
@@ -50,12 +54,13 @@
     <if>
       <equals arg1="${env.TRAVIS_REPO_SLUG}" arg2="acquia-pso/project-template" />
       <then>
-        <phingcall target="pt:new-project" />
+        <phingcall target="pt:create" />
         <phingcall target="setup:build-files" />
         <phingcall target="setup:install-drupal" />
+        <phingcall target="setup:behat" />
         <phingcall target="vm:download" />
         <phingcall target="vm:configure" />
-        <phingcall target="test:all" />
+        <phingcall target="tests:all" />
       </then>
       <else>
         <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>
