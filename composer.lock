@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5bb9835b93aca56d1882a324741cee24",
+    "hash": "a4a6235efee21a4f56d6885bda93f314",
     "packages": [
         {
             "name": "behat/behat",
@@ -1477,12 +1477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "4136999a6bd941de492b7188228ac308187dcdbc"
+                "reference": "3050abd8336b76d04f464454da22637cedb127aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/4136999a6bd941de492b7188228ac308187dcdbc",
-                "reference": "4136999a6bd941de492b7188228ac308187dcdbc",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/3050abd8336b76d04f464454da22637cedb127aa",
+                "reference": "3050abd8336b76d04f464454da22637cedb127aa",
                 "shasum": ""
             },
             "require": {
@@ -1562,7 +1562,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2015-08-28 09:49:33"
+            "time": "2015-08-31 16:57:44"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
