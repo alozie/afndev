@@ -23,16 +23,16 @@ Each testing type can be either executed directly, or via a corresponding Phing
 target. Phing will execute the tests with default values defined in your
 project's yaml configuration files (project.yml, local.yml). Examples: 
 
-* ./task.sh tests:all
-* ./task.sh tests:behat
-* ./task.sh tests:phpunit
+* `./task.sh tests:all`
+* `./task.sh tests:behat`
+* `./task.sh tests:phpunit`
 
 To execute the tests directly (without Phing) see the following examples:
 
-* ./bin/behat -c tests/behat/local.yml test/behat/features/Examples.feature
-* ./bin/phpunit tests/phpunit/ProjectTemplateTest.php
+* `./bin/behat -c tests/behat/local.yml test/behat/features/Examples.feature`
+* `./bin/phpunit tests/phpunit/ProjectTemplateTest.php`
 
 For more information on the commands, run:
 
-* ./bin/phpunit --help
-* ./bin/behat --help
+* `./bin/phpunit --help`
+* `./bin/behat --help`

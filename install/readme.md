@@ -49,6 +49,7 @@ follow from this repository's root directory:
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
   1. In your new project directory, run `./task.sh setup:build-files`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
+  1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration ``./task.sh setup:behat`
 
 ### Optionally, install Drupal
@@ -73,7 +74,7 @@ After project template has installed, there are several key activities to perfor
     * Virtual machine requirements
        * The installer will check for specific versions of dependent software
        * The installer will not bootstrap a VM if the project has a shared hostname or IP
-         * To manually install the VM, make adjustments to `config.yml` and `box/config.yml`
+         * To manually install the VM, make adjustments to `project.yml` and `box/project.yml`
          * Re-run the DrupalVM installation by following steps 5 and 6 of https://github.com/geerlingguy/drupal-vm/#2---build-the-virtual-machine
     * Virtual machine installation
        * If bootstrap is enabled, the installer will output all DrupalVM installation logs
@@ -96,7 +97,7 @@ After project template has installed, there are several key activities to perfor
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
       * Configure your local database credentials in `sites/default/local.settings.php`
       * Set up your local_url to work on your local LAMP stack by making an entry in `/etc/hosts`
-      * Visit the local_url that you set in config.yml
+      * Visit the local_url that you set in project.yml
     * If you used the included Ansible virtual machine ...
       * `cd box`
       * `vagrant plugin install vagrant-hostsupdater`
@@ -106,7 +107,7 @@ After project template has installed, there are several key activities to perfor
       * Your local hosts file should already be configured such that your
         local development URL points to your Ansible machine's VM. So, open
         your native browser and navigate to the local_url specified in
-        `config.yml`
+        `project.yml`
       * Verify your Drush alias has been created for your project, `drush sa`
   1. To push this to Acquia Cloud
     * `git checkout -b 7.x`

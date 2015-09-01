@@ -74,6 +74,9 @@
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory.">
     <copy todir="${repo.root}/.git/hooks">
       <fileset dir="${repo.root}/git/hooks"></fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
     </copy>
     <chmod mode="0755">
       <fileset dir="${repo.root}/.git/hooks"></fileset>
