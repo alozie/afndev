@@ -1,41 +1,35 @@
 # Build files
 
-This directory contains configuration files required for running automated
-builds via continuous integration solutions.
+This directory contains configuration files for running common project tasks. 
 
-Additionally, the configuration file for Travis CI lives in the the project
-root at /.travis.yml. It is required by Travis CI that the file live there.
+These may be used for running tasks locally, or for running automated builds via 
+continuous integration solutions. Additionally, the configuration file for 
+Travis CI lives in the the project root at /.travis.yml. It is required by 
+Travis CI that the file live there.
 
 This directory should not contain any test files. Those exist in the 
 /tests directory.
 
-## Build Process
+## Continuous Integration Build Process
 
 1. `.travis.yml` is read and executed by Travis CI. The environment is built
   by installing composer dependencies, apache, mysql, etc. Notable files
   involved in this step are:
   * `.travis.yml`
   * `composer.json`
-  * `install/composer.json`
-  * `example.config.yml`, which is copied to `config.yml` by Phing
-1. The phing `build` target is executed, causing Project Template to run its
-  installer and create a new project in `tmp/psproject`. Drupal is installed
-  to the MySQL DB. Notable files involved include:
-  * `config.yml` created from the previous step
-  * `build/phing/build.xml`
-1. The phing `run-tests` target is executed, which runs various validations 
-  tools to verify that the code meets PHP and Drupal coding standards. Notable 
-  files involved include:
-  * `tests/behat/example.local.yml` which is copied to `tmp/psproject/tests/behat/local.yml` by the installer
-  * All tests located in `tests`
-  * `build/phing/build.xml`
+1. Two phing targets are executed in parallel, validate:all and pt:self-test.
+   The pt:self-test target calls a number of other targets to simulated the 
+   creation of a new project via Project Template, and to run all automated
+   tests. Notable files include:
+  * `install/example.*.yml` files used for default configuration
+  * `build/phing/*` files
 
 ## Troubleshooting
 
 ### Phing
 
-To manually test a phing target, run the following commands:
+To manually test a phing target, run the following command in the docroot:
 ````
 composer install
-./bin/phing -f build/phing/build.xml run-pt-installer
+./bin/phing -f build/phing/build.xml target-name
 ````

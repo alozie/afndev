@@ -25,16 +25,25 @@ projects:
       # https://www.drupal.org/node/2211429#comment-10033677
       - https://www.drupal.org/files/issues/drupal-image-style-not-found-2211429-4.patch
 
-  acquia_purge: []
-  acquia_connector: []
-  entitycache: []
-  features: []
-  memcache: []
-  security_review: []
-  stage_file_proxy: []
-  transliteration: []
-  views: []
+  acquia_purge:
+    version: ~
+  acquia_connector:
+    version: ~
+  entitycache:
+    version: ~
+  features:
+    version: ~
+  memcache:
+    version: ~
+  security_review:
+    version: ~
+  stage_file_proxy:
+    version: ~
+  transliteration:
+    version: ~
+  views:
+    version: ~
 
 includes:
   # Thunder is a set of themes for PS Projects.
-  makefile: thunder.make.yml
+  makefile: scripts/thunder.make.yml

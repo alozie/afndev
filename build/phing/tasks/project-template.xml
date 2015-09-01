@@ -1,0 +1,71 @@
+<!-- THESE TARGETS ARE FOR USE IN PROJECT TEMPLATE ONLY, NOT FOR CHILD PROJECTS
+     CREATED VIA PROJECT TEMPLATE. -->
+<project name="project-template" default="build">
+
+  <!-- Runs all project template related targets. -->
+  <target name="pt:new-project" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
+
+  <!-- Creates new configuration files from example.*.yml files.
+       Note: this target must be called by itself first. Other targets must be
+       executed separately so that they may load the correct configuration   -->
+  <target name="pt:configure" description="Generates default .yml configuration files based on provided example files.">
+    <copy todir="${repo.root}">
+      <fileset dir="${repo.root}/install">
+        <include name="example.project.yml" />
+        <include name="example.make.yml" />
+        <include name="example.local.yml" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+
+    <!-- Rename files by removing "example" prefix. -->
+    <move file="${repo.root}/example.make.yml" tofile="${repo.root}/make.yml" />
+    <move file="${repo.root}/example.project.yml" tofile="${repo.root}/project.yml" />
+    <move file="${repo.root}/example.local.yml" tofile="${repo.root}/local.yml" />
+  </target>
+
+  <!-- Create a new project directory based on current repository. -->
+  <target name="pt:create" description="Create a new project based on local repository." depends="setup:rm-docroot">
+    <!-- Remove from existing directory. -->
+    <phingcall target="setup:rm-docroot">
+      <property name="docroot" value="${pt.new.dir}/docroot" />
+    </phingcall>
+
+    <!-- (re)Create project directory. -->
+    <mkdir dir="${pt.new.dir}" />
+    <copy todir="${pt.new.dir}" >
+      <fileset dir="${repo.root}" casesensitive="false" defaultexcludes="false" excludes=".cvsignore SCCS SCCS/** vssver.scc .svn .svn/** ._* .DS_Store .darcs .darcs/** .git .git/** .gitattributes .gitmodules .idea .idea/** .editorconfig">
+        <exclude name="install/**" />
+      </fileset>
+    </copy>
+    <gitinit repository="${pt.new.dir}" />
+    <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
+    <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
+  </target>
+
+  <!-- This target is meant to test Project Template itself on TravisCI.
+       A few things to note:
+       - We do not bootstrap the VM. It is not possible on TravisCI.
+       - We do not run validate:* targets, since they can be run in parallel.
+  -->
+  <target name="pt:self-test" description="Runs tests against acquia-pso/project-template proper.">
+    <if>
+      <equals arg1="${env.TRAVIS_REPO_SLUG}" arg2="acquia-pso/project-template" />
+      <then>
+        <phingcall target="pt:create" />
+        <phingcall target="setup:build-files" />
+        <phingcall target="setup:install-drupal" />
+        <phingcall target="setup:behat" />
+        <phingcall target="vm:download" />
+        <phingcall target="vm:configure" />
+        <phingcall target="tests:all" />
+      </then>
+      <else>
+        <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>
+        <echo>Please don't call "pt:self-test" anymore.</echo>
+      </else>
+    </if>
+  </target>
+</project>

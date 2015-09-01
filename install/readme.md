@@ -4,57 +4,67 @@ The project template has an installer which will do the following:
 
 * Create new project directory. It will be a sibling of the project template repository.
 * (optionally) Adds a Drupal VM for a local development environment
-* (optionally) Adds specified testing frameworks
-* (optionally) Adds specified project documentation
-* Include custom settings in settings.php
-* Remove installation artifacts
+* Adds testing frameworks
+* Adds project documentation
+* Includes custom settings in sites/all/settings
+* Removes installation artifacts
 
 ## Installer Requirements
 
 * Composer [Install](https://getcomposer.org/doc/00-intro.md#globally)
 * PHP 5.3.9+ (PHP 5.5 recommended)
   * [Homebrew Install](https://lastzero.net/2013/08/howto-install-php-5-5-and-phpunit-on-os-x-via-homebrew/)
-* PHP modules
-  * ctype
-  * json
-  * pcntl
 
 ### Virtual Machine Requirements
 
 If you'd like to use the included Ansible Drupal VM, you will need to install
 the following dependencies:
 
-* VirtualBox 4.3.x [Download](https://www.virtualbox.org/wiki/Downloads) 
+* VirtualBox 4.3.x [Download](https://www.virtualbox.org/wiki/Downloads)
   * Drupal VM also works with Parallels or VMware if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware))
 * Vagrant 1.7.2 or higher [Download](http://www.vagrantup.com/downloads.html)
 * Vagrant Host Updater
   * Instructions: `vagrant plugin install vagrant-hostsupdater`
-* Ansible 1.9.2 or higher [Install](http://docs.ansible.com/intro_installation.html). 
+* Ansible 1.9.2 or higher [Install](http://docs.ansible.com/intro_installation.html).
   * Mac / Linux only
   * OSX instructions from Homebrew: `brew install ansible`
   * Linux instructions:
     * `sudo easy_install pip`
     * `sudo CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments pip install ansible`
 
-## Configure
+## Create new project
 
-To create a new repository using Project Template's installer, run the 
+To create a new repository using Project Template's installer, run the
 follow from this repository's root directory:
 
-  1. Run `cp example.config.yml config.yml` to create your project-specific configuration file.
-  1. Modify `config.yml` with values for your new project.
-  
-Please note the importance of updating config.yml for the needs of your project.
-     
-## Installation
+### Create a new project, build all dependencies.
 
-To create a new repository using Project Template's installer, run the 
-follow from this repository's root directory:
+  1. `composer install`
+  1. Run `./task.sh pt:configure` to create your
+     project-specific configuration file. After running, `config.yml`, `make.yml`,
+     and `local.yml` should exist in the Project Template root directory.
+  1. Modify aforementioned .yml files with values for your new project.
+  1. Run `./task.sh pt:create`
+     This will create a new directory for your new project.
+  1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
+  1. In your new project directory, run `./task.sh setup:build-files`.
+     This will install git hooks, build dependencies in your make file, and setup behat configuration.
+  1. Install local git hooks `./task.sh setup:git-hooks`
+  1. Setup Behat configuration ``./task.sh setup:behat`
 
-  1. Run `composer install --working-dir=install` from the root directory
-  1. Run `php bin/project-template-installer install` to create your project.
-  1. Installation is complete! You now have a new repository that is a sibling
-     of the project template on your local machine.
+### Optionally, install Drupal
+
+  1. Optionally, you may install Drupal via Phing. To do this, verify correct
+     credentials in `local.yml` and then run:
+     `./task.sh setup:install-drupal`
+
+### Optionally, execute tests
+
+  1. To run code validation (phpcs, phpmd, pdepend) against your new project
+     run: `./task.sh validate:all`
+  1. To run automated tests (behat, phpunit) against your new project, run:
+     `./task.sh tests:all`. Please note that Behat
+     tests will only run successfully if Drupal is installed.
      
 ## Next Steps
 
@@ -71,19 +81,16 @@ After project template has installed, there are several key activities to perfor
        * Check for errors and create JIRA tickets with any issues you believe to be a bug
   1. Update your project's make file
     * Add contributed modules and themes to `scripts/project.make.yml`
-    * Execute Drush Make from the project's docroot (e.g. `drush make ../scripts/project.make.yml`) 
+    * Execute Drush Make from the project's docroot (e.g. `drush make ../scripts/project.make.yml`)
   1. Update your project readme.md (in project root)
     * Review each section and update the examples for your project needs
-  1. Update the configured project documentation (in `docs`)
+  1. Update the project documentation (in `docs`)
     * Architecture template, review each section and begin to specify your projects architecture
     * Open Source Contribution template, review the contents and ensure the contents meet the needs of your project
   1. Review and include common settings snippets (in `docroot\sites\all\settings`)
     * Review which settings snippets in `docroot\sites\all\settings` are relevant for your project
     * Update the contents of each relevant setting in `docroot\sites\all\settings`
-    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)  
-  1. Configure hooks for your project
-    * Update the git hooks found in `git` directory
-    * Update the Acquia Cloud deployment hooks found in `hooks` directory
+    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)
 
 ## Verification
   1. To visit the site locally via browser.
@@ -108,28 +115,10 @@ After project template has installed, there are several key activities to perfor
     * `git commit -m 'Initial commit'`
     * `git push acquia -f`
   1. Enable TravisCI for your project.
-  
-  
+
 ## Project Removal
 
 If you wish to remove a project, it is best to follow these steps:
 
   1. Destroy the VM (run `vagrant destroy` from the `box` directory)
   1. Remove project files (run `sudo rm -rf /path/to/project`)
-  
-
-## Explore what you have
-
-Read "Exploring project template"
-
-## Under the hood
-
-If you're interested in modifying the installer and contributing 
-
-The installer for Project Template uses an implementation of Symfony's console
-component. Salient files for the installation process include:
-
-* _src/ProjectTemplate/Installer/Installer.php_
-* composer.json
-* bin/project-template-installer
-* bin/project-template-installer.php

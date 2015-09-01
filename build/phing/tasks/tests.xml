@@ -1,0 +1,59 @@
+<project name="tests" default="build">
+
+  <target name="tests:all" description="Runs all tests against Drupal."
+          depends="tests:security-updates, tests:behat, tests:phpunit"/>
+
+  <target name="tests:phantomjs:launch"
+          description="Launches a GhostDriver.">
+    <exec command="${composer.bin}/phantomjs --webdriver=4444"
+          passthru="true"
+          spawn="true"
+          checkreturn="true" />
+  </target>
+
+  <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
+  <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
+  <target name="tests:security-updates"
+          description="Checks an installed site for security updates on modules">
+    <exec dir="${docroot}"
+          command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
+          logoutput="true"
+          passthru="true"/>
+  </target>
+
+  <!-- If you experience 'Maximum function nesting level' errors in your PHP
+       error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
+  <target name="tests:behat" description="Behat testing" depends="tests:phantomjs:launch">
+
+    <!-- As with any property, this can be overridden at runtime, permitting
+         Behat execution using any configuration -->
+    <property name="behat.config" value="${repo.root}/tests/behat/local.yml" />
+    <property name="behat.profile" value="local" />
+
+    <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
+      <arg line="runserver ${project.local_url}"/>
+    </exec>
+    <waitfor maxwait="10" maxwaitunit="second">
+      <http url="http://127.0.0.1:8080"/>
+    </waitfor>
+
+    <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
+    <behat executable="${repo.root}/bin/behat"
+           config="${behat.config}"
+           profile="${behat.profile}"
+           verbose="true"
+           strict="true"
+           haltonerror="false"
+           returnProperty="behatPass"/>
+  </target>
+
+  <!-- Execute PHPUnit tests. -->
+  <target name="tests:phpunit"
+          description="Checks an installed site for security updates on modules">
+    <exec dir="${repo.root}/tests/phpunit"
+          command="${repo.root}/bin/phpunit ./*"
+          logoutput="true"
+          checkreturn="true"/>
+  </target>
+
+</project>

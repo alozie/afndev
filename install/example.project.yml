@@ -1,0 +1,45 @@
+project:
+  # The acquia_subname value is the machine name of your subscription on Acquia
+  # Cloud. E.g., if your dev env URL on Acquia Cloud is
+  # http://psprojectdev.prod.acquia-sites.com/ then your acquia_subname is
+  # "psproject". This value is used to correctly configure settings in
+  # settings.php includes. This will also determine the the directory name
+  # of the new repository.
+  acquia_subname: 'psproject'
+  human_name: 'PS Project'
+  # This is used for configuring your local $base_url.
+  local_url: 'http://127.0.0.1:8080/'
+  # This is the default makefile that will be used to build dependencies.
+  # You do not need to change this. It is located in /scripts.
+  make_file: 'make.yml'
+  # Please ensure your profile is also in your make file.
+  install_profile: 'standard'
+
+# Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
+# the "vm" key.
+vm:
+  # If true, this provisions and launches the virtual machine as part of the
+  # installation process. Note that dependencies (vagrant, ansible, virtual box)
+  # must be installed for this work.
+  # @see /box
+  bootstrap: false
+  # This loads the necessary ansible requirements.
+  rebuild_requirements: true
+  drush_version: 6.6.0
+  drupal_major_version: 7
+
+# Configuration settings for new git repository.
+git:
+  # These git hooks will be installed in .git/hooks.
+  hooks:
+    # Validates commit message syntax prior to local git commits.
+    - commit-msg
+    # Runs PHP Code Sniffer prior to local git commits.
+    - pre-commit
+
+# The testing framework is limited to the `tests` directory, and includes
+# example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
+# this from being copied, remove the 'testing_framework' key.
+testing_framework:
+  behat:
+    javascript_driver: 'selenium2'

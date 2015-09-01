@@ -1,12 +1,16 @@
 # Ignore configuration files that may contain sensitive information.
-docroot/sites/*/local.settings.php
-sites/*/local.settings.php
+docroot
+sites/*/*/local.settings.php
 build/phing/build.properties
-config.yml
 
 # Ignore paths that contain user-generated content.
-docroot/sites/*/files
-docroot/sites/*/private
+sites/*/files
+sites/*/private
+
+# Ignore contrib modules. These should be created during build process.
+sites/*/*/contrib
+sites/default/*/contrib
+sites/*/libraries
 
 # Ignore build artifacts
 bin/*

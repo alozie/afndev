@@ -1,0 +1,13 @@
+# This file contains environment-specific settings required for executing
+# Phing tests. Non-environment-specific config should be in config.yml in the
+# project root.
+pt:
+  new.dir: ${repo.root}/../${project.acquia_subname}
+
+# File and Directory locations.
+docroot: ${repo.root}/docroot
+composer.bin: ${repo.root}/bin
+drush.bin: ${composer.bin}/drush
+drush.cmd: ${drush.bin} -r ${docroot}
+drush.file: ${phing.project.name}.aliases.drushrc.php
+drush.root: ${docroot}

@@ -601,3 +601,8 @@ require_once DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
 
 // Includes settings for Acquia Search (via apachesolr).
 // require_once DRUPAL_ROOT . '/sites/all/settings/search.settings.php';
+
+// Includes local settings.
+if (file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
+  require_once DRUPAL_ROOT . '/sites/all/settings/local.settings.php';
+}

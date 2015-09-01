@@ -18,7 +18,7 @@ local:
     Behat\MinkExtension:
       javascript_session: selenium2
       # configure the base url for your site
-      base_url: 'http://127.0.0.1:8080/'
+      base_url: ${project.local_url}
       # set default command for "Show last response" step.
       show_cmd: "open %s"
       # ADDITIONAL OPTIONS FOR WEB DRIVERS
@@ -53,6 +53,6 @@ local:
     Drupal\DrupalExtension:
       drupal:
         # This must be an absolute path.
-        drupal_root: "/my/project/repo"
+        drupal_root: ${docroot}
       drush:
         alias: '@self'

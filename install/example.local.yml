@@ -1,0 +1,16 @@
+# Database Credentials. By default, these match Travis CI creds.
+# @todo split creds into separate, optional, gitignored settings file.
+# consider putting this in project root and using it for both phing and also
+# generating local.settings.php.
+db:
+  username: root
+  name: drupal
+  host: localhost
+  port: 3306
+  password: ''
+
+# Drupal Account Credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: password
+  account.mail: no-reply@acquia.com
