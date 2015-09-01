@@ -4,10 +4,10 @@ The project template has an installer which will do the following:
 
 * Create new project directory. It will be a sibling of the project template repository.
 * (optionally) Adds a Drupal VM for a local development environment
-* Adds specified testing frameworks
-* Adds specified project documentation
-* Include custom settings in settings.php
-* Remove installation artifacts
+* Adds testing frameworks
+* Adds project documentation
+* Includes custom settings in sites/all/settings
+* Removes installation artifacts
 
 ## Installer Requirements
 
@@ -32,50 +32,40 @@ the following dependencies:
     * `sudo easy_install pip`
     * `sudo CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments pip install ansible`
 
-## Configure
+## Create new project
 
 To create a new repository using Project Template's installer, run the
 follow from this repository's root directory:
 
 ### Create a new project, build all dependencies.
 
-  1. Run `./bin/phing -f build/phing/build.xml pt:configure` to create your
-     project-specific configuration file. After running, `config.yml` and `make.yml`
-     should exist in the Project Template root directory.
-  1. Modify `config.yml` and `make.yml` with values for your new project.
-  1. Run `./bin/phing -f build/phing/build.xml pt:create`
+  1. `composer install`
+  1. Run `./task.sh pt:configure` to create your
+     project-specific configuration file. After running, `config.yml`, `make.yml`,
+     and `local.yml` should exist in the Project Template root directory.
+  1. Modify aforementioned .yml files with values for your new project.
+  1. Run `./task.sh pt:create`
      This will create a new directory for your new project.
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
-  1. In your new project directory, run `./bin/phing -f build/phing/build.xml setup:build-files`.
+  1. In your new project directory, run `./task.sh setup:build-files`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
+  1. Install local git hooks `./task.sh setup:git-hooks`
+  1. Setup Behat configuration ``./task.sh setup:behat`
 
 ### Optionally, install Drupal
 
-  1. Optionally, you may install Drupal via Phing. To do this, copy
-     `build/phing/example.local.yml` to `build/phing/local.yml` and populate it
-     with your local machine's MySQL credentials. Then, run:
-     `./bin/phing -f build/phing/build.xml setup:install-drupal`
+  1. Optionally, you may install Drupal via Phing. To do this, verify correct
+     credentials in `local.yml` and then run:
+     `./task.sh setup:install-drupal`
 
-### Optionally, execute tests against new project.
+### Optionally, execute tests
 
   1. To run code validation (phpcs, phpmd, pdepend) against your new project
-     run: `./bin/phing -f build/phing/build.xml validate:all`
+     run: `./task.sh validate:all`
   1. To run automated tests (behat, phpunit) against your new project, run:
-     `./bin/phing -f build/phing/build.xml tests:all`. Please note that Behat
+     `./task.sh tests:all`. Please note that Behat
      tests will only run successfully if Drupal is installed.
-
-Please note the importance of updating config.yml for the needs of your project.
-
-## Installation
-
-To create a new repository using Project Template's installer, run the
-follow from this repository's root directory:
-
-  1. Run `composer install --working-dir=install` from the root directory
-  1. Run `php bin/project-template-installer install` to create your project.
-  1. Installation is complete! You now have a new repository that is a sibling
-     of the project template on your local machine.
-
+     
 ## Next Steps
 
 After project template has installed, there are several key activities to perform for your project:
@@ -94,16 +84,13 @@ After project template has installed, there are several key activities to perfor
     * Execute Drush Make from the project's docroot (e.g. `drush make ../scripts/project.make.yml`)
   1. Update your project readme.md (in project root)
     * Review each section and update the examples for your project needs
-  1. Update the configured project documentation (in `docs`)
+  1. Update the project documentation (in `docs`)
     * Architecture template, review each section and begin to specify your projects architecture
     * Open Source Contribution template, review the contents and ensure the contents meet the needs of your project
   1. Review and include common settings snippets (in `docroot\sites\all\settings`)
     * Review which settings snippets in `docroot\sites\all\settings` are relevant for your project
     * Update the contents of each relevant setting in `docroot\sites\all\settings`
     * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)
-  1. Configure hooks for your project
-    * Update the git hooks found in `git` directory
-    * Update the Acquia Cloud deployment hooks found in `hooks` directory
 
 ## Verification
   1. To visit the site locally via browser.
@@ -129,27 +116,9 @@ After project template has installed, there are several key activities to perfor
     * `git push acquia -f`
   1. Enable TravisCI for your project.
 
-
 ## Project Removal
 
 If you wish to remove a project, it is best to follow these steps:
 
   1. Destroy the VM (run `vagrant destroy` from the `box` directory)
   1. Remove project files (run `sudo rm -rf /path/to/project`)
-
-
-## Explore what you have
-
-Read "Exploring project template"
-
-## Under the hood
-
-If you're interested in modifying the installer and contributing
-
-The installer for Project Template uses an implementation of Symfony's console
-component. Salient files for the installation process include:
-
-* _src/ProjectTemplate/Installer/Installer.php_
-* composer.json
-* bin/project-template-installer
-* bin/project-template-installer.php
