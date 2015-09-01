@@ -41,7 +41,7 @@ follow from this repository's root directory:
 
   1. `composer install`
   1. Run `./task.sh pt:configure` to create your
-     project-specific configuration file. After running, `config.yml`, `make.yml`,
+     project-specific configuration file. After running, `project.yml`, `make.yml`,
      and `local.yml` should exist in the Project Template root directory.
   1. Modify aforementioned .yml files with values for your new project.
   1. Run `./task.sh pt:create`
@@ -49,7 +49,6 @@ follow from this repository's root directory:
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
   1. In your new project directory, run `./task.sh setup:build-files`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
-  1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration ``./task.sh setup:behat`
 
 ### Optionally, install Drupal

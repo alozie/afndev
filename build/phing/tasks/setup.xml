@@ -72,9 +72,12 @@
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory.">
-      <copy todir="${repo.root}/.git/hooks">
-        <fileset dir="${repo.root}/git/hooks"></fileset>
-      </copy>
+    <copy todir="${repo.root}/.git/hooks">
+      <fileset dir="${repo.root}/git/hooks"></fileset>
+    </copy>
+    <chmod mode="0755">
+      <fileset dir="${repo.root}/.git/hooks"></fileset>
+    </chmod>
   </target>
 
   <target name="setup:behat" description="Configures a local.yml file for executing Behat tests.">
