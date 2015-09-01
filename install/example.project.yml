@@ -10,7 +10,7 @@ project:
   # This is used for configuring your local $base_url.
   local_url: 'http://127.0.0.1:8080/'
   # This is the default makefile that will be used to build dependencies.
-  # You do not need to change this. It is located in /scripts.
+  # You do not need to change this.
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
