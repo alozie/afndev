@@ -6,11 +6,13 @@ project:
   # settings.php includes. This will also determine the the directory name
   # of the new repository.
   acquia_subname: 'psproject'
+  # Used for enforcing correct git commit msg syntax.
+  prefix: 'PSP'
   human_name: 'PS Project'
   # This is used for configuring your local $base_url.
   local_url: 'http://127.0.0.1:8080/'
   # This is the default makefile that will be used to build dependencies.
-  # You do not need to change this.
+  # You do not need to change this. It is located in /scripts.
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
