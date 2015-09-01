@@ -24,12 +24,14 @@ This directory should not contain any test files. Those exist in the
   * `install/example.*.yml` files used for default configuration
   * `build/phing/*` files
 
-## Troubleshooting
 
-### Phing
+## Manual execution of tasks
 
-To manually test a phing target, run the following command in the docroot:
-````
-composer install
-./bin/phing -f build/phing/build.xml target-name
-````
+Before attempting to execute any tasks, verify that composer dependencies
+are built by running `composer install` in the project root.
+
+* For a full list of the available Phing targets, run `./task.sh -list`
+* To manually test a phing target, run the following command matching the
+  the following pattern: `./task.sh <target-name>`. 
+  For example `./task.sh validate:all`
+* To run Phing directly from the binary, simply run `./bin/phing -f build/phing/build.xml <arguments>`
