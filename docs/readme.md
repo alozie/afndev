@@ -1,8 +1,8 @@
 # Table of Contents
 
-* Onboarding
-* Developer Guide
-* OS Contribution
-* Theming Guide
+* [Onboarding](/docs/onboarding.md)
+* [Project Architecture](architecture.md)
+* [Developer Guide](/developer-guide.md)
+* [OS Contribution](os-contribution.md)
+* [Theming Guide](theming.md)
 
-@todo Add more to this!

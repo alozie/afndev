@@ -60,13 +60,12 @@ A starter configuration for running builds on Travis CI is included. The
 configuration lives in [.travis.yml] and [build]. At a high level, the build
 will do the following:
 * Execute a Travis CI build when a Pull Request is submitted to GitHub.
-  * Set up a LAMP stack on Travis environment
   * Build dependencies (e.g., composer)
   * Run phing targets. Phing targets include:
-    * make           - executes drush make on [/scripts/project.make.yml]
-    * install-drupal - installs Drupal to Travis environment via `drush si`
-    * validate:all   - runs code validation (e.g., code sniffer)
-    * test:all       - executes Behat and PHPUnit tests against installed Drupal instance
+    * setup:make           - executes drush make on [/scripts/project.make.yml]
+    * setup:install-drupal - installs Drupal to Travis environment via `drush si`
+    * validate:all         - runs code validation (e.g., code sniffer)
+    * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
 ## Directory Structure
 
@@ -75,15 +74,15 @@ The following is an overview of the purpose of each top level directory:
     root
       ├── bin     - Contains binaries built by Composer, as well as installation binaries.
       ├── box     - Contains the virtual machine.
-      ├── build   - Contains build config files for CI solutions. E.g., phing configuration.
-      ├── docroot - The drupal docroot. Intentionally .gitignored.
+      ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
+      ├── docroot - The drupal docroot. Intentionally .gitignored. Created only during builds.
       ├── docs    - Contains high level project documentation.
       ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
-      ├── install - Contains default configuration files for use at install time.
-      ├── patches - Contains private patches to be used by scripts/make.yml.
+      ├── install - Contains Project Template configuration files. Removed from child projects.
+      ├── patches - Contains private patches to be used by make.yml.
       ├── scripts - Contains a variety of utility scripts that are not part of the build process.
-      ├── tests   - Contains all test files.
+      ├── tests   - Contains all test files and configuration.
 
 # Contributing
 
