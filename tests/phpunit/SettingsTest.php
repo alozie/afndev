@@ -1,14 +1,16 @@
 <?php
 
-class SettingsTest extends PHPUnit_Framework_TestCase
-{
-  public function testPhpunit()
-  {
-    $this->assertTrue(TRUE);
-  }
+/**
+ * @file
+ * Test configuration in settings.php.
+ */
 
-  public function testProd()
-  {
+class SettingsTest extends PHPUnit_Framework_TestCase {
+
+  /**
+   * Test configuration for production environment on ACE.
+   */
+  public function testProd() {
     $_ENV['AH_SITE_ENVIRONMENT'] = 'prod';
     $_ENV['AH_SITE_GROUP'] = 'projectid';
 
@@ -35,11 +37,11 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(TRUE, $conf['page_cache_without_database']);
     $this->assertEquals(TRUE, $conf['redirect_page_cache']);
 
-    // Cron
+    // Cron.
     $this->assertEquals(TRUE, $conf['acquia_spi_use_cron']);
     $this->assertEquals(FALSE, $conf['cron_safe_threshold']);
 
-    // Files
+    // Files.
     $this->assertEquals('sites/default/files', $conf['file_public_path']);
     $this->assertEquals('sites/all', $conf['composer_manager_file_dir']);
     $this->assertEquals('sites/all/vendor', $conf['composer_manager_vendor_dir']);
@@ -49,12 +51,14 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(FALSE, $conf['composer_manager_autobuild_packages']);
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
 
-    // Testing
+    // Testing.
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
   }
 
-  public function testTest()
-  {
+  /**
+   * Test configuration for test/stg environment on ACE.
+   */
+  public function testTest() {
     $_ENV['AH_SITE_ENVIRONMENT'] = 'test';
     $_ENV['AH_SITE_GROUP'] = 'projectid';
 
@@ -63,7 +67,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
 
     $this->assertContains('projectidtest.prod.acquia-sites.com', $base_url);
 
-    // Assert cache.settings.php
+    // Assert cache.settings.php.
     $this->assertEquals(0, $conf['cache_lifetime']);
     $this->assertEquals(1800, $conf['page_cache_maximum_age']);
     $this->assertEquals('./sites/all/modules/contrib/memcache/memcache.inc', $conf['cache_backends'][0]);
@@ -75,10 +79,10 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(TRUE, $conf['page_cache_without_database']);
     $this->assertEquals(TRUE, $conf['redirect_page_cache']);
 
-    // Cron
+    // Cron.
     $this->assertEquals(FALSE, $conf['acquia_spi_use_cron']);
 
-    // Files
+    // Files.
     $this->assertEquals('sites/default/files', $conf['file_public_path']);
     $this->assertEquals('sites/all', $conf['composer_manager_file_dir']);
     $this->assertEquals('sites/all/vendor', $conf['composer_manager_vendor_dir']);
@@ -88,12 +92,14 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(FALSE, $conf['composer_manager_autobuild_packages']);
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
 
-    // Testing
+    // Testing.
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
   }
 
-  public function testDev()
-  {
+  /**
+   * Test configuration for dev environment on ACE.
+   */
+  public function testDev() {
     $_ENV['AH_SITE_ENVIRONMENT'] = 'dev';
     $_ENV['AH_SITE_GROUP'] = 'projectid';
 
@@ -102,7 +108,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
 
     $this->assertContains('projectiddev.prod.acquia-sites.com', $base_url);
 
-    // Assert cache.settings.php
+    // Assert cache.settings.php.
     $this->assertEquals(0, $conf['cache_lifetime']);
     $this->assertEquals(1800, $conf['page_cache_maximum_age']);
     $this->assertEquals('./sites/all/modules/contrib/memcache/memcache.inc', $conf['cache_backends'][0]);
@@ -114,10 +120,10 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(TRUE, $conf['page_cache_without_database']);
     $this->assertEquals(TRUE, $conf['redirect_page_cache']);
 
-    // Cron
+    // Cron.
     $this->assertEquals(FALSE, $conf['acquia_spi_use_cron']);
 
-    // Files
+    // Files.
     $this->assertEquals('sites/default/files', $conf['file_public_path']);
     $this->assertEquals('sites/all', $conf['composer_manager_file_dir']);
     $this->assertEquals('sites/all/vendor', $conf['composer_manager_vendor_dir']);
@@ -127,7 +133,8 @@ class SettingsTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(FALSE, $conf['composer_manager_autobuild_packages']);
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
 
-    // Testing
+    // Testing.
     $this->assertEquals(FALSE, $conf['admin_menu_cache_client']);
   }
+
 }

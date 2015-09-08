@@ -4,37 +4,36 @@
 
 # Build the list of PHP blacklisted functions
 checks[1]="\<var_dump("
-checks[2]="\<print_r("
-checks[3]="\<die("
+checks[2]="\<die("
 
 # Blacklist Drupal's built-in debugging function
-checks[4]="\<debug("
+checks[3]="\<debug("
 
 # Blacklist Devel's debugging functions
-checks[5]="\<dpm("
-checks[6]="\<krumo("
-checks[7]="\<dpr("
-checks[8]="\<dsm("
-checks[9]="\<dd("
-checks[10]="\<ddebug_backtrace("
-checks[11]="\<dpq("
-checks[12]="\<dprint_r("
-checks[13]="\<drupal_debug("
-checks[14]="\<dsm("
-checks[15]="\<dvm("
-checks[16]="\<dvr("
-checks[17]="\<kpr("
-checks[18]="\<kprint_r("
+checks[4]="\<dpm("
+checks[5]="\<krumo("
+checks[6]="\<dpr("
+checks[7]="\<dsm("
+checks[8]="\<dd("
+checks[9]="\<ddebug_backtrace("
+checks[10]="\<dpq("
+checks[11]="\<dprint_r("
+checks[12]="\<drupal_debug("
+checks[13]="\<dsm("
+checks[14]="\<dvm("
+checks[15]="\<dvr("
+checks[16]="\<kpr("
+checks[17]="\<kprint_r("
+checks[18]="\<kdevel_print_object("
 checks[19]="\<kdevel_print_object("
-checks[20]="\<kdevel_print_object("
 
 # Blacklist code conflicts resulting from Git merge.
-checks[21]="<<<<<<<"
-checks[22]=">>>>>>>"
+checks[20]="<<<<<<<"
+checks[21]=">>>>>>>"
 
 # Blacklist Javascript debugging functions
-checks[23]="\<console.log("
-checks[24]="\<alert("
+checks[22]="\<console.log("
+checks[23]="\<alert("
 
 # Get the total number of blacklisted functions.
 element_count=${#checks[@]}
@@ -97,11 +96,21 @@ NO_SYNTAX_ERROR=0
 # PHP syntax error code
 SYNTAX_ERROR=255
 
-# Code Sniffer error code
+PHPCS_BIN=bin/phpcs
+
+# Code Sniffer failed
 PHPCS_FAILED=1
+
+# Code sniffer error
+PHPCS_ERROR=2
 
 # Code Sniffer success code
 PHPCS_PASSED=0
+
+if [ ! -f $PHPCS_BIN ];
+then
+   echo "PHP Code Sniffer was not found in this project's bin directory. Please run composer install. "
+fi
 
 for file in $LIST
 do
@@ -115,13 +124,28 @@ do
       # Default PHP error code
       PHP_CODE=0
 
-      # Run the PHP Codesniffer validation
-      phpcs --standard=Drupal $file >&2
+      # Validate Behat and PHPunit tests against PSR-2
+      if [[ $file = "tests/behat"* || $file = "tests/phpunit"* ]]; then
+        # Run the PHP Codesniffer validation
+        PHPCS_STANDARD=PSR2
+
+      else
+        # Validate all other files against Drupal Coding Standards.
+        PHPCS_STANDARD=vendor/drupal/coder/coder_sniffer/Drupal
+      fi
+
+      ${PHPCS_BIN} --standard=${PHPCS_STANDARD} $file >&2
 
       # Default PHPCS error code
       PHPCS_CODE=$?
 
-      if [ "$PHPCS_CODE" == "$PHPCS_FAILED" ]; then
+      if [ "$PHPCS_CODE" == "$PHPCS_ERROR" ]; then
+        RETVAL=2
+
+      elif [ "$PHPCS_CODE" == "$PHPCS_FAILED" ]; then
+        echo "Failed validation against ${PHPCS_STANDARD} standard"
+        echo "You may be able to automatically fix these errors by running:"
+        echo "${ROOT_DIR}bin/phpcbf --standard=${PHPCS_STANDARD} ${file}"
         RETVAL=1
 
       # Search for debugging function only if PHP Codesniffer validation passed

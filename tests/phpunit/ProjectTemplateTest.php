@@ -75,4 +75,5 @@ class ProjectTemplateTest extends PHPUnit_Framework_TestCase {
     // Asserts that all Phing properties have been expanded.
     $this->assertNotContains('${', file_get_contents($this->projectDirectory . '/box/config.yml'));
   }
+
 }
