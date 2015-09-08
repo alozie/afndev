@@ -16,6 +16,10 @@
     <include name="sites/all/modules/features/**"/>
   </fileset>
 
+  <fileset dir="${repo.root}" id="tests.files" expandsymboliclinks="true">
+    <include name="tests/**/*.php" />
+  </fileset>
+
   <fileset dir="${repo.root}" id="custom.themes">
     <include name="sites/all/themes/custom/**"/>
   </fileset>

@@ -9,7 +9,7 @@
  *
  * Provides a set of example Classy Panel Styles definitions.
  */
-function dependencies[] = classy_panel_styles_classy_panel_styles() {
+function classy_panel_styles_classy_panel_styles() {
   $export = array();
 
   $style = new stdClass();
