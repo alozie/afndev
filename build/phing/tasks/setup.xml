@@ -32,7 +32,7 @@
     <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
     <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
     <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
-    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/bustom" />
+    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/custom" />
     <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
 
     <!-- Rebuild contrib -->
@@ -72,14 +72,16 @@
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory.">
-    <copy todir="${repo.root}/.git/hooks">
+    <copy todir="${repo.root}/.git/hooks" overwrite="true">
       <fileset dir="${repo.root}/git/hooks"></fileset>
       <filterchain>
         <expandproperties />
       </filterchain>
     </copy>
     <chmod mode="0755">
-      <fileset dir="${repo.root}/.git/hooks"></fileset>
+      <fileset dir="${repo.root}/.git/hooks">
+        <exclude name="**/*.sample" />
+      </fileset>
     </chmod>
   </target>
 

@@ -29,9 +29,7 @@
   <!-- Create a new project directory based on current repository. -->
   <target name="pt:create" description="Create a new project based on local repository." depends="setup:rm-docroot">
     <!-- Remove from existing directory. -->
-    <phingcall target="setup:rm-docroot">
-      <property name="docroot" value="${pt.new.dir}/docroot" />
-    </phingcall>
+    <delete dir="${pt.new.dir}" />
 
     <!-- (re)Create project directory. -->
     <mkdir dir="${pt.new.dir}" />
@@ -40,6 +38,11 @@
         <exclude name="install/**" />
       </fileset>
     </copy>
+
+    <!-- Remove Project Template self-documentation. -->
+    <delete file="${pt.new.dir}/readme.md" />
+    <symlink target="${pt.new.dir}/docs/readme.md" link="${pt.new.dir}/readme.md" />
+
     <gitinit repository="${pt.new.dir}" />
     <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
