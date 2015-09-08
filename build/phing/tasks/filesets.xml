@@ -14,7 +14,10 @@
   <fileset dir="${repo.root}" id="custom.files" expandsymboliclinks="true">
     <include name="sites/all/modules/custom/**"/>
     <include name="sites/all/modules/features/**"/>
-    <include name="tests/**" />
+  </fileset>
+
+  <fileset dir="${repo.root}" id="tests.files" expandsymboliclinks="true">
+    <include name="tests/**/*.php" />
   </fileset>
 
   <fileset dir="${repo.root}" id="custom.themes">
