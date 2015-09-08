@@ -24,12 +24,12 @@
     </phpcodesniffer>
 
     <phpcodesniffer
-        standard="PSR-4"
+        standard="PSR2"
         showSniffs="true"
         showWarnings="true"
         haltonerror="true"
         haltonwarning="true">
-      <fileset refid="test.files"/>
+      <fileset refid="tests.files"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
   </target>

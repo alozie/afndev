@@ -57,7 +57,7 @@ A set of example tests for the following testing technologies are included in th
 
 #### Example Builds
 A starter configuration for running builds on Travis CI is included. The
-configuration lives in [.travis.yml] and [build]. At a high level, the build
+configuration lives in [.travis.yml](/.travis.yml) and [build](/build). At a high level, the build
 will do the following:
 * Execute a Travis CI build when a Pull Request is submitted to GitHub.
   * Build dependencies (e.g., composer)
