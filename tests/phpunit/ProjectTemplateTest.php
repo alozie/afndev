@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
  * Verifies that project structure and configuration matches Project Template
  * standards.
  */
-class ProjectTemplateTest extends PHPUnit_Framework_TestCase
+class ProjectTemplateTest extends \PHPUnit_Framework_TestCase
 {
 
   /**
