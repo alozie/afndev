@@ -15,10 +15,11 @@ cache:
 env:
   matrix:
     - TEST_SUITE=validate:all
-    - TEST_SUITE='pt:configure pt:self-test'
+    - TEST_SUITE='setup:build-files setup:tests:all'
 
 notifications:
-  slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP
+  # Replace this with project slack token.
+  # slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP4
 
 before_install:
   - composer selfupdate
