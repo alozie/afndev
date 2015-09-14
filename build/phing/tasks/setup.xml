@@ -60,6 +60,8 @@
     </drush>
   </target>
 
+  <!-- @todo add setup:create-db to create local database, drop table if exists. -->
+
   <target name="setup:sync-db" description="Overwrites local database with upstream database from Acquia Cloud.">
     <property name="db.source" value="stg" />
     <drush command="sql-drop" assume="yes"></drush>
