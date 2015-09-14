@@ -64,6 +64,8 @@
         <phingcall target="vm:download" />
         <phingcall target="vm:configure" />
         <phingcall target="tests:all" />
+        <!-- @todo remove project-template.xml -->
+        <!-- @todo rewrite .travis.yml to remove self test -->
       </then>
       <else>
         <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>
