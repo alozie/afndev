@@ -44,15 +44,21 @@
     </copy>
 
     <!-- Remove reference to project-template.xml from build.xml. -->
-    <exec executable="sed -i">
-      <arg value="/project-template/d" />
-      <arg value="${pt.new.dir}/build/phing/tasks/build.xml" />
-    </exec>
+    <exec command="sed -i '' '/project-template/d' ${pt.new.dir}/build/phing/build.xml" />
+    <exec command="sed -i '' '/Project Template/d' ${pt.new.dir}/build/phing/build.xml" />
 
-    <!-- @todo Reflexively expand properties in /docs. -->
+    <!-- Reflexively expand properties in specified dirs/files. -->
+    <reflexive>
+      <fileset dir="${pt.new.dir}">
+        <include name="docs/**/*" />
+        <include name="sites/defaut/settings.php" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </reflexive>
 
-    <!-- @todo Fix this, make symlink relative. -->
-    <symlink target="${pt.new.dir}/docs/readme.md" link="${pt.new.dir}/readme.md" />
+    <exec dir="${pt.new.dir}" command="ln -s docs/readme.md readme.md" />
 
     <gitinit repository="${pt.new.dir}" />
     <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />

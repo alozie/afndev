@@ -5,7 +5,7 @@ local:
   suites:
     default:
       contexts:
-        - FeatureContext:
+        - Drupal\FeatureContext:
           parameters:
             environment:
               # absolute path to local directory to store screenshots - do not include trailing slash

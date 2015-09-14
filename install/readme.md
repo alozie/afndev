@@ -90,9 +90,14 @@ After project template has installed, there are several key activities to perfor
   1. Review and include common settings snippets (in `docroot\sites\all\settings`)
     * Review which settings snippets in `docroot\sites\all\settings` are relevant for your project
     * Update the contents of each relevant setting in `docroot\sites\all\settings`
-    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)
+    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`) 
+
+## Integration with 3rd Party Services
+  1. Enable TravisCI
+  2. Enable Slack integration with TravisCI
 
 ## Verification
+
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
       * Configure your local database credentials in `sites/default/local.settings.php`

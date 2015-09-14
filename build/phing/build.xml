@@ -1,4 +1,4 @@
-<project name="project-template" default="build" phingVersion="2.8.2">
+<project name="project" default="build" phingVersion="2.8.2">
 
   <!-- Include custom task classes -->
   <includepath classpath="${project.basedir}/phingcludes"/>
@@ -27,4 +27,8 @@
 
   <!-- Contains target used for self-testing of Project Template. -->
   <import file="${project.basedir}/tasks/project-template.xml"/>
+
+  <!-- @todo Add deploy.xml containing deployment tasks. -->
+  <!-- E.g., commit build artifacts, push to remote. -->
+
 </project>
