@@ -77,7 +77,7 @@ The following is an overview of the purpose of each top level directory:
       ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
       ├── docroot - The drupal docroot. Intentionally .gitignored. Created only during builds.
       ├── docs    - Contains high level project documentation.
-      ├── git     - Contains configuration files that will be copied into a new project's `.git` directory upon installation.
+      ├── git     - Contains configuration files that will be copied into a new project's .git directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
       ├── install - Contains Project Template configuration files. Removed from child projects.
       ├── patches - Contains private patches to be used by make.yml.
