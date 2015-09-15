@@ -568,8 +568,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 
 // Set this to the proper Acquia subscription. Subsequent includes rely
 // upon this variable being set correctly.
-// @todo Set $ac_domain via value in config.yml.
-$ac_domain = 'default_example';
+$ac_domain = '${project.acquia_subname}';
 
 // Primary modules directory.
 $module_dir = 'sites/all/modules';

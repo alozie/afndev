@@ -47,7 +47,7 @@ follow from this repository's root directory:
   1. Run `./task.sh pt:create`
      This will create a new directory for your new project.
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
-  1. In your new project directory, run `./task.sh setup:build-files`.
+  1. In your new project directory, run `./task.sh setup:build:all`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
   1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration ``./task.sh setup:behat`
@@ -56,7 +56,7 @@ follow from this repository's root directory:
 
   1. Optionally, you may install Drupal via Phing. To do this, verify correct
      credentials in `local.yml` and then run:
-     `./task.sh setup:install-drupal`
+     `./task.sh setup:install:drupal`
 
 ### Optionally, execute tests
 
@@ -90,9 +90,14 @@ After project template has installed, there are several key activities to perfor
   1. Review and include common settings snippets (in `docroot\sites\all\settings`)
     * Review which settings snippets in `docroot\sites\all\settings` are relevant for your project
     * Update the contents of each relevant setting in `docroot\sites\all\settings`
-    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)
+    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`) 
+
+## Integration with 3rd Party Services
+  1. Enable TravisCI
+  2. Enable Slack integration with TravisCI
 
 ## Verification
+
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
       * Configure your local database credentials in `sites/default/local.settings.php`

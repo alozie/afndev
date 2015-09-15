@@ -3,7 +3,7 @@
 
 
 [CLIENT]
-[PROJECT NAME]
+${project.human_name}
 
 
 

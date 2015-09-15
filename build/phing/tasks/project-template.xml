@@ -29,7 +29,7 @@
   </target>
 
   <!-- Create a new project directory based on current repository. -->
-  <target name="pt:create" description="Create a new project based on local repository." depends="setup:rm-docroot">
+  <target name="pt:create" description="Create a new project based on local repository." depends="setup:build:rm-docroot">
     <!-- Remove from existing directory. -->
     <delete dir="${pt.new.dir}" />
 
@@ -40,23 +40,32 @@
         <exclude name="install/**" />
         <exclude name="build/phing/tasks/project-template.xml" />
         <exclude name="readme.md" />
+        <exclude name="tests/phpunit/ProjectTemplateTest.php" />
       </fileset>
     </copy>
 
     <!-- Remove reference to project-template.xml from build.xml. -->
-    <exec executable="sed -i">
-      <arg value="/project-template/d" />
-      <arg value="${pt.new.dir}/build/phing/tasks/build.xml" />
-    </exec>
+    <exec dir="${pt.new.dir}" command="sed -i '/project-template/d' build/phing/build.xml" logoutput="true" passthru="true" />
+    <exec dir="${pt.new.dir}" command="sed -i '/Project Template/d' build/phing/build.xml" logoutput="true" passthru="true" />
 
-    <!-- @todo Reflexively expand properties in /docs. -->
+    <!-- Reflexively expand properties in specified dirs/files. -->
+    <reflexive>
+      <fileset dir="${pt.new.dir}">
+        <include name="docs/**/*" />
+        <include name="sites/default/settings.php" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </reflexive>
 
-    <!-- @todo Fix this, make symlink relative. -->
-    <symlink target="${pt.new.dir}/docs/readme.md" link="${pt.new.dir}/readme.md" />
+    <exec dir="${pt.new.dir}" command="ln -s docs/readme.md readme.md" />
 
     <gitinit repository="${pt.new.dir}" />
     <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
+
+    <!-- @todo Add instructions. -->
   </target>
 
   <!-- This target is meant to test Project Template itself on TravisCI.
@@ -69,12 +78,19 @@
       <equals arg1="${env.TRAVIS_REPO_SLUG}" arg2="acquia-pso/project-template" />
       <then>
         <phingcall target="pt:create" />
-        <phingcall target="setup:build-files" />
-        <phingcall target="setup:install-drupal" />
+        <phingcall target="setup:build:all" />
+        <phingcall target="setup:install:drupal" />
+        <phingcall target="setup:git-hooks" />
         <phingcall target="setup:behat" />
         <phingcall target="vm:download" />
         <phingcall target="vm:configure" />
-        <phingcall target="tests:all" />
+        <phingcall target="tests:security-updates" />
+        <phingcall target="tests:behat">
+          <!-- Run our own PHP server so that Apache need not be setup. -->
+          <property name="behat:run-server" value="true" />
+        </phingcall>
+        <phingcall target="tests:phpunit" />
+        <phingcall target="vm:configure" />
       </then>
       <else>
         <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>

@@ -62,8 +62,8 @@ will do the following:
 * Execute a Travis CI build when a Pull Request is submitted to GitHub.
   * Build dependencies (e.g., composer)
   * Run phing targets. Phing targets include:
-    * setup:make           - executes drush make on [/scripts/project.make.yml]
-    * setup:install-drupal - installs Drupal to Travis environment via `drush si`
+    * setup:build:make           - executes drush make on [/scripts/project.make.yml]
+    * setup:install:drupal - installs Drupal to Travis environment via `drush si`
     * validate:all         - runs code validation (e.g., code sniffer)
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
