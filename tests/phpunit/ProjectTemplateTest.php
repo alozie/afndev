@@ -35,7 +35,11 @@ class ProjectTemplateTest extends \PHPUnit_Framework_TestCase
         $new_project_dir = dirname($this->projectDirectory) . '/' . $this->config['project']['acquia_subname'];
         $this->assertFileExists($new_project_dir);
         $this->assertFileNotExists($new_project_dir . '/install');
-        $this->assertNotContains('pt:', $new_project_dir . '/.travis.yml');
+        $this->assertFileNotExists($new_project_dir . '/tests/phpunit/ProjectTemplate.php');
+        $this->assertNotContains(
+            'pt:self-test',
+            file_get_contents($new_project_dir . '/.travis.yml')
+        );
         $this->assertFileNotExists($new_project_dir . '/build/tasks/project-template.xml');
         $this->assertNotContains(
             'project-template',

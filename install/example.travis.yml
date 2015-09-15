@@ -15,7 +15,7 @@ cache:
 env:
   matrix:
     - TEST_SUITE=validate:all
-    - TEST_SUITE='setup:build-files setup:tests:all'
+    - TEST_SUITE='setup:build:all tests:all'
 
 notifications:
   # Replace this with project slack token.

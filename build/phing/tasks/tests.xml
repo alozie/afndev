@@ -1,6 +1,6 @@
 <project name="tests" default="build">
 
-  <target name="tests:all" description="Runs all tests against Drupal."
+  <target name="tests:all" description="Runs all tests, including Behat, PHPUnit, and Security Update check."
           depends="tests:security-updates, tests:behat, tests:phpunit"/>
 
   <target name="tests:phantomjs:launch"
@@ -14,7 +14,7 @@
   <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
   <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
   <target name="tests:security-updates"
-          description="Checks an installed site for security updates on modules">
+          description="Check local Drupal installation for security updates.">
     <exec dir="${docroot}"
           command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
           logoutput="true"
@@ -23,19 +23,27 @@
 
   <!-- If you experience 'Maximum function nesting level' errors in your PHP
        error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
-  <target name="tests:behat" description="Behat testing" depends="tests:phantomjs:launch">
+  <target name="tests:behat" depends="tests:phantomjs:launch" description="Executes Behat tests locally.">
+
+    <if>
+      <istrue value="${behat:run-server}"/>
+      <then>
+        <!-- Note that Behat's base_url must match php-server-url. -->
+        <property name="behat:server-url" value="http://127.0.0.1:8080/" />
+
+        <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
+          <arg line="runserver ${behat:server-url}"/>
+        </exec>
+        <waitfor maxwait="10" maxwaitunit="second">
+          <http url="${behat:server-url}"/>
+        </waitfor>
+      </then>
+    </if>
 
     <!-- As with any property, this can be overridden at runtime, permitting
-         Behat execution using any configuration -->
+     Behat execution using any configuration -->
     <property name="behat.config" value="${repo.root}/tests/behat/local.yml" />
     <property name="behat.profile" value="local" />
-
-    <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
-      <arg line="runserver ${project.local_url}"/>
-    </exec>
-    <waitfor maxwait="10" maxwaitunit="second">
-      <http url="http://127.0.0.1:8080"/>
-    </waitfor>
 
     <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
     <behat executable="${repo.root}/bin/behat"
@@ -45,6 +53,14 @@
            strict="true"
            haltonerror="false"
            returnProperty="behatPass"/>
+
+    <if>
+      <isfalse value="${BehatPass}"/>
+      <then>
+        <fail message="One ore more Behat tests failed." />
+      </then>
+    </if>
+
   </target>
 
   <!-- Execute PHPUnit tests. -->

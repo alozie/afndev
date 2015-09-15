@@ -47,7 +47,7 @@ follow from this repository's root directory:
   1. Run `./task.sh pt:create`
      This will create a new directory for your new project.
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
-  1. In your new project directory, run `./task.sh setup:build-files`.
+  1. In your new project directory, run `./task.sh setup:build:all`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
   1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration ``./task.sh setup:behat`
@@ -56,7 +56,7 @@ follow from this repository's root directory:
 
   1. Optionally, you may install Drupal via Phing. To do this, verify correct
      credentials in `local.yml` and then run:
-     `./task.sh setup:install-drupal`
+     `./task.sh setup:install:drupal`
 
 ### Optionally, execute tests
 

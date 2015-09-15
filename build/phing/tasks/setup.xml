@@ -1,12 +1,12 @@
-<project name="setup" default="build">
+<project name="setup" default="setup:build:all">
 
   <!-- This is run when a project is cloned to a new environment. -->
-  <target name="setup:build-files" description="Generates all required files for a full build. E.g., generates config files, builds via `drush make`, etc."
-      depends="setup:git-hooks, setup:behat, setup:make">
+  <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
+      depends="setup:behat, setup:build:make">
   </target>
 
   <!-- Delete the docroot directory. Used prior to running Drush make. -->
-  <target name="setup:rm-docroot" description="Remove the docroot folder.">
+  <target name="setup:build:rm-docroot" description="Removes the docroot folder.">
     <if>
       <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
       <then>
@@ -17,7 +17,7 @@
   </target>
 
   <!-- Drush make the build using a recursive strategy -->
-  <target name="setup:make" description="Rebuild core and contrib based on project's make.yml." depends="setup:rm-docroot">
+  <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
 
     <!-- Rebuild core -->
     <drush command="make" assume="yes">
@@ -47,8 +47,8 @@
   </target>
 
   <!-- Install Drupal. -->
-  <target name="setup:install-drupal"
-          description="Installs Drupal using credentials from build.yml.">
+  <target name="setup:install:drupal"
+          description="Installs Drupal using credentials from local.yml.">
     <drush command="site-install" assume="yes" verbose="TRUE">
       <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
       <option name="site-name">"${project.human_name}"</option>
@@ -62,7 +62,7 @@
 
   <!-- @todo add setup:create-db to create local database, drop table if exists. -->
 
-  <target name="setup:sync-db" description="Overwrites local database with upstream database from Acquia Cloud.">
+  <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
     <property name="db.source" value="stg" />
     <drush command="sql-drop" assume="yes"></drush>
     <drush command="sql-sync" assume="yes">
@@ -73,7 +73,7 @@
     </drush>
   </target>
 
-  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory.">
+  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled git/hooks directory.">
     <copy todir="${repo.root}/.git/hooks" overwrite="true">
       <fileset dir="${repo.root}/git/hooks"></fileset>
       <filterchain>
@@ -87,7 +87,7 @@
     </chmod>
   </target>
 
-  <target name="setup:behat" description="Configures a local.yml file for executing Behat tests.">
+  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
     <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
       <filterchain>
         <expandproperties />
