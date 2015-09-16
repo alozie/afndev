@@ -37,6 +37,7 @@
     <mkdir dir="${pt.new.dir}" />
     <copy todir="${pt.new.dir}" >
       <fileset dir="${repo.root}" casesensitive="false" defaultexcludes="false" excludes=".cvsignore SCCS SCCS/** vssver.scc .svn .svn/** ._* .DS_Store .darcs .darcs/** .git .git/** .gitattributes .gitmodules .idea .idea/** .editorconfig">
+        <!-- Exclude files that should not be copied. -->
         <exclude name="install/**" />
         <exclude name="build/phing/tasks/project-template.xml" />
         <exclude name="readme.md" />

@@ -36,4 +36,4 @@ before_script:
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 
 script:
-  - phing -f build/phing/build.xml $TEST_SUITE
+  - phing -f build/phing/build.xml -Dbehat:run-server=true $TEST_SUITE
