@@ -7,6 +7,8 @@
 
 namespace Drupal;
 
+use PHPUnit_Framework_TestCase;
+
 class SettingsTest extends PHPUnit_Framework_TestCase
 {
 
