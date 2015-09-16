@@ -16,6 +16,7 @@ sites/*/libraries
 bin/*
 tmp
 install/bin
+reports
 
 # Local testing config
 tests/behat/local.yml

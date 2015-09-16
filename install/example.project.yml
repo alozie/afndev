@@ -17,6 +17,12 @@ project:
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
 
+drush:
+  aliases:
+    default: ${project.acquia_subname}.dev
+    dev: ${project.acquia_subname}.dev
+    stg: ${project.acquia_subname}.stg
+
 # Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
 # the "vm" key.
 vm:

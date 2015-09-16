@@ -1,17 +1,40 @@
 <?php
 
+// Set this to the proper Acquia subscription. Subsequent includes rely
+// upon this variable being set correctly.
+$ac_subname = '${project.acquia_subname}';
+
+$databases = array (
+  'default' =>
+    array (
+      'default' =>
+        array (
+          'database' => '${db.name}',
+          'username' => '${db.username}',
+          'password' => '${db.password}',
+          'host' => '${db.host}',
+          'port' => '${db.port}',
+          'driver' => 'mysql',
+          'prefix' => '',
+        ),
+    ),
+);
+
 /**
  * Acquia Cloud settings.
  */
 if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_GROUP'])) {
-  require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_domain-settings.inc";
+  require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_subname-settings.inc";
 }
 
 if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  switch ($ac_domain) {
+  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
     default:
       // Dynamically set base url based on Acquia environment variable.
-      $base_url = "https://{$_ENV['AH_SITE_NAME']}.prod.acquia-sites.com";
+      $domain = $_ENV['AH_SITE_NAME'] . ".prod.acquia-sites.com";
+      $base_url = "https://$domain";
+      $cookie_domain = ".$domain";
+
       break;
     /*
     case 'multisite.example.com':

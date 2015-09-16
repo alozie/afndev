@@ -44,6 +44,7 @@
      Behat execution using any configuration -->
     <property name="behat.config" value="${repo.root}/tests/behat/local.yml" />
     <property name="behat.profile" value="local" />
+    <mkdir dir="${reports.localDir}/behat"/>
 
     <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
     <behat executable="${repo.root}/bin/behat"
@@ -52,24 +53,40 @@
            verbose="true"
            strict="true"
            haltonerror="false"
-           returnProperty="behatPass"/>
-
-    <if>
-      <isfalse value="${BehatPass}"/>
-      <then>
-        <fail message="One ore more Behat tests failed." />
-      </then>
-    </if>
-
+           returnProperty="behatPass"
+           out="std,${reports.localDir}"
+           format="pretty,junit"
+        />
   </target>
 
   <!-- Execute PHPUnit tests. -->
-  <target name="tests:phpunit"
-          description="Checks an installed site for security updates on modules">
-    <exec dir="${repo.root}/tests/phpunit"
-          command="${repo.root}/bin/phpunit ./*"
-          logoutput="true"
-          checkreturn="true"/>
+  <target name="tests:phpunit" description="Checks an installed site for security updates on modules">
+    <delete dir="${reports.localDir}/phpunit"/>
+    <mkdir dir="${reports.localDir}/phpunit"/>
+
+    <phpunit printsummary="true">
+      <formatter type="plain" usefile="false"/>
+      <formatter type="xml" todir="${reports.localDir}/phpunit"/>
+      <batchtest>
+        <fileset dir="${repo.root}/tests/phpunit">
+          <include name="**/*Test*.php"/>
+        </fileset>
+      </batchtest>
+    </phpunit>
+    <phpunitreport infile="${reports.localDir}/phpunit/testsuites.xml" format="noframes" todir="${reports.localDir}/phpunit" />
+
+    <property name="reports.phpunit.file" value="${reports.localDir}/phpunit/phpunit-noframes.html"/>
+    <echo>PHPUnit Report is available at ${reports.phpunit.file}</echo>
   </target>
 
+  <target name="rsync-results">
+    <property name="reports.remoteDir" value="build-results" />
+
+    <drush command="rsync">
+      <arg>"${reports.localDir}"</arg>
+      <arg>"${drush.aliases.default}:%files/${reports.remoteDir}"</arg>
+    </drush>
+
+    <!-- @todo Add message with link to new reports. -->
+  </target>
 </project>

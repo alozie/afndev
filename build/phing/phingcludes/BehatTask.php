@@ -37,6 +37,19 @@ class BehatTask extends Task
   protected $config = null;
 
   /**
+   * How to format tests output. pretty is default.
+   *
+   * @var null
+   */
+  protected $format = null;
+
+  /**
+   * Write format output to a file/directory instead of STDOUT (output_path).
+   * @var null
+   */
+  protected $out = null;
+
+  /**
    * Only executeCall the feature elements which match part
    * of the given name or regex.
    *
@@ -191,6 +204,28 @@ class BehatTask extends Task
   }
 
   /**
+   * Sets the output format.
+   *
+   * @param string $format The output format.
+   *
+   * @return void
+   */
+  public function setFormat($format) {
+    $this->format = $format;
+  }
+
+  /**
+   * Sets the output destination.
+   *
+   * @param string $out The output destination.
+   *
+   * @return void
+   */
+  public function setOut($out) {
+    $this->out = $out;
+  }
+
+  /**
    * Sets the role able to run tests.
    *
    * @param string $role The actor role to match.
@@ -321,6 +356,14 @@ class BehatTask extends Task
    */
   protected function createOption($name, $value)
   {
+    if (is_array($value)) {
+      $return = '';
+      foreach ($value as $part) {
+        $return .= "--$name=$part ";
+      }
+      return $return;
+    }
+
     if (is_numeric($name)) {
       return '--'.$value;
     }
@@ -392,6 +435,14 @@ class BehatTask extends Task
 
     if ($this->tags) {
       $this->options['tags'] = $this->tags;
+    }
+
+    if ($this->format) {
+      $this->options['format'] = explode(',', $this->format);
+    }
+
+    if ($this->out) {
+      $this->options['out'] = explode(',', $this->out);
     }
 
     if ($this->role) {
