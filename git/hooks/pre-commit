@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # See https://github.com/geraldvillorente/drupal-pre-commit/blob/master/pre-commit
 
