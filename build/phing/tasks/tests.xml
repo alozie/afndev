@@ -52,7 +52,7 @@
            profile="${behat.profile}"
            verbose="true"
            strict="true"
-           haltonerror="false"
+           haltonerror="true"
            returnProperty="behatPass"
            out="std,${reports.localDir}"
            format="pretty,junit"
@@ -64,7 +64,7 @@
     <delete dir="${reports.localDir}/phpunit"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
-    <phpunit printsummary="true">
+    <phpunit printsummary="true" haltonfailure="true">
       <formatter type="plain" usefile="false"/>
       <formatter type="xml" todir="${reports.localDir}/phpunit"/>
       <batchtest>
