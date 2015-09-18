@@ -11,15 +11,23 @@ use PHPUnit_Framework_TestCase;
 
 class SettingsTest extends PHPUnit_Framework_TestCase
 {
-    public function __construct()
+    /**
+     * Sets up require parameters for tests to run.
+     * 
+     * @param string $env
+     *   The acquia environment being simulated. E.g., prod, test, dev, etc.
+     */
+    public function setup($env)
     {
         $this->projectRoot = dirname(dirname(__DIR__));
         $this->drupalRoot = $this->projectRoot . '/docroot';
+        $_ENV['AH_SITE_ENVIRONMENT'] = $env;
         $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'] = 'project-template';
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         if (!defined('DRUPAL_ROOT')) {
             define('DRUPAL_ROOT', $this->drupalRoot);
         }
+        require $this->drupalRoot . '/sites/default/settings.php';
     }
 
     /**
@@ -27,8 +35,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
      */
     public function testProd()
     {
-        $_ENV['AH_SITE_ENVIRONMENT'] = 'prod';
-        require $this->drupalRoot . '/sites/default/settings.php';
+        $this->setup('prod');
 
         // Base_url
         $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
@@ -73,8 +80,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
    */
     public function testTest()
     {
-        $_ENV['AH_SITE_ENVIRONMENT'] = 'test';
-        require $this->drupalRoot . '/sites/default/settings.php';
+        $this->setup('test');
 
         // Base_url
         $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
@@ -111,8 +117,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
    */
     public function testDev()
     {
-        $_ENV['AH_SITE_ENVIRONMENT'] = 'dev';
-        require $this->drupalRoot . '/sites/default/settings.php';
+        $this->setup('dev');
 
         $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
 

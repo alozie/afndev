@@ -25,6 +25,7 @@
        error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
   <target name="tests:behat" depends="tests:phantomjs:launch" description="Executes Behat tests locally.">
 
+    <!-- Optionally run tests against internal PHP server. -->
     <if>
       <istrue value="${behat:run-server}"/>
       <then>
@@ -64,7 +65,7 @@
     <delete dir="${reports.localDir}/phpunit"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
-    <phpunit printsummary="true" haltonfailure="true">
+    <phpunit printsummary="true" failureproperty="phpunit.failure">
       <formatter type="plain" usefile="false"/>
       <formatter type="xml" todir="${reports.localDir}/phpunit"/>
       <batchtest>
@@ -74,9 +75,15 @@
       </batchtest>
     </phpunit>
     <phpunitreport infile="${reports.localDir}/phpunit/testsuites.xml" format="noframes" todir="${reports.localDir}/phpunit" />
-
     <property name="reports.phpunit.file" value="${reports.localDir}/phpunit/phpunit-noframes.html"/>
     <echo>PHPUnit Report is available at ${reports.phpunit.file}</echo>
+
+    <if>
+      <istrue value="${phpunit.failure}"/>
+      <then>
+        <fail message="PHPUnit Failed. See report for details."/>
+      </then>
+    </if>
   </target>
 
   <target name="rsync-results">
