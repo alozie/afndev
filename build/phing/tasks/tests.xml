@@ -79,7 +79,7 @@
     <echo>PHPUnit Report is available at ${reports.phpunit.file}</echo>
 
     <if>
-      <istrue value="${phpunit.failure}"/>
+      <equals arg1="${phpunit.failure}" arg2="true"/>
       <then>
         <fail message="PHPUnit Failed. See report for details."/>
       </then>
