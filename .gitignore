@@ -17,6 +17,7 @@ bin/*
 tmp
 install/bin
 reports
+deploy_key
 
 # Local testing config
 tests/behat/local.yml
