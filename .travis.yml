@@ -36,12 +36,3 @@ before_script:
 
 script:
   - phing -f build/phing/build.xml $TEST_SUITE
-
-after_success:
-  - eval "$(ssh-agent -s)" # Start the ssh agent.
-  - chmod 600 .travis/deploy_key.pem #  This key should have push access.
-  - ssh-add .travis/deploy_key.pem
-  - git add -A
-  - git commit -m 'Automated commit for Travis CI build \#$TRAVIS_BUILD_NUMBER.'
-  - git remote add acquia psproject@svn-4368.devcloud.hosting.acquia.com:psproject.git
-  - git push acquia
