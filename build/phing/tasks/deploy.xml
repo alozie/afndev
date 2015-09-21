@@ -1,0 +1,7 @@
+<project name="deploy" default="build">
+  <target name="deploy-build">
+    <exec command="git add -A" logoutput="true" passthru="true"/>
+    <exec command="git commit -m 'Automated commit by Travis CI for Build #${env.TRAVIS_BUILD_NUMBER}.'" logoutput="true" passthru="true"/>
+    <exec command="git tag build-${env.TRAVIS_BUILD_NUMBER}-"
+  </target>
+</project>

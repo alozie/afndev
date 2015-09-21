@@ -11,3 +11,5 @@ drush.bin: ${composer.bin}/drush
 drush.cmd: ${drush.bin} -r ${docroot}
 drush.file: ${phing.project.name}.aliases.drushrc.php
 drush.root: ${docroot}
+reports.localDir: ${repo.root}/reports
+reports.remoteDir: reports

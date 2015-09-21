@@ -14,7 +14,6 @@
         <include name="example.project.yml" />
         <include name="example.make.yml" />
         <include name="example.local.yml" />
-        <include name="example.travis.yml" />
       </fileset>
       <filterchain>
         <expandproperties />
@@ -25,7 +24,6 @@
     <move file="${repo.root}/example.make.yml" tofile="${repo.root}/make.yml" />
     <move file="${repo.root}/example.project.yml" tofile="${repo.root}/project.yml" />
     <move file="${repo.root}/example.local.yml" tofile="${repo.root}/local.yml" />
-    <move file="${repo.root}/example.travis.yml" tofile="${repo.root}/.travis.yml" />
   </target>
 
   <!-- Create a new project directory based on current repository. -->
@@ -41,19 +39,30 @@
         <exclude name="install/**" />
         <exclude name="build/phing/tasks/project-template.xml" />
         <exclude name="readme.md" />
+        <exclude name=".travis.yml" />
         <exclude name="tests/phpunit/ProjectTemplateTest.php" />
       </fileset>
     </copy>
+    <copy file="${repo.root}/install/example.travis.yml" tofile="${pt.new.dir}/.travis.yml"/>
 
-    <!-- Remove reference to project-template.xml from build.xml. -->
-    <exec dir="${pt.new.dir}" command="sed -i '/project-template/d' build/phing/build.xml" logoutput="true" passthru="true" />
-    <exec dir="${pt.new.dir}" command="sed -i '/Project Template/d' build/phing/build.xml" logoutput="true" passthru="true" />
+    <!-- Remove all references to Project Template from specified dirs/files. -->
+    <reflexive>
+      <fileset dir="${pt.new.dir}">
+        <include name="build/phing/build.xml" />
+      </fileset>
+      <filterchain>
+        <replaceregexp>
+          <regexp pattern="Project([- ])?Template" replace="\n" ignoreCase="true"/>
+        </replaceregexp>
+      </filterchain>
+    </reflexive>
 
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
       <fileset dir="${pt.new.dir}">
         <include name="docs/**/*" />
         <include name="sites/default/settings.php" />
+        <include name="sites/all/settings/**/*" />
       </fileset>
       <filterchain>
         <expandproperties />
@@ -66,7 +75,12 @@
     <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
 
-    <!-- @todo Add instructions. -->
+    <echo>New project was created in ${pt.new.dir}</echo>
+    <echo>Please change to the new project directory and run setup tasks. E.g.,</echo>
+    <echo>cd ${pt.new.dir}</echo>
+    <echo>./task.sh setup:build:all</echo>
+    <echo>./task.sh setup:git-hooks</echo>
+    <echo>./task.sh vm:add</echo>
   </target>
 
   <!-- This target is meant to test Project Template itself on TravisCI.
@@ -75,28 +89,21 @@
        - We do not run validate:* targets, since they can be run in parallel.
   -->
   <target name="pt:self-test" description="Runs tests against acquia-pso/project-template proper.">
-    <if>
-      <equals arg1="${env.TRAVIS_REPO_SLUG}" arg2="acquia-pso/project-template" />
-      <then>
-        <phingcall target="pt:create" />
-        <phingcall target="setup:build:all" />
-        <phingcall target="setup:install:drupal" />
-        <phingcall target="setup:git-hooks" />
-        <phingcall target="setup:behat" />
-        <phingcall target="vm:download" />
-        <phingcall target="vm:configure" />
-        <phingcall target="tests:security-updates" />
-        <phingcall target="tests:behat">
-          <!-- Run our own PHP server so that Apache need not be setup. -->
-          <property name="behat:run-server" value="true" />
-        </phingcall>
-        <phingcall target="tests:phpunit" />
-        <phingcall target="vm:configure" />
-      </then>
-      <else>
-        <echo>The "pt:self-test" target was called, but this project is not Project Template.</echo>
-        <echo>Please don't call "pt:self-test" anymore.</echo>
-      </else>
-    </if>
+
+      <phingcall target="pt:create" />
+      <phingcall target="setup:build:all" />
+      <phingcall target="setup:install:drupal" />
+      <phingcall target="setup:git-hooks" />
+      <phingcall target="setup:behat" />
+      <phingcall target="vm:download" />
+      <phingcall target="vm:configure" />
+      <phingcall target="tests:security-updates" />
+      <phingcall target="tests:behat">
+        <!-- Run our own PHP server so that Apache need not be setup. -->
+        <property name="behat:run-server" value="true" />
+      </phingcall>
+      <phingcall target="tests:phpunit" />
+      <phingcall target="vm:configure" />
+
   </target>
 </project>

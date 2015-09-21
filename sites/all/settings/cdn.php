@@ -17,6 +17,7 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
         // Set reverse proxy settings to make compatible with CDN.
         $conf['omit_vary_cookie'] = TRUE;
         $conf['reverse_proxy'] = TRUE;
+        // For Akamai, reverse proxy header is HTTP_TRUE_CLIENT_IP.
         $conf['reverse_proxy_header'] = 'HTTP_TRUE_CLIENT_IP';
 
         /**

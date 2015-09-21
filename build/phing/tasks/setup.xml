@@ -29,11 +29,7 @@
     </drush>
 
     <!-- Restore symlinks to subdirectories /sites . -->
-    <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
-    <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
-    <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
-    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/custom" />
-    <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
+    <phingcall target="setup:symlinks"/>
 
     <!-- Rebuild contrib -->
     <drush command="make" assume="yes">
@@ -46,9 +42,33 @@
     </drush>
   </target>
 
-  <!-- Install Drupal. -->
+  <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
+    <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
+    <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
+    <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
+    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/custom" />
+    <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
+  </target>
+
   <target name="setup:install:drupal"
           description="Installs Drupal using credentials from local.yml.">
+    <if>
+      <not>
+        <available file='${docroot}' type='dir' property="docroot.available"/>
+      </not>
+      <then>
+        <fail message="docroot does not existing. Please run 'setup:build:all' task first and then re-try."/>
+      </then>
+    </if>
+
+    <!-- Create a local.settings.php with local db creds from local.yml. -->
+    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+    <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
+
     <drush command="site-install" assume="yes" verbose="TRUE">
       <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
       <option name="site-name">"${project.human_name}"</option>
@@ -58,6 +78,9 @@
       <option name="account-mail">"${drupal.account.mail}"</option>
       <param>"${project.install_profile}"</param>
     </drush>
+
+    <!-- Restore original settings.php, wiped out by Drupal installation. -->
+    <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>
   </target>
 
   <!-- @todo add setup:create-db to create local database, drop table if exists. -->
