@@ -1,5 +1,5 @@
 api: 2
-core: 7.x
+core: 8.x
 
 defaults:
   projects:
@@ -8,42 +8,3 @@ defaults:
 projects:
   drupal:
     type: core
-    patch:
-      # Files displayed by default setting not respected.
-      # https://www.drupal.org/node/1520716#comment-6456630
-      - https://www.drupal.org/files/core-file-display-default-1520716-1.patch
-
-      # Scale and crop image effect needs anchor option.
-      # https://www.drupal.org/node/1252606#comment-8305805
-      - https://www.drupal.org/files/issues/D7-scale-and-crop-1252606-37.patch
-
-      # Node access grants should be statically cached.
-      # https://www.drupal.org/node/2199001#comment-8495029
-      - https://www.drupal.org/files/issues/node_access_grants-static-cache-11.patch
-
-      # Invalid image style URLs should return 404, not 403.
-      # https://www.drupal.org/node/2211429#comment-10033677
-      - https://www.drupal.org/files/issues/drupal-image-style-not-found-2211429-4.patch
-
-  acquia_purge:
-    version: ~
-  acquia_connector:
-    version: ~
-  entitycache:
-    version: ~
-  features:
-    version: ~
-  memcache:
-    version: ~
-  security_review:
-    version: ~
-  stage_file_proxy:
-    version: ~
-  transliteration:
-    version: ~
-  views:
-    version: ~
-
-includes:
-  # Thunder is a set of themes for PS Projects.
-  makefile: scripts/thunder.make.yml
