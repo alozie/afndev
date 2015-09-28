@@ -5,7 +5,7 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
     case 'prod':
 
       // Enforce caching in production.
-      $conf['cache'] = TRUE;
+      $settings['cache'] = TRUE;
 
       // When using varnish, set cache_lifetime to 0.
       // @see https://backlog.acquia.com/browse/NN-7868 and
@@ -14,32 +14,32 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
       // have not yet reached expiration.
       // Sites with large amounts of content creation/edits could benefit from
       // setting this to a non-zero value as it impacts the block cache as well.
-      $conf['cache_lifetime'] = 0;
+      $settings['cache_lifetime'] = 0;
 
       // Set default cache expiration to 6 hrs.
-      $conf['page_cache_maximum_age'] = 21600;
+      $settings['page_cache_maximum_age'] = 21600;
 
-      $conf['block_cache'] = TRUE;
+      $settings['block_cache'] = TRUE;
       // Allows Block to be cached on sites with hook_node_grant() implementations
-      // $conf['block_cache_bypass_node_grants'] = TRUE;
+      // $settings['block_cache_bypass_node_grants'] = TRUE;
 
       // Enforce aggregation and compression.
-      $conf['page_compression'] = TRUE;
-      $conf['preprocess_css'] = TRUE;
-      $conf['preprocess_js'] = TRUE;
+      $settings['page_compression'] = TRUE;
+      $settings['preprocess_css'] = TRUE;
+      $settings['preprocess_js'] = TRUE;
       break;
   }
 
   // Memcache for caching on Acquia Cloud.
-  $conf['cache_backends'][] = $module_dir . '/contrib/memcache/memcache.inc';
-  $conf['lock_inc'] =  $module_dir . '/contrib/memcache/memcache-lock.inc';
-  $conf['memcache_stampede_protection'] = TRUE;
-  $conf['cache_default_class'] = 'MemCacheDrupal';
+  $settings['cache_backends'][] = $module_dir . '/contrib/memcache/memcache.inc';
+  $settings['lock_inc'] =  $module_dir . '/contrib/memcache/memcache-lock.inc';
+  $settings['memcache_stampede_protection'] = TRUE;
+  $settings['cache_default_class'] = 'MemCacheDrupal';
 
   // Memcache stampede protection can be disabled for entire bins, specific cid's
   // in specific bins, or cid's starting with a specific prefix in specific bins.
   // see: https://www.drupal.org/node/2419757
-    $conf['memcache_stampede_protection_ignore'] = array(
+    $settings['memcache_stampede_protection_ignore'] = array(
       // Ignore some cids in 'cache_bootstrap'.
       'cache_bootstrap' => array(
         'module_implements',
@@ -61,30 +61,30 @@ if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
     );
 
   // The 'cache_form' bin must be assigned to non-volatile storage.
-  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+  $settings['cache_class_cache_form'] = 'DrupalDatabaseCache';
 
   // Cache bins that often grow too large to keep in memcache
-  // $conf['cache_class_cache_entity_bean'] = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_entity_comment'] = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_entity_file'] = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_entity_node'] = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_block'] = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_views']      = 'DrupalDatabaseCache';
-  // $conf['cache_class_cache_views_data'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_entity_bean'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_entity_comment'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_entity_file'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_entity_node'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_block'] = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_views']      = 'DrupalDatabaseCache';
+  // $settings['cache_class_cache_views_data'] = 'DrupalDatabaseCache';
 
   // Don't bootstrap the database when serving pages from the cache.
   // With the page cache disabled, no sense invoking hooks. Note that this is
   // NOT compatible with domain access.
-  $conf['page_cache_without_database'] = TRUE;
-  $conf['page_cache_invoke_hooks'] = FALSE;
+  $settings['page_cache_without_database'] = TRUE;
+  $settings['page_cache_invoke_hooks'] = FALSE;
 
   // Varnish and page caching are fundamentally the same. In all SSL through
   // Varnish backed environments (all Acquia envs), disable the page cache.
   // @See https://backlog.acquia.com/browse/DOC-2961
-  $conf['cache_backends'][] = 'includes/cache-install.inc';
-  $conf['cache_class_cache_page'] = 'DrupalFakeCache';
+  $settings['cache_backends'][] = 'includes/cache-install.inc';
+  $settings['cache_class_cache_page'] = 'DrupalFakeCache';
 
   // Even though our page cache backend is fake, setting redirects to be
   // stored in the page cache will set the appropriate cache headers.
-  $conf['redirect_page_cache'] = TRUE;
+  $settings['redirect_page_cache'] = TRUE;
 }
