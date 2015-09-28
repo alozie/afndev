@@ -8,9 +8,9 @@ sites/*/files
 sites/*/private
 
 # Ignore contrib modules. These should be created during build process.
-sites/*/*/contrib
-sites/default/*/contrib
-sites/*/libraries
+modules/contrib
+themes/contrib
+libraries
 
 # Ignore build artifacts
 bin/*

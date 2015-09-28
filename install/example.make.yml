@@ -8,3 +8,11 @@ defaults:
 projects:
   drupal:
     type: core
+  acquia_connector:
+    version: ~
+  memcache:
+    version: ~
+  security_review:
+    version: ~
+  stage_file_proxy:
+    version: ~

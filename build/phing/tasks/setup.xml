@@ -16,10 +16,10 @@
     <delete dir="${docroot}" failonerror="false" quiet="true" />
   </target>
 
-  <!-- Drush make the build using a recursive strategy -->
+  <!-- Drush make the build using a recursive strategy. -->
   <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
 
-    <!-- Rebuild core -->
+    <!-- Rebuild core. -->
     <drush command="make" assume="yes">
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${docroot}"</param>
@@ -28,41 +28,44 @@
       <option name="no-gitinfofile"></option>
     </drush>
 
-    <!-- Restore symlinks to subdirectories /sites . -->
+    <!-- Restore symlinks to subdirectories /sites. -->
     <phingcall target="setup:symlinks"/>
-
-    <!-- Rebuild contrib -->
+    <!-- Rebuild contrib. -->
     <drush command="make" assume="yes">
       <option name="concurrency">8</option>
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${docroot}"</param>
       <option name="no-core"></option>
       <option name="no-gitinfofile"></option>
-      <option name="contrib-destination">sites/all</option>
     </drush>
   </target>
 
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
-    <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
-    <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
-    <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
-    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/custom" />
+    <!-- Symlink modules and themes. -->
+    <delete dir="${docroot}/modules"/>
+    <delete dir="${docroot}/themes"/>
+    <symlink target="${repo.root}/modules" link="${docroot}/modules" />
+    <symlink target="${repo.root}/themes" link="${docroot}/themes" />
+
+    <!-- Symlink settings. -->
+    <delete file="${docroot}/sites/default/example.settings.local.php"/>
+    <symlink target="${repo.root}/default/drush" link="${docroot}/sites/default/drush" />
+    <symlink target="${repo.root}/sites/default/settings" link="${docroot}/sites/default/settings" />
     <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
   </target>
 
-  <target name="setup:install:drupal"
-          description="Installs Drupal using credentials from local.yml.">
+  <target name="setup:install:drupal" description="Installs Drupal using credentials from local.yml.">
     <if>
       <not>
         <available file='${docroot}' type='dir' property="docroot.available"/>
       </not>
       <then>
-        <fail message="docroot does not existing. Please run 'setup:build:all' task first and then re-try."/>
+        <fail message="Docroot does not existing. Please run 'setup:build:all' task first and then re-try."/>
       </then>
     </if>
 
     <!-- Create a local.settings.php with local db creds from local.yml. -->
-    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+    <copy file="${repo.root}/sites/default/settings/example.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
       <filterchain>
         <expandproperties />
       </filterchain>
@@ -78,6 +81,8 @@
       <option name="account-mail">"${drupal.account.mail}"</option>
       <param>"${project.install_profile}"</param>
     </drush>
+
+    <drush command="cache-rebuild" verbose="TRUE"/>
 
     <!-- Restore original settings.php, wiped out by Drupal installation. -->
     <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>

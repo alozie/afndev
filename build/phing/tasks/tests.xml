@@ -3,14 +3,6 @@
   <target name="tests:all" description="Runs all tests, including Behat, PHPUnit, and Security Update check."
           depends="tests:security-updates, tests:behat, tests:phpunit"/>
 
-  <target name="tests:phantomjs:launch"
-          description="Launches a GhostDriver.">
-    <exec command="${composer.bin}/phantomjs --webdriver=4444"
-          passthru="true"
-          spawn="true"
-          checkreturn="true" />
-  </target>
-
   <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
   <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
   <target name="tests:security-updates"
@@ -19,6 +11,14 @@
           command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
           logoutput="true"
           passthru="true"/>
+  </target>
+
+  <target name="tests:phantomjs:launch"
+          description="Launches a GhostDriver.">
+    <exec command="${composer.bin}/phantomjs --webdriver=4444"
+          passthru="true"
+          spawn="true"
+          checkreturn="true" />
   </target>
 
   <!-- If you experience 'Maximum function nesting level' errors in your PHP
