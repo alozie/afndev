@@ -70,15 +70,6 @@ follow from this repository's root directory:
 
 After project template has installed, there are several key activities to perform for your project:
 
-  1. Review the console output from the installer
-    * Virtual machine requirements
-       * The installer will check for specific versions of dependent software
-       * The installer will not bootstrap a VM if the project has a shared hostname or IP
-         * To manually install the VM, make adjustments to `project.yml` and `box/project.yml`
-         * Re-run the DrupalVM installation by following steps 5 and 6 of https://github.com/geerlingguy/drupal-vm/#2---build-the-virtual-machine
-    * Virtual machine installation
-       * If bootstrap is enabled, the installer will output all DrupalVM installation logs
-       * Check for errors and create JIRA tickets with any issues you believe to be a bug
   1. Update your project's make file
     * Add contributed modules and themes to `scripts/project.make.yml`
     * Execute Drush Make from the project's docroot (e.g. `drush make ../scripts/project.make.yml`)
@@ -90,7 +81,13 @@ After project template has installed, there are several key activities to perfor
   1. Review and include common settings snippets (in `docroot\sites\all\settings`)
     * Review which settings snippets in `docroot\sites\all\settings` are relevant for your project
     * Update the contents of each relevant setting in `docroot\sites\all\settings`
-    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`) 
+    * Include relevant settings within your site-specific `settings.php` file (e.g. `require_once ../all/settings/base.settings.php`)
+  1. (optional) Bootstrap the virtual machine
+     * Virtual machine requirements
+        * The installer will check for specific versions of dependent software
+        * The installer will not bootstrap a VM if the project has a shared hostname or IP
+          * To manually install the VM, make adjustments to `project.yml` and `box/project.yml`
+          * Re-run the DrupalVM installation by following steps 5 and 6 of https://github.com/geerlingguy/drupal-vm/#2---build-the-virtual-machine
 
 ## Integration with 3rd Party Services
   1. Enable TravisCI

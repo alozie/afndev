@@ -61,7 +61,7 @@
   </target>
 
   <!-- Execute PHPUnit tests. -->
-  <target name="tests:phpunit" description="Checks an installed site for security updates on modules">
+  <target name="tests:phpunit" description="Executes PHPUnit tests against custom code." depends="setup:check:docroot">
     <delete dir="${reports.localDir}/phpunit"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
