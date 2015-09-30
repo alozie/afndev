@@ -691,17 +691,17 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  */
 
 // Includes required Acquia configuration and set $base_url correctly.
-require DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
 
 // Includes default caching settings.
 // @todo Refactor for D8.
 // require DRUPAL_ROOT . '/sites/all/settings/cache.settings.php';
 
 // Includes default cron configuration.
-require DRUPAL_ROOT . '/sites/all/settings/cron.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/cron.settings.php';
 
 // Includes configuration for public and private file systems, composer_manager.
-require DRUPAL_ROOT . '/sites/all/settings/files.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/files.settings.php';
 // Includes settings for using a CDN. See include file for config details.
 // require_once DRUPAL_ROOT . '/sites/all/settings/cdn.settings.php';
 
@@ -716,6 +716,6 @@ require DRUPAL_ROOT . '/sites/all/settings/files.settings.php';
 // require_once DRUPAL_ROOT . '/sites/all/settings/search.settings.php';
 
 // Includes local settings.
-if (file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
-  require DRUPAL_ROOT . '/sites/all/settings/local.settings.php';
+if (file_exists(DRUPAL_ROOT . '/sites/default/settings/local.settings.php')) {
+  require DRUPAL_ROOT . '/sites/default/settings/local.settings.php';
 }
