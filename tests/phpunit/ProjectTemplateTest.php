@@ -67,7 +67,8 @@ class ProjectTemplateTest extends \PHPUnit_Framework_TestCase
     public function testSetupMake()
     {
         $this->assertFileExists($this->projectDirectory . '/docroot/index.php');
-        $this->assertFileExists($this->projectDirectory . '/docroot/sites/all/modules/contrib');
+        $this->assertFileExists($this->projectDirectory . '/docroot/modules/contrib');
+        $this->assertFileExists($this->projectDirectory . '/docroot/themes/custom');
     }
 
   /**
