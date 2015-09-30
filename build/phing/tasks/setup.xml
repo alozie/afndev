@@ -5,6 +5,18 @@
       depends="setup:behat, setup:build:make">
   </target>
 
+  <!-- Check for docroot. -->
+  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
+    <if>
+      <not>
+        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      </not>
+      <then>
+        <fail message="The docroot is missing. Please run setup:build:all." />
+      </then>
+    </if>
+  </target>
+
   <!-- Delete the docroot directory. Used prior to running Drush make. -->
   <target name="setup:build:rm-docroot" description="Removes the docroot folder.">
     <if>
