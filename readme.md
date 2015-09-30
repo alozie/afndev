@@ -1,6 +1,6 @@
 # Bolt
 
-(formerly Bolt)
+(formerly Project Template)
 
 This repository is the template for all new Professional Services projects.
 
