@@ -1,6 +1,6 @@
 # Bolt
 
-*formerly Bolt)
+(formerly Bolt)
 
 This repository is the template for all new Professional Services projects.
 
@@ -90,4 +90,4 @@ The following is an overview of the purpose of each top level directory:
 
 Bolt work is currently being tracked in [Acquia's internal JIRA instance](https://backlog.acquia.com/browse/PPT).
 
-[![Build Status](https://magnum.travis-ci.com/acquia-pso/project-template.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x)](https://magnum.travis-ci.com/acquia-pso/project-template)
+[![Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=8.x)](https://magnum.travis-ci.com/acquia/bolt)
