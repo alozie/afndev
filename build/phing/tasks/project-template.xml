@@ -45,14 +45,14 @@
     </copy>
     <copy file="${repo.root}/install/example.travis.yml" tofile="${pt.new.dir}/.travis.yml"/>
 
-    <!-- Remove all references to Project Template from specified dirs/files. -->
+    <!-- Remove all lines that reference Project Template from specified dirs/files. -->
     <reflexive>
       <fileset dir="${pt.new.dir}">
         <include name="build/phing/build.xml" />
       </fileset>
       <filterchain>
         <replaceregexp>
-          <regexp pattern="Project([- ])?Template" replace="\n" ignoreCase="true"/>
+          <regexp pattern="(.*)Project([- ])?Template(.*)" replace="" ignoreCase="true" />
         </replaceregexp>
       </filterchain>
     </reflexive>

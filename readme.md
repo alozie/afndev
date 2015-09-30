@@ -1,4 +1,6 @@
-# Project Template
+# Bolt
+
+*formerly Bolt)
 
 This repository is the template for all new Professional Services projects.
 
@@ -11,26 +13,26 @@ This repository is the template for all new Professional Services projects.
   * [Git Hooks](#git-hooks)
   * [Testing Framework](#testing-framework)
 * [Directory Structure](#directory-structure)
-* [Contributing](#contributing) (to Project Template)
+* [Contributing](#contributing) (to Bolt)
 
 ## Installation
 
 When beginning a new Drupal project, do the following:
 
-* Clone this Project Template repository to a local directory.
+* Clone this Bolt repository to a local directory.
 * Follow the instructions in [/install/readme.md](/install/readme.md).
 
 ## Features
 
 ### Virtual Machine
 
-Project Template ships with the [Drupal VM](https://github.com/geerlingguy/drupal-vm), a simple virtual machine built on Ansible and Vagrant. The project template installer will generate all of the necessary vagrant configuration files in the `box` directory by default.
+Bolt ships with the [Drupal VM](https://github.com/geerlingguy/drupal-vm), a simple virtual machine built on Ansible and Vagrant. The Bolt installer will generate all of the necessary vagrant configuration files in the `box` directory by default.
 
 For full instructions on how to configure and install the packaged VM, see [Drupal VM](https://github.com/geerlingguy/drupal-vm) documentation.
 
 ### Documentation Templates
 
-The following default documentation is included in Project Template:
+The following default documentation is included in Bolt:
 * [Onboarding](/docs/onboarding.md)
 * [Developer Guide](/docs/developer-guide.md)
 * [Architecture Template](/docs/drupal-architecture-template.md)
@@ -40,13 +42,13 @@ The following default documentation is included in Project Template:
 
 ### Git Hooks
 
-Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included with Project Template. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
+Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included with Bolt. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
 
 Please see the [Git Hooks Readme](/hooks/readme.md) for more information.
 
 ### Testing Framework
 
-The project template includes both [example tests](/tests) and also [example
+The Bolt includes both [example tests](/tests) and also [example
 build configurations](/build) for Travis CI.
 
 #### Example Tests
@@ -79,13 +81,13 @@ The following is an overview of the purpose of each top level directory:
       ├── docs    - Contains high level project documentation.
       ├── git     - Contains configuration files that will be copied into a new project's .git directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
-      ├── install - Contains Project Template configuration files. Removed from child projects.
+      ├── install - Contains Bolt configuration files. Removed from child projects.
       ├── patches - Contains private patches to be used by make.yml.
       ├── scripts - Contains a variety of utility scripts that are not part of the build process.
       ├── tests   - Contains all test files and configuration.
 
 # Contributing
 
-Project Template work is currently being tracked in [Acquia's internal JIRA instance](https://backlog.acquia.com/browse/PPT).
+Bolt work is currently being tracked in [Acquia's internal JIRA instance](https://backlog.acquia.com/browse/PPT).
 
 [![Build Status](https://magnum.travis-ci.com/acquia-pso/project-template.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x)](https://magnum.travis-ci.com/acquia-pso/project-template)
