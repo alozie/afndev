@@ -1,14 +1,14 @@
 <!-- THESE TARGETS ARE FOR USE IN PROJECT TEMPLATE ONLY, NOT FOR CHILD PROJECTS
      CREATED VIA PROJECT TEMPLATE. -->
-<project name="project-template" default="build">
+<project name="bolt" default="build">
 
   <!-- Runs all project template related targets. -->
-  <target name="pt:new-project" description="Runs all targets required to spin up new project from Project Template." depends="pt:configure, pt:create"></target>
+  <target name="bolt:new-project" description="Runs all targets required to spin up new project from Bolt." depends="bolt:configure, bolt:create"></target>
 
   <!-- Creates new configuration files from example.*.yml files.
        Note: this target must be called by itself first. Other targets must be
        executed separately so that they may load the correct configuration   -->
-  <target name="pt:configure" description="Generates default .yml configuration files based on provided example files.">
+  <target name="bolt:configure" description="Generates default .yml configuration files based on provided example files.">
     <copy todir="${repo.root}">
       <fileset dir="${repo.root}/install">
         <include name="example.project.yml" />
@@ -27,39 +27,39 @@
   </target>
 
   <!-- Create a new project directory based on current repository. -->
-  <target name="pt:create" description="Create a new project based on local repository." depends="setup:build:rm-docroot">
+  <target name="bolt:create" description="Create a new project based on local repository." depends="setup:build:rm-docroot">
     <!-- Remove from existing directory. -->
-    <delete dir="${pt.new.dir}" />
+    <delete dir="${bolt.new.dir}" />
 
     <!-- (re)Create project directory. -->
-    <mkdir dir="${pt.new.dir}" />
-    <copy todir="${pt.new.dir}" >
+    <mkdir dir="${bolt.new.dir}" />
+    <copy todir="${bolt.new.dir}" >
       <fileset dir="${repo.root}" casesensitive="false" defaultexcludes="false" excludes=".cvsignore SCCS SCCS/** vssver.scc .svn .svn/** ._* .DS_Store .darcs .darcs/** .git .git/** .gitattributes .gitmodules .idea .idea/** .editorconfig">
         <!-- Exclude files that should not be copied. -->
         <exclude name="install/**" />
-        <exclude name="build/phing/tasks/project-template.xml" />
+        <exclude name="build/phing/tasks/bolt.xml" />
         <exclude name="readme.md" />
         <exclude name=".travis.yml" />
-        <exclude name="tests/phpunit/ProjectTemplateTest.php" />
+        <exclude name="tests/phpunit/BoltTest.php" />
       </fileset>
     </copy>
-    <copy file="${repo.root}/install/example.travis.yml" tofile="${pt.new.dir}/.travis.yml"/>
+    <copy file="${repo.root}/install/example.travis.yml" tofile="${bolt.new.dir}/.travis.yml"/>
 
-    <!-- Remove all lines that reference Project Template from specified dirs/files. -->
+    <!-- Remove all lines that reference Bolt from specified dirs/files. -->
     <reflexive>
-      <fileset dir="${pt.new.dir}">
+      <fileset dir="${bolt.new.dir}">
         <include name="build/phing/build.xml" />
       </fileset>
       <filterchain>
         <replaceregexp>
-          <regexp pattern="(.*)Project([- ])?Template(.*)" replace="" ignoreCase="true" />
+          <regexp pattern="(.*)bolt(.*)" replace="" ignoreCase="true" />
         </replaceregexp>
       </filterchain>
     </reflexive>
 
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
-      <fileset dir="${pt.new.dir}">
+      <fileset dir="${bolt.new.dir}">
         <include name="docs/**/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/all/settings/**/*" />
@@ -69,28 +69,28 @@
       </filterchain>
     </reflexive>
 
-    <exec dir="${pt.new.dir}" command="ln -s docs/readme.md readme.md" />
+    <exec dir="${bolt.new.dir}" command="ln -s docs/readme.md readme.md" />
 
-    <gitinit repository="${pt.new.dir}" />
-    <exec command="git add -A" dir="${pt.new.dir}" logoutput="true" passthru="true" />
-    <gitcommit repository="${pt.new.dir}" message="Initial commit of default files from Project Template." allFiles="true" />
+    <gitinit repository="${bolt.new.dir}" />
+    <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
 
-    <echo>New project was created in ${pt.new.dir}</echo>
+    <echo>New project was created in ${bolt.new.dir}</echo>
     <echo>Please change to the new project directory and run setup tasks. E.g.,</echo>
-    <echo>cd ${pt.new.dir}</echo>
+    <echo>cd ${bolt.new.dir}</echo>
     <echo>./task.sh setup:build:all</echo>
     <echo>./task.sh setup:git-hooks</echo>
     <echo>./task.sh vm:add</echo>
   </target>
 
-  <!-- This target is meant to test Project Template itself on TravisCI.
+  <!-- This target is meant to test Bolt itself on TravisCI.
        A few things to note:
        - We do not bootstrap the VM. It is not possible on TravisCI.
        - We do not run validate:* targets, since they can be run in parallel.
   -->
-  <target name="pt:self-test" description="Runs tests against acquia-pso/project-template proper.">
+  <target name="bolt:self-test" description="Runs tests against acquia-pso/bolt proper.">
 
-      <phingcall target="pt:create" />
+      <phingcall target="bolt:create" />
       <phingcall target="setup:build:all" />
       <phingcall target="setup:install:drupal" />
       <phingcall target="setup:git-hooks" />

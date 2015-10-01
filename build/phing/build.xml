@@ -25,8 +25,8 @@
   <!-- Contains targets for setting up virtual machine. -->
   <import file="${project.basedir}/tasks/vm.xml"/>
 
-  <!-- Contains target used for self-testing of Project Template. -->
-  <import file="${project.basedir}/tasks/project-template.xml"/>
+  <!-- Contains target used for self-testing of Bolt. -->
+  <import file="${project.basedir}/tasks/bolt.xml"/>
 
   <!-- @todo Add deploy.xml containing deployment tasks. -->
   <!-- E.g., commit build artifacts, push to remote. -->

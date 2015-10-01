@@ -19,7 +19,7 @@ This directory should not contain any test files. Those exist in the
   * `composer.json`
 1. Two phing targets are executed in parallel, validate:all and pt:self-test.
    The pt:self-test target calls a number of other targets to simulated the 
-   creation of a new project via Project Template, and to run all automated
+   creation of a new project via Bolt, and to run all automated
    tests. Notable files include:
   * `install/example.*.yml` files used for default configuration
   * `build/phing/*` files

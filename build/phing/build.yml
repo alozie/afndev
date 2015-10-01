@@ -1,7 +1,7 @@
 # This file contains environment-specific settings required for executing
 # Phing tests. Non-environment-specific config should be in config.yml in the
 # project root.
-pt:
+bolt:
   new.dir: ${repo.root}/../${project.acquia_subname}
 
 # File and Directory locations.
