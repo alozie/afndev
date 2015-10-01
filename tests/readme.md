@@ -30,7 +30,7 @@ project's yaml configuration files (project.yml, local.yml). Examples:
 To execute the tests directly (without Phing) see the following examples:
 
 * `./bin/behat -c tests/behat/local.yml test/behat/features/Examples.feature`
-* `./bin/phpunit tests/phpunit/ProjectTemplateTest.php`
+* `./bin/phpunit tests/phpunit/BoltTest.php`
 
 For more information on the commands, run:
 
