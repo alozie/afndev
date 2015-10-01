@@ -69,7 +69,7 @@ will do the following:
     * validate:all         - runs code validation (e.g., code sniffer)
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
-## Directory Structure
+## Directory Structure (needs updating)
 
 The following is an overview of the purpose of each top level directory:
 
@@ -77,14 +77,18 @@ The following is an overview of the purpose of each top level directory:
       ├── bin     - Contains binaries built by Composer, as well as installation binaries.
       ├── box     - Contains the virtual machine.
       ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
-      ├── docroot - The drupal docroot. Intentionally .gitignored. Created only during builds.
+      ├── docroot - The drupal docroot; is .gitignored. Created only during builds.
       ├── docs    - Contains high level project documentation.
       ├── git     - Contains configuration files that will be copied into a new project's .git directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
       ├── install - Contains Bolt configuration files. Removed from child projects.
+      ├── modules - Contains custom and contrib modules. Symlinked to docroot/modules.
       ├── patches - Contains private patches to be used by make.yml.
+      ├── reports - Contains output of automated tests; is .gitignored.
       ├── scripts - Contains a variety of utility scripts that are not part of the build process.
       ├── tests   - Contains all test files and configuration.
+      ├── themes  - Contains custom and contrib themes. Symlinked to docroot/themes.
+      ├── vendor  - Contains built composer dependencies; is .gitignored.
 
 # Contributing
 

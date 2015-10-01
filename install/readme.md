@@ -1,6 +1,6 @@
 ## Overview
 
-The project template has an installer which will do the following:
+Bolt has an installer which will do the following:
 
 * Create new project directory. It will be a sibling of the project template repository.
 * (optionally) Adds a Drupal VM for a local development environment
@@ -34,7 +34,7 @@ the following dependencies:
 
 ## Create new project
 
-To create a new repository using Project Template's installer, run the
+To create a new repository using Bolt's installer, run the
 follow from this repository's root directory:
 
 ### Create a new project, build all dependencies.
@@ -42,7 +42,7 @@ follow from this repository's root directory:
   1. `composer install`
   1. Run `./task.sh pt:configure` to create your
      project-specific configuration file. After running, `project.yml`, `make.yml`,
-     and `local.yml` should exist in the Project Template root directory.
+     and `local.yml` should exist in the Bolt root directory.
   1. Modify aforementioned .yml files with values for your new project.
   1. Run `./task.sh pt:create`
      This will create a new directory for your new project.
@@ -68,7 +68,7 @@ follow from this repository's root directory:
      
 ## Next Steps
 
-After project template has installed, there are several key activities to perform for your project:
+After Bolt has installed, there are several key activities to perform for your project:
 
   1. Update your project's make file
     * Add contributed modules and themes to `scripts/project.make.yml`

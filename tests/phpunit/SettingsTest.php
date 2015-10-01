@@ -22,7 +22,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->projectRoot = dirname(dirname(__DIR__));
         $this->drupalRoot = $this->projectRoot . '/docroot';
         $_ENV['AH_SITE_ENVIRONMENT'] = $env;
-        $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'] = 'project-template';
+        $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'] = 'bolt';
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         if (!defined('DRUPAL_ROOT')) {
             define('DRUPAL_ROOT', $this->drupalRoot);

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * PHP Unit tests for Project Template itself.
+ * PHP Unit tests for Bolt itself.
  */
 
 namespace Drupal;
@@ -10,12 +10,12 @@ namespace Drupal;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class ProjectTemplateTest.
+ * Class BoltTest.
  *
- * Verifies that project structure and configuration matches Project Template
+ * Verifies that project structure and configuration matches Bolt
  * standards.
  */
-class ProjectTemplateTest extends \PHPUnit_Framework_TestCase
+class BoltTest extends \PHPUnit_Framework_TestCase
 {
 
   /**
@@ -30,23 +30,23 @@ class ProjectTemplateTest extends \PHPUnit_Framework_TestCase
   /**
    * Tests Phing pt:create target.
    */
-    public function testProjectTemplateCreate()
+    public function testBoltCreate()
     {
         $new_project_dir = dirname($this->projectDirectory) . '/' . $this->config['project']['acquia_subname'];
         $this->assertFileExists($new_project_dir);
         $this->assertFileNotExists($new_project_dir . '/install');
-        $this->assertFileNotExists($new_project_dir . '/tests/phpunit/ProjectTemplate.php');
+        $this->assertFileNotExists($new_project_dir . '/tests/phpunit/Bolt.php');
         $this->assertNotContains(
             'pt:self-test',
             file_get_contents($new_project_dir . '/.travis.yml')
         );
-        $this->assertFileNotExists($new_project_dir . '/build/tasks/project-template.xml');
+        $this->assertFileNotExists($new_project_dir . '/build/tasks/bolt.xml');
         $this->assertNotContains(
-            'project-template',
+            'bolt',
             file_get_contents($new_project_dir . '/build/phing/build.xml')
         );
         $this->assertNotContains(
-            'Project Template',
+            'Bolt',
             file_get_contents($new_project_dir . '/build/phing/build.xml')
         );
         $this->assertNotContains(
