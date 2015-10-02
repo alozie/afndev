@@ -4,12 +4,12 @@ Bolt has an installer which will do the following:
 
 * Create new project directory (sibling of the Bolt repository)
 * Copies Bolt files to new directory, including:
-** Git Hooks
-** Acquia Cloud Hooks
-** Project documentation
-** Testing frameworks
-** CI configuration
-** Custom settings.php files
+  * Git Hooks
+  * Acquia Cloud Hooks
+  * Project documentation
+  * Testing frameworks
+  * CI configuration
+  * Custom settings.php files
 * Replaces tokens in copied files with project-specific strings
 * Removes installation artifacts
 
