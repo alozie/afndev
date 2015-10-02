@@ -15,7 +15,7 @@ cache:
 env:
   matrix:
     - TEST_SUITE=validate:all
-    - TEST_SUITE='setup:build:all tests:all'
+    - TEST_SUITE='setup:build:all setup:install:drupal tests:all'
 
 notifications:
   # Replace this with project slack token.
