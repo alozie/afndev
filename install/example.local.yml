@@ -1,7 +1,5 @@
 # Database Credentials. By default, these match Travis CI creds.
-# @todo split creds into separate, optional, gitignored settings file.
-# consider putting this in project root and using it for both phing and also
-# generating local.settings.php.
+# Note, these should match credentials in sites/default/local.settings.php!
 db:
   username: root
   name: drupal
