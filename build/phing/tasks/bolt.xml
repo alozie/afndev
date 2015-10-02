@@ -1,4 +1,4 @@
-<!-- THESE TARGETS ARE FOR USE IN PROJECT TEMPLATE ONLY, NOT FOR CHILD PROJECTS
+<!-- THESE TARGETS ARE FOR USE IN BOLT ONLY, NOT FOR CHILD PROJECTS
      CREATED VIA PROJECT TEMPLATE. -->
 <project name="bolt" default="build">
 
@@ -41,6 +41,7 @@
         <exclude name="readme.md" />
         <exclude name=".travis.yml" />
         <exclude name="tests/phpunit/BoltTest.php" />
+        <exclude name="vendor/**" />
       </fileset>
     </copy>
     <copy file="${repo.root}/install/example.travis.yml" tofile="${bolt.new.dir}/.travis.yml"/>
@@ -75,6 +76,8 @@
     <exec command="git checkout -b 7.x"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
+
+    <exec dir="${bolt.new.dir}" command="composer install" />
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
