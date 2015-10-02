@@ -9,9 +9,8 @@
   </target>
 
   <target name="vm:download" description="Downloads the virtual machine to /box.">
-    <exec command="curl -O -L https://github.com/geerlingguy/drupal-vm/archive/${vm.version}.tar.gz" dir="${repo.root}" />
-    <untar file="${repo.root}/${vm.version}.tar.gz" todir="${repo.root}" />
-    <move file="${repo.root}/drupal-vm-${vm.version}" tofile="${vm.dir}" />
+    <exec command="curl -O -L https://github.com/geerlingguy/drupal-vm/archive/${vm.version}.tar.gz" dir="${repo.root}" logoutput="true"/>
+    <exec command="tar -zxvf ${repo.root}/${vm.version}.tar.gz -C ${vm.dir} --strip-components=1" logoutput="true"/>
     <delete file="${repo.root}/${vm.version}.tar.gz" />
   </target>
 
