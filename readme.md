@@ -74,13 +74,12 @@ will do the following:
 
 ### Virtual Machine
 
-Bolt ships with the [Drupal VM](https://github.com/geerlingguy/drupal-vm), a 
-simple virtual machine built on Ansible and Vagrant. The Bolt installer will 
+Bolt ships with tasks for installing [Drupal VM](https://github.com/geerlingguy/drupal-vm), 
+a simple virtual machine built on Ansible and Vagrant. The Bolt installer will 
 generate all of the necessary vagrant configuration files in the `box` directory 
 by default.
 
-For full instructions on how to configure and install the packaged VM, see 
-[Drupal VM](https://github.com/geerlingguy/drupal-vm) documentation.
+For more information, see [box directory](/box).
 
 ## Directory Structure (needs updating)
 

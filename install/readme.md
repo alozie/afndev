@@ -2,11 +2,15 @@
 
 Bolt has an installer which will do the following:
 
-* Create new project directory. It will be a sibling of the project template repository.
-* (optionally) Adds a Drupal VM for a local development environment
-* Adds testing frameworks
-* Adds project documentation
-* Includes custom settings in sites/all/settings
+* Create new project directory (sibling of the Bolt repository)
+* Copies Bolt files to new directory, including:
+** Git Hooks
+** Acquia Cloud Hooks
+** Project documentation
+** Testing frameworks
+** CI configuration
+** Custom settings.php files
+* Replaces tokens in copied files with project-specific strings
 * Removes installation artifacts
 
 ## Installer Requirements
@@ -14,23 +18,6 @@ Bolt has an installer which will do the following:
 * Composer [Install](https://getcomposer.org/doc/00-intro.md#globally)
 * PHP 5.3.9+ (PHP 5.5 recommended)
   * [Homebrew Install](https://lastzero.net/2013/08/howto-install-php-5-5-and-phpunit-on-os-x-via-homebrew/)
-
-### Virtual Machine Requirements
-
-If you'd like to use the included Ansible Drupal VM, you will need to install
-the following dependencies:
-
-* VirtualBox 4.3.x [Download](https://www.virtualbox.org/wiki/Downloads)
-  * Drupal VM also works with Parallels or VMware if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware))
-* Vagrant 1.7.2 or higher [Download](http://www.vagrantup.com/downloads.html)
-* Vagrant Host Updater
-  * Instructions: `vagrant plugin install vagrant-hostsupdater`
-* Ansible 1.9.2 or higher [Install](http://docs.ansible.com/intro_installation.html).
-  * Mac / Linux only
-  * OSX instructions from Homebrew: `brew install ansible`
-  * Linux instructions:
-    * `sudo easy_install pip`
-    * `sudo CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments pip install ansible`
 
 ## Create new project
 
@@ -40,31 +27,17 @@ follow from this repository's root directory:
 ### Create a new project, build all dependencies.
 
   1. `composer install`
-  1. Run `./task.sh pt:configure` to create your
+  1. Run `./task.sh bolt:configure` to create your
      project-specific configuration file. After running, `project.yml`, `make.yml`,
      and `local.yml` should exist in the Bolt root directory.
   1. Modify aforementioned .yml files with values for your new project.
-  1. Run `./task.sh pt:create`
+  1. Run `./task.sh bolt:create`
      This will create a new directory for your new project.
   1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
   1. In your new project directory, run `./task.sh setup:build:all`.
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
   1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration ``./task.sh setup:behat`
-
-### Optionally, install Drupal
-
-  1. Optionally, you may install Drupal via Phing. To do this, verify correct
-     credentials in `local.yml` and then run:
-     `./task.sh setup:install:drupal`
-
-### Optionally, execute tests
-
-  1. To run code validation (phpcs, phpmd, pdepend) against your new project
-     run: `./task.sh validate:all`
-  1. To run automated tests (behat, phpunit) against your new project, run:
-     `./task.sh tests:all`. Please note that Behat
-     tests will only run successfully if Drupal is installed.
      
 ## Next Steps
 
@@ -78,15 +51,25 @@ After Bolt has installed, there are several key activities to perform for your p
   1. Review and include common settings snippets (in `sites\default\settings`)
     * Review which settings snippets in `sites\default\settings` are relevant for your project
     * Include relevant settings within your site-specific by uncommenting require line(s)
-  1. (optional) Bootstrap the virtual machine
-     * `.task.sh vm:add`
 
-## Integration with 3rd Party Services
+### Optionally, install Drupal locally
+
+  1. Optionally, you may install Drupal via Phing. To do this, verify correct
+     credentials in `local.yml` and then run:
+     `./task.sh setup:install:drupal`
+
+### Optionally, download and bootstrap VM
+ 
+  1. `./task.sh vm:add`
+  
+  See [box directory](/box) for more information.
+
+### Optionally, integrate with 3rd party services
 
   1. Enable TravisCI
   2. Enable Slack integration with TravisCI
 
-## Verification
+### Visit the site!
 
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
