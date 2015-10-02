@@ -37,7 +37,7 @@ follow from this repository's root directory:
   1. In your new project directory, run `./task.sh setup:build:all`.
      This will build dependencies in your make file and setup behat config.
   1. Install local git hooks `./task.sh setup:git-hooks`
-  1. Setup Behat configuration ``./task.sh setup:behat`
+  1. Setup Behat configuration `./task.sh setup:behat`
      
 ## Next Steps
 

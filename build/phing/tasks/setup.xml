@@ -69,7 +69,7 @@
         <available file='${docroot}' type='dir' property="docroot.available"/>
       </not>
       <then>
-        <fail message="docroot does not existing. Please run 'setup:build:all' task first and then re-try."/>
+        <fail message="docroot does not exis. Please run 'setup:build:all' task first and then re-try."/>
       </then>
     </if>
 
