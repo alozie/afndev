@@ -4,21 +4,8 @@
 // upon this variable being set correctly.
 $ac_subname = '${project.acquia_subname}';
 
-$databases = array (
-  'default' =>
-    array (
-      'default' =>
-        array (
-          'database' => '${db.name}',
-          'username' => '${db.username}',
-          'password' => '${db.password}',
-          'host' => '${db.host}',
-          'port' => '${db.port}',
-          'driver' => 'mysql',
-          'prefix' => '',
-        ),
-    ),
-);
+// Database credentials are loaded either via local.settings.php or Acquia
+// Cloud.
 
 /**
  * Acquia Cloud settings.

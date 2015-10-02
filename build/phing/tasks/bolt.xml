@@ -72,11 +72,14 @@
     <exec dir="${bolt.new.dir}" command="ln -s docs/readme.md readme.md" />
 
     <gitinit repository="${bolt.new.dir}" />
+    <exec command="git checkout -b 7.x"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
 
+    <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
     <echo>Please change to the new project directory and run setup tasks. E.g.,</echo>
+    <echo></echo>
     <echo>cd ${bolt.new.dir}</echo>
     <echo>./task.sh setup:build:all</echo>
     <echo>./task.sh setup:git-hooks</echo>
