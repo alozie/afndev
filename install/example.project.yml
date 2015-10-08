@@ -23,19 +23,6 @@ drush:
     dev: ${project.acquia_subname}.dev
     stg: ${project.acquia_subname}.stg
 
-# Configuration for the Ansible Drupal VM. To prevent inclusion of a vm, remove
-# the "vm" key.
-vm:
-  # If true, this provisions and launches the virtual machine as part of the
-  # installation process. Note that dependencies (vagrant, ansible, virtual box)
-  # must be installed for this work.
-  # @see /box
-  bootstrap: false
-  # This loads the necessary ansible requirements.
-  rebuild_requirements: true
-  drush_version: 6.6.0
-  drupal_major_version: 7
-
 # Configuration settings for new git repository.
 git:
   # These git hooks will be installed in .git/hooks.

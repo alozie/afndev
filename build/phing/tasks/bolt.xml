@@ -86,12 +86,10 @@
     <echo>cd ${bolt.new.dir}</echo>
     <echo>./task.sh setup:build:all</echo>
     <echo>./task.sh setup:git-hooks</echo>
-    <echo>./task.sh vm:add</echo>
   </target>
 
   <!-- This target is meant to test Bolt itself on TravisCI.
        A few things to note:
-       - We do not bootstrap the VM. It is not possible on TravisCI.
        - We do not run validate:* targets, since they can be run in parallel.
   -->
   <target name="bolt:self-test" description="Runs tests against acquia-pso/bolt proper.">
@@ -101,15 +99,12 @@
       <phingcall target="setup:install:drupal" />
       <phingcall target="setup:git-hooks" />
       <phingcall target="setup:behat" />
-      <phingcall target="vm:download" />
-      <phingcall target="vm:configure" />
       <phingcall target="tests:security-updates" />
       <phingcall target="tests:behat">
         <!-- Run our own PHP server so that Apache need not be setup. -->
         <property name="behat:run-server" value="true" />
       </phingcall>
       <phingcall target="tests:phpunit" />
-      <phingcall target="vm:configure" />
 
   </target>
 </project>

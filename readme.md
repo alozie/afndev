@@ -72,14 +72,14 @@ will do the following:
     * setup:install:drupal - installs Drupal to Travis environment via `drush si`
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
-### Virtual Machine
+### Local Development Environment
 
-Bolt ships with tasks for installing [Drupal VM](https://github.com/geerlingguy/drupal-vm), 
-a simple virtual machine built on Ansible and Vagrant. The Bolt installer will 
-generate all of the necessary vagrant configuration files in the `box` directory 
-by default.
+Bolt does not ship with any local development environment configuration, but there are two recommended solutions, both of which can be used with Bolt-generated Drupal projects:
 
-For more information, see [box directory](/box).
+  - [Drupal VM](http://www.drupalvm.com/)
+  - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
+
+TODO - Add documentation/tutorial in `/docs` folder for local development environments.
 
 ## Directory Structure
 
@@ -87,7 +87,6 @@ The following is an overview of the purpose of each top level directory:
 
     root
       ├── bin     - Contains binaries built by Composer, as well as installation binaries.
-      ├── box     - Contains the virtual machine.
       ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
       ├── docroot - The drupal docroot. Intentionally .gitignored. Created only during builds.
       ├── docs    - Contains high level project documentation.
