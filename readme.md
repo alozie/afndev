@@ -37,7 +37,6 @@ The following default documentation is included in Bolt:
 * [Theming Guide](/readme/theming.md)
 * [Local Development](local-development.md)
 
-
 ### Git Hooks
 
 Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included with Bolt. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
@@ -74,7 +73,7 @@ will do the following:
     * setup:drupal:install - installs Drupal to Travis environment via `drush si`
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
-### Local Development
+### Local Development Environment
 
 Bolt does not ship with any local development environment configuration, but there are two recommended solutions, both of which can be used with Bolt-generated Drupal projects:
 
@@ -89,7 +88,6 @@ The following is an overview of the purpose of each top level directory:
 
     root
       ├── bin     - Contains binaries built by Composer, as well as installation binaries.
-      ├── box     - Contains the virtual machine.
       ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
       ├── docroot - The drupal docroot; is .gitignored. Created only during builds.
       ├── readme  - Contains high level project documentation.
