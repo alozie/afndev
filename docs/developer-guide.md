@@ -159,18 +159,18 @@ This model removes the bottleneck of designated integrators, but still eliminate
 
 Using [Hub](https://github.com/github/hub), it is very easy to merge a PR locally without adding another remote or messing with branches. For example, using the URL used to view a pull request, simply run `hub checkout` to test these changes locally -
 
-    hub checkout https://github.com/acquia-pso/project-template/pull/1
+    hub checkout https://github.com/acquia-pso/bolt/pull/1
 
 Alternatively, you can use `hub merge` to merge the changes -
 
-    hub merge https://github.com/acquia-pso/project-template/pull/1
+    hub merge https://github.com/acquia-pso/bolt/pull/1
 
 *NOTE: This command implies the `--no-ff` flag like GitHub uses when merging pull requests using the web interface.*
 
 # Generate Release Notes Script
 
 ## Overview
-Use a script compiles PR comments for a project into a Markdown file that can be copy and pasted into github release notes. This script is hosted in the Acquia PSO [project-template](https://github.com/acquia-pso/project-template/blob/master/scripts/generate_release_notes.php) repository.
+Use a script compiles PR comments for a project into a Markdown file that can be copy and pasted into github release notes. This script is hosted in the Acquia PSO [bolt](https://github.com/acquia-pso/bolt/blob/master/scripts/generate_release_notes.php) repository.
 
 ## Usage
 
