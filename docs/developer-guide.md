@@ -170,7 +170,7 @@ Alternatively, you can use `hub merge` to merge the changes -
 # Generate Release Notes Script
 
 ## Overview
-Use a script compiles PR comments for a project into a Markdown file that can be copy and pasted into github release notes. This script is hosted in the Acquia PSO [project-template](https://github.com/acquia-pso/project-template/blob/master/scripts/generate_release_notes.php) repository.
+Use a script compiles PR comments for a project into a Markdown file that can be copy and pasted into github release notes. This script is hosted in the Acquia PSO [project-template](https://github.com/acquia-pso/project-template/blob/7.x/scripts/release-notes/generate-release-notes.php) repository.
 
 ## Usage
 
