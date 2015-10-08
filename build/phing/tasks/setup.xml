@@ -56,8 +56,10 @@
     <!-- Symlink modules and themes. -->
     <delete dir="${docroot}/modules"/>
     <delete dir="${docroot}/themes"/>
+    <delete dir="${docroot}/profiles"/>
     <symlink target="${repo.root}/modules" link="${docroot}/modules" />
     <symlink target="${repo.root}/themes" link="${docroot}/themes" />
+    <symlink target="${repo.root}/profiles" link="${docroot}/profiles" />
 
     <!-- Symlink settings. -->
     <delete file="${docroot}/sites/default/example.settings.local.php"/>
