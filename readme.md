@@ -82,7 +82,7 @@ Bolt does not ship with any local development environment configuration, but the
 
 Please read the included [Local Development](/readme/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
 
-## Directory Structure (needs updating)
+## Directory Structure
 
 The following is an overview of the purpose of each top level directory:
 
