@@ -4,16 +4,10 @@ installation provided by Drupal core when Drupal is first installed.
 WHAT TO PLACE IN THIS DIRECTORY?
 --------------------------------
 
-Place downloaded and custom installation profiles in this directory.
+Place custom installation profiles in this directory.
 Installation profiles are generally provided as part of a Drupal distribution.
 They only impact the installation of your site. They do not have any effect on
 an already running site.
-
-DOWNLOAD ADDITIONAL DISTRIBUTIONS
----------------------------------
-
-Contributed distributions from the Drupal community may be downloaded at
-https://www.drupal.org/project/project_distribution.
 
 MULTISITE CONFIGURATION
 -----------------------
