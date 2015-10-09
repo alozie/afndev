@@ -35,6 +35,7 @@ The following default documentation is included in Bolt:
 * [Open Source Contribution Guide](/docs/os-contribution.md)
 * [Project Readme](/docs/readme.md)
 * [Theming Guide](/docs/theming.md)
+* [Local Development](/docs/local-development.md)
 
 ### Git Hooks
 
@@ -72,14 +73,14 @@ will do the following:
     * setup:install:drupal - installs Drupal to Travis environment via `drush si`
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
-### Local Development Environment
+### Local Development
 
 Bolt does not ship with any local development environment configuration, but there are two recommended solutions, both of which can be used with Bolt-generated Drupal projects:
 
   - [Drupal VM](http://www.drupalvm.com/)
   - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
 
-TODO - Add documentation/tutorial in `/docs` folder for local development environments.
+Please read the included [Local Development](/docs/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
 
 ## Directory Structure
 
