@@ -54,11 +54,11 @@
 
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink modules and themes. -->
-    <delete dir="${docroot}/modules"/>
-    <delete dir="${docroot}/themes"/>
+    <delete dir="${docroot}/modules/custom"/>
+    <delete dir="${docroot}/themes/custom"/>
     <delete dir="${docroot}/profiles"/>
-    <symlink target="${repo.root}/modules" link="${docroot}/modules" />
-    <symlink target="${repo.root}/themes" link="${docroot}/themes" />
+    <symlink target="${repo.root}/modules/custom" link="${docroot}/modules/custom" />
+    <symlink target="${repo.root}/themes/custom" link="${docroot}/themes/custom" />
     <symlink target="${repo.root}/profiles" link="${docroot}/profiles" />
 
     <!-- Symlink settings. -->
