@@ -22,9 +22,6 @@
   <!-- Contains fileset definitions. E.g., patterns defining contrib locations, theming files, etc. -->
   <import file="${project.basedir}/tasks/filesets.xml"/>
 
-  <!-- Contains targets for setting up virtual machine. -->
-  <import file="${project.basedir}/tasks/vm.xml"/>
-
   <!-- Contains target used for self-testing of Bolt. -->
   <import file="${project.basedir}/tasks/bolt.xml"/>
 

@@ -38,7 +38,7 @@ follow from this repository's root directory:
      This will install git hooks, build dependencies in your make file, and setup behat configuration.
   1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration `./task.sh setup:behat`
-     
+
 ## Next Steps
 
 After Bolt has installed, there are several key activities to perform for your project:
@@ -58,12 +58,6 @@ After Bolt has installed, there are several key activities to perform for your p
      credentials in `local.yml` and then run:
      `./task.sh setup:install:drupal`
 
-### Optionally, download and bootstrap VM
- 
-  1. `./task.sh vm:add`
-  
-  See [box directory](/box) for more information.
-
 ### Optionally, integrate with 3rd party services
 
   1. Enable TravisCI
@@ -76,14 +70,3 @@ After Bolt has installed, there are several key activities to perform for your p
       * Verify correct db creds in `sites/all/settings/local.settings.php`
       * Configure your local LAMP stack such that the docroot is associated with the $base_url
       * Visit the local_url that you set in project.yml
-    * If you used the included Ansible virtual machine ...
-      * `cd box`
-      * `vagrant plugin install vagrant-hostsupdater`
-      * `sudo ansible-galaxy install -r provisioning/requirements.txt --force`
-      * `vagrant up` This will take about 5 minutes. It will provision your
-         virtual machine and install Drupal.
-      * Your local hosts file should already be configured such that your
-        local development URL points to your Ansible machine's VM. So, open
-        your native browser and navigate to the local_url specified in
-        `project.yml`
-      * Verify your Drush alias has been created for your project, `drush sa`
