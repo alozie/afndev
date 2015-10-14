@@ -98,16 +98,4 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($this->projectDirectory . '/.git/hooks/pre-commit');
     }
 
-  /**
-   * Tests Phing vm:add target.
-   */
-    public function testVmAdd()
-    {
-        // @todo Assert vm configuration in box/config.yml.
-        $this->assertFileExists($this->projectDirectory . '/box/Vagrantfile');
-        $this->assertFileExists($this->projectDirectory . '/box/config.yml');
-
-        // Asserts that all Phing properties have been expanded.
-        $this->assertNotContains('${', file_get_contents($this->projectDirectory . '/box/config.yml'));
-    }
 }
