@@ -55,11 +55,14 @@
   </target>
 
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
-    <symlink target="${repo.root}/sites/all/drush" link="${docroot}/sites/all/drush" />
-    <symlink target="${repo.root}/sites/all/modules/custom" link="${docroot}/sites/all/modules/custom" />
-    <symlink target="${repo.root}/sites/all/settings" link="${docroot}/sites/all/settings" />
-    <symlink target="${repo.root}/sites/all/themes/custom" link="${docroot}/sites/all/themes/custom" />
-    <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
+    <!-- Symlink settings. -->
+    <exec dir="${repo.root}" command="ln -s ../../sites/all/drush docroot/sites/all/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../sites/all/settings docroot/sites/all/settings"/>
+    <exec dir="${repo.root}" command="ln -s ../../sites/default/settings.php docroot/sites/default/settings.php"/>
+
+    <!-- Symlink modules and themes. -->
+    <exec dir="${repo.root}" command="ln -s ../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
+    <exec dir="${repo.root}" command="ln -s ../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
   </target>
 
   <target name="setup:install:drupal"
