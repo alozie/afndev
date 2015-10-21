@@ -56,7 +56,7 @@ After Bolt has installed, there are several key activities to perform for your p
 
   1. Optionally, you may install Drupal via Phing. To do this, verify correct
      credentials in `local.yml` and then run:
-     `./task.sh setup:install:drupal`
+     `./task.sh setup:drupal:install`
 
 ### Optionally, integrate with 3rd party services
 
