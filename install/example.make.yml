@@ -9,10 +9,6 @@ projects:
   drupal:
     type: core
     patch:
-      # Files displayed by default setting not respected.
-      # https://www.drupal.org/node/1520716#comment-6456630
-      - https://www.drupal.org/files/core-file-display-default-1520716-1.patch
-
       # Scale and crop image effect needs anchor option.
       # https://www.drupal.org/node/1252606#comment-8305805
       - https://www.drupal.org/files/issues/D7-scale-and-crop-1252606-37.patch
