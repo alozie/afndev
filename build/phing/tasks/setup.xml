@@ -54,6 +54,14 @@
     </drush>
   </target>
 
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink settings. -->
     <exec dir="${repo.root}" command="ln -s ../../../sites/all/drush docroot/sites/all/drush"/>
@@ -65,23 +73,10 @@
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
   </target>
 
-  <target name="setup:install:drupal"
-          description="Installs Drupal using credentials from local.yml.">
-    <if>
-      <not>
-        <available file='${docroot}' type='dir' property="docroot.available"/>
-      </not>
-      <then>
-        <fail message="docroot does not exis. Please run 'setup:build:all' task first and then re-try."/>
-      </then>
-    </if>
+  <target name="setup:drupal:install"
+          description="Installs Drupal using credentials from local.yml."
+          depends="setup:drupal:settings, setup:check:docroot">
 
-    <!-- Create a local.settings.php with local db creds from local.yml. -->
-    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
     <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
 
     <drush command="site-install" assume="yes" verbose="TRUE">

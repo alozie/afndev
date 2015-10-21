@@ -77,7 +77,7 @@
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
 
-    <exec dir="${bolt.new.dir}" command="composer install" />
+    <exec dir="${bolt.new.dir}" command="composer install" logoutput="true" passthru="true" />
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
@@ -93,18 +93,14 @@
        - We do not run validate:* targets, since they can be run in parallel.
   -->
   <target name="bolt:self-test" description="Runs tests against acquia-pso/bolt proper.">
-
+      <phingcall target="bolt:configure" />
       <phingcall target="bolt:create" />
       <phingcall target="setup:build:all" />
-      <phingcall target="setup:install:drupal" />
+      <phingcall target="setup:drupal:install" />
       <phingcall target="setup:git-hooks" />
       <phingcall target="setup:behat" />
       <phingcall target="tests:security-updates" />
-      <phingcall target="tests:behat">
-        <!-- Run our own PHP server so that Apache need not be setup. -->
-        <property name="behat:run-server" value="true" />
-      </phingcall>
+      <phingcall target="tests:behat" />
       <phingcall target="tests:phpunit" />
-
   </target>
 </project>

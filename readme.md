@@ -70,7 +70,7 @@ will do the following:
   * Run phing targets. Phing targets include:
     * validate:all         - runs code validation (e.g., code sniffer)
     * setup:build:make     - executes drush make on [make.yml]
-    * setup:install:drupal - installs Drupal to Travis environment via `drush si`
+    * setup:drupal:install - installs Drupal to Travis environment via `drush si`
     * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
 
 ### Local Development

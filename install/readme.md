@@ -38,6 +38,7 @@ follow from this repository's root directory:
      This will build dependencies in your make file and setup behat config.
   1. Install local git hooks `./task.sh setup:git-hooks`
   1. Setup Behat configuration `./task.sh setup:behat`
+  1. To read a full list of available tasks, run `./task.sh -list`
      
 ## Next Steps
 
@@ -56,7 +57,7 @@ After Bolt has installed, there are several key activities to perform for your p
 
   1. Optionally, you may install Drupal via Phing. To do this, verify correct
      credentials in `local.yml` and then run:
-     `./task.sh setup:install:drupal`
+     `./task.sh setup:drupal:install`
 
 ### Optionally, integrate with 3rd party services
 
