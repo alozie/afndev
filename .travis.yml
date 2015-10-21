@@ -34,4 +34,4 @@ before_script:
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 
 script:
-  - ./task.sh validate:all bolt:configure bolt:self-test
+  - ./task.sh validate:all bolt:self-test -Dbehat:run-server=true

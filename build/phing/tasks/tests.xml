@@ -21,14 +21,12 @@
           passthru="true"/>
   </target>
 
-  <!-- If you experience 'Maximum function nesting level' errors in your PHP
-       error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
-  <target name="tests:behat" depends="tests:phantomjs:launch" description="Executes Behat tests locally.">
-
-    <!-- Optionally run tests against internal PHP server. -->
+  <!-- Optionally run tests against internal PHP server. -->
+  <target name="tests:run-server">
     <if>
-      <istrue value="${behat:run-server}"/>
+      <equals arg1="${behat:run-server}" arg2="true"/>
       <then>
+        <echo message="Using drush runserver for executing subsequent tests." />
         <!-- Note that Behat's base_url must match php-server-url. -->
         <property name="behat:server-url" value="http://127.0.0.1:8080/" />
 
@@ -40,6 +38,11 @@
         </waitfor>
       </then>
     </if>
+  </target>
+
+  <!-- If you experience 'Maximum function nesting level' errors in your PHP
+       error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
+  <target name="tests:behat" depends="tests:run-server, tests:phantomjs:launch" description="Executes Behat tests locally.">
 
     <!-- As with any property, this can be overridden at runtime, permitting
      Behat execution using any configuration -->

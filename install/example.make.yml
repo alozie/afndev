@@ -39,7 +39,3 @@ projects:
     version: ~
   views:
     version: ~
-
-includes:
-  # Thunder is a set of themes for PS Projects.
-  makefile: scripts/thunder.make.yml

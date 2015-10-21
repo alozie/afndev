@@ -1,8 +1,2 @@
-composer.phar
-composer.lock
-bin
-vendor
 behat.local.yml
-*.rej
-test_releases
-
+local.yml
