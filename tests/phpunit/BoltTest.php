@@ -55,7 +55,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertNotContains(
             '${project.human_name}',
-            file_get_contents($new_project_dir . '/docs/architecture.md')
+            file_get_contents($new_project_dir . '/readme/architecture.md')
         );
     }
 

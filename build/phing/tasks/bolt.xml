@@ -61,7 +61,7 @@
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
       <fileset dir="${bolt.new.dir}">
-        <include name="docs/**/*" />
+        <include name="readme/**/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/all/settings/**/*" />
       </fileset>
@@ -70,7 +70,7 @@
       </filterchain>
     </reflexive>
 
-    <exec dir="${bolt.new.dir}" command="ln -s docs/readme.md readme.md" />
+    <exec dir="${bolt.new.dir}" command="ln -s readme/readme.md readme.md" />
 
     <gitinit repository="${bolt.new.dir}" />
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
