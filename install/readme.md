@@ -47,7 +47,7 @@ After Bolt has installed, there are several key activities to perform for your p
   * Add contributed modules and themes to `make.yml`
   * Build docroot via `./task.sh setup:build:all`
 1. Update your project readme.md
-1. Update the project documentation (in `docs`)
+1. Update the project documentation (in `readme`)
 1. Review and include common settings snippets (in `sites\all\settings`)
   * Review which settings snippets in `sites\all\settings` are relevant for your project
   * Include relevant settings within your site-specific by uncommenting require line(s)
