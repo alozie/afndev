@@ -342,6 +342,10 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 // Primary modules directory.
 $module_dir = 'sites/all/modules';
 
+// Set this to the proper Acquia subscription. Subsequent includes rely
+// upon this variable being set correctly.
+$ac_subname = '${project.acquia_subname}';
+
 // Includes required Acquia configuration and set $base_url correctly.
 require DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
 
@@ -369,6 +373,13 @@ require DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
 
 // Includes settings for Acquia Search (via apachesolr).
 // require_once DRUPAL_ROOT . '/sites/all/settings/search.settings.php';
+
+/**
+ * Acquia Cloud settings.
+ */
+if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_GROUP'])) {
+  require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_subname-settings.inc";
+}
 
 // Includes local settings.
 if (file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
