@@ -29,12 +29,12 @@ When beginning a new Drupal project, do the following:
 ### Documentation Templates
 
 The following default documentation is included in Bolt:
-* [Onboarding](/docs/onboarding.md)
-* [Developer Guide](/docs/developer-guide.md)
-* [Architecture Template](/docs/drupal-architecture-template.md)
-* [Open Source Contribution Guide](/docs/os-contribution.md)
-* [Project Readme](/docs/readme.md)
-* [Theming Guide](/docs/theming.md)
+* [Onboarding](/readme/onboarding.md)
+* [Developer Guide](/readme/developer-guide.md)
+* [Architecture Template](/readme/drupal-architecture-template.md)
+* [Open Source Contribution Guide](/readme/os-contribution.md)
+* [Project Readme](/readme/readme.md)
+* [Theming Guide](/readme/theming.md)
 * [Local Development](local-development.md)
 
 
@@ -81,7 +81,7 @@ Bolt does not ship with any local development environment configuration, but the
   - [Drupal VM](http://www.drupalvm.com/)
   - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
 
-Please read the included [Local Development](/docs/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
+Please read the included [Local Development](/readme/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
 
 ## Directory Structure (needs updating)
 
@@ -92,7 +92,7 @@ The following is an overview of the purpose of each top level directory:
       ├── box     - Contains the virtual machine.
       ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
       ├── docroot - The drupal docroot; is .gitignored. Created only during builds.
-      ├── docs    - Contains high level project documentation.
+      ├── readme  - Contains high level project documentation.
       ├── git     - Contains configuration files that will be copied into a new project's .git directory upon installation.
       ├── hooks   - Contains Acquia Cloud hooks.
       ├── install - Contains Bolt configuration files. Removed from child projects.
