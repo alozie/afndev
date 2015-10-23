@@ -52,6 +52,14 @@
     </drush>
   </target>
 
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/default/settings/example.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink modules and themes. -->
     <delete dir="${docroot}/modules/custom"/>
@@ -68,7 +76,9 @@
     <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
   </target>
 
-  <target name="setup:install:drupal" description="Installs Drupal using credentials from local.yml.">
+  <target name="setup:drupal:install"
+          description="Installs Drupal using credentials from local.yml."
+          depends="setup:drupal:settings, setup:check:docroot">
     <if>
       <not>
         <available file='${docroot}' type='dir' property="docroot.available"/>
