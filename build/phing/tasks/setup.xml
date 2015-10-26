@@ -65,28 +65,19 @@
     <delete dir="${docroot}/modules/custom"/>
     <delete dir="${docroot}/themes/custom"/>
     <delete dir="${docroot}/profiles"/>
-    <symlink target="${repo.root}/modules/custom" link="${docroot}/modules/custom" />
-    <symlink target="${repo.root}/themes/custom" link="${docroot}/themes/custom" />
-    <symlink target="${repo.root}/profiles" link="${docroot}/profiles" />
+    <exec dir="${repo.root}" command="ln -s ../../modules/custom docroot/modules/custom"/>
+    <exec dir="${repo.root}" command="ln -s ../../themes/custom docroot/themes/custom"/>
+    <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>
 
     <!-- Symlink settings. -->
-    <delete file="${docroot}/sites/default/example.settings.local.php"/>
-    <symlink target="${repo.root}/default/drush" link="${docroot}/sites/default/drush" />
-    <symlink target="${repo.root}/sites/default/settings" link="${docroot}/sites/default/settings" />
-    <symlink target="${repo.root}/sites/default/settings.php" link="${docroot}/sites/default/settings.php" />
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/drush docroot/sites/default/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
   </target>
 
   <target name="setup:drupal:install"
           description="Installs Drupal using credentials from local.yml."
           depends="setup:drupal:settings, setup:check:docroot">
-    <if>
-      <not>
-        <available file='${docroot}' type='dir' property="docroot.available"/>
-      </not>
-      <then>
-        <fail message="Docroot does not existing. Please run 'setup:build:all' task first and then re-try."/>
-      </then>
-    </if>
 
     <!-- Create a local.settings.php with local db creds from local.yml. -->
     <copy file="${repo.root}/sites/default/settings/example.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
@@ -126,14 +117,21 @@
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled git/hooks directory.">
-    <copy todir="${repo.root}/.git/hooks" overwrite="true">
+    <!-- Replace tokens in files. -->
+    <reflexive>
       <fileset dir="${repo.root}/git/hooks"></fileset>
       <filterchain>
         <expandproperties />
       </filterchain>
-    </copy>
+    </reflexive>
+
+    <!-- Symlink into .git directory. -->
+    <delete dir="${repo.root}/.git/hooks" quiet="true" failonerror="false"/>
+    <exec dir="${repo.root}/.git" command="ln -s ../git/hooks" logoutput="true"/>
+
+    <!-- Grant execution permissions. -->
     <chmod mode="0755">
-      <fileset dir="${repo.root}/.git/hooks">
+      <fileset dir="${repo.root}/git/hooks">
         <exclude name="**/*.sample" />
       </fileset>
     </chmod>

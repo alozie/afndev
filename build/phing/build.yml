@@ -5,6 +5,7 @@ bolt:
   new.dir: ${repo.root}/../${project.acquia_subname}
 
 # File and Directory locations.
+docroot.relative: ${repo.root.relative}/docroot
 docroot: ${repo.root}/docroot
 composer.bin: ${repo.root}/bin
 drush.bin: ${composer.bin}/drush
