@@ -8,7 +8,7 @@ the [build](/build) directory.
     ├── behat - contains all Behat tests
     │    ├── features
     │    │   ├── bootstrap
-    │    │   └── Example.feature 
+    │    │   └── Example.feature
     │    ├── behat.yml - contains behat configuration common to all behat profiles.
     │    └── integration.yml - contains behat configuration for the integration profile, which is used to run tests on the integration environment.
     ├── jmeter  - contains all jMeter tests
@@ -21,7 +21,7 @@ are built by running `composer install` in the project root.
 
 Each testing type can be either executed directly, or via a corresponding Phing
 target. Phing will execute the tests with default values defined in your
-project's yaml configuration files (project.yml, local.yml). Examples: 
+project's yaml configuration files (project.yml, local.yml). Examples:
 
 * `./task.sh tests:all`
 * `./task.sh tests:behat`
@@ -29,7 +29,7 @@ project's yaml configuration files (project.yml, local.yml). Examples:
 
 To execute the tests directly (without Phing) see the following examples:
 
-* `./bin/behat -c tests/behat/local.yml test/behat/features/Examples.feature`
+* `./bin/behat -c tests/behat/local.yml tests/behat/features/Examples.feature`
 * `./bin/phpunit tests/phpunit/BoltTest.php`
 
 For more information on the commands, run:
