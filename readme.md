@@ -1,8 +1,7 @@
 # Bolt
 
-(formerly Project Template)
-
-This repository is the template for all new Professional Services projects.
+Bolt will create a new Professional Services project using the project template
+located in /template.
 
 ## Table of Contents
 
@@ -28,7 +27,7 @@ When beginning a new Drupal project, do the following:
 
 ### Documentation Templates
 
-The following default documentation is included in Bolt:
+The following default documentation is included in the project template:
 * [Onboarding](/readme/onboarding.md)
 * [Developer Guide](/readme/developer-guide.md)
 * [Architecture Template](/readme/drupal-architecture-template.md)
@@ -39,7 +38,7 @@ The following default documentation is included in Bolt:
 
 ### Git Hooks
 
-Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included with Bolt. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
+Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
 
 Please see the [Git Hooks Readme](/git/readme.md) for more information.
 
@@ -84,7 +83,7 @@ Please read the included [Local Development](/readme/local-development.md) docum
 
 ## Directory Structure
 
-The following is an overview of the purpose of each top level directory:
+The following is an overview of the purpose of each top level directory in the project template:
 
     root
       ├── bin     - Contains binaries built by Composer, as well as installation binaries.

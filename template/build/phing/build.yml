@@ -1,0 +1,10 @@
+# File and Directory locations.
+docroot.relative: ${repo.root.relative}/docroot
+docroot: ${repo.root}/docroot
+composer.bin: ${repo.root}/bin
+drush.bin: ${composer.bin}/drush
+drush.cmd: ${drush.bin} -r ${docroot}
+drush.file: ${phing.project.name}.aliases.drushrc.php
+drush.root: ${docroot}
+reports.localDir: ${repo.root}/reports
+reports.remoteDir: reports
