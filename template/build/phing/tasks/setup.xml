@@ -107,9 +107,9 @@
     </drush>
   </target>
 
-  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled git/hooks directory.">
+  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
     <copy todir="${repo.root}/.git/hooks" overwrite="true">
-      <fileset dir="${repo.root}/git/hooks"></fileset>
+      <fileset dir="${repo.root}/scripts/git-hooks/hooks"></fileset>
       <filterchain>
         <expandproperties />
       </filterchain>
