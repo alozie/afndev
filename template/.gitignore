@@ -1,10 +1,32 @@
-# Ignore config files
-project.yml
-make.yml
+# Ignore configuration files that may contain sensitive information.
+docroot
+sites/*/*/local.settings.php
+build/phing/build.properties
 local.yml
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+
+# Ignore contrib modules. These should be created during build process.
+sites/*/*/contrib
+sites/default/*/contrib
+sites/*/libraries
 
 # Ignore build artifacts
 bin/*
+tmp
+install/bin
+reports
+deploy_key
+
+# Local testing config
+tests/behat/local.yml
+docroot/sites/*/local.settings.php
+docroot/sites/local.sites.php
+
+# Drush FirePHP files
+docroot/FirePHPCore
 
 # OS X
 .DS_Store
@@ -83,3 +105,4 @@ vendor/.git
 #Netbeans IDE
 nbproject
 nbproject/*
+

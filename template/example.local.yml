@@ -1,0 +1,14 @@
+# Database Credentials. By default, these match Travis CI creds.
+# Note, these should match credentials in sites/default/local.settings.php!
+db:
+  username: root
+  name: drupal
+  host: localhost
+  port: 3306
+  password: ''
+
+# Drupal Account Credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: password
+  account.mail: no-reply@acquia.com

@@ -1,0 +1,132 @@
+<project name="setup" default="setup:build:all">
+
+  <!-- This is run when a project is cloned to a new environment. -->
+  <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
+      depends="setup:behat, setup:build:make">
+  </target>
+
+  <!-- Check for docroot. -->
+  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
+    <if>
+      <not>
+        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      </not>
+      <then>
+        <fail message="The docroot is missing. Please run setup:build:all." />
+      </then>
+    </if>
+  </target>
+
+  <!-- Delete the docroot directory. Used prior to running Drush make. -->
+  <target name="setup:build:rm-docroot" description="Removes the docroot folder.">
+    <if>
+      <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      <then>
+        <chmod file="${docroot}/sites/default" mode="0775"/>
+      </then>
+    </if>
+    <delete dir="${docroot}" failonerror="false" quiet="true" />
+  </target>
+
+  <!-- Drush make the build using a recursive strategy -->
+  <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
+
+    <!-- Rebuild core -->
+    <drush command="make" assume="yes">
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${docroot}"</param>
+      <option name="projects">drupal</option>
+      <option name="concurrency">8</option>
+      <option name="no-gitinfofile"></option>
+    </drush>
+
+    <!-- Restore symlinks to subdirectories /sites . -->
+    <phingcall target="setup:symlinks"/>
+
+    <!-- Rebuild contrib -->
+    <drush command="make" assume="yes">
+      <option name="concurrency">8</option>
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${docroot}"</param>
+      <option name="no-core"></option>
+      <option name="no-gitinfofile"></option>
+      <option name="contrib-destination">sites/all</option>
+    </drush>
+  </target>
+
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
+  <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
+    <!-- Symlink settings. -->
+    <exec dir="${repo.root}" command="ln -s ../../../sites/all/drush docroot/sites/all/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/all/settings docroot/sites/all/settings"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
+
+    <!-- Symlink modules and themes. -->
+    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
+    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
+  </target>
+
+  <target name="setup:drupal:install"
+          description="Installs Drupal using credentials from local.yml."
+          depends="setup:drupal:settings, setup:check:docroot">
+
+    <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
+
+    <drush command="site-install" assume="yes" verbose="TRUE">
+      <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
+      <option name="site-name">"${project.human_name}"</option>
+      <option name="debug" />
+      <option name="site-mail">"${drupal.account.mail}"</option>
+      <option name="account-name">"${drupal.account.name}"</option>
+      <option name="account-mail">"${drupal.account.mail}"</option>
+      <param>"${project.install_profile}"</param>
+    </drush>
+
+    <!-- Restore original settings.php, wiped out by Drupal installation. -->
+    <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>
+  </target>
+
+  <!-- @todo add setup:create-db to create local database, drop table if exists. -->
+
+  <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
+    <property name="db.source" value="stg" />
+    <drush command="sql-drop" assume="yes"></drush>
+    <drush command="sql-sync" assume="yes">
+      <param>"${db.source}"</param>
+      <param>"@self"</param>
+      <!-- This key is defined in /sites/all/drush/drushrc.php. -->
+      <option name="structure-tables-key">"lightweight"</option>
+    </drush>
+  </target>
+
+  <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
+    <copy todir="${repo.root}/.git/hooks" overwrite="true">
+      <fileset dir="${repo.root}/scripts/git-hooks/hooks"></fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+    <chmod mode="0755">
+      <fileset dir="${repo.root}/.git/hooks">
+        <exclude name="**/*.sample" />
+      </fileset>
+    </chmod>
+  </target>
+
+  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
+    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
+</project>
