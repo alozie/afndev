@@ -46,7 +46,7 @@
     <delete dir="${reports.localDir}/phpunit"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
-    <phpunit printsummary="true" failureproperty="phpunit.failure">
+    <phpunit printsummary="true" failureproperty="phpunit.failures" errorproperty="phpunit.errors">
       <formatter type="plain" usefile="false"/>
       <formatter type="xml" todir="${reports.localDir}/phpunit"/>
       <batchtest>
@@ -60,7 +60,10 @@
     <echo>PHPUnit Report is available at ${reports.phpunit.file}</echo>
 
     <if>
-      <equals arg1="${phpunit.failure}" arg2="true"/>
+      <or>
+        <equals arg1="${phpunit.failures}" arg2="true"/>
+        <equals arg1="${phpunit.errors}" arg2="true"/>
+      </or>
       <then>
         <fail message="PHPUnit Failed. See report for details."/>
       </then>

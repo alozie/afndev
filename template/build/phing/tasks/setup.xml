@@ -52,8 +52,8 @@
     </if>
   </target>
 
-  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
-    <copy file="${repo.root}/sites/default/settings/example.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
+  <target name="setup:drupal:settings" description="Create a settings.local.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/default/settings/default.settings.local.php" tofile="${repo.root}/sites/default/settings/settings.local.php">
       <filterchain>
         <expandproperties />
       </filterchain>
@@ -80,12 +80,6 @@
           description="Installs Drupal using credentials from local.yml."
           depends="setup:drupal:settings, setup:check:docroot">
 
-    <!-- Create a local.settings.php with local db creds from local.yml. -->
-    <copy file="${repo.root}/sites/default/settings/example.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
     <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
 
     <drush command="site-install" assume="yes" verbose="TRUE">
