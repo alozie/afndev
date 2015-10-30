@@ -377,11 +377,20 @@ require DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
 /**
  * Acquia Cloud settings.
  */
-if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_GROUP'])) {
+if ($is_ah_env && file_exists('/var/www/site-php')) {
   require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_subname-settings.inc";
 }
 
-// Includes local settings.
-if (file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
-  require DRUPAL_ROOT . '/sites/all/settings/local.settings.php';
+/**
+ * Load local development override configuration, if available.
+ *
+ * Use settings.local.php to override variables on secondary (staging,
+ * development, etc) installations of this site. Typically used to disable
+ * caching, JavaScript/CSS compression, re-routing of outgoing emails, and
+ * other things that should not happen on development and testing sites.
+ *
+ * Keep this code block at the end of this file to take full effect.
+ */
+if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/all/settings/settings.local.php')) {
+  require DRUPAL_ROOT . '/sites/all/settings/settings.local.php';
 }

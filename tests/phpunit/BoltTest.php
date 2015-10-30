@@ -72,6 +72,13 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($this->new_project_dir . '/docroot/sites/all/modules/contrib');
     }
 
+    /**
+     * Tests Phing setup:drupal:settings target.
+     */
+    public function testSetupLocalSettings() {
+        $this->assertFileExists($this->new_project_dir . '/sites/all/settings/settings.local.php');
+    }
+
   /**
    * Tests Phing setup:behat target.
    */

@@ -1,20 +1,16 @@
 <project name="setup" default="setup:build:all">
 
+  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
+    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
       depends="setup:behat, setup:build:make">
-  </target>
-
-  <!-- Check for docroot. -->
-  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
-    <if>
-      <not>
-        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
-      </not>
-      <then>
-        <fail message="The docroot is missing. Please run setup:build:all." />
-      </then>
-    </if>
   </target>
 
   <!-- Delete the docroot directory. Used prior to running Drush make. -->
@@ -54,24 +50,24 @@
     </drush>
   </target>
 
-  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
-    <copy file="${repo.root}/sites/all/settings/example.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+  <!-- Check for docroot. -->
+  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
+    <if>
+      <not>
+        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      </not>
+      <then>
+        <fail message="The docroot is missing. Please run setup:build:all." />
+      </then>
+    </if>
+  </target>
+
+  <target name="setup:drupal:settings" description="Create a settings.local.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/all/settings/default.settings.local.php" tofile="${repo.root}/sites/all/settings/settings.local.php">
       <filterchain>
         <expandproperties />
       </filterchain>
     </copy>
-  </target>
-
-  <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
-    <!-- Symlink settings. -->
-    <exec dir="${repo.root}" command="ln -s ../../../sites/all/drush docroot/sites/all/drush"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/all/settings docroot/sites/all/settings"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
-
-    <!-- Symlink modules and themes. -->
-    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
-    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
   </target>
 
   <target name="setup:drupal:install"
@@ -121,12 +117,16 @@
     </chmod>
   </target>
 
-  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
-    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
+  <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
+    <!-- Symlink settings. -->
+    <exec dir="${repo.root}" command="ln -s ../../../sites/all/drush docroot/sites/all/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/all/settings docroot/sites/all/settings"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
+
+    <!-- Symlink modules and themes. -->
+    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
+    <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
   </target>
 
 </project>

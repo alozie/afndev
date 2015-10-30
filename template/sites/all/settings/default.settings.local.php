@@ -22,7 +22,7 @@ if (empty($_ENV['AH_SITE_ENVIRONMENT'])) {
 
   $base_url = '${project.local_url}';
 
-// Disable virus scanning on uploaded files.
+  // Disable virus scanning on uploaded files.
   $conf['clamav_enabled'] = 0;
   $conf['clamav_enable_element_image_widget'] = 0;
   $conf['clamav_enable_element_file_widget'] = 0;
