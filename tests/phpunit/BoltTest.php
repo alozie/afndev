@@ -97,5 +97,9 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($this->new_project_dir . '/.git');
         $this->assertFileExists($this->new_project_dir . '/.git/hooks/commit-msg');
         $this->assertFileExists($this->new_project_dir . '/.git/hooks/pre-commit');
+      $this->assertNotContains(
+        '${project.prefix}',
+        file_get_contents($this->new_project_dir . '/.git/hooks/commit-msg')
+      );
     }
 }
