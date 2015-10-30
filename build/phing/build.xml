@@ -63,6 +63,7 @@
         <include name="readme/**/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/all/settings/**/*" />
+        <include name="scripts/git-hooks/*" />
       </fileset>
       <filterchain>
         <expandproperties />
