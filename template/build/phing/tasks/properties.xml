@@ -10,6 +10,5 @@
   <!-- Load the environment-specific local.yml file for this project. -->
   <property file="${repo.root}/local.yml" override="true"/>
   <property file="${project.basedir}/build.yml" override="true"/>
-  <resolvepath propertyName="bolt.new.dir" file="${bolt.new.dir}"/>
 
 </project>

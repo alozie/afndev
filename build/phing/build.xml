@@ -1,31 +1,105 @@
-<project name="project" default="build" phingVersion="2.8.2">
+<!-- THESE TARGETS ARE FOR USE IN BOLT ONLY, NOT FOR CHILD PROJECTS
+     CREATED VIA PROJECT TEMPLATE. -->
+<project name="bolt" default="build">
 
-  <!-- Include custom task classes -->
-  <includepath classpath="${project.basedir}/phingcludes"/>
-  <taskdef name="behat" classname="phingcludes.BehatTask"/>
-  <taskdef name="drush" classname="phingcludes.DrushTask"/>
+  <!-- Define bolt root directory. -->
+  <property name="bolt.root.relative" value="${project.basedir}/../.."/>
+  <resolvepath propertyName="bolt.root" file="${bolt.root.relative}"/>
 
-  <!-- Include task partials -->
+  <!-- Include yml setting. -->
+  <property file="${project.basedir}/build.yml" override="true"/>
+  <resolvepath propertyName="bolt.new.dir" file="${bolt.new.dir}"/>
 
-  <!-- Defines a list of default properties, available to all targets. -->
-  <import file="${project.basedir}/tasks/properties.xml"/>
+  <!-- Load the root project.yml file for this project. -->
+  <property file="${bolt.root}/project.yml" override="true"/>
 
-  <!-- Contains tasks relevant to validation. E.g., code metrics. -->
-  <import file="${project.basedir}/tasks/validate.xml"/>
+  <!-- Runs all bolt related targets. -->
+  <target name="bolt:new-project" description="Runs all targets required to spin up new project from Bolt." depends="bolt:configure, bolt:create"></target>
 
-  <!-- Contains targets relevant to the execution of tests. E.g., Behat, jMeter. -->
-  <import file="${project.basedir}/tasks/tests.xml"/>
+  <!-- Creates new configuration files from example.*.yml files.
+       Note: this target must be called by itself first. Other targets must be
+       executed separately so that they may load the correct configuration   -->
+  <target name="bolt:configure" description="Generates default .yml configuration files based on provided example files.">
+    <copy todir="${bolt.root}">
+      <fileset dir="${bolt.root}/install">
+        <include name="example.project.yml" />
+        <include name="example.make.yml" />
+        <include name="example.local.yml" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
 
-  <!-- Contains targets used for setting up environment. E.g., installing Drupal. -->
-  <import file="${project.basedir}/tasks/setup.xml"/>
+    <!-- Rename files by removing "example" prefix. -->
+    <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
+    <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
+    <move file="${bolt.root}/example.local.yml" tofile="${bolt.root}/local.yml" />
+  </target>
 
-  <!-- Contains fileset definitions. E.g., patterns defining contrib locations, theming files, etc. -->
-  <import file="${project.basedir}/tasks/filesets.xml"/>
+  <!-- Create a new project directory based on current repository. -->
+  <target name="bolt:create" description="Create a new project based on local repository.">
+    <!-- Remove from existing directory. -->
+    <!-- @todo Add prompt or warning! -->
+    <delete dir="${bolt.new.dir}" />
 
-  <!-- Contains target used for self-testing of Bolt. -->
-  <import file="${project.basedir}/tasks/bolt.xml"/>
+    <!-- (re)Create project directory. -->
+    <mkdir dir="${bolt.new.dir}" />
+    <copy todir="${bolt.new.dir}" >
+      <fileset dir="${bolt.root}/template">
+        <!-- Exclude files that should not be copied. -->
+        <exclude name="vendor/**" />
+      </fileset>
+    </copy>
 
-  <!-- @todo Add deploy.xml containing deployment tasks. -->
-  <!-- E.g., commit build artifacts, push to remote. -->
+    <!-- Copy configuration files to new project. -->
+    <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
+    <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
+    <copy file="${bolt.root}/local.yml" tofile="${bolt.new.dir}/local.yml" />
 
+    <!-- Reflexively expand properties in specified dirs/files. -->
+    <reflexive>
+      <fileset dir="${bolt.new.dir}">
+        <include name="readme/**/*" />
+        <include name="sites/default/settings.php" />
+        <include name="sites/all/settings/**/*" />
+      </fileset>
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </reflexive>
+
+    <!-- Initialize git repository. -->
+    <gitinit repository="${bolt.new.dir}" />
+    <exec command="git checkout -b 8.x"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
+
+    <!-- Build composer dependencies. -->
+    <exec dir="${bolt.new.dir}" command="composer install" logoutput="true" passthru="true" />
+
+    <echo></echo>
+    <echo>New project was created in ${bolt.new.dir}</echo>
+    <echo>Please change to the new project directory and run setup tasks. E.g.,</echo>
+    <echo></echo>
+    <echo>cd ${bolt.new.dir}</echo>
+    <echo>./task.sh setup:build:all</echo>
+    <echo>./task.sh setup:git-hooks</echo>
+  </target>
+
+  <!-- This target is meant to test Bolt itself on TravisCI.
+       A few things to note:
+       - We do not run validate:* targets, since they can be run in parallel.
+  -->
+  <target name="bolt:self-test" description="Runs tests against acquia/bolt proper.">
+    <phingcall target="bolt:configure" />
+    <phingcall target="bolt:create" />
+    <phingcall target="setup:build:all" />
+    <phingcall target="setup:drupal:install" />
+    <phingcall target="setup:git-hooks" />
+    <phingcall target="setup:behat" />
+    <phingcall target="tests:security-updates" />
+    <phingcall target="tests:behat" />
+    <phingcall target="tests:phpunit" />
+  </target>
 </project>

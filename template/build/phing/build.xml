@@ -1,0 +1,28 @@
+<project name="project" default="build" phingVersion="2.8.2">
+
+  <!-- Include custom task classes -->
+  <includepath classpath="${project.basedir}/phingcludes"/>
+  <taskdef name="behat" classname="phingcludes.BehatTask"/>
+  <taskdef name="drush" classname="phingcludes.DrushTask"/>
+
+  <!-- Include task partials -->
+
+  <!-- Defines a list of default properties, available to all targets. -->
+  <import file="${project.basedir}/tasks/properties.xml"/>
+
+  <!-- Contains tasks relevant to validation. E.g., code metrics. -->
+  <import file="${project.basedir}/tasks/validate.xml"/>
+
+  <!-- Contains targets relevant to the execution of tests. E.g., Behat, jMeter. -->
+  <import file="${project.basedir}/tasks/tests.xml"/>
+
+  <!-- Contains targets used for setting up environment. E.g., installing Drupal. -->
+  <import file="${project.basedir}/tasks/setup.xml"/>
+
+  <!-- Contains fileset definitions. E.g., patterns defining contrib locations, theming files, etc. -->
+  <import file="${project.basedir}/tasks/filesets.xml"/>
+
+  <!-- @todo Add deploy.xml containing deployment tasks. -->
+  <!-- E.g., commit build artifacts, push to remote. -->
+
+</project>
