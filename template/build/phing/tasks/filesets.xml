@@ -12,8 +12,8 @@
   </fileset>
 
   <fileset dir="${repo.root}" id="custom.files" expandsymboliclinks="true">
-    <include name="sites/all/modules/custom/**"/>
-    <include name="sites/all/modules/features/**"/>
+    <include name="modules/custom/**"/>
+    <include name="modules/features/**"/>
   </fileset>
 
   <fileset dir="${repo.root}" id="tests.files" expandsymboliclinks="true">
@@ -21,6 +21,6 @@
   </fileset>
 
   <fileset dir="${repo.root}" id="custom.themes">
-    <include name="sites/all/themes/custom/**"/>
+    <include name="themes/custom/**"/>
   </fileset>
 </project>
