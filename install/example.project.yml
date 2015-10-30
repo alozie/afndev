@@ -15,24 +15,15 @@ project:
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
 
+# Drush settings. These are used for deployment tasks.
 drush:
   aliases:
     default: ${project.acquia_subname}.dev
     dev: ${project.acquia_subname}.dev
     stg: ${project.acquia_subname}.stg
 
-# Configuration settings for new git repository.
-git:
-  # These git hooks will be installed in .git/hooks.
-  hooks:
-    # Validates commit message syntax prior to local git commits.
-    - commit-msg
-    # Runs PHP Code Sniffer prior to local git commits.
-    - pre-commit
-
-# The testing framework is limited to the `tests` directory, and includes
-# example tests and configuration for Behat, PHPUnit, and JMeter. To prevent
-# this from being copied, remove the 'testing_framework' key.
-testing_framework:
-  behat:
-    javascript_driver: 'selenium2'
+# Drupal Account Credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: password
+  account.mail: no-reply@acquia.com
