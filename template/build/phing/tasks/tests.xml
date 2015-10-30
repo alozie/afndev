@@ -3,43 +3,9 @@
   <target name="tests:all" description="Runs all tests, including Behat, PHPUnit, and Security Update check."
           depends="tests:security-updates, tests:behat, tests:phpunit"/>
 
-  <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
-  <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
-  <target name="tests:security-updates"
-          description="Check local Drupal installation for security updates.">
-    <exec dir="${docroot}"
-          command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
-          logoutput="true"
-          passthru="true"/>
-  </target>
-
-  <target name="tests:phantomjs:launch"
-          description="Launches a GhostDriver.">
-    <exec command="${composer.bin}/phantomjs --webdriver=4444"
-          passthru="true"
-          spawn="true"
-          checkreturn="true" />
-  </target>
-
   <!-- If you experience 'Maximum function nesting level' errors in your PHP
        error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
-  <target name="tests:behat" depends="tests:phantomjs:launch" description="Executes Behat tests locally.">
-
-    <!-- Optionally run tests against internal PHP server. -->
-    <if>
-      <istrue value="${behat:run-server}"/>
-      <then>
-        <!-- Note that Behat's base_url must match php-server-url. -->
-        <property name="behat:server-url" value="http://127.0.0.1:8080/" />
-
-        <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
-          <arg line="runserver ${behat:server-url}"/>
-        </exec>
-        <waitfor maxwait="10" maxwaitunit="second">
-          <http url="${behat:server-url}"/>
-        </waitfor>
-      </then>
-    </if>
+  <target name="tests:behat" depends="tests:run-server, tests:phantomjs:launch" description="Executes Behat tests locally.">
 
     <!-- As with any property, this can be overridden at runtime, permitting
      Behat execution using any configuration -->
@@ -58,6 +24,21 @@
            out="std,${reports.localDir}"
            format="pretty,junit"
         />
+
+    <if>
+      <isfalse value="${BehatPass}"/>
+      <then>
+        <fail message="One ore more Behat tests failed." />
+      </then>
+    </if>
+  </target>
+
+  <target name="tests:phantomjs:launch"
+          description="Launches a GhostDriver.">
+    <exec command="${composer.bin}/phantomjs --webdriver=4444"
+          passthru="true"
+          spawn="true"
+          checkreturn="true" />
   </target>
 
   <!-- Execute PHPUnit tests. -->
@@ -95,5 +76,34 @@
     </drush>
 
     <!-- @todo Add message with link to new reports. -->
+  </target>
+
+  <!-- Optionally run tests against internal PHP server. -->
+  <target name="tests:run-server">
+    <if>
+      <equals arg1="${behat:run-server}" arg2="true"/>
+      <then>
+        <echo message="Using drush runserver for executing subsequent tests." />
+        <!-- Note that Behat's base_url must match php-server-url. -->
+        <property name="behat:server-url" value="http://127.0.0.1:8080/" />
+
+        <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
+          <arg line="runserver ${behat:server-url}"/>
+        </exec>
+        <waitfor maxwait="10" maxwaitunit="second">
+          <http url="${behat:server-url}"/>
+        </waitfor>
+      </then>
+    </if>
+  </target>
+
+  <!-- Ensure Drupal doesn't have any modules requiring security updates. -->
+  <!-- Intentionally removed checkreturn="true" so that this does not cause failure. -->
+  <target name="tests:security-updates"
+          description="Check local Drupal installation for security updates.">
+    <exec dir="${docroot}"
+          command="! ${drush.bin} -n ups --check-disabled --security-only 2>/dev/null | grep 'SECURITY UPDATE'"
+          logoutput="true"
+          passthru="true"/>
   </target>
 </project>

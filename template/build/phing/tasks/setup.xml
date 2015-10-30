@@ -16,18 +16,6 @@
     <delete dir="${docroot}" failonerror="false" quiet="true" />
   </target>
 
-  <!-- Check for docroot. -->
-  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
-    <if>
-      <not>
-        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
-      </not>
-      <then>
-        <fail message="The docroot is missing. Please run setup:build:all." />
-      </then>
-    </if>
-  </target>
-
   <!-- Drush make the build using a recursive strategy. -->
   <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
 
@@ -50,6 +38,18 @@
       <option name="no-core"></option>
       <option name="no-gitinfofile"></option>
     </drush>
+  </target>
+
+  <!-- Check for docroot. -->
+  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
+    <if>
+      <not>
+        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      </not>
+      <then>
+        <fail message="The docroot is missing. Please run setup:build:all." />
+      </then>
+    </if>
   </target>
 
   <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
