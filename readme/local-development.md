@@ -13,7 +13,7 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run `
 
     # Update the hostname to the local development environment hostname.
     vagrant_hostname: [project_local_domain]
-
+    
     # Provide the path to the project docroot to Vagrant.
     vagrant_synced_folders:
       # Set the local_path for the first synced folder to `../docroot`.
@@ -21,24 +21,24 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run `
         # Set the destination to the Acquia Cloud subscription machine name.
         destination: /var/www/[project_acquia_subname]
         type: nfs
-
+    
     # Set this to `7` for a Drupal 7 site, or `8` for a Drupal 8 site.
     drupal_major_version: 8
-
+    
     # Set drupal_core_path to the same as the `destination` in the synced folder
     # configuration above.
     drupal_core_path: /var/www/[project_acquia_subname]
-
+    
     # Set drupal_domain to the same thing as the `vagrant_hostname` above.
     drupal_domain: [project_local_domain]
-
+    
     # Set drupal_site_name to the project's human-readable name.
     drupal_site_name: [project_human_name]
-
+    
     # If you build the makefile using Bolt's built-in Phing task, set
     # `build_makefile` to `false`.
     build_makefile: false
-
+    
     # If you need to install the site inside the VM, set `install_site` to
     # `true`. Otherwise, after you build the VM, you can import the database
     # using Drush, Adminer, or any other method of connecting to the MySQL
