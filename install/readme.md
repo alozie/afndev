@@ -70,3 +70,4 @@ After Bolt has installed, there are several key activities to perform for your p
       * Verify correct db creds in `sites/all/settings/local.settings.php`
       * Configure your local LAMP stack such that the docroot is associated with the $base_url
       * Visit the local_url that you set in project.yml
+    * If you used a different local development environment, visit the configured `local_url` for the site.
