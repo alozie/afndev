@@ -46,7 +46,7 @@
     <!-- (re)Create project directory. -->
     <mkdir dir="${bolt.new.dir}" />
     <copy todir="${bolt.new.dir}" >
-      <fileset dir="${bolt.root}/template">
+      <fileset dir="${bolt.root}/template" casesensitive="false" defaultexcludes="false" excludes=".cvsignore SCCS SCCS/** vssver.scc .svn .svn/** ._* .DS_Store .darcs .darcs/** .git .git/** .gitattributes .gitmodules .idea .idea/** .editorconfig">
         <!-- Exclude files that should not be copied. -->
         <exclude name="vendor/**" />
       </fileset>
