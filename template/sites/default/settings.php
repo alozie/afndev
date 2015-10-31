@@ -703,6 +703,6 @@ if ($is_ah_env && file_exists('/var/www/site-php')) {
  *
  * Keep this code block at the end of this file to take full effect.
  */
-if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/all/settings/settings.local.php')) {
+if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/default/settings/settings.local.php')) {
   require DRUPAL_ROOT . '/sites/default/settings/settings.local.php';
 }
