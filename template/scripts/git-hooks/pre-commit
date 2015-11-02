@@ -71,6 +71,8 @@ filters_exclude[19]='\.eot$'
 filters_exclude[20]='\.svg$'
 filters_exclude[21]='\.yml$'
 filters_exclude[22]='\.xml$'
+# The last item in this list is ignore. This is a hack.
+filters_exclude[23]='\.xml$'
 
 # Additional excludes specific to this project
 # filters_exclude[20]=''
