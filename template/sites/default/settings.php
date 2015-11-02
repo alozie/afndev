@@ -243,7 +243,7 @@ $databases = array();
  *   );
  * @endcode
  */
-$config_directories = array();
+$config_directories['sync'] = 'sites/default/files/config_${project.hash_conf}/sync';
 
 /**
  * Settings:
@@ -265,7 +265,7 @@ $config_directories = array();
  *
  * @see install_select_profile()
  */
-# $settings['install_profile'] = '';
+$settings['install_profile'] = '${project.install_profile}';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -284,7 +284,7 @@ $config_directories = array();
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = '${project.hash_salt}';
 
 /**
  * Deployment identifier.

@@ -83,9 +83,7 @@
     <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
 
     <drush command="site-install" assume="yes" verbose="TRUE">
-      <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
       <option name="site-name">"${project.human_name}"</option>
-      <option name="debug" />
       <option name="site-mail">"${drupal.account.mail}"</option>
       <option name="account-name">"${drupal.account.name}"</option>
       <option name="account-mail">"${drupal.account.mail}"</option>

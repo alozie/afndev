@@ -11,7 +11,8 @@
     "phing/phing": "2.13.x-dev",
     "symfony/yaml": "~2.7",
     "phpunit/phpunit": "4.6.*",
-    "pear-pear.php.net/VersionControl_Git": "0.4.*"
+    "pear-pear.php.net/VersionControl_Git": "0.4.*",
+    "platinumpixs/phing-random-string": "dev-master"
   },
   "config": {
     "bin-dir": "bin"
