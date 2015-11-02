@@ -121,6 +121,7 @@
     <chmod mode="0755">
       <fileset dir="${repo.root}/scripts/git-hooks">
         <exclude name="**/*.sample" />
+        <exclude name="**/README.md" />
       </fileset>
     </chmod>
   </target>
