@@ -384,13 +384,13 @@ if ($is_ah_env && file_exists('/var/www/site-php')) {
 /**
  * Load local development override configuration, if available.
  *
- * Use settings.local.php to override variables on secondary (staging,
+ * Use local.settings.php to override variables on secondary (staging,
  * development, etc) installations of this site. Typically used to disable
  * caching, JavaScript/CSS compression, re-routing of outgoing emails, and
  * other things that should not happen on development and testing sites.
  *
  * Keep this code block at the end of this file to take full effect.
  */
-if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/all/settings/settings.local.php')) {
-  require DRUPAL_ROOT . '/sites/all/settings/settings.local.php';
+if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
+  require DRUPAL_ROOT . '/sites/all/settings/local.settings.php';
 }
