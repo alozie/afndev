@@ -2,7 +2,7 @@
 
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
-      depends="setup:build:make">
+      depends="setup:build:make, setup:build:symlinks">
   </target>
 
   <!-- Delete the docroot directory. Used prior to running Drush make. -->
@@ -19,25 +19,13 @@
   <!-- Drush make the build using a recursive strategy. -->
   <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
 
-    <!-- Rebuild core. -->
     <drush command="make" assume="yes">
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${docroot}"</param>
-      <option name="projects">drupal</option>
       <option name="concurrency">8</option>
       <option name="no-gitinfofile"></option>
     </drush>
 
-    <!-- Restore symlinks to subdirectories /sites. -->
-    <phingcall target="setup:symlinks"/>
-    <!-- Rebuild contrib. -->
-    <drush command="make" assume="yes">
-      <option name="concurrency">8</option>
-      <param>"${repo.root}/${project.make_file}"</param>
-      <param>"${docroot}"</param>
-      <option name="no-core"></option>
-      <option name="no-gitinfofile"></option>
-    </drush>
   </target>
 
   <!-- Check for docroot. -->
@@ -60,7 +48,7 @@
     </copy>
   </target>
 
-  <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
+  <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink modules and themes. -->
     <delete dir="${docroot}/modules/custom"/>
     <delete dir="${docroot}/themes/custom"/>
