@@ -69,7 +69,8 @@ filters_exclude[17]='\.ttf$'
 filters_exclude[18]='\.woff$'
 filters_exclude[19]='\.eot$'
 filters_exclude[20]='\.svg$'
-filters_exclude[21]='\.xml$'
+filters_exclude[21]='\.yml$'
+filters_exclude[22]='\.xml$'
 
 # Additional excludes specific to this project
 # filters_exclude[20]=''
