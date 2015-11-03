@@ -21,7 +21,7 @@ located in /template.
 When beginning a new Drupal project, do the following:
 
 * Clone this Bolt repository to a local directory.
-* Follow the instructions in [/install/readme.md](/install/readme.md).
+* Follow the instructions in [/install/README.md](/install/README.md).
 
 ## Features
 
