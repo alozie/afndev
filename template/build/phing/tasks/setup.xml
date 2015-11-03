@@ -52,8 +52,8 @@
     </if>
   </target>
 
-  <target name="setup:drupal:settings" description="Create a settings.local.php with local db creds from local.yml.">
-    <copy file="${repo.root}/sites/default/settings/default.settings.local.php" tofile="${repo.root}/sites/default/settings/settings.local.php">
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
       <filterchain>
         <expandproperties />
       </filterchain>
