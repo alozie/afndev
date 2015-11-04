@@ -6,3 +6,9 @@ db:
   host: localhost
   port: 3306
   password: ''
+
+# Drupal account credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: password
+  account.mail: no-reply@acquia.com
