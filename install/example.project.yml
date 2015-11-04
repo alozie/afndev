@@ -23,9 +23,3 @@ drush:
     default: ${project.acquia_subname}.dev
     dev: ${project.acquia_subname}.dev
     stg: ${project.acquia_subname}.stg
-
-# Drupal account credentials. These are used for installing Drupal.
-drupal:
-  account.name: admin
-  account.password: password
-  account.mail: no-reply@acquia.com
