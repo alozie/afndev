@@ -1,6 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
 docroot
-sites/*/*/settings.local.php
+sites/*/*/local.settings.php
 build/phing/build.properties
 local.yml
 
@@ -22,11 +22,6 @@ deploy_key
 
 # Local testing config
 tests/behat/local.yml
-docroot/sites/*/local.settings.php
-docroot/sites/local.sites.php
-
-# Drush FirePHP files
-docroot/FirePHPCore
 
 # OS X
 .DS_Store
