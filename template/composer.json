@@ -26,7 +26,7 @@
     "phing/phing":                  "2.13.x-dev",
     "jakoch/phantomjs-installer":   "1.9.8",
     "phpmd/phpmd":                  "1.*",
-    "drush/drush":                  "8.*@beta",
+    "drush/drush":                  "8.*@dev",
     "pear-pear.php.net/VersionControl_Git": "0.4.*",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
