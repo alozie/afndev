@@ -3,8 +3,8 @@
 // Disable the Akamai module by default. To be enable on prod in specific.
 // $conf['akamai_disabled'] = TRUE;
 
-if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+if ($is_ah_env) {
+  switch ($ah_env) {
     case 'prod':
 
       // Akamai module configuration.

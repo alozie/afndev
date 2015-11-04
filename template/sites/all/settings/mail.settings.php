@@ -1,7 +1,7 @@
 <?php
 
 // Disable mail on non-production enviroments
-if (!isset($_ENV['AH_SITE_ENVIRONMENT']) || !in_array($_ENV['AH_SITE_ENVIRONMENT'], array('prod'))) {
+if (!$is_ah_env || !in_array($ah_env, array('prod'))) {
   // Ensure DevelMailLog is available even if Devel module is disabled
   include_once('includes/mail.inc');
   include_once('modules/system/system.mail.inc');

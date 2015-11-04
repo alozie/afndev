@@ -14,8 +14,8 @@ if ($conf['is_edit_domain']) {
 }
 
 // If we're in the Acquia Cloud, require setting and set up a few variables.
-if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+if ($is_ah_env) {
+  switch ($ah_env) {
     case 'prod':
       if ($conf['is_edit_domain']) {
         $base_url = 'https://edit.example.com';
