@@ -24,7 +24,6 @@
       <fileset dir="${bolt.root}/install">
         <include name="example.project.yml" />
         <include name="example.make.yml" />
-        <include name="example.local.yml" />
       </fileset>
       <filterchain>
         <expandproperties />
@@ -34,7 +33,7 @@
     <!-- Rename files by removing "example" prefix. -->
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
-    <move file="${bolt.root}/example.local.yml" tofile="${bolt.root}/local.yml" />
+    <copy file="${bolt.root}/template/example.local.yml" tofile="${bolt.root}/local.yml" />
   </target>
 
   <!-- Create a new project directory based on current repository. -->
