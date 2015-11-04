@@ -14,7 +14,7 @@ $conf['composer_manager_file_dir'] = 'sites/all';
 // dependencies at /composer.json with Drupal via a module.
 $conf['composer_manager_vendor_dir'] = 'sites/all/vendor';
 
-if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
+if ($is_ah_env) {
   // File directories.
   $conf['file_private_path'] = '/mnt/files/' . $_ENV['AH_SITE_NAME'] . '/files-private';
   $conf['file_temporary_path'] = '/mnt/tmp/' . $_ENV['AH_SITE_NAME'];

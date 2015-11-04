@@ -82,6 +82,7 @@
       <option name="debug" />
       <option name="site-mail">"${drupal.account.mail}"</option>
       <option name="account-name">"${drupal.account.name}"</option>
+      <option name="account-pass">"${drupal.account.password}"</option>
       <option name="account-mail">"${drupal.account.mail}"</option>
       <param>"${project.install_profile}"</param>
     </drush>

@@ -1,7 +1,7 @@
 <?php
 
-if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+if ($is_ah_env) {
+  switch ($ah_env) {
     case 'prod':
 
       // Enforce caching in production.

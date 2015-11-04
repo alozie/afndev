@@ -15,8 +15,8 @@ $conf['apachesolr_environments']['acquia_search_server_1']['conf']['apachesolr_r
 $conf['apachesolr_default_environment'] = 'acquia_search_server_1';
 
 // If we're in the Acquia Cloud, require setting and set up a few variables.
-if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+if ($is_ah_env) {
+  switch ($ah_env) {
     case 'prod':
       // Enable solr search.
       $conf['apachesolr_environments']['acquia_search_server_1']['conf']['apachesolr_read_only'] = 1;
