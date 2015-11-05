@@ -85,6 +85,7 @@
       <option name="account-pass">"${drupal.account.password}"</option>
       <option name="account-mail">"${drupal.account.mail}"</option>
       <param>"${project.install_profile}"</param>
+      <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
     </drush>
 
     <!-- Restore original settings.php, wiped out by Drupal installation. -->
