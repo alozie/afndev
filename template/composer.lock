@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "775f8e8876a5b7c207e7b85d4b258364",
-    "content-hash": "0c45b4f61c92db7db934f4b714467cab",
+    "hash": "8baf71d526dda8758181d041da588fff",
     "packages": [
         {
             "name": "behat/behat",
@@ -749,16 +748,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "8.0.0-rc2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "5cb73ea2f51cbfb60ddb2e37b94e4260e8c7d1e7"
+                "reference": "d9f7fb2a424550965863caca7c7303a1258ca5cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/5cb73ea2f51cbfb60ddb2e37b94e4260e8c7d1e7",
-                "reference": "5cb73ea2f51cbfb60ddb2e37b94e4260e8c7d1e7",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/d9f7fb2a424550965863caca7c7303a1258ca5cc",
+                "reference": "d9f7fb2a424550965863caca7c7303a1258ca5cc",
                 "shasum": ""
             },
             "require": {
@@ -766,11 +765,11 @@
                 "php": ">=5.4.5",
                 "psy/psysh": "~0.5",
                 "symfony/var-dumper": "^2.6.3",
-                "symfony/yaml": "~2.2"
+                "symfony/yaml": "2.7.*"
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.5",
-                "symfony/process": "2.4.5"
+                "symfony/process": "2.7.*"
             },
             "suggest": {
                 "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
@@ -834,7 +833,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2015-10-22 19:25:14"
+            "time": "2015-11-04 20:36:31"
         },
         {
             "name": "fabpot/goutte",
@@ -1000,16 +999,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e"
+                "reference": "4d0bdbe1206df7440219ce14c972aa57cc5e4982"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
-                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/4d0bdbe1206df7440219ce14c972aa57cc5e4982",
+                "reference": "4d0bdbe1206df7440219ce14c972aa57cc5e4982",
                 "shasum": ""
             },
             "require": {
@@ -1054,7 +1053,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2015-08-15 19:32:36"
+            "time": "2015-11-03 01:34:55"
         },
         {
             "name": "instaclick/php-webdriver",
@@ -1449,12 +1448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "94b5c2f31d4eb890ae81438967d1afc6150e210d"
+                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/94b5c2f31d4eb890ae81438967d1afc6150e210d",
-                "reference": "94b5c2f31d4eb890ae81438967d1afc6150e210d",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/4c8bd76a5724048784567297e80c3d5d67f66a44",
+                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44",
                 "shasum": ""
             },
             "require": {
@@ -1534,7 +1533,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2015-09-21 09:37:01"
+            "time": "2015-11-03 15:02:14"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3576,7 +3575,7 @@
         "phploc/phploc": 20,
         "sebastian/phpcpd": 20,
         "phing/phing": 20,
-        "drush/drush": 10
+        "drush/drush": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
