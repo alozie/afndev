@@ -55,6 +55,10 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             '${project.acquia_subname}',
             file_get_contents($this->new_project_dir . '/sites/default/settings.php')
         );
+      $this->assertNotContains(
+            '${project.acquia_subname}',
+            file_get_contents($this->new_project_dir . '/tests/phpunit/SettingsTest.php')
+        );
         $this->assertNotContains(
             '${project.human_name}',
             file_get_contents($this->new_project_dir . '/readme/architecture.md')

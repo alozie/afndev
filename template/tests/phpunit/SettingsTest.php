@@ -22,7 +22,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->projectRoot = dirname(dirname(__DIR__));
         $this->drupalRoot = $this->projectRoot . '/docroot';
         $_ENV['AH_SITE_ENVIRONMENT'] = $env;
-        $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'] = 'bolt';
+        $_ENV['AH_SITE_NAME'] = '${project.acquia_subname}';
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         if (!defined('DRUPAL_ROOT')) {
             define('DRUPAL_ROOT', $this->drupalRoot);
@@ -38,7 +38,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         require $this->drupalRoot . '/sites/default/settings.php';
 
         // Base_url
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
+        $this->assertContains($this->getExpectedBaseUrl($_ENV['AH_SITE_NAME']), $base_url);
 
         // Assert cache.settings.php
         $this->assertEquals(true, $conf['cache']);
@@ -84,7 +84,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         require $this->drupalRoot . '/sites/default/settings.php';
 
         // Base_url
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
+        $this->assertContains($this->getExpectedBaseUrl($_ENV['AH_SITE_NAME']), $base_url);
 
         // Assert cache.settings.php.
         $this->assertEquals('sites/all/modules/contrib/memcache/memcache.inc', $conf['cache_backends'][0]);
@@ -121,7 +121,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->setupParams('dev');
         require $this->drupalRoot . '/sites/default/settings.php';
 
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
+        $this->assertContains($this->getExpectedBaseUrl($_ENV['AH_SITE_NAME']), $base_url);
 
         // Assert cache.settings.php.
         $this->assertEquals('sites/all/modules/contrib/memcache/memcache.inc', $conf['cache_backends'][0]);
@@ -148,5 +148,23 @@ class SettingsTest extends PHPUnit_Framework_TestCase
 
         // Testing.
         $this->assertEquals(false, $conf['admin_menu_cache_client']);
+    }
+
+    /**
+     * Returns the expected Acquia Cloud $base_url based on site name.
+     *
+     * @param string $site_name
+     *  The Acquia Cloud site name.
+     *
+     * @return string
+     *   The expected $base_url.
+     */
+    public function getExpectedBaseUrl($site_name) {
+        $is_ah_free_tier = (!empty($_ENV['ACQUIA_HOSTING_DRUPAL_LOG']) && strstr($_ENV['ACQUIA_HOSTING_DRUPAL_LOG'], 'free'));
+        $domain_prefix = $is_ah_free_tier ? 'devcloud' : 'prod';
+        $domain = "$site_name.$domain_prefix.acquia-sites.com";
+        $protocol = 'http://';
+
+        return $protocol . $domain;
     }
 }

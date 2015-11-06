@@ -20,6 +20,17 @@ if ($is_ah_env) {
       $conf['page_cache_maximum_age'] = 21600;
 
       $conf['block_cache'] = TRUE;
+
+      /**
+       * Block caching:
+       *
+       * Block caching may not be compatible with node access modules depending on
+       * how the original block cache policy is defined by the module that provides
+       * the block. By default, Drupal therefore disables block caching when one or
+       * more modules implement hook_node_grants(). If you consider block caching to
+       * be safe on your site and want to bypass this restriction, uncomment the line
+       * below.
+       */
       // Allows Block to be cached on sites with hook_node_grant() implementations
       // $conf['block_cache_bypass_node_grants'] = TRUE;
 
