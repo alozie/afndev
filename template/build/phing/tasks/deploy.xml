@@ -1,7 +1,14 @@
 <project name="deploy" default="build">
-  <target name="deploy-build">
-    <exec command="git add -A" logoutput="true" passthru="true"/>
-    <exec command="git commit -m 'Automated commit by Travis CI for Build #${env.TRAVIS_BUILD_NUMBER}.'" logoutput="true" passthru="true"/>
-    <exec command="git tag build-${env.TRAVIS_BUILD_NUMBER}-"
+  <target name="deploy:build">
+    <!-- deploy.build and deploy.commitMsg must be passed as params at runtime. -->
+    <exec command="git checkout -b ${deploy.buildID}" logoutput="true"/>
+    <exec command="git add ${repo.root}/docroot -f" logoutput="true"/>
+    <exec command="git commit -m 'Automated commit by Travis CI for Build ${deploy.buildID}' -n" logoutput="true"/>
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:push" />
+  </target>
+  <target name="deploy:push">
+    <exec command="git remote add temp ${deploy.remote}" logoutput="true"/>
+    <exec command="git push temp ${deploy.buildID}:${deploy.branch} --force" logoutput="true"/>
+    <exec command="git remote remove temp" logoutput="true"/>
   </target>
 </project>

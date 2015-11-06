@@ -378,7 +378,7 @@ require DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
  * Acquia Cloud settings.
  */
 if ($is_ah_env && file_exists('/var/www/site-php')) {
-  require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_subname-settings.inc";
+  require "/var/www/site-php/{$_ENV['AH_SITE_GROUP']}/{$_ENV['AH_SITE_GROUP']}-settings.inc";
 }
 
 /**

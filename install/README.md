@@ -52,17 +52,24 @@ After Bolt has installed, there are several key activities to perform for your p
 1. Review and include common settings snippets (in `sites\all\settings`)
   * Review which settings snippets in `sites\all\settings` are relevant for your project
   * Include relevant settings within your site-specific by uncommenting require line(s)
+1. Optionally, you may install Drupal locally via Phing. To do this, verify correct
+   credentials in `local.yml` and then run:
+   `./task.sh setup:drupal:install`
 
-### Optionally, install Drupal locally
+### Configure your CI solution
 
-  1. Optionally, you may install Drupal via Phing. To do this, verify correct
-     credentials in `local.yml` and then run:
-     `./task.sh setup:drupal:install`
+Travis CI is used for both automated testing and for deploying to Acquia Cloud.
 
-### Optionally, integrate with 3rd party services
+Best practices dictate that the docroot should not be committed to the
+repository. This allows the deployed site to have complete parity with the 
+project's make.yml, and avoids undocumented modifications to core and contrib.
+As such, Travis is always used for deploying a built-docroot to the cloud.
 
-  1. Enable TravisCI
-  2. Enable Slack integration with TravisCI
+Your GitHub repository should have Travis CI enabled when it is created. If it
+is not enabled, contact your Technical Team Lead and have him/her enable it.
+
+Once it is enabled, follow the steps under 
+"Setting Up Travis CI for automated deployments" in [build/README.md](/build/README.md)
 
 ### Visit the site!
 

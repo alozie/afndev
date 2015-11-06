@@ -22,7 +22,7 @@
   <!-- Contains fileset definitions. E.g., patterns defining contrib locations, theming files, etc. -->
   <import file="${project.basedir}/tasks/filesets.xml"/>
 
-  <!-- @todo Add deploy.xml containing deployment tasks. -->
   <!-- E.g., commit build artifacts, push to remote. -->
+  <import file="${project.basedir}/tasks/deploy.xml"/>
 
 </project>
