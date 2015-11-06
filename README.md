@@ -28,14 +28,14 @@ When beginning a new Drupal project, do the following:
 ### Documentation Templates
 
 The following default documentation is included in the project template:
-* [Onboarding](/readme/onboarding.md)
-* [Developer Guide](/readme/developer-guide.md)
-* [Architecture Template](/readme/drupal-architecture-template.md)
-* [Open Source Contribution Guide](/readme/os-contribution.md)
-* [Project Readme](/readme/readme.md)
-* [Theming Guide](/readme/theming.md)
-* [Local Development](local-development.md)
-
+* [Onboarding](/template/readme/onboarding.md)
+* [Developer Guide](/template/readme/developer-guide.md)
+* [Architecture Template](/template/readme/drupal-architecture-template.md)
+* [Open Source Contribution Guide](/template/readme/os-contribution.md)
+* [Project Readme](/template/readme/readme.md)
+* [Theming Guide](/template/readme/theming.md)
+* [Local Development](/template/readme/local-development.md)
+ 
 ### Git Hooks
 
 Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
