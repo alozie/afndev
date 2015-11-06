@@ -247,28 +247,6 @@ $update_free_access = FALSE;
 $drupal_hash_salt = '';
 
 /**
- * Base URL (optional).
- *
- * If Drupal is generating incorrect URLs on your site, which could
- * be in HTML headers (links to CSS and JS files) or visible links on pages
- * (such as in menus), uncomment the Base URL statement below (remove the
- * leading hash sign) and fill in the absolute URL to your Drupal installation.
- *
- * You might also want to force users to use a given domain.
- * See the .htaccess file for more information.
- *
- * Examples:
- *   $base_url = 'http://www.example.com';
- *   $base_url = 'http://www.example.com:8888';
- *   $base_url = 'http://www.example.com/drupal';
- *   $base_url = 'https://www.example.com:8888/drupal';
- *
- * It is not allowed to have a trailing slash; Drupal will add it
- * for you.
- */
-# $base_url = 'http://www.example.com';  // NO trailing slash!
-
-/**
  * PHP settings:
  *
  * To see what PHP settings are possible, including whether they can be set at
@@ -303,18 +281,61 @@ ini_set('session.gc_maxlifetime', 200000);
  */
 ini_set('session.cookie_lifetime', 2000000);
 
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
 
 /**
- * Block caching:
+ * Variable overrides:
  *
- * Block caching may not be compatible with node access modules depending on
- * how the original block cache policy is defined by the module that provides
- * the block. By default, Drupal therefore disables block caching when one or
- * more modules implement hook_node_grants(). If you consider block caching to
- * be safe on your site and want to bypass this restriction, uncomment the line
- * below.
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
  */
-# $conf['block_cache_bypass_node_grants'] = TRUE;
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling the Locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
 
 /**
  * Fast 404 pages:
@@ -339,12 +360,92 @@ $conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
 $conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
 $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
 
+/**
+ * By default the page request process will return a fast 404 page for missing
+ * files if they match the regular expression set in '404_fast_paths' and not
+ * '404_fast_paths_exclude' above. 404 errors will simultaneously be logged in
+ * the Drupal system log.
+ *
+ * You can choose to return a fast 404 page earlier for missing pages (as soon
+ * as settings.php is loaded) by uncommenting the line below. This speeds up
+ * server response time when loading 404 error pages and prevents the 404 error
+ * from being logged in the Drupal system log. In order to prevent valid pages
+ * such as image styles and other generated content that may match the
+ * '404_fast_paths' regular expression from returning 404 errors, it is
+ * necessary to add them to the '404_fast_paths_exclude' regular expression
+ * above. Make sure that you understand the effects of this feature before
+ * uncommenting the line below.
+ *
+ * We check for the existence of this function before calling in case this
+ * settings file has been included without bootstrapping Drupal.
+ */
+if (function_exists('drupal_fast_404')) {
+  drupal_fast_404();
+}
+
+
+/**
+ * External access proxy settings:
+ *
+ * If your site must access the Internet via a web proxy then you can enter
+ * the proxy settings here. Currently only basic authentication is supported
+ * by using the username and password variables. The proxy_user_agent variable
+ * can be set to NULL for proxies that require no User-Agent header or to a
+ * non-empty string for proxies that limit requests to a specific agent. The
+ * proxy_exceptions variable is an array of host names to be accessed directly,
+ * not via proxy.
+ */
+# $conf['proxy_server'] = '';
+# $conf['proxy_port'] = 8080;
+# $conf['proxy_username'] = '';
+# $conf['proxy_password'] = '';
+# $conf['proxy_user_agent'] = '';
+# $conf['proxy_exceptions'] = array('127.0.0.1', 'localhost');
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface. On securely-configured servers,
+ * the Update manager will require the administrator to provide SSH or FTP
+ * credentials before allowing the installation to proceed; this allows the
+ * site to update the new files as the user who owns all the Drupal files,
+ * instead of as the user the webserver is running as. On servers where the
+ * webserver user is itself the owner of the Drupal files, the administrator
+ * will not be prompted for SSH or FTP credentials (note that these server
+ * setups are common on shared hosting, but are inherently insecure).
+ *
+ * Some sites might wish to disable the above functionality, and only update
+ * the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * @see http://drupal.org/node/244924
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+
+/**
+ * Theme debugging:
+ *
+ * When debugging is enabled:
+ * - The markup of each template is surrounded by HTML comments that contain
+ *   theming information, such as template file name suggestions.
+ * - Note that this debugging markup will cause automated tests that directly
+ *   check rendered HTML to fail.
+ *
+ * For more information about debugging theme templates, see
+ * https://www.drupal.org/node/223440#theme-debug.
+ *
+ * Not recommended in production environments.
+ *
+ * Remove the leading hash sign to enable.
+ */
+# $conf['theme_debug'] = TRUE;
+
 // Primary modules directory.
 $module_dir = 'sites/all/modules';
-
-// Set this to the proper Acquia subscription. Subsequent includes rely
-// upon this variable being set correctly.
-$ac_subname = '${project.acquia_subname}';
 
 // Includes required Acquia configuration and set $base_url correctly.
 require DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
