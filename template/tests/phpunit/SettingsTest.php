@@ -75,9 +75,9 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(false, $conf['admin_menu_cache_client']);
     }
 
-  /**
-   * Test configuration for test/stg environment on ACE.
-   */
+    /**
+     * Test configuration for test/stg environment on ACE.
+     */
     public function testTest()
     {
         $this->setupParams('test');
@@ -113,9 +113,9 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(false, $conf['admin_menu_cache_client']);
     }
 
-  /**
-   * Test configuration for dev environment on ACE.
-   */
+    /**
+     * Test configuration for dev environment on ACE.
+     */
     public function testDev()
     {
         $this->setupParams('dev');
