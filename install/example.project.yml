@@ -16,6 +16,9 @@ project:
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
+  # These are random strings used to configure the hash salt and conf directory.
+  hash_salt: ${project.hash_salt}
+  hash_conf: ${project.hash_conf}
 
 # Drush settings. These are used for deployment tasks.
 drush:

@@ -13,6 +13,8 @@
   <!-- Load the root project.yml file for this project. -->
   <property file="${bolt.root}/project.yml" override="true"/>
 
+  <taskdef name="randomString" classname="${bolt.root}.vendor.platinumpixs.phing-random-string.src.PlatinumPixs.RandomString.GenerateTask" />
+
   <!-- Runs all bolt related targets. -->
   <target name="bolt:new-project" description="Runs all targets required to spin up new project from Bolt." depends="bolt:configure, bolt:create"></target>
 
@@ -20,6 +22,8 @@
        Note: this target must be called by itself first. Other targets must be
        executed separately so that they may load the correct configuration   -->
   <target name="bolt:configure" description="Generates default .yml configuration files based on provided example files.">
+    <randomString name="project.hash_salt" length="55" stringType="lowercase_uppercase_numeric" />
+    <randomString name="project.hash_conf" length="55" stringType="lowercase_uppercase_numeric" />
     <copy todir="${bolt.root}">
       <fileset dir="${bolt.root}/install">
         <include name="example.project.yml" />

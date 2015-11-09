@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "03096c6df58d618e19f919a8f0a9ec97",
-    "content-hash": "b620b6c015e87f3d9f89ffca49d2d055",
+    "hash": "3b5d688453e7bb233b98ecfdea3acf95",
+    "content-hash": "454c6ecbb37fb837a38701ad69b6f3e7",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -96,12 +96,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "94b5c2f31d4eb890ae81438967d1afc6150e210d"
+                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/94b5c2f31d4eb890ae81438967d1afc6150e210d",
-                "reference": "94b5c2f31d4eb890ae81438967d1afc6150e210d",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/4c8bd76a5724048784567297e80c3d5d67f66a44",
+                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44",
                 "shasum": ""
             },
             "require": {
@@ -181,7 +181,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2015-09-21 09:37:01"
+            "time": "2015-11-03 15:02:14"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -661,6 +661,48 @@
             "time": "2015-10-02 06:51:40"
         },
         {
+            "name": "platinumpixs/phing-random-string",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/platinumpixs/phing-random-string.git",
+                "reference": "d395d365a8d8c75fd7944328a2a64b1c33f57665"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/platinumpixs/phing-random-string/zipball/d395d365a8d8c75fd7944328a2a64b1c33f57665",
+                "reference": "d395d365a8d8c75fd7944328a2a64b1c33f57665",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phing/phing": "dev-master",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PlatinumPixs": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Platinum Pixs",
+                    "homepage": "http://www.platinumpixs.com"
+                }
+            ],
+            "description": "Provides A Task To Generate A Random String For Phing",
+            "homepage": "https://github.com/platinumpixs/phing-random-string",
+            "keywords": [
+                "phing",
+                "random string"
+            ],
+            "time": "2013-02-19 16:46:36"
+        },
+        {
             "name": "sebastian/comparator",
             "version": "1.2.0",
             "source": {
@@ -1082,7 +1124,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phing/phing": 20
+        "phing/phing": 20,
+        "platinumpixs/phing-random-string": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
