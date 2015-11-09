@@ -35,23 +35,23 @@ The following default documentation is included in the project template:
 * [Project Readme](/template/readme/readme.md)
 * [Theming Guide](/template/readme/theming.md)
 * [Local Development](/template/readme/local-development.md)
- 
+
 ### Git Hooks
 
 Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are included. These are copied into your local repository's `.git` directory upon intallation. All new developers onboarding onto a project should copy these hooks into their local repository's `.git/hooks` directory after cloning the project.
 
-Please see the [Git Hooks Readme](/git/readme.md) for more information.
+Please see the [Git Hooks Readme](/template/scripts/git-hooks/README.md) for more information.
 
 ### Acquia Cloud Hooks
 
-Sample Acquia Cloud Hooks are included in the [hooks directory](/hooks). These
+Sample Acquia Cloud Hooks are included in the [hooks directory](/template/hooks). These
 include example integrations for third party services such as Slack, New Relic,
-and HipChat. See [hooks](/hooks/readme.md) for more information.
+and HipChat. See [hooks](/template/hooks/README.md) for more information.
 
 ### Testing Framework
 
 Bolt includes example tests and configurations for various testing tools,
- include Behat and PHPUnit. See [tests directory](/tests) for more information.
+ include Behat and PHPUnit. See [tests directory](/template/tests) for more information.
 Tasks for executing these tests are included in the [continuous integration](#continuous-integration)
 tools.
 
@@ -62,7 +62,7 @@ include tasks for things like code sniffing, executing tests, building
 dependencies, installing Drupal, etc.
 
 A starter configuration for running builds on Travis CI is included. The
-configuration lives in [.travis.yml](/.travis.yml) and [build](/build). At a high level, the build
+configuration lives in [.travis.yml](/template/.travis.yml) and [build](/template/build). At a high level, the build
 will do the following:
 * Execute a Travis CI build when a Pull Request is submitted to GitHub.
   * Build dependencies (e.g., composer)
@@ -79,7 +79,7 @@ Bolt does not ship with any local development environment configuration, but the
   - [Drupal VM](http://www.drupalvm.com/)
   - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
 
-Please read the included [Local Development](/readme/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
+Please read the included [Local Development](/template/readme/local-development.md) documentation for instructions for using Drupal VM with a Bolt-generated Drupal project.
 
 ## Directory Structure
 
