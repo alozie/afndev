@@ -2,7 +2,12 @@
   <target name="deploy:build">
     <!-- deploy.build and deploy.commitMsg must be passed as params at runtime. -->
     <exec command="git checkout -b ${deploy.buildID}" logoutput="true"/>
+
+    <!-- Add .gitignore files. -->
     <exec command="git add ${repo.root}/docroot -f" logoutput="true"/>
+    <exec command="git add ${repo.root}/sites/all/themes/custom/${project.theme_name}/dist -f" logoutput="true"/>
+    <exec command="git add ${repo.root}/sites/all/themes/custom/${project.theme_name}/styleguide -f" logoutput="true"/>
+
     <exec command="git commit -m 'Automated commit by Travis CI for Build ${deploy.buildID}' -n" logoutput="true"/>
     <foreach list="${git.remotes}" param="deploy.remote" target="deploy:push" />
   </target>

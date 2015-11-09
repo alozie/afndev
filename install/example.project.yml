@@ -14,6 +14,8 @@ project:
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
   install_profile: 'standard'
+  # This is used to build front end artifacts. E.g., SASS compilation.
+  theme_name: 'thunder'
 
 # Drush settings. These are used for deployment tasks.
 drush:
