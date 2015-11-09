@@ -10,22 +10,6 @@
 
 This guide contains best practices in the form of examples and guidelines. It is meant both to onboard new developers and as a reference tool.
 
-## How to Read
-
-This repository is formatted for reading via GitBook, which is easy to install and use:
-
-1. Install npm (`brew install npm`) if it's not already present.
-2. Install `gitbook` (`npm install gitbook -g`).
-3. From within the directory with `book.json`, run the command `gitbook serve`.
-
-GitBook will output a URL you can use to read the book in a web browser.
-
-### Documentation format
-
-This guide is written in Markdown and hosted on Github. It is written in Markdown because Markdown has awesome support for code highlighting and is pretty easy to read as raw text and on Github. We are hosting this on Github so we can easily collaborate and because out of the box, Github supports displaying markup as HTML when you browse the repository.
-
-see: [https://help.github.com/articles/github-flavored-markdown](https://help.github.com/articles/github-flavored-markdown)
-
 ## Who writes this?
 
 This is a collaborative document written by Acquia's Professional Services organization. If you are a member of PS, please feel free to put in a pull request if you think your changes / additions are controversial, or just commit if they aren't.
@@ -36,12 +20,7 @@ If you are a partner developer and see some areas for improvement, any comments,
 
 ## Development Environment
 
-We recommend using [Acquia Dev Desktop](https://docs.acquia.com/dev-desktop2) for Windows/Mac development. No matter what local environment you choose to use, the following guidelines should be followed -
-
-* In order to guarantee similar behavior, use Apache as your web server.
-* If your project is hosted on Acquia Cloud, please ensure to match [our software versions](https://docs.acquia.com/cloud/arch/tech-platform).
-
-Acquia developers use [PHPStorm](http://www.jetbrains.com/phpstorm/) and recommend it for local development environments. Acquia has written [several articles](https://docs.acquia.com/search/site/phpstorm) on effectively using PHPStorm for Drupal development.
+Please see [Local Development](/local-development.md) for detailed information.
 
 ## Frontend Development
 
