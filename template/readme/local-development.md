@@ -1,4 +1,3 @@
-
 # Local Development
 
 All development for a Drupal site should be done locally, then once complete, 
