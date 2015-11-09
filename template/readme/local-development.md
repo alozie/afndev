@@ -1,15 +1,40 @@
 
 # Local Development
 
-All development for a Drupal site should be done locally, then once complete, it should be committed to a repository and deployed to other environments (eventually to production, if it passes all tests and acceptance criteria).
+All development for a Drupal site should be done locally, then once complete, 
+it should be committed to a repository and deployed to other environments 
+(eventually to production, if it passes all tests and acceptance criteria).
 
-It's important that developers have a reliable and functional local development environment, and there are many options to choose from. Acquia currently recommends the use of [Drupal VM](http://www.drupalvm.com/) or [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop).
+It's important that developers have a reliable and functional local development 
+environment, and there are many options to choose from. Acquia currently 
+recommends the use of either:
+
+  * [Drupal VM](http://www.drupalvm.com/). An isolated virtual machine, 
+  managed by Virtual Box, Vagrant, and Ansible.
+  * [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
+  A turn-key LAMP stack tailored specifically for Acquia-hosted Drupal sites.
+
+No matter what local environment you choose to use, the following guidelines 
+should be followed:
+
+  * In order to guarantee similar behavior, use Apache as your web server.
+  * If your project is hosted on Acquia Cloud, please ensure to match [our 
+ software versions](https://docs.acquia.com/cloud/arch/tech-platform).
+
+Acquia developers use [PHPStorm](http://www.jetbrains.com/phpstorm/) and 
+recommend it for local development environments. Acquia has written [several 
+articles](https://docs.acquia.com/search/site/phpstorm) on effectively using 
+PHPStorm for Drupal development.
+
 
 ## Using Drupal VM for Bolt-generated projects
 
-To use Drupal VM with a Drupal project that is generated with Bolt, first place your downloaded copy of Drupal VM inside the generated Drupal project folder, and name the drupal-vm directory `box`.
+To use Drupal VM with a Drupal project that is generated with Bolt, first place 
+your downloaded copy of Drupal VM inside the generated Drupal project folder, 
+and name the drupal-vm directory `box`.
 
-Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run `vagrant up`, make the following changes to your VM `config.yml` file:
+Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run 
+`vagrant up`, make the following changes to your VM `config.yml` file:
 
     # Update the hostname to the local development environment hostname.
     vagrant_hostname: [project_local_domain]
@@ -45,20 +70,37 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run `
     # database.
     install_site: true
 
-There are also other changes you can make if you choose to match the Acquia Cloud server configuration more closely. See Drupal VM's example configuration changes in Drupal VM's `examples/acquia/acquia.overrides.yml` file.
+There are also other changes you can make if you choose to match the Acquia 
+Cloud server configuration more closely. See Drupal VM's example configuration 
+changes in Drupal VM's `examples/acquia/acquia.overrides.yml` file.
 
-Once you've made these changes and completed the steps in Drupal VM's Quick Start Guide, you may run `vagrant up` to bring up your local development environment, and then access the site via the configured `drupal_domain`.
+Once you've made these changes and completed the steps in Drupal VM's Quick 
+Start Guide, you may run `vagrant up` to bring up your local development 
+environment, and then access the site via the configured `drupal_domain`.
 
 ## Alternative local development environments
 
-For reasons, some teams may prefer to use a different development environment. Drupal VM offers a great deal of flexibility and a uniform configuration for everyone, but sometimes a tool like Acquia Dev Desktop, MAMP/XAMPP, or a different environment (e.g. a bespoke Docker-based dev environment) may be preferable.
+For reasons, some teams may prefer to use a different development environment. 
+Drupal VM offers a great deal of flexibility and a uniform configuration for 
+everyone, but sometimes a tool like Acquia Dev Desktop, MAMP/XAMPP, or a 
+different environment (e.g. a bespoke Docker-based dev environment) may be 
+preferable.
 
-It is up to each team to choose how to handle local development, but some of the main things that help a project's velocity with regard to local development include:
+It is up to each team to choose how to handle local development, but some of 
+the main things that help a project's velocity with regard to local development 
+include:
 
   - Uniformity and the same configuration across all developer environments.
-  - Ease of initial environment configuration (if it takes more than an hour to get a new developer running your project locally, you're doing it wrong).
-  - Ability to emulate all aspects of the production environment with minimal hassle (e.g. Varnish, Memcached, Solr, Elasticsearch, different PHP versions, etc.).
+  - Ease of initial environment configuration (if it takes more than an hour to 
+  get a new developer running your project locally, you're doing it wrong).
+  - Ability to emulate all aspects of the production environment with minimal 
+  hassle (e.g. Varnish, Memcached, Solr, Elasticsearch, different PHP versions, 
+  etc.).
   - Helpful built-in developer tools (e.g. XHProf, Xdebug, Adminer, PimpMyLog).
   - Ease of use across Windows, Mac, or Linux workstations.
 
-For these reasons and many others, Drupal VM is the recommended solution as it achieves all these goals and is an actively-maintained Drupal community project. If you choose to use a different solution, please make sure it fits all the needs of your team and project, and will not be a hindrance to project development velocity!
+For these reasons and many others, Drupal VM is the recommended solution as it 
+achieves all these goals and is an actively-maintained Drupal community project.
+If you choose to use a different solution, please make sure it fits all the 
+needs of your team and project, and will not be a hindrance to project 
+development velocity!
