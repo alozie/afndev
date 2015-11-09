@@ -6,7 +6,7 @@ These may be used for running tasks locally, or for running automated builds via
 continuous integration solutions.
 
 This directory should not contain any test files. Those exist in the 
-/tests directory.
+[/tests](/tests) directory.
 
 ## Build Tasks
 
@@ -14,13 +14,15 @@ A large number of common build tasks are provided via Phing targets. These
 include tasks for things like code sniffing, executing tests, building 
 dependencies, installing Drupal, etc.
 
+For a full list of available Phing tasks, run `./task.sh -list`.
+
 Before attempting to execute any tasks, verify that composer dependencies
 are built by running `composer install` in the project root.
 
 ### Executing Tasks
 
 * For a full list of the available Phing targets, run `./task.sh -list`
-* To manually test a phing target, run the following command matching the
+* To manually test a Phing target, run the following command matching the
   the following pattern: `./task.sh <target-name>`. 
   For example `./task.sh validate:all`
 * To run Phing directly from the binary, simply run `./bin/phing -f build/phing/build.xml <arguments>`
@@ -35,6 +37,51 @@ Integration with Travis CI is included, although Phing tasks can be used with
   by installing composer dependencies. Notable files involved in this step are:
   * `.travis.yml`
   * `composer.json`
-1. Travis CI begins to builds in parallel:
-  * The Phing 'validate:all' target is executed
-  * The Phing 'setup:build:all' and 'tests:all' targets are executed
+1. Travis CI begins a a build and calls various Phing targets.
+
+### Setting Up Travis CI for automated deployments
+
+Travis CI can be used to deploy a fully built site artifact (with the docroot)
+in the following manner:
+1. A pull request is merged into the GitHub repository
+2. Travis builds the docroot
+3. Travis commits the docroot to a specific "build" branch and pushed to Acquia
+   Cloud
+   
+To set up with workflow, you must configure Acquia Cloud, GitHub, and Travis
+to work together. Step-by-step instructions are provided below.
+
+
+1. Generate an SSH key locally. E.g.,
+   ````
+   cd ~/.ssh
+   ssh-keygen -t rsa
+   ````
+   Do not use a passphrase!
+1. Create a new Acquia Cloud account to be used exclusively as a container for
+   the SSH keys that will grant Travis push access to Acquia Cloud. This can be
+   done by inviting a new team member on the "Teams" tab in Acquia Cloud. You
+   can use an email address like `<email>+travis@acquia.com`. The team member
+   must have SSH push access.
+1. Login the your new Acquia Cloud account and add the public SSH key from the
+   key pair that was generated in step 1 by visiting
+   `https://accounts.acquia.com/account/[uid]/security`.
+1. Add the same public SSH key to the "Deployment Keys" section on your 
+   Project's GitHub settings page, located at
+   `https://github.com/acquia-pso/[project-name]/settings/keys`.
+1. Add the _private SSH key_ to your project's Travis CI settings located at
+   `https://magnum.travis-ci.com/acquia-pso/[project-name]/settings`.
+1. Update your .travis.yml file to include the following lines:
+  ````
+   after_success:
+     - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "7.x" ]; then ./task.sh deploy:build -Ddeploy.branch=7.x-build -Ddeploy.buildID=$TRAVIS_BUILD_ID; fi;
+  ````
+  Note that two branch names are referenced in this example: "develop" and "build".
+  This example will watch for changes to the "develop" branch on GitHub and deploy
+  a build artifact to the "build" branch on Acquia Cloud.
+1. Add your cloud git repository to the remotes section of your project.yml file:
+  ````
+  remotes:
+     - example@svn-14671.prod.hosting.acquia.com:example.git`
+  ````
+199.27.76.133
