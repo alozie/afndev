@@ -1,18 +1,10 @@
-
-
-
-
-[CLIENT]
 ${project.human_name}
-
-
 
 Drupal Architecture
 ========================
 v1.0
 
 Note: This is a living document that will evolve throughout the lifecycle of the project. Any delivery of this document is a snapshot in time and may be either incomplete or inaccurate as the project/platform evolves. This and related documents will be maintained throughout the project and the goal is to most accurately reflect the current known state of architecture for the various project components.
-
 
 ## Contents
 
@@ -90,12 +82,11 @@ TODO: High-level overview of hosting infrastructure.
 ###Environments
 TODO: Outline usage, audience, and any restrictions (IP or Authorization) of each environment.
 
-| Environment | Short name | Audience | Purpose |
-|-------------|------------|----------|---------|
-| Production | prod | Public                  | Public traffic |
-| Staging    | test | Client, Acquia, Partner | UAT |
-| Development | dev | Acquia, Partner         | Code integration and developer testing |
-
+| Environment | Short name | Audience                | Purpose                                |
+|-------------|------------|-------------------------|----------------------------------------|
+| Production  | prod       | Public                  | Public traffic                         |
+| Staging     | test       | Client, Acquia, Partner | UAT                                    |
+| Development | dev        | Acquia, Partner         | Code integration and developer testing |
 
 ###Traffic Management and CDN
 TODO: Document any use of content delivery networks or other traffic management above the Acquia Cloud platform, including CDN content caching methodology (origin pull, push, both).

@@ -1,4 +1,3 @@
-
 # Local Development
 
 All development for a Drupal site should be done locally, then once complete, it should be committed to a repository and deployed to other environments (eventually to production, if it passes all tests and acceptance criteria).
