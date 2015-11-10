@@ -23,7 +23,6 @@
        executed separately so that they may load the correct configuration   -->
   <target name="bolt:configure" description="Generates default .yml configuration files based on provided example files.">
     <randomString name="project.hash_salt" length="55" stringType="lowercase_uppercase_numeric" />
-    <randomString name="project.hash_conf" length="55" stringType="lowercase_uppercase_numeric" />
     <copy todir="${bolt.root}">
       <fileset dir="${bolt.root}/install">
         <include name="example.project.yml" />

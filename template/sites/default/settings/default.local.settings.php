@@ -22,4 +22,9 @@ if (empty($_ENV['AH_SITE_ENVIRONMENT'])) {
   );
 
   $base_url = '${local_url}';
+
+  // Configuration directories.
+  $dir = dirname(DRUPAL_ROOT);
+  $config_directories['vcs'] = $dir . '/config/default';
+  $config_directories['sync'] = $dir . '/config/default';
 }

@@ -91,6 +91,10 @@
       <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
     </drush>
 
+    <drush command="config-import" assume="yes" verbose="TRUE">
+      <param>vcs</param>
+    </drush>
+
     <drush command="cache-rebuild" verbose="TRUE"/>
 
     <!-- Restore original settings.php, wiped out by Drupal installation. -->

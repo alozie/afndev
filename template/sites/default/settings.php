@@ -243,7 +243,7 @@ $databases = array();
  *   );
  * @endcode
  */
-$config_directories['sync'] = 'sites/default/files/config_${project.hash_conf}/sync';
+$config_directories = array();
 
 /**
  * Settings:
