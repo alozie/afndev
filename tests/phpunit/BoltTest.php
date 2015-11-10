@@ -92,7 +92,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         // project's config.yml file.
         $this->assertEquals(
             $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'],
-            $this->config['project']['local_url']
+            $this->config['local_url']
         );
     }
 
