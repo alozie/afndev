@@ -13,8 +13,8 @@
 * Workflow
     * [Agile Process](readme/agile-guide.md)
     * [Development Workflow](readme/dev-workflow.md)
-    * Continuous Integration
-    * Release Process
+    * [Continuous Integration](#ci)
+    * [Release Process](#release-process)
     * [Open Source Contribution](readme/os-contribution.md)
 
 ## Overview
@@ -92,8 +92,8 @@ Please see [Drupal Theming Best Practices](theming.md) for detailed information.
 Proper usage of automated testing is a cornerstone of sound software 
 development. 
 
-We follow a [Behavioral Driven Development[(http://guide.agilealliance
-.org/guide/bdd.html) methodology to ensure that all acceptance criteria for all
+We follow a [Behavioral Driven Development[(http://guide.agilealliance.org/guide/bdd.html)
+methodology to ensure that all acceptance criteria for all
 user stories are closely mapped to automated tests. This both ensures 
 accurate delivery of functionality and prevents regressions. BDD is 
 implemented via the use of [Behat](http://docs.behat.org/) in combination 
@@ -107,6 +107,8 @@ is not the proper testing tool for a given feature.
 
 For more information our our testing architecture, see the [tests]
 (tests/README.md) directory.
+
+## <a name="ci"></a>Continuous Integration
 
 Tests may be executed either locally, in the cloud, or via our Continuous 
 Integration solution. Please see (build/README.md) for more information on 
