@@ -6,7 +6,7 @@ These may be used for running tasks locally, or for running automated builds via
 continuous integration solutions.
 
 This directory should not contain any test files. Those exist in the 
-/tests directory.
+[/tests](/tests) directory.
 
 ## Build Tasks
 
@@ -14,13 +14,15 @@ A large number of common build tasks are provided via Phing targets. These
 include tasks for things like code sniffing, executing tests, building 
 dependencies, installing Drupal, etc.
 
+For a full list of available Phing tasks, run `./task.sh -list`.
+
 Before attempting to execute any tasks, verify that composer dependencies
 are built by running `composer install` in the project root.
 
 ### Executing Tasks
 
 * For a full list of the available Phing targets, run `./task.sh -list`
-* To manually test a phing target, run the following command matching the
+* To manually test a Phing target, run the following command matching the
   the following pattern: `./task.sh <target-name>`. 
   For example `./task.sh validate:all`
 * To run Phing directly from the binary, simply run `./bin/phing -f build/phing/build.xml <arguments>`
@@ -37,7 +39,7 @@ Integration with Travis CI is included, although Phing tasks can be used with
   * `composer.json`
 1. Travis CI begins a a build and calls various Phing targets.
 
-## Setting Up Travis CI for automated deployments
+### Setting Up Travis CI for automated deployments
 
 Travis CI can be used to deploy a fully built site artifact (with the docroot)
 in the following manner:
