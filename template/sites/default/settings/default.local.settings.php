@@ -21,5 +21,5 @@ if (empty($_ENV['AH_SITE_ENVIRONMENT'])) {
       ),
   );
 
-  $base_url = '${project.local_url}';
+  $base_url = '${local_url}';
 }

@@ -9,8 +9,6 @@ project:
   # Used for enforcing correct git commit msg syntax.
   prefix: 'BLT'
   human_name: 'Bolted'
-  # This is used for configuring your local $base_url.
-  local_url: 'http://127.0.0.1:8080/'
   # This is the default makefile that will be used to build dependencies.
   # It should live in the project root.
   make_file: 'make.yml'
