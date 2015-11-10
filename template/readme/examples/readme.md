@@ -3,8 +3,6 @@ The purpose of these examples is to provide a starting point for common custom d
 
 These modules are working examples. It's recommended that you copy the module and test that it works and then begin to modify the files to fit your need.
 
-_NOTICE: ctools is particularly fussy. If you rename or delete installed plugins, you will likely need to empty the `cache` table manually and then run `drush cc all` to rebuild the tables. If you don't do this, you may encounter white-screens and errors._
-
 ## Modules
 These example modules demonstrate how to create and theme custom components including panels. This also demonstrates how to work with javascript, libraries, and other assets.
 

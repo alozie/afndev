@@ -1,6 +1,0 @@
-name = Acquia Examples - Custom Component
-description = Example showing how to make a custom themed component
-core = 7.x
-package = Acquia Professional Services Examples
-dependencies[] = ctools
-dependencies[] = panels
