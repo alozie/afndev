@@ -77,11 +77,7 @@
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
-    <echo>Please change to the new project directory and run setup tasks. E.g.,</echo>
-    <echo></echo>
-    <echo>cd ${bolt.new.dir}</echo>
-    <echo>./task.sh setup:build:all</echo>
-    <echo>./task.sh setup:git-hooks</echo>
+    <echo>Please change to the new project directory and run remaining setup tasks.</echo>
   </target>
 
   <!-- This target is meant to test Bolt itself on TravisCI.
