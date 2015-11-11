@@ -106,15 +106,16 @@
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
-    <copy todir="${repo.root}/.git/hooks" overwrite="true">
-      <fileset dir="${repo.root}/scripts/git-hooks"></fileset>
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
+
+    <!-- Symlink into .git directory. -->
+    <delete dir="${repo.root}/.git/hooks" quiet="true" failonerror="false"/>
+    <exec dir="${repo.root}/.git" command="ln -s ../scripts/git-hooks hooks" logoutput="true"/>
+
+    <!-- Grant execution permissions. -->
     <chmod mode="0755">
-      <fileset dir="${repo.root}/.git/hooks">
+      <fileset dir="${repo.root}/scripts/git-hooks">
         <exclude name="**/*.sample" />
+        <exclude name="**/README.md" />
       </fileset>
     </chmod>
   </target>
