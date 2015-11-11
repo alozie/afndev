@@ -92,7 +92,7 @@
     </drush>
 
     <drush command="config-import" assume="yes" verbose="TRUE">
-      <param>vcs</param>
+      <param>sync</param>
     </drush>
 
     <drush command="cache-rebuild" verbose="TRUE"/>
