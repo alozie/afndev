@@ -6,6 +6,6 @@ Feature: Selenium Test
 
   Scenario: Load a page
     Given I am on "/"
-    Then I should see the text "Welcome"
+    Then I should see the text "Log in"
 
 # @todo Add @api example.
