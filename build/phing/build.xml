@@ -42,9 +42,18 @@
 
   <!-- Create a new project directory based on current repository. -->
   <target name="bolt:create" description="Create a new project based on local repository.">
-    <!-- Remove from existing directory. -->
-    <!-- @todo Add prompt or warning! -->
-    <delete dir="${bolt.new.dir}" />
+    <if>
+      <available file="${bolt.new.dir}" type="dir" />
+      <then>
+        <input message="The following directory will be permanently deleted. Continue?${line.separator}${bolt.new.dir} " validargs="y,n" propertyname="do.delete" />
+        <condition property="do.abort">
+          <equals arg1="n" arg2="${do.delete}"/>
+        </condition>
+        <fail if="do.abort">Build aborted by user.</fail>
+        <!-- Remove from existing directory. -->
+        <delete dir="${bolt.new.dir}" />
+      </then>
+    </if>
 
     <!-- (re)Create project directory. -->
     <mkdir dir="${bolt.new.dir}" />
