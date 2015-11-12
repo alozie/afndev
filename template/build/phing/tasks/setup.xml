@@ -109,7 +109,7 @@
 
     <!-- Symlink into .git directory. -->
     <delete dir="${repo.root}/.git/hooks" quiet="true" failonerror="false"/>
-    <exec dir="${repo.root}/.git" command="ln -s ../scripts/git-hooks hooks" logoutput="true"/>
+    <exec dir="${repo.root}/.git" command="ln -snv ../scripts/git-hooks hooks" logoutput="true"/>
 
     <!-- Grant execution permissions. -->
     <chmod mode="0755">
