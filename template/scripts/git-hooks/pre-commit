@@ -53,25 +53,17 @@ filters_exclude[3]='devel'
 filters_exclude[4]='libraries'
 filters_exclude[5]='development'
 filters_exclude[6]='scripts'
-filters_exclude[6]='featurized'
+filters_exclude[7]='git'
+filters_exclude[8]='featurized'
 
-# Exclude extensions we know should not be checked.
-filters_exclude[7]='\.png$'
-filters_exclude[8]='\.gif$'
-filters_exclude[9]='\.jpg$'
-filters_exclude[10]='\.ico$'
-filters_exclude[11]='\.patch$'
-filters_exclude[12]='\.ad$'
-filters_exclude[13]='\.htaccess$'
-filters_exclude[14]='\.sh$'
-filters_exclude[15]='\.ttf$'
-filters_exclude[16]='\.woff$'
-filters_exclude[17]='\.eot$'
-filters_exclude[18]='\.svg$'
-filters_exclude[19]='\.xml$'
-
-# Additional excludes specific to this project
-# filters_exclude[20]=''
+# Include extensions that should be checked.
+filters_include[0]='\.inc'
+filters_include[1]='\.info'
+filters_include[2]='\.install'
+filters_include[3]='\.module'
+filters_include[4]='\.php'
+filters_include[5]='\.profile'
+filters_include[6]='\.test'
 
 # Join filters_include array into a single string for grep -e
 sep="\\|"
@@ -88,7 +80,7 @@ egrep_exclude=$(printf "${sep}%s" "${filters_exclude[@]}")
 egrep_exclude=${egrep_exclude:${#sep}}
 egrep_exclude=".*\($egrep_exclude\)"
 
-LIST=$( git diff --name-only --cached --diff-filter=ACM | egrep -v "$egrep_exclude" )
+LIST=$( git diff --name-only --cached --diff-filter=ACM | grep -e "$grep_include" | egrep -v "$egrep_exclude" )
 
 # PHP syntax-error free code
 NO_SYNTAX_ERROR=0
