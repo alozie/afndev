@@ -69,13 +69,11 @@
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
     <copy file="${bolt.root}/local.yml" tofile="${bolt.new.dir}/local.yml" />
 
-    <!-- Copy minimal profile to new project. -->
-    <mkdir dir="${bolt.new.dir}/profiles/${project.acquia_subname}/config/install" />
-    <copy todir="${bolt.new.dir}/profiles/${project.acquia_subname}/config/install">
-      <fileset dir="${bolt.root}/install/profiles/minimal/config/install" />
-    </copy>
-    <copy file="${bolt.root}/install/profiles/minimal/minimal.info.yml" tofile="${bolt.new.dir}/profiles/${project.acquia_subname}/${project.acquia_subname}.info.yml"/>
-    <copy file="${bolt.root}/install/profiles/minimal/minimal.install" tofile="${bolt.new.dir}/profiles/${project.acquia_subname}/${project.acquia_subname}.install"/>
+    <!-- Rename minimal profile in new project. -->
+    <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.acquia_subname}"/>
+    <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
+    <move file="${bolt.profile.dir}/minimal.info.yml" tofile="${bolt.profile.dir}/${project.acquia_subname}.info.yml"/>
+    <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.acquia_subname}.install"/>
 
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
