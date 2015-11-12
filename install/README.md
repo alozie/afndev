@@ -3,7 +3,7 @@
 Bolt has an installer which will do the following:
 
 * Create new project directory (sibling of the Bolt repository)
-* Copies Bolt files to new directory, including:
+* Copies the Bolt template to the new directory, including:
 ** Git Hooks
 ** Acquia Cloud Hooks
 ** Project documentation
@@ -11,7 +11,6 @@ Bolt has an installer which will do the following:
 ** CI configuration
 ** Custom settings.php files
 * Replaces tokens in copied files with project-specific strings
-* Removes installation artifacts
 
 ## Installer Requirements
 
@@ -22,22 +21,21 @@ Bolt has an installer which will do the following:
 ## Create new project
 
 To create a new repository using Bolt's installer, run the
-follow from this repository's root directory:
+following from this repository's root directory:
 
 ### Create a new project, build all dependencies.
 
   1. `composer install`
   1. Run `./task.sh bolt:configure` to create your
-     project-specific configuration file. After running, `project.yml`, `make.yml`,
-     and `local.yml` should exist in the Bolt root directory.
+  project-specific configuration files. After running, `project.yml`,
+  `local.yml`, and `make.yml` should exist in the Bolt root directory.
   1. Modify aforementioned .yml files with values for your new project.
-  1. Run `./task.sh bolt:create`
-     This will create a new directory for your new project.
-  1. Change directories to your new project directory. E.g., `cd /path/to/my/new/project`.
+  1. Run `./task.sh bolt:create` to create a new directory for your new project.
+  1. Change directories to your new project directory. E.g.,
+  `cd /path/to/my/new/project`.
   1. In your new project directory, run `./task.sh setup:build:all`.
-     This will install git hooks, build dependencies in your make file, and setup behat configuration.
+  This will build dependencies in your make file and setup behat configuration.
   1. Install local git hooks `./task.sh setup:git-hooks`
-  1. Setup Behat configuration `./task.sh setup:behat`
 
 ## Next Steps
 
@@ -47,7 +45,7 @@ After Bolt has installed, there are several key activities to perform for your p
     * Add contributed modules and themes to `make.yml`
     * Build docroot via `./task.sh setup:build:all`
   1. Update your project readme.md
-  1. Update the project documentation (in `docs`)
+  1. Update the project documentation (in `readme`)
   1. Review and include common settings snippets (in `sites\default\settings`)
     * Review which settings snippets in `sites\default\settings` are relevant for your project
     * Include relevant settings within your site-specific by uncommenting require line(s)
@@ -67,7 +65,7 @@ After Bolt has installed, there are several key activities to perform for your p
 
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
-      * Verify correct db creds in `sites/all/settings/local.settings.php`
+      * Verify correct db creds in `sites/default/settings/local.settings.php`
       * Configure your local LAMP stack such that the docroot is associated with the $base_url
       * Visit the local_url that you set in project.yml
     * If you used a different local development environment, visit the configured `local_url` for the site.
