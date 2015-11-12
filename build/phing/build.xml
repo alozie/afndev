@@ -69,10 +69,19 @@
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
     <copy file="${bolt.root}/local.yml" tofile="${bolt.new.dir}/local.yml" />
 
+    <!-- Copy minimal profile to new project. -->
+    <mkdir dir="${bolt.new.dir}/profiles/${project.acquia_subname}/config/install" />
+    <copy todir="${bolt.new.dir}/profiles/${project.acquia_subname}/config/install">
+      <fileset dir="${bolt.root}/install/profiles/minimal/config/install" />
+    </copy>
+    <copy file="${bolt.root}/install/profiles/minimal/minimal.info.yml" tofile="${bolt.new.dir}/profiles/${project.acquia_subname}/${project.acquia_subname}.info.yml"/>
+    <copy file="${bolt.root}/install/profiles/minimal/minimal.install" tofile="${bolt.new.dir}/profiles/${project.acquia_subname}/${project.acquia_subname}.install"/>
+
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
       <fileset dir="${bolt.new.dir}">
         <include name="readme/**/*" />
+        <include name="profiles/**/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/all/settings/**/*" />
         <include name="scripts/git-hooks/*" />
