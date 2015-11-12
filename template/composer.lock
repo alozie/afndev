@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8baf71d526dda8758181d041da588fff",
+    "hash": "3cfb1c8b7b099ae039b3ed9ee1ef7d44",
+    "content-hash": "57d6739896dfe462e34fda80f0fd5e08",
     "packages": [
         {
             "name": "behat/behat",
@@ -748,16 +749,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "dev-master",
+            "version": "8.0.0-rc3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "d9f7fb2a424550965863caca7c7303a1258ca5cc"
+                "reference": "620aa70d055cb8dbe2a3f8aebf8f53fa69832bf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/d9f7fb2a424550965863caca7c7303a1258ca5cc",
-                "reference": "d9f7fb2a424550965863caca7c7303a1258ca5cc",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/620aa70d055cb8dbe2a3f8aebf8f53fa69832bf3",
+                "reference": "620aa70d055cb8dbe2a3f8aebf8f53fa69832bf3",
                 "shasum": ""
             },
             "require": {
@@ -833,28 +834,28 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2015-11-04 20:36:31"
+            "time": "2015-11-04 21:26:14"
         },
         {
             "name": "fabpot/goutte",
-            "version": "v3.1.1",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/Goutte.git",
-                "reference": "751a3dc5c4d86ec3e97c9f27133ef9694d9243cc"
+                "reference": "3cbc6ed222422a28400e470050f14928a153207e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/751a3dc5c4d86ec3e97c9f27133ef9694d9243cc",
-                "reference": "751a3dc5c4d86ec3e97c9f27133ef9694d9243cc",
+                "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/3cbc6ed222422a28400e470050f14928a153207e",
+                "reference": "3cbc6ed222422a28400e470050f14928a153207e",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.0",
                 "php": ">=5.5.0",
-                "symfony/browser-kit": "~2.1",
-                "symfony/css-selector": "~2.1",
-                "symfony/dom-crawler": "~2.1"
+                "symfony/browser-kit": "~2.1|~3.0",
+                "symfony/css-selector": "~2.1|~3.0",
+                "symfony/dom-crawler": "~2.1|~3.0"
             },
             "type": "application",
             "extra": {
@@ -882,7 +883,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2015-08-29 16:16:56"
+            "time": "2015-11-05 12:58:44"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1448,12 +1449,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44"
+                "reference": "3823b9227ef7929ef71c21cbaef5aa67939e3eda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/4c8bd76a5724048784567297e80c3d5d67f66a44",
-                "reference": "4c8bd76a5724048784567297e80c3d5d67f66a44",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/3823b9227ef7929ef71c21cbaef5aa67939e3eda",
+                "reference": "3823b9227ef7929ef71c21cbaef5aa67939e3eda",
                 "shasum": ""
             },
             "require": {
@@ -1533,7 +1534,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2015-11-03 15:02:14"
+            "time": "2015-11-09 09:01:45"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2150,29 +2151,29 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.5.2",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "aaf8772ade08b5f0f6830774a5d5c2f800415975"
+                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/aaf8772ade08b5f0f6830774a5d5c2f800415975",
-                "reference": "aaf8772ade08b5f0f6830774a5d5c2f800415975",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0f04df0b23663799a8941fae13cd8e6299bde3ed",
+                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed",
                 "shasum": ""
             },
             "require": {
                 "dnoegel/php-xdg-base-dir": "0.1",
                 "jakub-onderka/php-console-highlighter": "0.3.*",
-                "nikic/php-parser": "^1.2.1",
+                "nikic/php-parser": "^1.2.1|~2.0",
                 "php": ">=5.3.9",
                 "symfony/console": "~2.3.10|^2.4.2|~3.0",
                 "symfony/var-dumper": "~2.7|~3.0"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "~1.5",
-                "phpunit/phpunit": "~3.7|~4.0",
+                "phpunit/phpunit": "~3.7|~4.0|~5.0",
                 "squizlabs/php_codesniffer": "~2.0",
                 "symfony/finder": "~2.1|~3.0"
             },
@@ -2188,15 +2189,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.6.x-dev"
+                    "dev-develop": "0.7.x-dev"
                 }
             },
             "autoload": {
                 "files": [
                     "src/Psy/functions.php"
                 ],
-                "psr-0": {
-                    "Psy\\": "src/"
+                "psr-4": {
+                    "Psy\\": "src/Psy/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2218,7 +2219,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2015-07-16 15:26:57"
+            "time": "2015-11-12 16:18:56"
         },
         {
             "name": "sebastian/comparator",
@@ -3575,7 +3576,7 @@
         "phploc/phploc": 20,
         "sebastian/phpcpd": 20,
         "phing/phing": 20,
-        "drush/drush": 20
+        "drush/drush": 5
     },
     "prefer-stable": false,
     "prefer-lowest": false,
