@@ -13,7 +13,7 @@ project:
   # It should live in the project root.
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
-  install_profile: 'standard'
+  install_profile: '${project.acquia_subname}'
   # These are random strings used to configure the hash salt and conf directory.
   hash_salt: ${project.hash_salt}
   hash_conf: ${project.hash_conf}
