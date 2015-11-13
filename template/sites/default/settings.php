@@ -516,28 +516,6 @@ if ($settings['hash_salt']) {
 # $settings['maintenance_theme'] = 'bartik';
 
 /**
- * Base URL (optional).
- *
- * If Drupal is generating incorrect URLs on your site, which could
- * be in HTML headers (links to CSS and JS files) or visible links on pages
- * (such as in menus), uncomment the Base URL statement below (remove the
- * leading hash sign) and fill in the absolute URL to your Drupal installation.
- *
- * You might also want to force users to use a given domain.
- * See the .htaccess file for more information.
- *
- * Examples:
- *   $base_url = 'http://www.example.com';
- *   $base_url = 'http://www.example.com:8888';
- *   $base_url = 'http://www.example.com/drupal';
- *   $base_url = 'https://www.example.com:8888/drupal';
- *
- * It is not allowed to have a trailing slash; Drupal will add it
- * for you.
- */
-# $base_url = 'http://www.example.com';  // NO trailing slash!
-
-/**
  * PHP settings:
  *
  * To see what PHP settings are possible, including whether they can be set at
@@ -679,10 +657,6 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  * example.org, with all subdomains included.
  */
 
-// Set this to the proper Acquia subscription. Subsequent includes rely
-// upon this variable being set correctly.
-$ac_subname = '${project.acquia_subname}';
-
 // Includes required Acquia configuration and set $base_url correctly.
 require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
 
@@ -690,7 +664,7 @@ require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
  * Acquia Cloud settings.
  */
 if ($is_ah_env && file_exists('/var/www/site-php')) {
-  require "/var/www/site-php/" . $_ENV['AH_SITE_GROUP'] . "/$ac_subname-settings.inc";
+  require "/var/www/site-php/{$_ENV['AH_SITE_GROUP']}/{$_ENV['AH_SITE_GROUP']}-settings.inc";
 }
 
 /**
