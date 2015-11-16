@@ -74,7 +74,7 @@ to work together. Step-by-step instructions are provided below.
 1. Update your .travis.yml file to include the following lines:
   ````
    after_success:
-     - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "7.x" ]; then ./task.sh deploy:build -Ddeploy.branch=7.x-build -Ddeploy.buildID=$TRAVIS_BUILD_ID; fi;
+     - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then ./task.sh deploy:build -Ddeploy.branch=build -Ddeploy.buildID=$TRAVIS_BUILD_ID; fi;
   ````
   Note that two branch names are referenced in this example: "develop" and "build".
   This example will watch for changes to the "develop" branch on GitHub and deploy
