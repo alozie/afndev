@@ -63,7 +63,7 @@
   </target>
 
   <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
-    <copy file="${repo.root}/sites/all/settings/default.local.settings.php" tofile="${repo.root}/sites/all/settings/local.settings.php">
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
       <filterchain>
         <expandproperties />
       </filterchain>
@@ -123,7 +123,7 @@
   <target name="setup:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink settings. -->
     <exec dir="${repo.root}" command="ln -s ../../../sites/all/drush docroot/sites/all/drush"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/all/settings docroot/sites/all/settings"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
 
