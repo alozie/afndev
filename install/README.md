@@ -3,14 +3,15 @@
 Bolt has an installer which will do the following:
 
 * Create new project directory (sibling of the Bolt repository)
-* Copies the Bolt template to the new directory, including:
-** Git Hooks
-** Acquia Cloud Hooks
-** Project documentation
-** Testing frameworks
-** CI configuration
-** Custom settings.php files
+* Copies Bolt files to new directory, including:
+  * Git Hooks
+  * Acquia Cloud Hooks
+  * Project documentation
+  * Testing frameworks
+  * CI configuration
+  * Custom settings.php files
 * Replaces tokens in copied files with project-specific strings
+* Removes installation artifacts
 
 ## Installer Requirements
 
@@ -25,47 +26,60 @@ following from this repository's root directory:
 
 ### Create a new project, build all dependencies.
 
-  1. `composer install`
-  1. Run `./task.sh bolt:configure` to create your
-  project-specific configuration files. After running, `project.yml`,
-  `local.yml`, and `make.yml` should exist in the Bolt root directory.
-  1. Modify aforementioned .yml files with values for your new project.
-  1. Run `./task.sh bolt:create` to create a new directory for your new project.
-  1. Change directories to your new project directory. E.g.,
-  `cd /path/to/my/new/project`.
-  1. In your new project directory, run `./task.sh setup:build:all`.
-  This will build dependencies in your make file and setup behat configuration.
-  1. Install local git hooks `./task.sh setup:git-hooks`
+1. `composer install`
+1. Run `./task.sh bolt:configure` to create your project-specific
+   configuration files. After running, `project.yml`, `make.yml`,
+   and `local.yml` should exist in the Bolt root directory.
+1. Modify aforementioned .yml files with values for your new project.
+1. Run `./task.sh bolt:create`. This will create a new directory for your new
+   project.
+1. Change directories to your new project directory.
+   E.g., `cd /path/to/my/new/project`.
+1. In your new project directory, run `./task.sh setup:build:all`.
+   This will build dependencies in your make file and create required
+   symlinks.
+1. Install local git hooks `./task.sh setup:git-hooks`.
+1. Setup Behat configuration `./task.sh setup:behat`.
+1. To read a full list of available tasks, run `./task.sh -list`.
 
 ## Next Steps
 
-After Bolt has installed, there are several key activities to perform for your project:
+After Bolt has installed, there are several key activities to perform for your
+project:
 
-  1. Update your project's make file
-    * Add contributed modules and themes to `make.yml`
-    * Build docroot via `./task.sh setup:build:all`
-  1. Update your project readme.md
-  1. Update the project documentation (in `readme`)
-  1. Review and include common settings snippets (in `sites\default\settings`)
-    * Review which settings snippets in `sites\default\settings` are relevant for your project
-    * Include relevant settings within your site-specific by uncommenting require line(s)
+1. Update your project's make file.
+  * Add contributed modules and themes to `make.yml`
+  * Re-build docroot via `./task.sh setup:build:all`
+1. Update your project README.md.
+1. Update the project documentation (in `readme`).
+1. Set up your local \*AMP stack using. See [Local Environment]
+   (/readme/local-development.md). documentation.
+1. Optionally, you may install Drupal locally via Phing. To do this, verify
+   correct credentials in `local.yml` and then run:
+   `./task.sh setup:drupal:install`
 
-### Optionally, install Drupal locally
+### Configure your CI solution
 
-  1. Optionally, you may install Drupal via Phing. To do this, verify correct
-     credentials in `local.yml` and then run:
-     `./task.sh setup:drupal:install`
+Travis CI is used for both automated testing and for deploying to Acquia Cloud.
 
-### Optionally, integrate with 3rd party services
+Best practices dictate that the docroot should not be committed to the
+repository. This allows the deployed site to have complete parity with the
+project's make.yml, and avoids undocumented modifications to core and contrib.
+As such, Travis is always used for deploying a built-docroot to the cloud.
 
-  1. Enable TravisCI
-  2. Enable Slack integration with TravisCI
+Your GitHub repository should have Travis CI enabled when it is created. If it
+is not enabled, contact your Technical Team Lead and have him/her enable it.
+
+Once it is enabled, follow the steps under
+"Setting Up Travis CI for automated deployments" in [build/README.md](/build/README.md)
 
 ### Visit the site!
 
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
       * Verify correct db creds in `sites/default/settings/local.settings.php`
-      * Configure your local LAMP stack such that the docroot is associated with the $base_url
+      * Configure your local LAMP stack such that the docroot is associated with
+        the $base_url
       * Visit the local_url that you set in project.yml
-    * If you used a different local development environment, visit the configured `local_url` for the site.
+    * If you used a different local development environment, visit the 
+      configured `local_url` for the site.

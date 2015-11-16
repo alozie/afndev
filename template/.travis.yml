@@ -12,10 +12,9 @@ cache:
   - "$HOME/.composer/cache"
   - "$HOME/.drush/cache"
 
-env:
-  matrix:
-    - TEST_SUITE=validate:all
-    - TEST_SUITE='setup:build:all tests:all'
+addons:
+  ssh_known_hosts:
+  # - svn-4786.devcloud.hosting.acquia.com
 
 notifications:
   # Replace this with project slack token.
@@ -37,3 +36,8 @@ before_script:
 
 script:
   - phing -f build/phing/build.xml -Dbehat:run-server=true $TEST_SUITE
+
+after_success:
+  # Watch for successfully changes to `7.x` branch on GitHub, build and deploy
+  # to `build` branch on Acquia Cloud.
+  # - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then ./task.sh deploy:build -Ddeploy.branch=build -Ddeploy.buildID=$TRAVIS_BUILD_ID; fi;
