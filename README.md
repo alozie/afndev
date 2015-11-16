@@ -12,8 +12,7 @@ located in /template.
   * [Acquia Cloud Hooks](#acquia-cloud-hooks)
   * [Testing Framework](#testing-framework)
   * [Continuous Integration](#continuous-integration)
-* [Directory Structure](#directory-structure)
-* [Contributing](#contributing) (to Bolt)
+* [Contributing to Bolt](#contributing-to-bolt)
 
 ## Installation
 
@@ -28,10 +27,10 @@ When beginning a new Drupal project, do the following:
 
 The following default documentation is included in the project template:
 * [Onboarding](/template/readme/onboarding.md)
-* [Developer Guide](/template/readme/developer-guide.md)
+* [Developer Guide](/template/readme/dev-workflow.md)
 * [Architecture Template](/template/readme/architecture.md)
 * [Open Source Contribution Guide](/template/readme/os-contribution.md)
-* [Project Readme](/template/readme.md)
+* [Project Readme](/template/README.md)
 * [Theming Guide](/template/readme/theming.md)
 * [Local Development](/template/readme/local-development.md)
 
@@ -42,14 +41,14 @@ are included with Bolt. These should be symlinked into your local repository's
 `.git` directory using the `setup:git-hooks` task during the 
 [onboarding process](/template/readme/onboarding.md). 
 
-Please see the [Git Hooks Readme](/template/scripts/git-hooks/readme.md) for 
+Please see the [Git Hooks Readme](/template/scripts/git-hooks/README.md) for 
 more information.
 
 ### Acquia Cloud Hooks
 
-Sample Acquia Cloud Hooks are included in the [hooks directory](/hooks). These
+Sample Acquia Cloud Hooks are included in the [hooks directory](/template/hooks). These
 include example integrations for third party services such as Slack, New Relic,
-and HipChat. See [hooks](/template/hooks/readme.md) for more information.
+and HipChat. See [hooks](/template/hooks/README.md) for more information.
 
 ### Testing Framework
 
@@ -85,7 +84,7 @@ Bolt-generated Drupal projects:
   - [Drupal VM](http://www.drupalvm.com/)
   - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
 
-Please read the included [Local Development](/readme/local-development.md) 
+Please read the included [Local Development](/template/readme/local-development.md)
 documentation for instructions for using Drupal VM with a Bolt-generated Drupal 
 project.
 
@@ -93,4 +92,4 @@ project.
 
 Bolt work is currently being tracked in the Bolt GitHub issue queue.
 
-[![Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x)](https://magnum.travis-ci.com/acquia/bolt)
+[![Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=8.x)](https://magnum.travis-ci.com/acquia/bolt)
