@@ -84,4 +84,3 @@ to work together. Step-by-step instructions are provided below.
   remotes:
      - example@svn-14671.prod.hosting.acquia.com:example.git`
   ````
-199.27.76.133

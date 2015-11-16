@@ -77,6 +77,7 @@
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
       <fileset dir="${bolt.new.dir}">
+        <include name="README.md" />
         <include name="readme/**/*" />
         <include name="profiles/**/*" />
         <include name="sites/default/settings.php" />
@@ -90,7 +91,7 @@
 
     <!-- Initialize git repository. -->
     <gitinit repository="${bolt.new.dir}" />
-    <exec command="git checkout -b 8.x"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <exec command="git checkout -b ${project.git.default_branch}"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
 
