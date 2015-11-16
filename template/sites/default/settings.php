@@ -448,32 +448,32 @@ if (function_exists('drupal_fast_404')) {
 $module_dir = 'sites/all/modules';
 
 // Includes required Acquia configuration and set $base_url correctly.
-require DRUPAL_ROOT . '/sites/all/settings/base.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
 
 // Includes default caching settings.
-require DRUPAL_ROOT . '/sites/all/settings/cache.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/cache.settings.php';
 
 // Includes default cron configuration.
-require DRUPAL_ROOT . '/sites/all/settings/cron.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/cron.settings.php';
 
 // Includes configuration for public and private file systems, composer_manager.
-require DRUPAL_ROOT . '/sites/all/settings/files.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/files.settings.php';
 
 // Includes configuration useful for running automated tests.
-require DRUPAL_ROOT . '/sites/all/settings/testing.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/testing.settings.php';
 
 // Includes settings for using a CDN. See include file for config details.
-// require_once DRUPAL_ROOT . '/sites/all/settings/cdn.settings.php';
+// require_once DRUPAL_ROOT . '/sites/default/settings/cdn.settings.php';
 
 // Include settings for having a separate "edit domain" for authenticated
 // traffic. Requires setting additional configuration within include file.
-// require_once DRUPAL_ROOT . '/sites/all/settings/edit-domain.settings.php';
+// require_once DRUPAL_ROOT . '/sites/default/settings/edit-domain.settings.php';
 
 // Includes functions for protecting a site via ip, password, etc.
-// require_once DRUPAL_ROOT . '/sites/all/settings/site-protection.settings.php';
+// require_once DRUPAL_ROOT . '/sites/default/settings/site-protection.settings.php';
 
 // Includes settings for Acquia Search (via apachesolr).
-// require_once DRUPAL_ROOT . '/sites/all/settings/search.settings.php';
+// require_once DRUPAL_ROOT . '/sites/default/settings/search.settings.php';
 
 /**
  * Acquia Cloud settings.
@@ -492,6 +492,6 @@ if ($is_ah_env && file_exists('/var/www/site-php')) {
  *
  * Keep this code block at the end of this file to take full effect.
  */
-if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/all/settings/local.settings.php')) {
-  require DRUPAL_ROOT . '/sites/all/settings/local.settings.php';
+if ($is_local_env && file_exists(DRUPAL_ROOT . '/sites/default/settings/local.settings.php')) {
+  require DRUPAL_ROOT . '/sites/default/settings/local.settings.php';
 }

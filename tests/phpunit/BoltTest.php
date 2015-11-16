@@ -80,7 +80,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase
      * Tests Phing setup:drupal:settings target.
      */
     public function testSetupLocalSettings() {
-        $this->assertFileExists($this->new_project_dir . '/sites/all/settings/local.settings.php');
+        $this->assertFileExists($this->new_project_dir . '/sites/default/settings/local.settings.php');
     }
 
   /**

@@ -77,7 +77,7 @@ Once it is enabled, follow the steps under
 
   1. To visit the site locally via browser.
     * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
-      * Verify correct db creds in `sites/all/settings/local.settings.php`
+      * Verify correct db creds in `sites/default/settings/local.settings.php`
       * Configure your local LAMP stack such that the docroot is associated with
         the $base_url
       * Visit the local_url that you set in project.yml
