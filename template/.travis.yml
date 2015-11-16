@@ -38,6 +38,7 @@ script:
   - phing -f build/phing/build.xml -Dbehat:run-server=true validate:all setup:build:all setup:drupal:install tests:all
 
 after_success:
-  # Watch for successfully changes to `7.x` branch on GitHub, build and deploy
+  # Watch for successfully changes to `master` branch on GitHub, build and deploy
   # to `build` branch on Acquia Cloud.
-  # - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "7.x" ]; then ./task.sh deploy:build -Ddeploy.branch=7.x-build -Ddeploy.buildID=$TRAVIS_BUILD_ID; fi;
+  # - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then ./task.sh deploy:build -Ddeploy.branch=build -Ddeploy
+  .buildID=$TRAVIS_BUILD_ID; fi;
