@@ -11,4 +11,51 @@
     <exec command="git push temp ${deploy.buildID}:${deploy.branch} --force" logoutput="true"/>
     <exec command="git remote remove temp" logoutput="true"/>
   </target>
+
+  <target name="deploy:build:all" description="Generates a deploy-ready build in /deploy"
+          depends="deploy:build:make, deploy:build:copy">
+  </target>
+
+  <!-- Delete the deploy docroot. -->
+  <target name="deploy:build:rm-docroot" description="Removes the deploy docroot.">
+    <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
+  </target>
+
+  <!-- Drush make the build for deploy. -->
+  <target name="deploy:build:make" description="Downloads core and contrib to deploy folder." depends="deploy:build:rm-docroot">
+
+    <drush command="make" assume="yes">
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${deploy.dir}/docroot"</param>
+      <option name="concurrency">8</option>
+      <option name="no-gitinfofile"></option>
+    </drush>
+
+  </target>
+
+  <target name="deploy:build:copy" description="Copy required files from /sites to /docroot/sites.">
+    <!-- Copy modules and themes into deploy directory. -->
+    <copy todir="${deploy.dir}/docroot/modules/custom" overwrite="true">
+      <fileset dir="${repo.root}/modules/custom"/>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/themes/custom" overwrite="true">
+      <fileset dir="${repo.root}/themes/custom">
+        <include name="**"></include>
+        <exclude name="**/node_modules/**"></exclude>
+      </fileset>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
+      <fileset dir="${repo.root}/profiles"/>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/sites/default/settings" overwrite="true">
+      <fileset dir="${repo.root}/sites/default/settings">
+        <exclude name="**/local.settings.php"/>
+      </fileset>
+    </copy>
+    <copy file="${repo.root}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
+    <copy todir="${deploy.dir}/hooks" overwrite="true">
+      <fileset dir="${repo.root}/hooks"/>
+    </copy>
+  </target>
+
 </project>

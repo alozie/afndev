@@ -37,6 +37,7 @@ script:
   - ./task.sh bolt:configure
   - ./task.sh bolt:create
   - ../bolted/task.sh setup:build:all
+  - ../bolted/task.sh deploy:build:all
   - ../bolted/task.sh setup:drupal:install
   - ../bolted/task.sh setup:git-hooks
   - ../bolted/task.sh setup:behat
