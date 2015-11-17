@@ -70,7 +70,7 @@
     <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>
 
     <!-- Symlink settings. -->
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/drush docroot/sites/default/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../drush docroot/sites/default/drush"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
