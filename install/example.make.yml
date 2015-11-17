@@ -8,6 +8,7 @@ defaults:
 projects:
   drupal:
     type: core
+    version: ~
     patch:
       # Scale and crop image effect needs anchor option.
       # https://www.drupal.org/node/1252606#comment-8305805
@@ -21,9 +22,13 @@ projects:
       # https://www.drupal.org/node/2211429#comment-10033677
       - https://www.drupal.org/files/issues/drupal-image-style-not-found-2211429-4.patch
 
+  # For all projects, always specify the exact version that is to be used.
+  # For any project using a dev branch, always specify the revision id.
   acquia_purge:
     version: ~
   acquia_connector:
+    version: ~
+  ckeditor:
     version: ~
   entitycache:
     version: ~
@@ -39,3 +44,10 @@ projects:
     version: ~
   views:
     version: ~
+
+libraries:
+  ckeditor:
+    download:
+      type: file
+      url: http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.5.4/ckeditor_4.5.4_standard.zip
+    directory_name: ckeditor
