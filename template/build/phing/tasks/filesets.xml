@@ -15,6 +15,16 @@
     <include name="sites/all/modules/custom/**"/>
     <include name="sites/all/modules/features/**"/>
     <include name="sites/default/settings/**"/>
+    <exclude name="**/*.box.*"/>
+    <exclude name="**/*.context.*"/>
+    <exclude name="**/*.facetapi_defaults.*"/>
+    <exclude name="**/*.features.*"/>
+    <exclude name="**/*.field_group.*"/>
+    <exclude name="**/*.pages_default.*"/>
+    <exclude name="**/*.services.*"/>
+    <exclude name="**/*.strongarm.*"/>
+    <exclude name="**/*.views.*"/>
+    <exclude name="**/*.views_default.*"/>
   </fileset>
 
   <fileset dir="${repo.root}" id="tests.files" expandsymboliclinks="true">
