@@ -8,11 +8,12 @@ defaults:
 projects:
   drupal:
     type: core
+    version: ~
+  # For all projects, always specify the exact version that is to be used.
+  # For any project using a dev branch, always specify the revision id.
   acquia_connector:
     version: ~
   memcache:
     version: ~
   security_review:
-    version: ~
-  stage_file_proxy:
     version: ~
