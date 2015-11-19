@@ -7,7 +7,7 @@
   <!-- Run linter against all php files in repository. -->
   <target name="validate:lint" description="Runs a PHP Lint against all code.">
     <phplint>
-      <fileset refid="php.files"/>
+      <fileset refid="files.php.all"/>
     </phplint>
   </target>
 
@@ -19,7 +19,7 @@
         showWarnings="true"
         haltonerror="true"
         haltonwarning="true">
-      <fileset refid="custom.files"/>
+      <fileset refid="files.php.custom"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
 
@@ -29,7 +29,7 @@
         showWarnings="true"
         haltonerror="true"
         haltonwarning="true">
-      <fileset refid="tests.files"/>
+      <fileset refid="files.tests"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
   </target>
@@ -37,7 +37,7 @@
   <!-- Run code complexity and cleanliness checks on custom code. -->
   <target name="validate:phpmd" description="Runs PHP Mess Detector against only custom code.">
     <phpmd rulesets="codesize,unusedcode,cleancode">
-      <fileset refid="custom.files"/>
+      <fileset refid="files.php.custom"/>
       <formatter type="text" outfile="false" usefile="false"/>
     </phpmd>
   </target>
