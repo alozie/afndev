@@ -25,4 +25,7 @@
   <!-- E.g., commit build artifacts, push to remote. -->
   <import file="${project.basedir}/tasks/deploy.xml"/>
 
+  <!-- Contains frontend tasks. -->
+  <import file="${project.basedir}/tasks/frontend.xml"/>
+
 </project>
