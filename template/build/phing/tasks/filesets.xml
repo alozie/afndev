@@ -15,13 +15,14 @@
     <exclude name="**/vendor/**/*"/>
   </fileset>
 
-  <fileset dir="${repo.root}/modules/custom" id="files.php.custom" expandsymboliclinks="true">
+  <fileset dir="${repo.root}" id="files.php.custom" expandsymboliclinks="true">
     <patternset refid="files.php"/>
+    <include name="modules/custom/**"/>
+    <include name="sites/default/settings/**"/>
   </fileset>
 
   <fileset dir="${repo.root}" id="files.tests" expandsymboliclinks="true">
     <include name="tests/**/*.php" />
-    <exclude name="**/vendor/**/*"/>
   </fileset>
 
   <fileset dir="${repo.root}" id="custom.themes">
