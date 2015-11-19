@@ -31,16 +31,18 @@ To use Drupal VM with a Drupal project that is generated with Bolt, first place
 your downloaded copy of Drupal VM inside the generated Drupal project folder,
 and name the drupal-vm directory `box`.
 
-Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run
-`vagrant up`, make the following changes to your VM `config.yml` file:
+Follow the Quick Start Guide in [Drupal VM's README](https://github.com/geerlingguy/drupal-vm#quick-start-guide), 
+but before you run  `vagrant up`, make the following changes to your VM 
+`config.yml` file:
 
     # Update the hostname to the local development environment hostname.
     vagrant_hostname: [project_local_domain]
+    vagrant_machine_name: [project_acquia_subname]
     
-    # Provide the path to the project docroot to Vagrant.
+    # Provide the path to the project root to Vagrant.
     vagrant_synced_folders:
-      # Set the local_path for the first synced folder to `../docroot`.
-      - local_path: ../docroot
+      # Set the local_path for the first synced folder to `../`.
+      - local_path: ../
         # Set the destination to the Acquia Cloud subscription machine name.
         destination: /var/www/[project_acquia_subname]
         type: nfs
@@ -48,9 +50,9 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run
     # Set this to `7` for a Drupal 7 site, or `8` for a Drupal 8 site.
     drupal_major_version: 8
     
-    # Set drupal_core_path to the same as the `destination` in the synced folder
-    # configuration above.
-    drupal_core_path: /var/www/[project_acquia_subname]
+    # Set drupal_core_path to the `destination` in the synced folder
+    # configuration above, plus `/docroot`.
+    drupal_core_path: /var/www/[project_acquia_subname]/docroot
     
     # Set drupal_domain to the same thing as the `vagrant_hostname` above.
     drupal_domain: [project_local_domain]
@@ -58,8 +60,8 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run
     # Set drupal_site_name to the project's human-readable name.
     drupal_site_name: [project_human_name]
     
-    # If you build the makefile using Bolt's built-in Phing task, set
-    # `build_makefile` to `false`.
+    # If you build the makefile using Bolt's built-in Phing task (recommended),
+    # set `build_makefile` to `false`.
     build_makefile: false
     
     # If you need to install the site inside the VM, set `install_site` to
@@ -67,6 +69,12 @@ Follow the Quick Start Guide in [Drupal VM's README](TODO), but before you run
     # using Drush, Adminer, or any other method of connecting to the MySQL
     # database.
     install_site: true
+    
+    # To add support for XSL, which is used for some Bolt-supplied tests, add
+    # `php5-xsl` to `extra_packages`.
+    extra_packages:
+      - unzip
+      - php5-xsl
 
 There are also other changes you can make if you choose to match the Acquia
 Cloud server configuration more closely. See Drupal VM's example configuration
