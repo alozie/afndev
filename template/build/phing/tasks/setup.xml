@@ -81,7 +81,6 @@
     </drush>
 
     <drush command="config-import" assume="yes" verbose="TRUE">
-      <param>--partial</param>
       <param>sync</param>
     </drush>
 
