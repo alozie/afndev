@@ -14,6 +14,8 @@ project:
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
   install_profile: '${project.acquia_subname}'
+  # This is used to build front end artifacts. E.g., SASS compilation.
+  theme_name: 'thunder'
   # These are random strings used to configure the hash salt.
   hash_salt: ${project.hash_salt}
 
