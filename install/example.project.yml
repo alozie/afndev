@@ -22,7 +22,7 @@ drush:
   aliases:
     default: ${project.acquia_subname}.dev
     dev: ${project.acquia_subname}.dev
-    stg: ${project.acquia_subname}.stg
+    test: ${project.acquia_subname}.test
 
 # Configuration settings for new git repository.
 git:
