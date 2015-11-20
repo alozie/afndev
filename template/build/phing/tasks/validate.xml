@@ -19,7 +19,7 @@
         showWarnings="true"
         haltonerror="true"
         haltonwarning="true">
-      <fileset refid="files.php.custom"/>
+      <fileset refid="files.php.custom.modules"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
 
@@ -37,7 +37,7 @@
   <!-- Run code complexity and cleanliness checks on custom code. -->
   <target name="validate:phpmd" description="Runs PHP Mess Detector against only custom code.">
     <phpmd rulesets="codesize,unusedcode,cleancode">
-      <fileset refid="files.php.custom"/>
+      <fileset refid="files.php.custom.modules"/>
       <formatter type="text" outfile="false" usefile="false"/>
     </phpmd>
   </target>
