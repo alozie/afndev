@@ -80,9 +80,14 @@
       <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
     </drush>
 
-    <drush command="config-import" assume="yes" verbose="TRUE">
-      <param>sync</param>
-    </drush>
+    <if>
+      <available property="config.exists" file="${repo.root}/config/default/system.site.yml"/>
+      <then>
+        <drush command="config-import" assume="yes" verbose="TRUE">
+          <param>sync</param>
+        </drush>
+      </then>
+    </if>
 
     <drush command="cache-rebuild" verbose="TRUE"/>
 
