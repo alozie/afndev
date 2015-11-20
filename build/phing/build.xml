@@ -34,6 +34,12 @@
     <copy file="${bolt.root}/template/example.local.yml" tofile="${bolt.root}/local.yml" />
   </target>
 
+  <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
+    <delete file="${bolt.root}/project.yml"/>
+    <delete file="${bolt.root}/make.yml"/>
+    <delete file="${bolt.root}/local.yml"/>
+  </target>
+
   <!-- Create a new project directory based on current repository. -->
   <target name="bolt:create" description="Create a new project based on local repository.">
     <if>

@@ -29,4 +29,4 @@ git:
   default_branch: master
   remotes:
     # Defining git remotes allows builds deployed via CI.
-    # periscope@svn-4786.devcloud.hosting.acquia.com:periscope.git
+    - bolted@svn-4702.devcloud.hosting.acquia.com:bolted.git

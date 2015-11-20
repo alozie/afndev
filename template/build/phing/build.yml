@@ -1,6 +1,7 @@
 # File and Directory locations.
 docroot.relative: ${repo.root.relative}/docroot
 docroot: ${repo.root}/docroot
+deploy.dir: ${repo.root}/deploy
 composer.bin: ${repo.root}/bin
 drush.bin: ${composer.bin}/drush
 drush.cmd: ${drush.bin} -r ${docroot}

@@ -1,5 +1,9 @@
 <project name="setup" default="setup:build:all">
 
+  <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
+          depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
+  </target>
+
   <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
     <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
       <filterchain>

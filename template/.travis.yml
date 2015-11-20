@@ -12,6 +12,12 @@ cache:
   - "$HOME/.composer/cache"
   - "$HOME/.drush/cache"
 
+env:
+  matrix:
+    - TEST_SUITE='validate:all'
+    - TEST_SUITE='build:test'
+    - TEST_SUITE='build:validate:test'
+
 addons:
   ssh_known_hosts:
   # - svn-4786.devcloud.hosting.acquia.com
@@ -40,10 +46,10 @@ before_script:
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 
 script:
-  - phing -f build/phing/build.xml -Dbehat:run-server=true validate:all setup:build:all setup:drupal:install tests:all
+  - ./task.sh -Dbehat:run-server=true $TEST_SUITE
 
 after_success:
-  # Watch for successfully changes to `master` branch on GitHub, build and deploy
-  # to `build` branch on Acquia Cloud.
-  # - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then ./task.sh deploy:build -Ddeploy.branch=build -Ddeploy
-  .buildID=$TRAVIS_BUILD_ID; fi;
+  # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master-build`.
+  # - scripts/deploy/travis-deploy.sh build:validate:test master master-build
+  # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop-build`.
+  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop-build

@@ -1,19 +1,80 @@
-<project name="deploy" default="build">
-  <target name="deploy:build">
+<project name="deploy" default="deploy:repo">
+
+  <!--  -->
+  <!-- Deployment targets for a separate artifact. -->
+  <!--  -->
+
+  <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml."
+          depends="deploy:artifact:build, deploy:artifact:push">
     <!-- deploy.build and deploy.commitMsg must be passed as params at runtime. -->
-    <exec command="git checkout -b ${deploy.buildID}" logoutput="true"/>
-
-    <!-- Add .gitignore files. -->
-    <exec command="git add ${repo.root}/docroot -f" logoutput="true"/>
-    <exec command="git add ${repo.root}/sites/all/themes/custom/${project.theme_name}/dist -f" logoutput="true"/>
-    <exec command="git add ${repo.root}/sites/all/themes/custom/${project.theme_name}/styleguide -f" logoutput="true"/>
-
-    <exec command="git commit -m 'Automated commit by Travis CI for Build ${deploy.buildID}' -n" logoutput="true"/>
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:push" />
   </target>
-  <target name="deploy:push">
-    <exec command="git remote add temp ${deploy.remote}" logoutput="true"/>
-    <exec command="git push temp ${deploy.buildID}:${deploy.branch} --force" logoutput="true"/>
-    <exec command="git remote remove temp" logoutput="true"/>
+
+  <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
+          depends="deploy:artifact:make, deploy:artifact:copy">
   </target>
+
+  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:rm-docroot">
+    <drush command="make" assume="yes">
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${deploy.dir}/docroot"</param>
+      <option name="concurrency">8</option>
+      <option name="no-gitinfofile"></option>
+    </drush>
+  </target>
+
+  <target name="deploy:artifact:rm-docroot" description="Removes the deploy docroot.">
+    <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
+  </target>
+
+  <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
+    <!-- Copy modules and themes into deploy directory. -->
+    <copy todir="${deploy.dir}/docroot/sites/all/modules/custom" overwrite="true">
+      <fileset dir="${repo.root}/sites/all/modules/custom"/>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/sites/all/themes/custom" overwrite="true">
+      <fileset dir="${repo.root}/sites/all/themes/custom">
+        <include name="**"></include>
+        <exclude name="**/node_modules/**"></exclude>
+      </fileset>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
+      <fileset dir="${repo.root}/profiles"/>
+    </copy>
+    <copy todir="${deploy.dir}/docroot/sites/default/settings" overwrite="true">
+      <fileset dir="${repo.root}/sites/default/settings">
+        <exclude name="**/local.settings.php"/>
+      </fileset>
+    </copy>
+    <copy file="${repo.root}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
+    <copy todir="${deploy.dir}/hooks" overwrite="true">
+      <fileset dir="${repo.root}/hooks"/>
+    </copy>
+  </target>
+
+  <target name="deploy:artifact:push" description="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
+    <!--@todo Add this!-->
+  </target>
+
+  <!-- @todo Need targets to commit and push artifact. -->
+
+  <!--  -->
+  <!-- Deployment targets for in-place repository. -->
+  <!--  -->
+
+  <target name="deploy:repo" description="Forcibly commits docroot to repository.">
+    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
+    <exec command="git add ${repo.root}/docroot -f" logoutput="true" passthru="true"/>
+    <exec command="git commit -m '${deploy.commitMsg}' -n --quiet" logoutput="true" passthru="true"/>
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:repo:push" />
+    <exec command="git reset HEAD~1" logoutput="true" passthru="true"/>
+  </target>
+
+  <target name="deploy:repo:push" description="Pushes a build artifact to specified git remote.">
+    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
+    <exec command="git rev-parse --abbrev-ref HEAD" outputProperty="currentGitBranch" logoutput="true"/>
+    <exec command="git remote add downstream ${deploy.remote}" logoutput="true" passthru="true"/>
+    <exec command="git push downstream ${currentGitBranch}:${deploy.branch} --force" logoutput="true" passthru="true"/>
+    <exec command="git remote rm downstream" logoutput="true" passthru="true"/>
+  </target>
+
 </project>
