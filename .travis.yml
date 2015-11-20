@@ -17,7 +17,7 @@ notifications:
 
 addons:
   ssh_known_hosts:
-  - svn-4368.devcloud.hosting.acquia.com
+  - svn-4702.devcloud.hosting.acquia.com
 
 before_install:
   - composer selfupdate
@@ -32,15 +32,21 @@ install:
 before_script:
   # Clear drush release history cache, to pick up new releases.
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
+  # Enable $_ENV variables in PHP.
+  - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
+  # Generate a new 'bolted' project.
   - ./task.sh bolt:configure
   - ./task.sh bolt:create
-  - ../bolted/task.sh setup:build:all
-  - ../bolted/task.sh deploy:build:all
-  - ../bolted/task.sh setup:drupal:install
-  - ../bolted/task.sh setup:git-hooks
-  - ../bolted/task.sh tests:security-updates
-  - ../bolted/task.sh tests:behat -Dbehat:run-server=true
-  - ../bolted/task.sh tests:phpunit
+  # Call targets in the new 'bolted' project.
+  - ../bolted8/task.sh setup
+  - ../bolted8/task.sh tests:all -Dbehat:run-server=true
+  # Deploy in-place repo build.
+  - export TEST_SUITE=bolt
+  - export DEPLOY_PR=true
+  - ../bolted8/scripts/deploy/travis-deploy.sh bolt 8.x 8.x-build
+  # Deploy separate build artifact.
+  - ../bolted8/task.sh deploy:artifact
+  # Run 'bolt' phpunit tests.
   - phpunit tests

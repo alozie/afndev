@@ -5,10 +5,10 @@ project:
   # "psproject". This value is used to correctly configure settings in
   # settings.php includes. This will also determine the the directory name
   # of the new repository.
-  acquia_subname: 'bolted'
+  acquia_subname: 'bolted8'
   # Used for enforcing correct git commit msg syntax.
   prefix: 'BLT'
-  human_name: 'Bolted'
+  human_name: 'Bolted 8'
   # This is the default makefile that will be used to build dependencies.
   # It should live in the project root.
   make_file: 'make.yml'
@@ -29,4 +29,4 @@ git:
   default_branch: master
   remotes:
     # Defining git remotes allows builds deployed via CI.
-    # periscope@svn-4786.devcloud.hosting.acquia.com:periscope.git
+    - bolted8@svn-4702.devcloud.hosting.acquia.com:bolted8.git

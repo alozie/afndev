@@ -1,4 +1,8 @@
-<project name="setup" default="setup:build:all">
+<project name="setup" default="setup">
+
+  <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
+          depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
+  </target>
 
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
@@ -50,9 +54,9 @@
 
   <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink modules and themes. -->
-    <delete dir="${docroot}/modules/custom"/>
-    <delete dir="${docroot}/themes/custom"/>
-    <delete dir="${docroot}/profiles"/>
+    <delete dir="${docroot}/modules/custom" quiet="true"/>
+    <delete dir="${docroot}/themes/custom" quiet="true"/>
+    <delete dir="${docroot}/profiles" quiet="true"/>
     <exec dir="${repo.root}" command="ln -s ../../modules/custom docroot/modules/custom"/>
     <exec dir="${repo.root}" command="ln -s ../../themes/custom docroot/themes/custom"/>
     <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>

@@ -18,6 +18,12 @@
   <!-- Runs all bolt related targets. -->
   <target name="bolt:new-project" description="Runs all targets required to spin up new project from Bolt." depends="bolt:configure, bolt:create"></target>
 
+  <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
+    <delete file="${bolt.root}/project.yml"/>
+    <delete file="${bolt.root}/make.yml"/>
+    <delete file="${bolt.root}/local.yml"/>
+  </target>
+
   <!-- Creates new configuration files from example.*.yml files.
        Note: this target must be called by itself first. Other targets must be
        executed separately so that they may load the correct configuration   -->
