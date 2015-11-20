@@ -40,7 +40,6 @@ script:
   - ../bolted/task.sh deploy:build:all
   - ../bolted/task.sh setup:drupal:install
   - ../bolted/task.sh setup:git-hooks
-  - ../bolted/task.sh setup:behat
   - ../bolted/task.sh tests:security-updates
   - ../bolted/task.sh tests:behat -Dbehat:run-server=true
   - ../bolted/task.sh tests:phpunit
