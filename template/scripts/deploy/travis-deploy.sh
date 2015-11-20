@@ -19,6 +19,7 @@ dest_branch=$3    # The branch to which the build artifact should be committed a
 # $TRAVIS_PULL_REQUEST is false.
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = $source_branch ] && [ "${TEST_SUITE}" = $build_job ];
   then
-    # Call the `deploy:build` Phing target, passing in required parameters.
-    ../../task.sh deploy:build -Ddeploy.branch=$dest_branch -Ddeploy.buildID=$TRAVIS_BUILD_ID;
+    commit_msg="Automated commit by Travis CI for Build ${TRAVIS_BUILD_ID}";
+    # Call the `deploy` Phing target, passing in required parameters.
+    ../../task.sh deploy:repo -Ddeploy.branch=$dest_branch -Ddeploy.commitMsg=$commit_msg;
 fi;

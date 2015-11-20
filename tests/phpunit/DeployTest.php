@@ -28,9 +28,9 @@ class DeployTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * Tests Phing deploy target.
+   * Tests Phing deploy:build:all target.
    */
-  public function testBoltDeploy() {
+  public function testBoltDeployBuild() {
 
     // Ensure deploy directory exists.
     $this->assertFileExists($this->deploy_dir);
@@ -49,6 +49,32 @@ class DeployTest extends \PHPUnit_Framework_TestCase {
     // Ensure hooks were copied to deploy directory.
     $this->assertFileExists($this->deploy_dir . '/hooks');
     $this->assertFileExists($this->deploy_dir . '/hooks/README.md');
+  }
+
+  /**
+   * Tests Phing deploy:build:push target.
+   */
+  public function testBoltDeployPush() {
+    global $_ENV;
+    $git_remote = $this->config['git']['remotes'][0];
+    $deploy_branch = '8.x-build';
+
+    $commands = [
+      "git remote add temp $git_remote",
+      "git fetch temp $deploy_branch",
+      "git log temp/$deploy_branch",
+    ];
+
+    $log = '';
+    foreach ($commands as $command) {
+      print 'Executing "' . $command . '"\n';
+      $log .= shell_exec($command);
+    }
+
+    // We expect the remote git log to contain a commit message matching
+    // the syntax specified in deploy:build. I.e.,
+    // "Automated commit by Travis CI for Build $travis_build_id".
+    $this->assertContains($_ENV['TRAVIS_BUILD_ID'], $log);
   }
 
 }

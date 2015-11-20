@@ -14,7 +14,7 @@ themes/contrib
 libraries
 
 # Ignore build artifacts
-deploy
+/deploy
 bin/*
 tmp
 install/bin

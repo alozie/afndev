@@ -1,4 +1,4 @@
-<project name="tests" default="build">
+<project name="tests" default="tests:all">
 
   <target name="tests:all" description="Runs all tests, including Behat, PHPUnit, and Security Update check."
           depends="tests:security-updates, tests:behat, tests:phpunit"/>
@@ -43,7 +43,7 @@
 
   <!-- Execute PHPUnit tests. -->
   <target name="tests:phpunit" description="Executes PHPUnit tests against custom code." depends="setup:check:docroot">
-    <delete dir="${reports.localDir}/phpunit"/>
+    <delete dir="${reports.localDir}/phpunit" quiet="true"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
     <phpunit printsummary="true" failureproperty="phpunit.failures" errorproperty="phpunit.errors">
