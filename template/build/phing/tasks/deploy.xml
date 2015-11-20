@@ -5,7 +5,7 @@
   <!--  -->
 
   <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml."
-          depends="deploy:artifact:build, deploy:repo:push">
+          depends="deploy:artifact:build, deploy:artifact:push">
     <!-- deploy.build and deploy.commitMsg must be passed as params at runtime. -->
   </target>
 
@@ -51,7 +51,7 @@
     </copy>
   </target>
 
-  <target name="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
+  <target name="deploy:artifact:push" description="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
     <!--@todo Add this!-->
   </target>
 
@@ -63,18 +63,17 @@
 
   <target name="deploy:repo" description="Forcibly commits docroot to repository.">
     <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
-    <exec command="git checkout -b ${deploy.branch}-local" logoutput="true" passthru="true"/>
     <exec command="git add ${repo.root}/docroot -f" logoutput="true" passthru="true"/>
-    <exec command="git commit -m '${deploy.commitMsg}' -n" logoutput="true" passthru="true"/>
+    <exec command="git commit -m '${deploy.commitMsg}' -n --quiet" logoutput="true" passthru="true"/>
     <foreach list="${git.remotes}" param="deploy.remote" target="deploy:repo:push" />
-    <exec command="git checkout -" logoutput="true" passthru="true"/>
-    <exec command="git branch -D ${deploy.branch}-local" logoutput="true" passthru="true"/>
+    <exec command="git reset HEAD~1" logoutput="true" passthru="true"/>
   </target>
 
   <target name="deploy:repo:push" description="Pushes a build artifact to specified git remote.">
     <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
+    <exec command="git rev-parse --abbrev-ref HEAD" outputProperty="currentGitBranch" logoutput="true"/>
     <exec command="git remote add downstream ${deploy.remote}" logoutput="true" passthru="true"/>
-    <exec command="git push downstream ${deploy.branch}-local:${deploy.branch} --force" logoutput="true" passthru="true"/>
+    <exec command="git push downstream ${currentGitBranch}:${deploy.branch} --force" logoutput="true" passthru="true"/>
     <exec command="git remote rm downstream" logoutput="true" passthru="true"/>
   </target>
 

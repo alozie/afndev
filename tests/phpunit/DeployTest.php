@@ -67,14 +67,14 @@ class DeployTest extends \PHPUnit_Framework_TestCase {
 
     $log = '';
     foreach ($commands as $command) {
-      print 'Executing "' . $command . '"\n';
+      print "Executing \"$command\" \n";
       $log .= shell_exec($command);
     }
 
     // We expect the remote git log to contain a commit message matching
     // the syntax specified in deploy:build. I.e.,
-    // "Automated commit by Travis CI for Build $travis_build_id".
-    $this->assertContains($_ENV['TRAVIS_BUILD_ID'], $log);
+    // "Automated commit by Travis CI for Build #$travis_build_id".
+    $this->assertContains('#' . $_ENV['TRAVIS_BUILD_ID'], $log);
   }
 
 }
