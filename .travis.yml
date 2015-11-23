@@ -13,7 +13,7 @@ cache:
   - "$HOME/.drush/cache"
 
 notifications:
-  slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP
+  # slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP
 
 addons:
   ssh_known_hosts:
