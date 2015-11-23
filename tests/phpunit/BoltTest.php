@@ -63,6 +63,16 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             '${project.human_name}',
             file_get_contents($this->new_project_dir . '/readme/architecture.md')
         );
+
+        $profile_dir = $this->new_project_dir . '/profiles/' . $this->config['project']['acquia_subname'];
+        // Test new installation profile.
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.info');
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.profile');
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.install');
+        $this->assertNotContains(
+          '${project.acquia_subname}',
+          file_get_contents($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.install')
+        );
     }
 
   /**

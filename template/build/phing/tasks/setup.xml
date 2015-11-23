@@ -131,9 +131,11 @@
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
 
-    <!-- Symlink modules and themes. -->
+    <!-- Symlink modules, themes, and profiles. -->
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
+    <delete dir="${docroot}/profiles" quiet="true"/>
+    <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>
   </target>
 
 </project>

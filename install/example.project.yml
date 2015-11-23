@@ -13,7 +13,7 @@ project:
   # It should live in the project root.
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
-  install_profile: 'standard'
+  install_profile: '${project.acquia_subname}'
   # This is used to build front end artifacts. E.g., SASS compilation.
   theme_name: 'thunder'
 
