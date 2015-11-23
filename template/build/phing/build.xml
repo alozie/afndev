@@ -25,6 +25,9 @@
   <!-- E.g., commit build artifacts, push to remote. -->
   <import file="${project.basedir}/tasks/deploy.xml"/>
 
+  <!-- Contains frontend tasks. -->
+  <import file="${project.basedir}/tasks/frontend.xml"/>
+
   <!--
     The follow targets are intended to be wrapper targets that bundle
     multiple targets from other includes.

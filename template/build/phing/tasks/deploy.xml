@@ -10,7 +10,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:make, deploy:artifact:copy">
+          depends="deploy:artifact:make, frontend:build, deploy:artifact:copy">
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:rm-docroot">
