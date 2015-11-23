@@ -34,6 +34,12 @@
     <copy file="${bolt.root}/template/example.local.yml" tofile="${bolt.root}/local.yml" />
   </target>
 
+  <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
+    <delete file="${bolt.root}/project.yml"/>
+    <delete file="${bolt.root}/make.yml"/>
+    <delete file="${bolt.root}/local.yml"/>
+  </target>
+
   <!-- Create a new project directory based on current repository. -->
   <target name="bolt:create" description="Create a new project based on local repository.">
     <if>
@@ -63,11 +69,19 @@
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
     <copy file="${bolt.root}/local.yml" tofile="${bolt.new.dir}/local.yml" />
 
+    <!-- Rename minimal profile in new project. -->
+    <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.acquia_subname}"/>
+    <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
+    <move file="${bolt.profile.dir}/minimal.info" tofile="${bolt.profile.dir}/${project.acquia_subname}.info"/>
+    <move file="${bolt.profile.dir}/minimal.profile" tofile="${bolt.profile.dir}/${project.acquia_subname}.profile"/>
+    <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.acquia_subname}.install"/>
+
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>
       <fileset dir="${bolt.new.dir}">
         <include name="README.md" />
         <include name="readme/**/*" />
+        <include name="profiles/**/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/default/settings/**/*" />
         <include name="tests/phpunit/SettingsTest.php" />

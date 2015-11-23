@@ -9,4 +9,4 @@ if [ ! -f ${DIR}/bin/phing ]; then
 fi
 
 # This script simply passes all arguments to Phing.
-${DIR}/bin/phing -f ${DIR}/build/phing/build.xml $@
+${DIR}/bin/phing -f ${DIR}/build/phing/build.xml "$@"

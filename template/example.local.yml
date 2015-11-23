@@ -3,6 +3,7 @@ local_url: 'http://127.0.0.1:8080'
 
 # Database Credentials. By default, these match Travis CI creds.
 # Note, these should match credentials in sites/default/local.settings.php!
+# To re-generate local.settings.php, run `./task.sh setup:drupal:settings'.
 db:
   username: root
   name: drupal
@@ -13,5 +14,5 @@ db:
 # Drupal Account Credentials. These are used for installing Drupal.
 drupal:
   account.name: admin
-  account.password: password
+  account.password: admin
   account.mail: no-reply@acquia.com
