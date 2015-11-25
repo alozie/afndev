@@ -10,7 +10,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:make, frontend:build, deploy:artifact:copy">
+          depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:rm-docroot">
@@ -18,12 +18,22 @@
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${deploy.dir}/docroot"</param>
       <option name="concurrency">8</option>
-      <option name="no-gitinfofile"></option>
+      <option name="no-gitinfofile"/>
+      <option name="no-patch-txt"/>
     </drush>
   </target>
 
   <target name="deploy:artifact:rm-docroot" description="Removes the deploy docroot.">
     <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
+  </target>
+
+  <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
+    <delete>
+      <fileset dir="${deploy.dir}/docroot">
+        <include name="core/*.txt"/>
+        <include name="**/CHANGELOG.txt"/>
+      </fileset>
+    </delete>
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
