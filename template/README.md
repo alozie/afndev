@@ -126,4 +126,4 @@ Please see [Release Process](/release-process.md) for detailed information.
 
 ----------------
 
-[![Build Status](https://magnum.travis-ci.com/acquia-pso/${project.acquia_subname}.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=${project.git.default_branch})](https://magnum.travis-ci.com/acquia-pso/${project.acquia_subname})
+[![Build Status](https://magnum.travis-ci.com/acquia-pso/${project.acquia_subname}.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=${git.default_branch})](https://magnum.travis-ci.com/acquia-pso/${project.acquia_subname})

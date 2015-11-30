@@ -82,6 +82,7 @@
         <include name="README.md" />
         <include name="readme/**/*" />
         <include name="profiles/**/*" />
+        <include name="scripts/git-hooks/*" />
         <include name="sites/default/settings.php" />
         <include name="sites/default/settings/**/*" />
         <include name="tests/phpunit/SettingsTest.php" />
@@ -92,7 +93,7 @@
     </reflexive>
 
     <gitinit repository="${bolt.new.dir}" />
-    <exec command="git checkout -b ${project.git.default_branch}"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <exec command="git checkout -b ${git.default_branch}"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
     <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
 
