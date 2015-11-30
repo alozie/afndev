@@ -93,7 +93,7 @@
         <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
           <arg line="runserver ${behat:server-url}"/>
         </exec>
-        <waitfor maxwait="10" maxwaitunit="second">
+        <waitfor maxwait="10" maxwaitunit="second" checkevery="1" checkeveryunit="second">
           <http url="${behat:server-url}"/>
         </waitfor>
       </then>

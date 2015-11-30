@@ -35,11 +35,9 @@ following from this repository's root directory:
    project.
 1. Change directories to your new project directory.
    E.g., `cd /path/to/my/new/project`.
-1. In your new project directory, run `./task.sh setup:build:all`.
+1. In your new project directory, run `./task.sh setup`.
    This will build dependencies in your make file and create required
    symlinks.
-1. Install local git hooks `./task.sh setup:git-hooks`.
-1. Setup Behat configuration `./task.sh setup:behat`.
 1. To read a full list of available tasks, run `./task.sh -list`.
 
 ## Next Steps
