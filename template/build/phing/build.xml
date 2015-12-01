@@ -1,4 +1,4 @@
-<project name="project" default="build" phingVersion="2.8.2">
+<project name="project" default="setup" phingVersion="2.8.2">
 
   <!-- Include custom task classes -->
   <includepath classpath="${project.basedir}/phingcludes"/>
@@ -27,5 +27,19 @@
 
   <!-- Contains frontend tasks. -->
   <import file="${project.basedir}/tasks/frontend.xml"/>
+
+  <!--
+  The follow targets are intended to be wrapper targets that bundle
+  multiple targets from other includes.
+  -->
+  <target name="build:test"
+          description="Builds, tests, and deploys an artifact."
+          depends="setup:build:all, setup:drupal:install, tests:all">
+  </target>
+
+  <target name="build:validate:test"
+          description="Builds, validates, tests, and deploys an artifact."
+          depends="validate:all, setup:build:all, setup:drupal:install, tests:all">
+  </target>
 
 </project>
