@@ -33,7 +33,7 @@ database credentials.
 site platform into `/docroot`. It will also symlink custom modules and themes
 into place, so that changes you make will be reflected immediately on the site
 and in Git.
-1. Run `./task.sh setup:drupal:install`. This will create use values defiend in
+1. Run `./task.sh setup:drupal:install`. This will create use values defined in
 `local.settings.php`.
 
 After this initial setup, you should only need to run `./task.sh setup:build:all`

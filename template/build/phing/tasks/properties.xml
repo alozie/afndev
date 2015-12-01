@@ -9,4 +9,15 @@
 
   <!-- Load file directory and binary locations. -->
   <property file="${project.basedir}/build.yml" override="true"/>
+
+  <!-- Extract PHP variable values from local.settings.php. -->
+  <property name="local.settings.file" value="${repo.root}/sites/default/settings/local.settings.php" />
+  <!-- Extracts value of $base_url and outputs to local_url property in Phing. -->
+  <phpVariable file="${local.settings.file}" variable="base_url" outputProperty="local_url" />
+  <!-- Extracts values from the $databases array and outputs to db.* properties. -->
+  <phpVariable file="${local.settings.file}" variable="databases[default][default][database]" outputProperty="db.database" />
+  <phpVariable file="${local.settings.file}" variable="databases[default][default][username]" outputProperty="db.username" />
+  <phpVariable file="${local.settings.file}" variable="databases[default][default][password]" outputProperty="db.password" />
+  <phpVariable file="${local.settings.file}" variable="databases[default][default][host]" outputProperty="db.host" />
+  <phpVariable file="${local.settings.file}" variable="databases[default][default][port]" outputProperty="db.port" />
 </project>
