@@ -1,6 +1,6 @@
 <!-- This defines generic, reusable file sets that are used by other targets -->
 <project name="filesets" default="build">
-  <fileset dir="${repo.root}" id="php.files">
+  <patternset id="files.php">
     <include name="**/*.inc"/>
     <include name="**/*.php"/>
     <include name="**/*.module"/>
@@ -8,27 +8,23 @@
     <include name="**/*.profile"/>
     <include name="**/*.test"/>
     <include name="**/*.theme"/>
-    <exclude name="vendor/**/*"/>
+    <exclude name="**/vendor/**/*"/>
+  </patternset>
+
+  <fileset dir="${repo.root}" id="files.php.all">
+    <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}" id="custom.files" expandsymboliclinks="true">
-    <include name="sites/all/modules/custom/**"/>
-    <include name="sites/all/modules/features/**"/>
-    <include name="sites/default/settings/**"/>
-    <exclude name="**/*.box.*"/>
-    <exclude name="**/*.context.*"/>
-    <exclude name="**/*.facetapi_defaults.*"/>
-    <exclude name="**/*.features.*"/>
-    <exclude name="**/*.field_group.*"/>
-    <exclude name="**/*.pages_default.*"/>
-    <exclude name="**/*.services.*"/>
-    <exclude name="**/*.strongarm.*"/>
-    <exclude name="**/*.views.*"/>
-    <exclude name="**/*.views_default.*"/>
+  <fileset dir="${repo.root}/sites/all/modules/custom" id="files.php.custom.modules">
+    <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}" id="tests.files" expandsymboliclinks="true">
-    <include name="tests/**/*.php" />
+  <fileset dir="${repo.root}/sites/default/settings" id="files.php.custom.settings">
+    <patternset refid="files.php"/>
+  </fileset>
+
+  <fileset dir="${repo.root}/tests" id="files.tests" expandsymboliclinks="true">
+    <patternset refid="files.php"/>
   </fileset>
 
   <fileset dir="${repo.root}" id="custom.themes">
