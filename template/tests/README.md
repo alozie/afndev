@@ -21,7 +21,7 @@ are built by running `composer install` in the project root.
 
 Each testing type can be either executed directly, or via a corresponding Phing
 target. Phing will execute the tests with default values defined in your
-project's yaml configuration files (project.yml, local.yml). Examples: 
+project's yaml configuration files (project.yml). Examples: 
 
 * `./task.sh tests:all`
 * `./task.sh tests:behat`

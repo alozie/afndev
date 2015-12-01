@@ -7,10 +7,6 @@
   <!-- Load the root project.yml file for this project. -->
   <property file="${repo.root}/project.yml" override="true"/>
 
-  <!-- Load the environment-specific local.yml file for this project. -->
-  <copy file="${repo.root}/example.local.yml" tofile="${repo.root}/local.yml" overwrite="false" />
-  <property file="${repo.root}/local.yml" override="true"/>
-
   <!-- Load file directory and binary locations. -->
   <property file="${project.basedir}/build.yml" override="true"/>
 </project>

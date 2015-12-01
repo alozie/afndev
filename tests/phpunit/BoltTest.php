@@ -25,7 +25,6 @@ class BoltTest extends \PHPUnit_Framework_TestCase
     {
         $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
         $this->config = Yaml::parse(file_get_contents("{$this->projectDirectory}/project.yml"));
-        $this->config = array_merge($this->config, Yaml::parse(file_get_contents("{$this->projectDirectory}/local.yml")));
         $this->new_project_dir = dirname($this->projectDirectory) . '/' . $this->config['project']['acquia_subname'];
     }
 

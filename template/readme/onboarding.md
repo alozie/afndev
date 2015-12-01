@@ -26,14 +26,15 @@ local copy of the master branch to begin work -
 1. Run `composer install` (you must already have Composer installed).
 1. Run `./task.sh setup:git-hooks`. This will install hooks that validate code
 standards and commit message format prior to commiting.
-1. You should now see a `local.yml` in the root directory. Update the values in
-`local.yml` with local database credentials.
+1. Copy `sites/default/settings/default.local.settings.php` to 
+`sites/default/settings/local.settings.php` and update the values with local 
+database credentials.
 1. Run `./task.sh setup:build:all`. This will run Drush make and place the built
 site platform into `/docroot`. It will also symlink custom modules and themes
 into place, so that changes you make will be reflected immediately on the site
 and in Git.
-1. Run `./task.sh setup:drupal:install`. This will create `local.settings.php`
-based on the values in `local.yml` and install the site.
+1. Run `./task.sh setup:drupal:install`. This will create use values defiend in
+`local.settings.php`.
 
 After this initial setup, you should only need to run `./task.sh setup:build:all`
 when the make file is updated, and `./task.sh setup:drupal:install` when you
