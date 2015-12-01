@@ -44,10 +44,10 @@ $repository = array(
 unset($repo_array);
 
 // Parse date.
-$since = ($argc < 4) ? date('m/d/y', strtotime('30 days ago')) : strtotime($argv[4]);
+$since = ($argc < 5) ? strtotime('30 days ago') : strtotime($argv[4]);
 
 // Default to pulling 100 PRs.
-$limit = ($argc < 5) ? 100 : $argv[5];
+$limit = ($argc < 6) ? 100 : $argv[5];
 
 // Print the header.
 print '# Release notes for ' . date("F j, Y") . PHP_EOL . PHP_EOL;
