@@ -21,7 +21,7 @@
   <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
     <delete file="${bolt.root}/project.yml"/>
     <delete file="${bolt.root}/make.yml"/>
-    <delete file="${bolt.root}/local.yml"/>
+    <delete file="${bolt.root}/local.settings.php"/>
   </target>
 
   <!-- Creates new configuration files from example.*.yml files.
@@ -42,7 +42,7 @@
     <!-- Rename files by removing "example" prefix. -->
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
-    <copy file="${bolt.root}/template/example.local.yml" tofile="${bolt.root}/local.yml" />
+    <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
   </target>
 
   <!-- Create a new project directory based on current repository. -->
@@ -72,7 +72,7 @@
     <!-- Copy configuration files to new project. -->
     <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
-    <copy file="${bolt.root}/local.yml" tofile="${bolt.new.dir}/local.yml" />
+    <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" />
 
     <!-- Rename minimal profile in new project. -->
     <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.acquia_subname}"/>

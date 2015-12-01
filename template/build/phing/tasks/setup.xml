@@ -69,7 +69,7 @@
   </target>
 
   <target name="setup:drupal:install"
-          description="Installs Drupal using credentials from local.yml."
+          description="Installs Drupal using credentials from local.settings.php."
           depends="setup:drupal:settings, setup:check:docroot">
 
     <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>

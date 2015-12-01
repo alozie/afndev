@@ -4,6 +4,7 @@
   <includepath classpath="${project.basedir}/phingcludes"/>
   <taskdef name="behat" classname="phingcludes.BehatTask"/>
   <taskdef name="drush" classname="phingcludes.DrushTask"/>
+  <taskdef name="phpVariable" classname="phingcludes.PhpVariableTask"/>
 
   <!-- Include task partials -->
 

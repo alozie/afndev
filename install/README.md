@@ -29,7 +29,7 @@ following from this repository's root directory:
 1. `composer install`
 1. Run `./task.sh bolt:configure` to create your project-specific
    configuration files. After running, `project.yml`, `make.yml`,
-   and `local.yml` should exist in the Bolt root directory.
+   and `local.settings.php` should exist in the Bolt root directory.
 1. Modify aforementioned .yml files with values for your new project.
 1. Run `./task.sh bolt:create`. This will create a new directory for your new
    project.
