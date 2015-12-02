@@ -85,3 +85,10 @@ to work together. Step-by-step instructions are provided below.
   remotes:
      - example@svn-14671.prod.hosting.acquia.com:example.git`
   ````
+1. Add your cloud git repository's server host name to `ssh_known_hosts` in
+   you .travis.yml file.
+  ````
+  addons:
+    ssh_known_hosts:
+    - svn-14671.prod.hosting.acquia.com
+  ````
