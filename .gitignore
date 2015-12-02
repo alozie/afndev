@@ -2,6 +2,7 @@
 project.yml
 make.yml
 local.yml
+local.settings.php
 
 # Ignore build artifacts
 bin/*

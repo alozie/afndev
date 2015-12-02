@@ -1,11 +1,25 @@
 # File and Directory locations.
 docroot.relative: ${repo.root.relative}/docroot
 docroot: ${repo.root}/docroot
-deploy.dir: ${repo.root}/deploy
-composer.bin: ${repo.root}/bin
-drush.bin: ${composer.bin}/drush
-drush.cmd: ${drush.bin} -r ${docroot}
-drush.file: ${phing.project.name}.aliases.drushrc.php
-drush.root: ${docroot}
-reports.localDir: ${repo.root}/reports
-reports.remoteDir: reports
+
+deploy:
+  dir: ${repo.root}/deploy
+
+composer:
+  bin: ${repo.root}/bin
+
+drush:
+  bin: ${composer.bin}/drush
+  cmd: ${drush.bin} -r ${docroot}
+  file: ${phing.project.name}.aliases.drushrc.php
+  root: ${docroot}
+
+reports:
+  localDir: ${repo.root}/reports
+  remoteDir: reports
+
+# Drupal Account Credentials. These are used for installing Drupal.
+drupal:
+  account.name: admin
+  account.password: admin
+  account.mail: no-reply@acquia.com
