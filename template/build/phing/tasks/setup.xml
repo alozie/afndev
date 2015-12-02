@@ -66,22 +66,14 @@
     </if>
   </target>
 
-  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
-    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
-  </target>
-
   <target name="setup:drupal:install"
-          description="Installs Drupal using credentials from local.yml."
-          depends="setup:drupal:settings, setup:check:docroot">
+          description="Installs Drupal using credentials from local.settings.php."
+          depends="setup:check:docroot">
 
     <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
 
     <drush command="site-install" assume="yes" verbose="TRUE">
-      <option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>
+      <!--<option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>-->
       <option name="site-name">"${project.human_name}"</option>
       <option name="debug" />
       <option name="site-mail">"${drupal.account.mail}"</option>
@@ -96,7 +88,13 @@
     <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>
   </target>
 
-  <!-- @todo add setup:create-db to create local database, drop table if exists. -->
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
 
   <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
     <property name="db.source" value="@test" />

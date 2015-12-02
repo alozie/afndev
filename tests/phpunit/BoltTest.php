@@ -25,7 +25,6 @@ class BoltTest extends \PHPUnit_Framework_TestCase
     {
         $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
         $this->config = Yaml::parse(file_get_contents("{$this->projectDirectory}/project.yml"));
-        $this->config = array_merge($this->config, Yaml::parse(file_get_contents("{$this->projectDirectory}/local.yml")));
         $this->new_project_dir = dirname($this->projectDirectory) . '/' . $this->config['project']['acquia_subname'];
     }
 
@@ -101,13 +100,11 @@ class BoltTest extends \PHPUnit_Framework_TestCase
     {
         // Assert that a local.yml file was created in the new project.
         $this->assertFileExists($this->new_project_dir . '/tests/behat/local.yml');
-        $behat_config = Yaml::parse(file_get_contents("{$this->new_project_dir}/tests/behat/local.yml"));
+        // $behat_config = Yaml::parse(file_get_contents("{$this->new_project_dir}/tests/behat/local.yml"));
 
-        // Assert that its values were modified to match values defined in
-        // project's config.yml file.
-        $this->assertEquals(
-            $behat_config['local']['extensions']['Behat\MinkExtension']['base_url'],
-            $this->config['local_url']
+        $this->assertNotContains(
+            '${local_url}',
+            file_get_contents("{$this->new_project_dir}/tests/behat/local.yml")
         );
     }
 

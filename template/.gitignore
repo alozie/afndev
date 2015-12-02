@@ -22,8 +22,8 @@ reports
 
 # Local testing config
 tests/behat/local.yml
-docroot/sites/*/local.settings.php
-docroot/sites/local.sites.php
+sites/*/local.settings.php
+sites/local.sites.php
 
 # Drush FirePHP files
 docroot/FirePHPCore
