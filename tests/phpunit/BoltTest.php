@@ -55,7 +55,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             '${project.acquia_subname}',
             file_get_contents($this->new_project_dir . '/sites/default/settings.php')
         );
-      $this->assertNotContains(
+        $this->assertNotContains(
             '${project.acquia_subname}',
             file_get_contents($this->new_project_dir . '/tests/phpunit/SettingsTest.php')
         );
@@ -70,8 +70,8 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.profile');
         $this->assertFileExists($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.install');
         $this->assertNotContains(
-          '${project.acquia_subname}',
-          file_get_contents($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.install')
+            '${project.acquia_subname}',
+            file_get_contents($profile_dir . '/' . $this->config['project']['acquia_subname'] . '.install')
         );
     }
 
@@ -89,7 +89,8 @@ class BoltTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests Phing setup:drupal:settings target.
      */
-    public function testSetupLocalSettings() {
+    public function testSetupLocalSettings()
+    {
         $this->assertFileExists($this->new_project_dir . '/sites/default/settings/local.settings.php');
     }
 
@@ -117,8 +118,8 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($this->new_project_dir . '/.git/hooks/commit-msg');
         $this->assertFileExists($this->new_project_dir . '/.git/hooks/pre-commit');
         $this->assertNotContains(
-          '${project.prefix}',
-          file_get_contents($this->new_project_dir . '/.git/hooks/commit-msg')
+            '${project.prefix}',
+            file_get_contents($this->new_project_dir . '/.git/hooks/commit-msg')
         );
     }
 
@@ -127,32 +128,32 @@ class BoltTest extends \PHPUnit_Framework_TestCase
      */
     public function testGitHookCommitMsg()
     {
-      // Commits must be executed inside of new project directory.
-      chdir($this->new_project_dir);
-      $bad_commit_msgs = array(
-          "This is a bad commit.", // Missing prefix and ticket number.
-          "123: This is a bad commit.", // Missing project prefix.
-          "BLT: This is a bad commit.", // Missing ticket number.
-          "BLT-123 This is a bad commit.", // Missing colon.
-          "BLT-123: This is a bad commit", // Missing period.
-          "BLT-123: Hello.", // Too short.
-      );
-      foreach ($bad_commit_msgs as $bad_commit_msg) {
-          // "2>&1" redirects standard error output to standard output.
-          $command = "git commit --amend -m '$bad_commit_msg' 2>&1";
-          print "Executing \"$command\" \n";
-          $output = shell_exec($command);
-          $this->assertContains('Invalid commit message', $output);
-      }
-      $good_commit_msgs = array(
-          "BLT-123: This is a good commit.",
-      );
-      foreach ($good_commit_msgs as $good_commit_msg) {
-          // "2>&1" redirects standard error output to standard output.
-          $command = "git commit --amend -m '$good_commit_msg' 2>&1";
-          print "Executing \"$command\" \n";
-          $output = shell_exec($command);
-          $this->assertNotContains('Invalid commit message', $output);
-      }
+        // Commits must be executed inside of new project directory.
+        chdir($this->new_project_dir);
+        $bad_commit_msgs = array(
+            "This is a bad commit.", // Missing prefix and ticket number.
+            "123: This is a bad commit.", // Missing project prefix.
+            "BLT: This is a bad commit.", // Missing ticket number.
+            "BLT-123 This is a bad commit.", // Missing colon.
+            "BLT-123: This is a bad commit", // Missing period.
+            "BLT-123: Hello.", // Too short.
+        );
+        foreach ($bad_commit_msgs as $bad_commit_msg) {
+            // "2>&1" redirects standard error output to standard output.
+            $command = "git commit --amend -m '$bad_commit_msg' 2>&1";
+            print "Executing \"$command\" \n";
+            $output = shell_exec($command);
+            $this->assertContains('Invalid commit message', $output);
+        }
+        $good_commit_msgs = array(
+            "BLT-123: This is a good commit.",
+        );
+        foreach ($good_commit_msgs as $good_commit_msg) {
+            // "2>&1" redirects standard error output to standard output.
+            $command = "git commit --amend -m '$good_commit_msg' 2>&1";
+            print "Executing \"$command\" \n";
+            $output = shell_exec($command);
+            $this->assertNotContains('Invalid commit message', $output);
+        }
     }
 }
