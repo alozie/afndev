@@ -465,8 +465,8 @@ class BehatTask extends Task
       $this->options[] = 'verbose';
     }
 
-    if (!$this->colors) {
-      $this->options[] = 'no-colors';
+    if ($this->colors) {
+      $this->options[] = 'colors';
     }
 
     if ($this->dryRun) {
