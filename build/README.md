@@ -8,12 +8,20 @@ little confusing. The CI configuration is detailed below.
 When a pull request is submitted a travis build is run against Bolt. This tests 
 Bolt's ability to generate a new project. After a successful build, the new 
 project will be deployed to Acquia Cloud and to a GitHub repository, where 
-another child Travis build is subsequently executed. Specifically:
+another child Travis build is subsequently executed. Here is the step-by-step
+breakdown:
 
-1. Bolt 7.x Pull Request submitted
-2. Travis Build *against Bolt* creates Bolted7 project
-3. Upon success, Bolted7 is pushed to ACE and acquia-pso/bolted7
-4. Travis Build *against Bolted7* begins
+1. Bolt 7.x Pull Request is submitted
+2. Travis Build *against Bolt* creates Bolted7 child project
+    * Tests are run to assert that project was created
+    * Tests are run against the child project (install, behat, phpunit, etc.)
+3. Upon success, Bolted7 child project is pushed to ACE bolted 7 subscription 
+   and to GitHub acquia-pso/bolted7. 
+    * Tests assert that deployment to remote(s) was successful
+4. Travis Build *against Bolted7* begins. Sadly, failure of this build
+   has no impact on the success of Bolt's builds. Status of child builds should
+   be checked periodically to verify that Bolt is generating a working build
+   process for child projects out of the box.
 
 Likewise, this process occurs for pull requests submitted to Bolt 8.x with 
 Bolted8 as a companion project.
@@ -26,7 +34,7 @@ user is added with required role(s) to the relevant project on Acquia Cloud and
 GitHub.
 
 GitHub User: acquia-pso-ci
-Acquia Cloud User: matthew.grasmick@acquia.com
+Acquia Cloud User: matthew.grasmick+acquia-pso-ci@acquia.com
 
 This requires the following steps for configuration:
 1. Generate id_rsa_bolt and id_rsa_bolt.pub key pair.
@@ -34,9 +42,9 @@ This requires the following steps for configuration:
 1. Add id_rsa_bolt _private_ key to https://travis-ci.com/acquia-pso/bolted7/settings.
 1. Add id_rsa_bolt _private_ key to https://travis-ci.com/acquia-pso/bolted8/settings.
 1. Add id_rsa_bolt.pub key to acquia-pso-ci user on GitHub.
-1. Add acquia-pso-ci user to acquia/bolt on GitHub
-1. Add acquia-pso-ci user to acquia-pso/bolted7 on GitHub
-1. Add acquia-pso-ci user to acquia-pso/bolted8 on GitHub
+1. Add acquia-pso-ci user to acquia/bolt project on GitHub
+1. Add acquia-pso-ci user to acquia-pso/bolted7 project on GitHub
+1. Add acquia-pso-ci user to acquia-pso/bolted8 project on GitHub
 1. Add id_rsa_bolt.pub key to matthew.grasmick+acquia-pso-ci@acquia.com on
    Acquia Cloud.
 1. Add matthew.grasmick+acquia-pso-ci@acquia.com to "Bolted" team on Acquia 
