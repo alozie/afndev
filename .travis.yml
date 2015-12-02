@@ -41,6 +41,7 @@ script:
   - ./task.sh bolt:create
   # Call targets in the new 'bolted' project.
   - ../bolted8/task.sh setup
+  - ../bolted8/task.sh validate:all
   - ../bolted8/task.sh tests:all -Dbehat:run-server=true
   # Deploy in-place repo build.
   - export TEST_SUITE=bolt
