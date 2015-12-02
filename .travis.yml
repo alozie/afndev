@@ -41,6 +41,7 @@ script:
   - ./task.sh bolt:create
   # Call targets in the new 'bolted' project.
   - ../bolted/task.sh setup
+  - ../bolted/task.sh validate:all
   - ../bolted/task.sh tests:all -Dbehat:run-server=true
   # Deploy in-place repo build.
   - export TEST_SUITE=bolt
@@ -48,5 +49,6 @@ script:
   - ../bolted/scripts/deploy/travis-deploy.sh bolt 7.x 7.x-build
   # Deploy separate build artifact.
   - ../bolted/task.sh deploy:artifact
-  # Run 'bolt' phpunit tests.
+  # Validate and run 'bolt' phpunit tests.
+  - phpcs --standard=PSR2 tests
   - phpunit tests

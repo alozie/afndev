@@ -159,8 +159,10 @@ class SettingsTest extends PHPUnit_Framework_TestCase
      * @return string
      *   The expected $base_url.
      */
-    public function getExpectedBaseUrl($site_name) {
-        $is_ah_free_tier = (!empty($_ENV['ACQUIA_HOSTING_DRUPAL_LOG']) && strstr($_ENV['ACQUIA_HOSTING_DRUPAL_LOG'], 'free'));
+    public function getExpectedBaseUrl($site_name)
+    {
+        $is_ah_free_tier = (!empty($_ENV['ACQUIA_HOSTING_DRUPAL_LOG'])
+          && strstr($_ENV['ACQUIA_HOSTING_DRUPAL_LOG'], 'free'));
         $domain_prefix = $is_ah_free_tier ? 'devcloud' : 'prod';
         $domain = "$site_name.$domain_prefix.acquia-sites.com";
         $protocol = 'http://';
