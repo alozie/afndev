@@ -88,7 +88,13 @@
     <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>
   </target>
 
-  <!-- @todo add setup:create-db to create local database, drop table if exists. -->
+  <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
 
   <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
     <property name="db.source" value="@test" />
