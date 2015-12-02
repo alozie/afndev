@@ -12,7 +12,8 @@
     "symfony/yaml": "~2.7",
     "phpunit/phpunit": "4.6.*",
     "pear-pear.php.net/VersionControl_Git": "0.4.*",
-    "platinumpixs/phing-random-string": "dev-master"
+    "platinumpixs/phing-random-string": "dev-master",
+    "squizlabs/php_codesniffer": "^2.4"
   },
   "config": {
     "bin-dir": "bin"

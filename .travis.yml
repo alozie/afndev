@@ -49,5 +49,6 @@ script:
   - ../bolted8/scripts/deploy/travis-deploy.sh bolt 8.x 8.x-build
   # Deploy separate build artifact.
   - ../bolted8/task.sh deploy:artifact
-  # Run 'bolt' phpunit tests.
+  # Validate and run 'bolt' phpunit tests.
+  - phpcs --standard=PSR2 tests
   - phpunit tests
