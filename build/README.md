@@ -37,6 +37,7 @@ GitHub User: acquia-pso-ci
 Acquia Cloud User: matthew.grasmick+acquia-pso-ci@acquia.com
 
 This requires the following steps for configuration:
+
 1. Generate id_rsa_bolt and id_rsa_bolt.pub key pair.
 1. Add id_rsa_bolt _private_ key to https://travis-ci.com/acquia/bolt/settings.
 1. Add id_rsa_bolt _private_ key to https://travis-ci.com/acquia-pso/bolted7/settings.
