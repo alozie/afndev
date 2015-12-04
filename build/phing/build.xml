@@ -96,10 +96,10 @@
     </reflexive>
 
     <!-- Initialize git repository. -->
-    <gitinit repository="${bolt.new.dir}" />
-    <exec command="git checkout -b ${git.default_branch}"  dir="${bolt.new.dir}" logoutput="true" passthru="true" />
-    <exec command="git add -A" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
-    <gitcommit repository="${bolt.new.dir}" message="Initial commit of default files from Bolt." allFiles="true" />
+    <exec command="git init" dir="${bolt.new.dir}" logoutput="true" passthru="true"/>
+    <exec command="git checkout -b ${git.default_branch}" dir="${bolt.new.dir}" logoutput="true" passthru="true" />
+    <exec command="git add -A" dir="${bolt.new.dir}" logoutput="false" passthru="false" />
+    <exec command="git commit -m 'Initial commit of default files from Bolt.'" dir="${bolt.new.dir}" logoutput="false" passthru="false" />
 
     <!-- Build composer dependencies. -->
     <exec dir="${bolt.new.dir}" command="composer install" logoutput="true" passthru="true" />
