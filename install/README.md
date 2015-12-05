@@ -26,6 +26,8 @@ following from this repository's root directory:
 
 ### Create a new project, build all dependencies.
 
+_Note:_ There are additional development environment-specific build instructions in the [local development documentation](/template/readme/local-development.md).
+
 1. `composer install`
 1. Run `./task.sh bolt:configure` to create your project-specific
    configuration files. After running, `project.yml`, `make.yml`,
@@ -79,5 +81,5 @@ Once it is enabled, follow the steps under
       * Configure your local LAMP stack such that the docroot is associated with
         the $base_url
       * Visit the local_url that you set in project.yml
-    * If you used a different local development environment, visit the 
+    * If you used a different local development environment, visit the
       configured `local_url` for the site.
