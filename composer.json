@@ -13,8 +13,5 @@
     "phpunit/phpunit": "4.6.*",
     "platinumpixs/phing-random-string": "dev-master",
     "squizlabs/php_codesniffer": "^2.4"
-  },
-  "config": {
-    "bin-dir": "bin"
   }
 }

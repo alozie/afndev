@@ -40,7 +40,7 @@ before_install:
 install:
   # Load composer dependencies.
   - composer install
-  - export PATH=$PATH:$TRAVIS_BUILD_DIR/bin
+  - export PATH=$PATH:$TRAVIS_BUILD_DIR/vendor/bin
 
 before_script:
   # Clear drush release history cache, to pick up new releases.

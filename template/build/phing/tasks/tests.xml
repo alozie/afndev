@@ -14,7 +14,7 @@
     <mkdir dir="${reports.localDir}/behat"/>
 
     <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
-    <behat executable="${repo.root}/bin/behat"
+    <behat executable="${composer.bin}/behat"
            config="${behat.config}"
            profile="${behat.profile}"
            verbose="true"
@@ -90,7 +90,7 @@
         <!-- Note that Behat's base_url must match php-server-url. -->
         <property name="behat:server-url" value="http://127.0.0.1:8080/" />
 
-        <exec executable="${repo.root}/bin/drush" dir="${docroot}" spawn="true">
+        <exec executable="${composer.bin}/drush" dir="${docroot}" spawn="true">
           <arg line="runserver ${behat:server-url}"/>
         </exec>
         <waitfor maxwait="10" maxwaitunit="second" checkevery="1" checkeveryunit="second">
