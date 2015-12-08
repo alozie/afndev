@@ -25,3 +25,6 @@ $base_url = 'http://127.0.0.1:8080';
 // Configuration directories.
 $dir = dirname(DRUPAL_ROOT);
 $config_directories['sync'] = $dir . '/config/default';
+
+// Use development service parameters.
+$settings['container_yamls'][] = $dir . '/sites/development.services.yml';
