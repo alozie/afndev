@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the ${project.acquia_subname} installation profile.
+ * Install, update and uninstall functions for the ${project.install_profile} installation profile.
  */
 
 /**
@@ -11,7 +11,7 @@
  *
  * @see system_install()
  */
-function ${project.acquia_subname}_install() {
+function ${project.install_profile}_install() {
   // Enable some standard blocks.
   $default_theme = variable_get('theme_default', 'bartik');
   $values = array(
