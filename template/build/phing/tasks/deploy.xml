@@ -13,7 +13,7 @@
           depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
   </target>
 
-  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:rm-docroot">
+  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
     <drush command="make" assume="yes">
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${deploy.dir}/docroot"</param>
@@ -23,8 +23,11 @@
     </drush>
   </target>
 
-  <target name="deploy:artifact:rm-docroot" description="Removes the deploy docroot.">
+  <!-- Clean the deploy directory. -->
+  <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
     <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
+    <delete dir="${deploy.dir}/hooks" failonerror="false" quiet="true" />
+    <delete dir="${deploy.dir}/config" failonerror="false" quiet="true" />
   </target>
 
   <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
@@ -59,6 +62,9 @@
     <copy file="${repo.root}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
     <copy todir="${deploy.dir}/hooks" overwrite="true">
       <fileset dir="${repo.root}/hooks"/>
+    </copy>
+    <copy todir="${deploy.dir}/config" overwrite="true">
+       <fileset dir="${repo.root}/config"/>
     </copy>
   </target>
 
