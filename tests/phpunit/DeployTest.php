@@ -62,23 +62,23 @@ class DeployTest extends \PHPUnit_Framework_TestCase
         $deploy_branch = '8.x-build';
 
         foreach ($this->config['git']['remotes'] as $remote) {
-          $commands = [
-            "git remote add temp $remote",
-            "git fetch temp $deploy_branch",
-            "git log temp/$deploy_branch",
-            "git remote rm temp",
-          ];
+            $commands = [
+              "git remote add temp $remote",
+              "git fetch temp $deploy_branch",
+              "git log temp/$deploy_branch",
+              "git remote rm temp",
+            ];
 
-          $log = '';
-          foreach ($commands as $command) {
-            print "Executing \"$command\" \n";
-            $log .= shell_exec($command);
-          }
+            $log = '';
+            foreach ($commands as $command) {
+                print "Executing \"$command\" \n";
+                $log .= shell_exec($command);
+            }
 
-          // We expect the remote git log to contain a commit message matching
-          // the syntax specified in deploy:build. I.e.,
-          // "Automated commit by Travis CI for Build #$travis_build_id".
-          $this->assertContains('#' . $_ENV['TRAVIS_BUILD_ID'], $log);
+            // We expect the remote git log to contain a commit message matching
+            // the syntax specified in deploy:build. I.e.,
+            // "Automated commit by Travis CI for Build #$travis_build_id".
+            $this->assertContains('#' . $_ENV['TRAVIS_BUILD_ID'], $log);
         }
     }
 }
