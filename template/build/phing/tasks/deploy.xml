@@ -13,7 +13,7 @@
           depends="deploy:artifact:make, deploy:artifact:sanitize, deploy:artifact:copy">
   </target>
 
-  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:rm-docroot">
+  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
     <drush command="make" assume="yes">
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${deploy.dir}/docroot"</param>
@@ -23,8 +23,10 @@
     </drush>
   </target>
 
-  <target name="deploy:artifact:rm-docroot" description="Removes the deploy docroot.">
+  <!-- Clean the deploy directory. -->
+  <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
     <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
+    <delete dir="${deploy.dir}/hooks" failonerror="false" quiet="true" />
   </target>
 
   <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
