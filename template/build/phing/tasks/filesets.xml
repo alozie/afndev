@@ -19,11 +19,15 @@
     <patternset refid="files.php"/>
   </fileset>
 
+  <fileset dir="${repo.root}/themes/custom" id="files.php.custom.themes">
+    <patternset refid="files.php"/>
+  </fileset>
+
   <fileset dir="${repo.root}/sites/default/settings" id="files.php.custom.settings">
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}/tests" id="files.tests" expandsymboliclinks="true">
+  <fileset dir="${repo.root}/tests" id="files.php.tests" expandsymboliclinks="true">
     <patternset refid="files.php"/>
   </fileset>
 
