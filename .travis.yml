@@ -47,8 +47,6 @@ script:
   - export TEST_SUITE=bolt
   - export DEPLOY_PR=true
   - ../bolted8/scripts/deploy/travis-deploy.sh bolt 8.x 8.x-build
-  # Deploy separate build artifact.
-  - ../bolted8/task.sh deploy:artifact
   # Validate and run 'bolt' phpunit tests.
   - phpcs --standard=PSR2 tests
   - phpunit tests
