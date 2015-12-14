@@ -70,11 +70,25 @@
     </copy>
   </target>
 
-  <target name="deploy:artifact:push" description="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
-    <!--@todo Add this!-->
+  <target name="deploy:artifact:all" description="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
+    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
+    <exec command="git init ${deploy.dir}" logoutput="true"/>
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
+    <exec command="git checkout ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <phingcall target="deploy:artifact:build"/>
+    <exec command="git add -A" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:push"/>
   </target>
 
-  <!-- @todo Need targets to commit and push artifact. -->
+  <target name="deploy:artifact:add-remote" description="Adds a git remote.">
+    <exec command="git remote add origin ${deploy.remote}" dir="${deploy.dir}" logoutput="true"/>
+    <exec command="git fetch origin" dir="${deploy.dir}" logoutput="true"/>
+  </target>
+
+  <target name="deploy:artifact:push" description="Pushes to a git remote.">
+    <exec command="git push origin ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+  </target>
 
   <!--  -->
   <!-- Deployment targets for in-place repository. -->
