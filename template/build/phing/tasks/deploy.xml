@@ -51,6 +51,7 @@
       <fileset dir="${repo.root}/sites/all/themes/custom">
         <include name="**"></include>
         <exclude name="**/node_modules/**"></exclude>
+        <exclude name="**/bower_components/**"></exclude>
       </fileset>
     </copy>
     <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
