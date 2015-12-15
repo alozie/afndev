@@ -30,7 +30,7 @@ if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]] || [[ "${DEPLOY_PR}" = "true" ]];
         echo "Build artifact will be deployed."
         commit_msg="Automated commit by Travis CI for Build #${TRAVIS_BUILD_ID}";
         # Call the `deploy` Phing target, passing in required parameters.
-        ${DIR}/../../task.sh deploy:artifact:all -Ddeploy.branch="${dest_branch}" -Ddeploy.commitMsg="${commit_msg}";
+        ${DIR}/../../task.sh deploy:artifact -Ddeploy.branch="${dest_branch}" -Ddeploy.commitMsg="${commit_msg}";
       else
         echo "Build artifact will NOT be deployed."
     fi
