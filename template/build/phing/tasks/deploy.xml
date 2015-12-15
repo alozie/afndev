@@ -1,47 +1,56 @@
 <project name="deploy" default="deploy:repo">
 
-  <!--  -->
-  <!-- Deployment targets for a separate artifact. -->
-  <!--  -->
+  <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml." depends="deploy:artifact:clean">
 
-  <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml."
-          depends="deploy:artifact:build, deploy:artifact:push">
-    <!-- deploy.build and deploy.commitMsg must be passed as params at runtime. -->
+    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
+    <if>
+      <or>
+        <not><isset property="deploy.branch"/></not>
+        <not><isset property="deploy.commitMsg"/></not>
+      </or>
+      <then>
+        <fail>You must pass deploy.branch and deploy.commitMsg as runtime parameters.</fail>
+        <echo message="Command should match syntax:"/>
+        <echo message="./task.sh deploy:artifact -Ddeploy.branch=7.x-build -Ddeploy.commitMsg='BLT-123: The commit message.'"/>
+      </then>
+    </if>
+
+    <exec command="git init ${deploy.dir}" logoutput="true"/>
+
+    <!-- Add remotes and fetch upstream refs. Checkout local branch tracking
+         tracking upstream branch, if it exists. Otherwise create new branch
+         locally. -->
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
+
+    <!-- Build artifact and commit locally. -->
+    <phingcall target="deploy:artifact:build"/>
+    <exec command="git add -A" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+
+    <!-- Push up changes to remotes. -->
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:push"/>
+  </target>
+
+  <target name="deploy:artifact:add-remote" description="Adds a git remote and checks out deploy branch from upstream.">
+    <!-- Generate and md5 sum of the remote URL to use as remote name. -->
+    <exec command="echo ${deploy.remote} | openssl md5 | cut -d' ' -f 2" outputProperty="remoteName"/>
+    <exec command="git remote add ${remoteName} ${deploy.remote}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="git fetch ${remoteName}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+
+    <!-- This will only be successful for the first remote, which is good.
+         `git checkout -b` will work only when exactly one remote has a matching
+         branch. -->
+    <exec command="git checkout -b ${deploy.branch} ${remoteName}/${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:make, deploy:artifact:sanitize, deploy:artifact:copy">
-  </target>
-
-  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
-    <drush command="make" assume="yes">
-      <param>"${repo.root}/${project.make_file}"</param>
-      <param>"${deploy.dir}/docroot"</param>
-      <option name="concurrency">8</option>
-      <option name="no-gitinfofile"/>
-      <option name="no-patch-txt"/>
-    </drush>
+          depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
   </target>
 
   <!-- Clean the deploy directory. -->
   <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
     <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
     <delete dir="${deploy.dir}/hooks" failonerror="false" quiet="true" />
-  </target>
-
-  <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
-    <delete>
-      <fileset dir="${deploy.dir}/docroot">
-        <include name="CHANGELOG.txt"/>
-        <include name="COPYRIGHT.txt"/>
-        <include name="INSTALL.txt"/>
-        <include name="INSTALL.*.txt"/>
-        <include name="LICENSE.txt"/>
-        <include name="PATCHES.txt"/>
-        <include name="README.txt"/>
-        <include name="UPGRADE.txt"/>
-      </fileset>
-    </delete>
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
@@ -70,44 +79,34 @@
     </copy>
   </target>
 
-  <target name="deploy:artifact:all" description="Commits and pushes the deploy artifact to git.remotes defined in project.yml.">
-    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
-    <exec command="git init ${deploy.dir}" logoutput="true"/>
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
-    <exec command="git checkout ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
-    <phingcall target="deploy:artifact:build"/>
-    <exec command="git add -A" dir="${deploy.dir}" logoutput="true" passthru="true"/>
-    <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:push"/>
-  </target>
-
-  <target name="deploy:artifact:add-remote" description="Adds a git remote.">
-    <exec command="git remote add origin ${deploy.remote}" dir="${deploy.dir}" logoutput="true"/>
-    <exec command="git fetch origin" dir="${deploy.dir}" logoutput="true"/>
+  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
+    <drush command="make" assume="yes">
+      <param>"${repo.root}/${project.make_file}"</param>
+      <param>"${deploy.dir}/docroot"</param>
+      <option name="concurrency">8</option>
+      <option name="no-gitinfofile"/>
+      <option name="no-patch-txt"/>
+    </drush>
   </target>
 
   <target name="deploy:artifact:push" description="Pushes to a git remote.">
-    <exec command="git push origin ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="echo ${deploy.remote} | openssl md5 | cut -d' ' -f 2" outputProperty="remoteName"/>
+    <exec command="git push ${remoteName} ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
-  <!--  -->
-  <!-- Deployment targets for in-place repository. -->
-  <!--  -->
-
-  <target name="deploy:repo" description="Forcibly commits docroot to repository.">
-    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
-    <exec command="git add ${repo.root}/docroot -f" logoutput="true" passthru="true"/>
-    <exec command="git commit -m '${deploy.commitMsg}' -n --quiet" logoutput="true" passthru="true"/>
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:repo:push" />
-    <exec command="git reset HEAD~1" logoutput="true" passthru="true"/>
-  </target>
-
-  <target name="deploy:repo:push" description="Pushes a build artifact to specified git remote.">
-    <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
-    <exec command="git rev-parse --abbrev-ref HEAD" outputProperty="currentGitBranch" logoutput="true"/>
-    <exec command="git remote add downstream ${deploy.remote}" logoutput="true" passthru="true"/>
-    <exec command="git push downstream ${currentGitBranch}:${deploy.branch} --force" logoutput="true" passthru="true"/>
-    <exec command="git remote rm downstream" logoutput="true" passthru="true"/>
+  <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
+    <delete>
+      <fileset dir="${deploy.dir}/docroot">
+        <include name="CHANGELOG.txt"/>
+        <include name="COPYRIGHT.txt"/>
+        <include name="INSTALL.txt"/>
+        <include name="INSTALL.*.txt"/>
+        <include name="LICENSE.txt"/>
+        <include name="PATCHES.txt"/>
+        <include name="README.txt"/>
+        <include name="UPGRADE.txt"/>
+      </fileset>
+    </delete>
   </target>
 
 </project>

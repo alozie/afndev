@@ -27,6 +27,7 @@ notifications:
   # slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP4
 
 before_install:
+  - phpenv config-rm xdebug.ini
   - composer selfupdate
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
@@ -50,6 +51,6 @@ script:
 
 after_success:
   # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test master master
+  # - scripts/deploy/travis-deploy.sh build:validate:test master master-build
   # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop
+  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop-build

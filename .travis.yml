@@ -20,6 +20,9 @@ addons:
   - svn-4702.devcloud.hosting.acquia.com
 
 before_install:
+  - phpenv config-rm xdebug.ini
+  # Enable $_ENV variables in PHP.
+  - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer selfupdate
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
@@ -32,8 +35,6 @@ install:
 before_script:
   # Clear drush release history cache, to pick up new releases.
   - rm -f ~/.drush/cwache/download/*---updates.drupal.org-release-history-*
-  # Enable $_ENV variables in PHP.
-  - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
   # Generate a new 'bolted' project.
@@ -47,8 +48,6 @@ script:
   - export TEST_SUITE=bolt
   - export DEPLOY_PR=true
   - ../bolted/scripts/deploy/travis-deploy.sh bolt 7.x 7.x-build
-  # Deploy separate build artifact.
-  - ../bolted/task.sh deploy:artifact
   # Validate and run 'bolt' phpunit tests.
   - phpcs --standard=PSR2 tests
   - phpunit tests
