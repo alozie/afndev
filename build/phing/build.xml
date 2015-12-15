@@ -75,10 +75,18 @@
     <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" />
 
     <!-- Rename minimal profile in new project. -->
-    <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.install_profile}"/>
-    <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
-    <move file="${bolt.profile.dir}/minimal.info.yml" tofile="${bolt.profile.dir}/${project.install_profile}.info.yml"/>
-    <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.install_profile}.install"/>
+    <if>
+      <isfalse value="${project.profile.contrib}"/>
+      <then>
+        <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.profile.name}"/>
+        <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
+        <move file="${bolt.profile.dir}/minimal.info.yml" tofile="${bolt.profile.dir}/${project.profile.name}.info.yml"/>
+        <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.profile.name}.install"/>
+      </then>
+      <else>
+        <delete dir="${bolt.new.dir}/profiles/minimal"/>
+      </else>
+    </if>
 
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>

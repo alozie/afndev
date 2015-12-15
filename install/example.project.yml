@@ -12,8 +12,10 @@ project:
   # This is the default makefile that will be used to build dependencies.
   # It should live in the project root.
   make_file: 'make.yml'
-  # Please ensure your profile is also in your make file.
-  install_profile: 'bolted8'
+  profile:
+    name: 'bolted8'
+    # Please ensure contrib profiles are also in your make file.
+    contrib: false
   # This is used to build front end artifacts. E.g., SASS compilation.
   theme_name: 'thunder'
   # These are random strings used to configure the hash salt.
