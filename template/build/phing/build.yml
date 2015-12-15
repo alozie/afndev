@@ -6,7 +6,7 @@ deploy:
   dir: ${repo.root}/deploy
 
 composer:
-  bin: ${repo.root}/bin
+  bin: ${repo.root}/vendor/bin
 
 drush:
   bin: ${composer.bin}/drush
