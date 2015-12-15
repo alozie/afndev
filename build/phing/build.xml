@@ -70,11 +70,11 @@
     <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" />
 
     <!-- Rename minimal profile in new project. -->
-    <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.acquia_subname}"/>
+    <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.install_profile}"/>
     <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
-    <move file="${bolt.profile.dir}/minimal.info" tofile="${bolt.profile.dir}/${project.acquia_subname}.info"/>
-    <move file="${bolt.profile.dir}/minimal.profile" tofile="${bolt.profile.dir}/${project.acquia_subname}.profile"/>
-    <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.acquia_subname}.install"/>
+    <move file="${bolt.profile.dir}/minimal.info" tofile="${bolt.profile.dir}/${project.install_profile}.info"/>
+    <move file="${bolt.profile.dir}/minimal.profile" tofile="${bolt.profile.dir}/${project.install_profile}.profile"/>
+    <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.install_profile}.install"/>
 
     <!-- Reflexively expand properties in specified dirs/files. -->
     <reflexive>

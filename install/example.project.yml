@@ -13,16 +13,9 @@ project:
   # It should live in the project root.
   make_file: 'make.yml'
   # Please ensure your profile is also in your make file.
-  install_profile: '${project.acquia_subname}'
+  install_profile: 'bolted'
   # This is used to build front end artifacts. E.g., SASS compilation.
   theme_name: 'thunder'
-
-# Drush settings. These are used for deployment tasks.
-drush:
-  aliases:
-    default: ${project.acquia_subname}.dev
-    dev: ${project.acquia_subname}.dev
-    test: ${project.acquia_subname}.test
 
 # Configuration settings for new git repository.
 git:
