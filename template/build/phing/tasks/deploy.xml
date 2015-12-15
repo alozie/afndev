@@ -91,7 +91,8 @@
 
   <target name="deploy:artifact:push" description="Pushes to a git remote.">
     <exec command="echo ${deploy.remote} | openssl md5 | cut -d' ' -f 2" outputProperty="remoteName"/>
-    <exec command="git push ${remoteName} ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="git push ${remoteName} ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true" outputProperty="deploy.push.output"/>
+    <exec command="export DEPLOY_UPTODATE=${echo '${deploy.push.output}' | grep --quiet 'Everything up-to-date'}"/>
   </target>
 
   <target name="deploy:artifact:sanitize" description="Removes sensitive files from the deploy docroot.">
