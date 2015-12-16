@@ -28,19 +28,51 @@ projects:
     version: ~
   acquia_connector:
     version: ~
+  autologout:
+    version: ~
   ckeditor:
+    version: ~
+  clamav:
+    version: ~
+  diff:
+    version: ~
+  email_confirm:
+    version: ~
+  entity:
     version: ~
   entitycache:
     version: ~
   features:
     version: ~
+  genpass:
+    version: ~
+  honeypot:
+    version: ~
+  login_security:
+    version: ~
   memcache:
+    version: ~
+  mollom:
+    version: ~
+  paranoia:
+    version: ~
+  password_policy:
+    version: ~
+  realname:
+    version: ~
+  seckit:
     version: ~
   security_review:
     version: ~
   stage_file_proxy:
     version: ~
+  strongarm:
+    version: ~
+  token:
+    version: ~
   transliteration:
+    version: ~
+  username_enumeration_prevention:
     version: ~
   views:
     version: ~
