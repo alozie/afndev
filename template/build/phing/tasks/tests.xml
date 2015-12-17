@@ -92,7 +92,7 @@
     <if>
       <equals arg1="${behat.run-server}" arg2="true"/>
       <then>
-        <echo message="Using drush runserver for executing subsequent tests." />
+        <echo message="Using drush runserver for tests." />
         <!-- Note that Behat's base_url must match php-server-url. -->
         <property name="behat:server-url" value="http://127.0.0.1:8080/" />
 
@@ -104,7 +104,7 @@
         </waitfor>
       </then>
       <else>
-        <echo message="Using local LAMP stack." />
+        <echo message="Using local LAMP stack for tests." />
       </else>
     </if>
   </target>

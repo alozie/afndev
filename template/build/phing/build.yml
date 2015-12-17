@@ -29,9 +29,10 @@ behat:
   profile: local
   # If true, `drush runserver` will be used for executing tests.
   run-server: false
+  # If true, PhantomJS GhostDriver will be launched with Behat.
   launch-phantom: false
   # An array of paths with behat tests that should be executed.
   paths:
-    - ${docroot}/profiles
-    - ${docroot}/modules
+    # - ${docroot}/profiles
+    # - ${docroot}/modules
     - ${repo.root}/tests/behat

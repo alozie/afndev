@@ -1,4 +1,4 @@
-# To generate a local.yml file using this as a template, execute:
+# To generate a local.yml file using this the example template, execute:
 # `./task.sh setup:behat` from the project root.
 imports:
   - behat.yml
@@ -8,7 +8,8 @@ local:
     default:
       paths:
         # Set features to repo root so that .feature files belonging to contrib
-        # modules, themes, and profiles are discovered.
+        # modules, themes, and profiles can be discovered. Enable these
+        # additional paths in build/phing/build.yml.
         features: ${repo.root}
         bootstrap: ${repo.root}/tests/behat/features/bootstrap
       contexts:
