@@ -58,7 +58,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             '${project.human_name}',
             file_get_contents($this->new_project_dir . '/readme/architecture.md')
         );
-        $profile_dir = $this->new_project_dir . '/profiles/' . $this->config['project']['profile']['name'];
+        $profile_dir = $this->new_project_dir . '/profiles/custom/' . $this->config['project']['profile']['name'];
 
         // Test new installation profile.
         if (!$this->config['project']['profile']['contrib']) {

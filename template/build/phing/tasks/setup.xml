@@ -56,10 +56,10 @@
     <!-- Symlink modules and themes. -->
     <delete dir="${docroot}/modules/custom" quiet="true"/>
     <delete dir="${docroot}/themes/custom" quiet="true"/>
-    <delete dir="${docroot}/profiles" quiet="true"/>
+    <delete dir="${docroot}/profiles/custom" quiet="true"/>
     <exec dir="${repo.root}" command="ln -s ../../modules/custom docroot/modules/custom"/>
     <exec dir="${repo.root}" command="ln -s ../../themes/custom docroot/themes/custom"/>
-    <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>
+    <exec dir="${repo.root}" command="ln -s ../../profiles/custom docroot/profiles/custom"/>
 
     <!-- Symlink settings. -->
     <exec dir="${repo.root}" command="ln -s ../../../drush docroot/sites/default/drush"/>
