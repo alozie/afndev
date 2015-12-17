@@ -5,14 +5,12 @@
 
   <!-- If you experience 'Maximum function nesting level' errors in your PHP
        error log, set 'xdebug.max_nesting_level=1000' in php.ini. -->
-  <target name="tests:behat" depends="tests:run-server, tests:phantomjs:launch" description="Executes Behat tests locally.">
-
-    <!-- As with any property, this can be overridden at runtime, permitting
-     Behat execution using any configuration -->
-    <property name="behat.config" value="${repo.root}/tests/behat/local.yml" />
-    <property name="behat.profile" value="local" />
+  <target name="tests:behat" depends="tests:run-server, tests:phantomjs:launch" description="Executes Behat all behat tests in behat.paths.">
     <mkdir dir="${reports.localDir}/behat"/>
+    <foreach list="${behat.paths}" target="tests:behat:execute" param="behat.path"/>
+  </target>
 
+  <target name="tests:behat:execute" description="Executes behat tests against specific path.">
     <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
     <behat executable="${composer.bin}/behat"
            config="${behat.config}"
@@ -23,7 +21,8 @@
            returnProperty="behatPass"
            out="std,${reports.localDir}"
            format="pretty,junit"
-        />
+           path="${behat.path}"
+    />
 
     <if>
       <isfalse value="${BehatPass}"/>
@@ -35,10 +34,17 @@
 
   <target name="tests:phantomjs:launch"
           description="Launches a GhostDriver.">
-    <exec command="${composer.bin}/phantomjs --webdriver=4444"
-          passthru="true"
-          spawn="true"
-          checkreturn="true" />
+
+    <if>
+      <equals arg1="${behat.launch-phantom}" arg2="true"/>
+      <then>
+        <echo message="Launching PhantomJS GhostDriver." />
+        <exec command="${composer.bin}/phantomjs --webdriver=4444"
+              passthru="true"
+              spawn="true"
+              checkreturn="true" />
+      </then>
+    </if>
   </target>
 
   <!-- Execute PHPUnit tests. -->
@@ -84,7 +90,7 @@
   <!-- Optionally run tests against internal PHP server. -->
   <target name="tests:run-server">
     <if>
-      <equals arg1="${behat:run-server}" arg2="true"/>
+      <equals arg1="${behat.run-server}" arg2="true"/>
       <then>
         <echo message="Using drush runserver for executing subsequent tests." />
         <!-- Note that Behat's base_url must match php-server-url. -->
@@ -97,6 +103,9 @@
           <http url="${behat:server-url}"/>
         </waitfor>
       </then>
+      <else>
+        <echo message="Using local LAMP stack." />
+      </else>
     </if>
   </target>
 
