@@ -22,11 +22,10 @@
     "phpunit/phpunit":              "4.6.*",
     "squizlabs/php_codesniffer":    "2.*",
     "pdepend/pdepend":              "1.1.*",
-    "phing/phing":                  "2.13.x-dev",
+    "phing/phing":                  "2.*",
     "jakoch/phantomjs-installer":   "1.9.8",
     "phpmd/phpmd":                  "1.*",
     "drush/drush":                  "7.*",
-    "pear-pear.php.net/VersionControl_Git": "0.4.*",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
   "scripts": {
