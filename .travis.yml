@@ -11,6 +11,8 @@ cache:
   directories:
   - "$HOME/.composer/cache"
   - "$HOME/.drush/cache"
+  - "$HOME/.nvm"
+  - "vendor"
 
 notifications:
   # slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP
