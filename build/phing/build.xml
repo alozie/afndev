@@ -38,6 +38,9 @@
     <delete file="${bolt.root}/project.yml"/>
     <delete file="${bolt.root}/make.yml"/>
     <delete file="${bolt.root}/local.settings.php"/>
+    <delete file="${bolt.root}/template/project.yml"/>
+    <delete file="${bolt.root}/template/make.yml"/>
+    <delete file="${bolt.root}/template/tests/behat/local.yml"/>
   </target>
 
   <!-- Create a new project directory based on current repository. -->
@@ -102,8 +105,8 @@
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
-    <echo>Please change to the new project directory and run remaining setup tasks.</echo>
-  </target>
+    <echo>Please change to the new project directory and run:</echo>
+    <echo>./task.sh setup</echo>  </target>
 
   <!-- This target is meant to test Bolt itself on TravisCI.
        A few things to note:

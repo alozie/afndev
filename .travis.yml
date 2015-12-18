@@ -46,7 +46,7 @@ script:
   # Call targets in the new 'bolted' project.
   - ../bolted/task.sh setup
   - ../bolted/task.sh validate:all
-  - ../bolted/task.sh tests:all -Dbehat:run-server=true
+  - ../bolted/task.sh tests:all -Dbehat.run-server=true -Dbehat.launch-phantom=true
   # Deploy in-place repo build.
   - export TEST_SUITE=bolt
   - export DEPLOY_PR=true
