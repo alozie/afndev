@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the ${project.install_profile} installation profile.
+ * Install, update and uninstall functions for the ${project.profile.name} installation profile.
  */
 
 /**
@@ -11,7 +11,7 @@
  *
  * @see system_install()
  */
-function ${project.install_profile}_install() {
+function ${project.profile.name}_install() {
   // Enable some standard blocks.
   $default_theme = variable_get('theme_default', 'bartik');
   $values = array(

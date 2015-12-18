@@ -64,14 +64,14 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             file_get_contents($this->new_project_dir . '/readme/architecture.md')
         );
 
-        $profile_dir = $this->new_project_dir . '/profiles/' . $this->config['project']['install_profile'];
+        $profile_dir = $this->new_project_dir . '/profiles/' . $this->config['project']['profile']['name'];
         // Test new installation profile.
-        $this->assertFileExists($profile_dir . '/' . $this->config['project']['install_profile'] . '.info');
-        $this->assertFileExists($profile_dir . '/' . $this->config['project']['install_profile'] . '.profile');
-        $this->assertFileExists($profile_dir . '/' . $this->config['project']['install_profile'] . '.install');
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['profile']['name'] . '.info');
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['profile']['name'] . '.profile');
+        $this->assertFileExists($profile_dir . '/' . $this->config['project']['profile']['name'] . '.install');
         $this->assertNotContains(
-            '${project.install_profile}',
-            file_get_contents($profile_dir . '/' . $this->config['project']['install_profile'] . '.install')
+            '${project.profile.name}',
+            file_get_contents($profile_dir . '/' . $this->config['project']['profile']['name'] . '.install')
         );
     }
 
