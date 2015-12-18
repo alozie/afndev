@@ -1,9 +1,17 @@
+# To generate a local.yml file using this the example template, execute:
+# `./task.sh setup:behat` from the project root.
 imports:
   - behat.yml
 
 local:
   suites:
     default:
+      paths:
+        # Set features to repo root so that .feature files belonging to contrib
+        # modules, themes, and profiles can be discovered. Enable these
+        # additional paths in build/phing/build.yml.
+        features: ${repo.root}
+        bootstrap: ${repo.root}/tests/behat/features/bootstrap
       contexts:
         - Drupal\FeatureContext:
           parameters:
@@ -26,10 +34,6 @@ local:
       # browser_name: phantomjs
       # selenium2:
       #   wd_host: "http://localhost:8643/wd/hub"
-      #   browser: chrome
-      #
-      # use the following two lines for chromedriver
-      # selenium2:
       #   browser: chrome
       #
       # use the following three lines to configure zombie.js.
