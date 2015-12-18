@@ -12,6 +12,8 @@ cache:
   - "$HOME/.composer/cache"
   - "$HOME/.drush/cache"
   - "$HOME/.npm"
+  - "$HOME/.nvm"
+  - "vendor"
 
 env:
   matrix:
