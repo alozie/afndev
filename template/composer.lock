@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "59bb20bb352c719858d98ec58ef97faf",
-    "content-hash": "ca59eb1fc07c684547779898bc4c7306",
+    "hash": "5772da840876552df2aab59defbdc789",
+    "content-hash": "ce9a67339290b098cb848f2481325187",
     "packages": [
         {
             "name": "behat/behat",
@@ -1224,35 +1224,6 @@
             "time": "2013-12-04 17:46:00"
         },
         {
-            "name": "pear-pear.php.net/VersionControl_Git",
-            "version": "0.4.4",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/VersionControl_Git-0.4.4.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.1.0.0"
-            },
-            "replace": {
-                "pear-pear/versioncontrol_git": "== 0.4.4.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "Apache License"
-            ],
-            "description": "VersionControl_Git is a library that provides OO interface to handle Git repository.\n  You can use Git command via the wrapper class. Some features are provided by high-featured interface."
-        },
-        {
             "name": "pear/console_table",
             "version": "1.2.1",
             "source": {
@@ -1309,16 +1280,16 @@
         },
         {
             "name": "phing/phing",
-            "version": "dev-master",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "3823b9227ef7929ef71c21cbaef5aa67939e3eda"
+                "reference": "a5b10a50160c8a4744545aacb33ef158349e655c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/3823b9227ef7929ef71c21cbaef5aa67939e3eda",
-                "reference": "3823b9227ef7929ef71c21cbaef5aa67939e3eda",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/a5b10a50160c8a4744545aacb33ef158349e655c",
+                "reference": "a5b10a50160c8a4744545aacb33ef158349e655c",
                 "shasum": ""
             },
             "require": {
@@ -1328,13 +1299,10 @@
                 "ext-pdo_sqlite": "*",
                 "lastcraft/simpletest": "@dev",
                 "pdepend/pdepend": "2.x",
-                "pear-pear.php.net/console_getopt": "~1.3.0",
-                "pear-pear.php.net/http_request2": "2.2.x",
-                "pear-pear.php.net/net_growl": "2.7.x",
-                "pear-pear.php.net/pear_packagefilemanager": "1.7.x",
-                "pear-pear.php.net/pear_packagefilemanager2": "1.0.x",
-                "pear-pear.php.net/xml_serializer": "0.20.x",
-                "pear/pear_exception": "~1.0",
+                "pear/archive_tar": "1.4.x",
+                "pear/http_request2": "dev-trunk",
+                "pear/net_growl": "dev-trunk",
+                "pear/pear-core-minimal": "1.10.1",
                 "pear/versioncontrol_git": "@dev",
                 "pear/versioncontrol_svn": "~0.5",
                 "phpdocumentor/phpdocumentor": "2.x",
@@ -1398,7 +1366,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2015-11-09 09:01:45"
+            "time": "2015-12-04 09:45:44"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3473,8 +3441,7 @@
     "stability-flags": {
         "behat/mink": 0,
         "phploc/phploc": 20,
-        "sebastian/phpcpd": 20,
-        "phing/phing": 20
+        "sebastian/phpcpd": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
