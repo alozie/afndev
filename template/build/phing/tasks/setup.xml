@@ -80,7 +80,7 @@
       <option name="account-name">"${drupal.account.name}"</option>
       <option name="account-pass">"${drupal.account.password}"</option>
       <option name="account-mail">"${drupal.account.mail}"</option>
-      <param>"${project.install_profile}"</param>
+      <param>"${project.profile.name}"</param>
       <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
     </drush>
 
@@ -132,8 +132,8 @@
     <!-- Symlink modules, themes, and profiles. -->
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
-    <delete dir="${docroot}/profiles" quiet="true"/>
-    <exec dir="${repo.root}" command="ln -s ../profiles docroot/profiles"/>
+    <delete dir="${docroot}/profiles/${project.profile.name}" quiet="true"/>
+    <exec dir="${repo.root}" command="ln -s ../../profiles/${project.profile.name} docroot/profiles/${project.profile.name}"/>
   </target>
 
 </project>
