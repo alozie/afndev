@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e871d11adb2616a7cd51c9cffd980d87",
-    "content-hash": "c49d6aeb4f2ff805c009aa6fcfd5fd5b",
+    "hash": "87dcda7a9f19447abd44a064bd55336a",
+    "content-hash": "3ab32562cfa32b5d5be6b9142624da79",
     "packages": [
         {
             "name": "behat/behat",
@@ -1372,35 +1372,6 @@
             ],
             "description": "Official version of pdepend to be handled with Composer",
             "time": "2013-12-04 17:46:00"
-        },
-        {
-            "name": "pear-pear.php.net/VersionControl_Git",
-            "version": "0.4.4",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/VersionControl_Git-0.4.4.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.1.0.0"
-            },
-            "replace": {
-                "pear-pear/versioncontrol_git": "== 0.4.4.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "Apache License"
-            ],
-            "description": "VersionControl_Git is a library that provides OO interface to handle Git repository.\n  You can use Git command via the wrapper class. Some features are provided by high-featured interface."
         },
         {
             "name": "pear/console_table",
