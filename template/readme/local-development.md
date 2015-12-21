@@ -49,7 +49,7 @@ but before you run  `vagrant up`, make the following changes to your VM
         type: nfs
 
     # Set this to `7` for a Drupal 7 site, or `8` for a Drupal 8 site.
-    drupal_major_version: 8
+    drupal_major_version: 7
 
     # Set drupal_core_path to the `destination` in the synced folder
     # configuration above, plus `/docroot`.
