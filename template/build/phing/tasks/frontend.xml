@@ -17,6 +17,7 @@
       </not>
       <then>
         <exec dir="${repo.root}/sites/all/themes/custom/${project.theme_name}" command="npm install" logoutput="true" checkreturn="true" />
+        <exec dir="${repo.root}/sites/all/themes/custom/${project.theme_name}" command="npm rebuild node-sass" logoutput="true" checkreturn="true" />
         <exec dir="${repo.root}/sites/all/themes/custom/${project.theme_name}" command="bower install" logoutput="true" checkreturn="true" />
       </then>
     </if>
