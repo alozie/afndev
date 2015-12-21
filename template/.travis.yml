@@ -42,7 +42,7 @@ before_install:
 
 install:
   # Load composer dependencies.
-  - composer install
+  - composer install --prefer-source
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/vendor/bin
 
 before_script:
@@ -53,7 +53,7 @@ script:
   - ./task.sh -Dbehat:run-server=true -Dbehat.run-server=true -Dbehat.launch-phantom=true $TEST_SUITE
 
 after_success:
-  # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master`.
+  # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master-build`.
   # - scripts/deploy/travis-deploy.sh build:validate:test master master-build
-  # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop`.
+  # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop-build`.
   # - scripts/deploy/travis-deploy.sh build:validate:test develop develop-build
