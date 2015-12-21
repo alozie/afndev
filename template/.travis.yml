@@ -54,6 +54,6 @@ script:
 
 after_success:
   # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test master master-build
+  # - scripts/deploy/travis-deploy.sh build:validate:test master master
   # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop-build
+  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop
