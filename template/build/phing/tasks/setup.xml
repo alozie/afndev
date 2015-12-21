@@ -45,7 +45,7 @@
   </target>
 
   <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.settings.php.">
-    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php" overwrite="false"/>
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php"/>
   </target>
 
   <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
