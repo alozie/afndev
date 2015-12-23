@@ -64,7 +64,7 @@
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
 
     <!-- Symlink the multisite related configuration. -->
-    <exec dir="${repo.root}" command="ln -s ../../../sites/sites.php docroot/sites/sites.php" />
+    <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
     <foreach param="dirname" absparam="absname" target="setup:build:symlinks:settings">
       <fileset dir="${repo.root}/sites/">
         <exclude name="default"></exclude>
