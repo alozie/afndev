@@ -38,6 +38,9 @@ if ($is_ah_env) {
       $conf['page_compression'] = TRUE;
       $conf['preprocess_css'] = TRUE;
       $conf['preprocess_js'] = TRUE;
+
+      // Disabling error reporting, which prevents caching.
+      $conf['error_level'] = 0;
       break;
   }
 

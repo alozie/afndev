@@ -26,5 +26,5 @@ $conf['clamav_enabled'] = 0;
 $conf['clamav_enable_element_image_widget'] = 0;
 $conf['clamav_enable_element_file_widget'] = 0;
 $conf['cron_safe_threshold'] = 0;
-
+$conf['error_level'] = 1;
 $conf['stage_file_proxy_origin'] = '';

@@ -88,7 +88,7 @@ NO_SYNTAX_ERROR=0
 # PHP syntax error code
 SYNTAX_ERROR=255
 
-PHPCS_BIN=bin/phpcs
+PHPCS_BIN=vendor/bin/phpcs
 
 # Code Sniffer failed
 PHPCS_FAILED=1
