@@ -30,8 +30,8 @@ $is_ah_free_tier = (!empty($_ENV['ACQUIA_HOSTING_DRUPAL_LOG']) && strstr($_ENV['
 $is_ah_dev_env = (preg_match('/^dev[0-9]*$/', $ah_env) == TRUE);
 $is_local_env = !$is_ah_env;
 
-if ($ah_env) {
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+if ($is_ah_env) {
+  switch ($ah_env) {
     default:
       // Dynamically set base url based on Acquia environment variable.
       $domain_prefix = $is_ah_free_tier ? 'devcloud' : 'prod';
