@@ -16,8 +16,9 @@
 
   <!-- Run code sniffer against all custom code. -->
   <target name="validate:phpcs" description="Runs PHP Code Sniffer against only custom modules.">
+    <property name="phpcs.ruleset" value="${repo.root}/vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml"/>
     <phpcodesniffer
-        standard="${repo.root}/vendor/drupal/coder/coder_sniffer/Drupal/"
+        standard="${phpcs.ruleset}"
         showSniffs="true"
         showWarnings="true"
         haltonerror="true"
