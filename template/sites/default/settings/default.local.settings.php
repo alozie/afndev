@@ -25,8 +25,6 @@ $databases = array(
   ),
 );
 
-$base_url = 'http://127.0.0.1:8080';
-
 // Configuration directories.
 $dir = dirname(DRUPAL_ROOT);
 $config_directories['sync'] = $dir . '/config/default';
@@ -108,3 +106,7 @@ $settings['extension_discovery_scan_tests'] = TRUE;
  * using these parameters in a request to rebuild.php.
  */
 $settings['rebuild_access'] = TRUE;
+
+// Get the $base_url.
+require_once __DIR__ . '/local.uri.php';
+$base_url = get_local_uri();

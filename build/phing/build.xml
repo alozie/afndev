@@ -47,12 +47,14 @@
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
     <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
+    <copy file="${bolt.root}/template/sites/default/settings/default.local.uri.php" tofile="${bolt.root}/local.uri.php" />
 
     <echo></echo>
     <echo>The following files have been generated:</echo>
     <echo>${bolt.root}/make.yml</echo>
     <echo>${bolt.root}/project.yml</echo>
     <echo>${bolt.root}/local.settings.php</echo>
+    <echo>${bolt.root}/local.uri.php</echo>
     <echo></echo>
     <echo>Modify these files and then run "./task.sh bolt:create" to generate a new project.</echo>
   </target>
@@ -85,6 +87,7 @@
     <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
     <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" overwrite="true" />
+    <copy file="${bolt.root}/local.uri.php" tofile="${bolt.new.dir}/sites/default/settings/local.uri.php" overwrite="true" />
 
     <!-- Rename minimal profile in new project. -->
     <if>

@@ -155,4 +155,19 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             $this->assertNotContains('Invalid commit message', $output);
         }
     }
+
+
+    /**
+     * Tests that correct drush binary is called from project and docroot.
+     */
+    public function testDrushWrapper()
+    {
+        // Assert that correct binary is called from project root.
+        chdir($this->new_project_dir);
+        $this->assertContains('wrapper', shell_exec('drush status --debug 2>&1'));
+
+        // Assert that correct binary is called from docroot.
+        chdir($this->new_project_dir . '/docroot');
+        $this->assertContains('wrapper', shell_exec('drush status --debug 2>&1'));
+    }
 }

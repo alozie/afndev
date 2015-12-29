@@ -1,8 +1,7 @@
 # Ignore config files
 project.yml
 make.yml
-local.yml
-local.settings.php
+local.*
 
 # Ignore build artifacts
 bin/*

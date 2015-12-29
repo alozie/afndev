@@ -20,7 +20,7 @@
     "squizlabs/php_codesniffer":    "2.*",
     "phing/phing":                  "2.*",
     "jakoch/phantomjs-installer":   "1.9.8",
-    "drush/drush":                  "~8.0-rc3",
+    "drush/drush":                  "~8.0",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
   "scripts": {
