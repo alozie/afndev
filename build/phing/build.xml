@@ -47,6 +47,14 @@
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
     <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
+
+    <echo></echo>
+    <echo>The following files have been generated:</echo>
+    <echo>${bolt.root}/make.yml</echo>
+    <echo>${bolt.root}/project.yml</echo>
+    <echo>${bolt.root}/local.settings.php</echo>
+    <echo></echo>
+    <echo>Modify these files and then run "./task.sh bolt:create" to generate a new project.</echo>
   </target>
 
   <!-- Create a new project directory based on current repository. -->
@@ -118,7 +126,8 @@
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
-    <echo>Please change to the new project directory and run:</echo>
+    <echo>Please change to the new project directory and run the setup task:</echo>
+    <echo>cd ${bolt.new.dir}</echo>
     <echo>./task.sh setup</echo>
   </target>
 
