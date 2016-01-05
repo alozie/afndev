@@ -2,6 +2,9 @@
 
   <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
           depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
+
+    <echo>For a full list of available Phing targets, run:</echo>
+    <echo>./task.sh -l</echo>
   </target>
 
   <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">

@@ -488,11 +488,6 @@ class BehatTask extends Task
     $output = array();
     $return = system($command, $output);
 
-    // Collect Behat output for display through the Phing log.
-    foreach ($output as $line) {
-      $this->log($line);
-    }
-
     // Return the output into a Phing property if specified.
     if (!empty($this->output_property)) {
       $this->getProject()
