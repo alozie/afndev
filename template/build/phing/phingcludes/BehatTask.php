@@ -486,7 +486,7 @@ class BehatTask extends Task
 
     // Run Behat.
     $output = array();
-    exec($command, $output, $return);
+    $return = system($command, $output);
 
     // Collect Behat output for display through the Phing log.
     foreach ($output as $line) {
