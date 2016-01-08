@@ -15,6 +15,8 @@
       </then>
     </if>
 
+    <!-- Delete the existing deploy directory and re-initialize as an empty git repository. -->
+    <delete dir="${deploy.dir}/.git" failonerror="false" quiet="true" />
     <exec command="git init ${deploy.dir}" logoutput="true"/>
 
     <!-- Add remotes and fetch upstream refs. Checkout local branch tracking
@@ -37,10 +39,10 @@
     <exec command="git remote add ${remoteName} ${deploy.remote}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
     <exec command="git fetch ${remoteName}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
 
-    <!-- This will only be successful for the first remote, which is good.
-         `git checkout -b` will work only when exactly one remote has a matching
-         branch. -->
-    <exec command="git checkout -b ${deploy.branch} ${remoteName}/${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <!-- Create the new branch. -->
+    <exec command="git checkout -b ${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <!-- Pull the latest updates (if available). -->
+    <exec command="git merge ${remoteName}/${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
@@ -80,6 +82,8 @@
     <copy todir="${deploy.dir}/config" overwrite="true">
       <fileset dir="${repo.root}/config"/>
     </copy>
+    <!-- Use our own .gitignore -->
+    <copy file="${repo.root}/build/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
