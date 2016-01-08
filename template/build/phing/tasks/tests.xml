@@ -17,7 +17,7 @@
            profile="${behat.profile}"
            verbose="true"
            strict="true"
-           haltonerror="true"
+           haltonerror="false"
            returnProperty="behatPass"
            out="std,${reports.localDir}"
            format="pretty,junit"

@@ -34,11 +34,6 @@ local:
       #   wd_host: "http://localhost:8643/wd/hub"
       #   browser: chrome
       #
-      # use the following three lines to configure zombie.js.
-      # zombie:
-      #   node_modules_path: /usr/lib/node_modules/
-      #   auto_server: false
-      #
       # use the following lines to disable SSL authentication for goutte.
       # goutte:
       #   guzzle_parameters:
