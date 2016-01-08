@@ -6,7 +6,7 @@
         <equals arg1="${project.theme_name}" arg2="thunder" />
       </not>
       <then>
-        <exec dir="${repo.root}/sites/all/themes/custom/${project.theme_name}" command="gulp" logoutput="true" checkreturn="true" />
+        <exec dir="${repo.root}/sites/all/themes/custom/${project.theme_name}" command="npm test" logoutput="true" checkreturn="true" />
       </then>
     </if>
   </target>
