@@ -2,7 +2,7 @@
 
   <!-- Run all validation targets. -->
   <target name="validate:all" description="Runs all code validation targets."
-          depends="validate:lint, validate:phpcs, validate:phpmd"/>
+          depends="validate:lint, validate:phpcs"/>
 
   <!-- Run linter against all php files in repository. -->
   <target name="validate:lint" description="Runs a PHP Lint against all code.">
@@ -36,13 +36,5 @@
       <fileset refid="files.php.tests"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
-  </target>
-
-  <!-- Run code complexity and cleanliness checks on custom code. -->
-  <target name="validate:phpmd" description="Runs PHP Mess Detector against only custom code.">
-    <phpmd rulesets="codesize,unusedcode,cleancode">
-      <fileset refid="files.php.custom.modules"/>
-      <formatter type="text" outfile="false" usefile="false"/>
-    </phpmd>
   </target>
 </project>
