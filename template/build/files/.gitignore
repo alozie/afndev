@@ -1,0 +1,7 @@
+# This file will be copied into the docroot of the build artifact.
+# Drupal 7 core includes a .gitignore file that ignores the settings.php file,
+# and we don't want to ignore that.
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
