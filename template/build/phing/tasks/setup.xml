@@ -65,6 +65,20 @@
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
+
+    <!-- Symlink the multisite related configuration. -->
+    <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
+    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:settings">
+      <fileset dir="${repo.root}/sites/">
+        <exclude name="default"></exclude>
+        <type type="dir" />
+        <depth max="0" min="0" />
+      </fileset>
+    </foreach>
+  </target>
+
+  <target name="setup:build:symlinks:settings">
+    <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
   </target>
 
   <target name="setup:drupal:install"
