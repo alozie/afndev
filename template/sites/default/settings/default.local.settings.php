@@ -106,7 +106,3 @@ $settings['extension_discovery_scan_tests'] = TRUE;
  * using these parameters in a request to rebuild.php.
  */
 $settings['rebuild_access'] = TRUE;
-
-// Get the $base_url.
-require_once __DIR__ . '/local.uri.php';
-$base_url = get_local_uri();

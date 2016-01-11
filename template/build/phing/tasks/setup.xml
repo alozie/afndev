@@ -1,7 +1,7 @@
 <project name="setup" default="setup">
 
   <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
-        depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install, setup:drush">
+        depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
     <echo>For a full list of available Phing targets, run:</echo>
     <echo>./task.sh -l</echo>
     <echo></echo>
@@ -62,6 +62,7 @@
 
     <!-- Symlink settings. -->
     <exec dir="${repo.root}" command="ln -s ../../../drush docroot/sites/default/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/drushrc.php docroot/sites/default/drushrc.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
@@ -107,13 +108,6 @@
       <!-- This key is defined in /drush/drushrc.php. -->
       <option name="structure-tables-key">"lightweight"</option>
     </drush>
-  </target>
-
-  <target name="setup:drush" description="Generates .drush-use file to ensure correct drush binary is used in docroot.">
-    <exec dir="${docroot}" command="echo -n " logoutput="true" passthru="true">
-      <arg value="../drush.wrapper"/>
-      <arg value="> .drush-use"/>
-    </exec>
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
