@@ -70,6 +70,12 @@
         </condition>
         <fail if="do.abort">Build aborted by user.</fail>
         <!-- Remove from existing directory. -->
+        <if>
+          <available file="${bolt.new.dir}/docroot/sites/default" type="dir" />
+          <then>
+            <chmod file="${bolt.new.dir}/docroot/sites/default" mode="0777" quiet="true" failonerror="false" />
+          </then>
+        </if>
         <delete dir="${bolt.new.dir}" />
       </then>
     </if>
