@@ -17,6 +17,7 @@ if ($conf['is_edit_domain']) {
 if ($is_ah_env) {
   switch ($ah_env) {
     case 'prod':
+      $conf['reverse_proxy_header'] = 'HTTP_X_AH_CLIENT_IP';
       if ($conf['is_edit_domain']) {
         $base_url = 'https://edit.example.com';
         $cookie_domain = '.edit.example.com';
