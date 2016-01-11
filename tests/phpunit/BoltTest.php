@@ -156,18 +156,28 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-
     /**
-     * Tests that correct drush binary is called from project and docroot.
+     * Tests that correct drush configuration is loaded.
      */
-    public function testDrushWrapper()
+    public function testDrushConfig()
     {
-        // Assert that correct binary is called from project root.
-        chdir($this->new_project_dir);
-        $this->assertContains('wrapper', shell_exec('drush status --debug 2>&1'));
+        // We must define the absolute path of the binary because child shell
+        // processes in PHP to not inherit $PATH setting from environment.
+        $drush_bin = $this->new_project_dir . '/vendor/bin/drush';
+        $command = "$drush_bin status";
 
-        // Assert that correct binary is called from docroot.
-        chdir($this->new_project_dir . '/docroot');
-        $this->assertContains('wrapper', shell_exec('drush status --debug 2>&1'));
+        $dirs = array(
+            $this->new_project_dir,
+            $this->new_project_dir . '/docroot',
+            $this->new_project_dir . '/docroot/sites/default',
+        );
+
+        foreach ($dirs as $dir) {
+            chdir($dir);
+            print "Executing \"$command\" in $dir \n";
+            // If it contains the local URI, we know it is correctly loading
+            // drushrc.php.
+            $this->assertContains('http://127.0.0.1:8080', shell_exec($command));
+        }
     }
 }
