@@ -1,10 +1,10 @@
 <project name="setup" default="setup">
 
   <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
-          depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
-
+        depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
     <echo>For a full list of available Phing targets, run:</echo>
     <echo>./task.sh -l</echo>
+    <echo></echo>
   </target>
 
   <!-- This is run when a project is cloned to a new environment. -->
@@ -62,6 +62,7 @@
 
     <!-- Symlink settings. -->
     <exec dir="${repo.root}" command="ln -s ../../../drush docroot/sites/default/drush"/>
+    <exec dir="${repo.root}" command="ln -s ../../../sites/default/drushrc.php docroot/sites/default/drushrc.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
     <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
@@ -118,13 +119,12 @@
     <drush command="sql-sync" assume="yes">
       <param>"${db.source}"</param>
       <param>"@self"</param>
-      <!-- This key is defined in /sites/all/drush/drushrc.php. -->
+      <!-- This key is defined in /drush/drushrc.php. -->
       <option name="structure-tables-key">"lightweight"</option>
     </drush>
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
-
     <!-- Symlink into .git directory. -->
     <delete dir="${repo.root}/.git/hooks" quiet="true" failonerror="false"/>
     <exec dir="${repo.root}/.git" command="ln -snv ../scripts/git-hooks hooks" logoutput="true"/>

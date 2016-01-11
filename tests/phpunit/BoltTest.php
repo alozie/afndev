@@ -155,4 +155,29 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             $this->assertNotContains('Invalid commit message', $output);
         }
     }
+
+    /**
+     * Tests that correct drush configuration is loaded.
+     */
+    public function testDrushConfig()
+    {
+        // We must define the absolute path of the binary because child shell
+        // processes in PHP to not inherit $PATH setting from environment.
+        $drush_bin = $this->new_project_dir . '/vendor/bin/drush';
+        $command = "$drush_bin status";
+
+        $dirs = array(
+            $this->new_project_dir,
+            $this->new_project_dir . '/docroot',
+            $this->new_project_dir . '/docroot/sites/default',
+        );
+
+        foreach ($dirs as $dir) {
+            chdir($dir);
+            print "Executing \"$command\" in $dir \n";
+            // If it contains the local URI, we know it is correctly loading
+            // drushrc.php.
+            $this->assertContains('http://127.0.0.1:8080', shell_exec($command));
+        }
+    }
 }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b6e2ff37af22c05e792a8f28da643cca",
-    "content-hash": "1f2512fc8666240b6a04a9d1d4d66293",
+    "hash": "5ecc0cbb1489ca2f73eba7319c86f7c0",
+    "content-hash": "fdfe629ed3707c950eaa96513b5752d8",
     "packages": [
         {
             "name": "behat/behat",
@@ -691,27 +691,28 @@
         },
         {
             "name": "drush/drush",
-            "version": "8.0.1",
+            "version": "8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "e03a3ef04f559f7ec00df637b4035e09c9cf389e"
+                "reference": "5c90a1d3d201bde1d733afa5d2a1885056a3932f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/e03a3ef04f559f7ec00df637b4035e09c9cf389e",
-                "reference": "e03a3ef04f559f7ec00df637b4035e09c9cf389e",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/5c90a1d3d201bde1d733afa5d2a1885056a3932f",
+                "reference": "5c90a1d3d201bde1d733afa5d2a1885056a3932f",
                 "shasum": ""
             },
             "require": {
                 "pear/console_table": "~1.2.0",
                 "php": ">=5.4.5",
+                "psr/log": "~1.0",
                 "psy/psysh": "~0.6",
                 "symfony/var-dumper": "^2.6.3",
                 "symfony/yaml": "2.7.*"
             },
             "require-dev": {
-                "phpunit/phpunit": ">=3.5",
+                "phpunit/phpunit": "4.*",
                 "symfony/process": "2.7.*"
             },
             "suggest": {
@@ -784,7 +785,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2015-11-29 00:43:35"
+            "time": "2016-01-08 18:28:35"
         },
         {
             "name": "fabpot/goutte",
@@ -1952,6 +1953,44 @@
                 "response"
             ],
             "time": "2015-05-04 20:22:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
         },
         {
             "name": "psy/psysh",
@@ -3261,8 +3300,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "behat/mink": 0,
-        "drush/drush": 5
+        "behat/mink": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

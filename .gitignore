@@ -1,8 +1,8 @@
 # Ignore config files
 project.yml
 make.yml
-local.yml
-local.settings.php
+local.*
+/drushrc.php
 
 # Ignore build artifacts
 bin/*

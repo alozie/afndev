@@ -11,7 +11,8 @@
  * listed below in order of precedence:
  *
  * 1.  Drupal site folder (e.g. sites/{default|example.com}/drushrc.php).
- * 2.  Drupal sites/all/drush folder.
+ * 2.  Drupal /drush and sites/all/drush folders, or the /drush folder
+ *       in the directory above the Drupal root.
  * 3.  In any location, as specified by the --config (-c) option.
  * 4.  User's .drush folder (i.e. ~/.drush/drushrc.php).
  * 5.  System wide configuration folder (e.g. /etc/drush/drushrc.php).
@@ -48,12 +49,6 @@
  * even if the Drush command being run does not bootstrap to the Drupal Site
  * phase.
  *
- * IMPORTANT NOTE for users upgrading from Drush 4:
- *
- * Drush 5 no longer looks for aliases, configs or command files in the Drupal
- * root folder, so if you previously used drushrc.php files in the Drupal root
- * you will need to move the file to sites/all/drush/drushrc.php.
- *
  * The Drush commands 'rsync' and 'sql-sync' are special cases.  These commands
  * will load the configuration file for the site specified by the source
  * parameter; however, they do not load the configuration file for the site
@@ -64,11 +59,13 @@
  * affects the loading of Drush configuration files.
  */
 
-// Specify a particular multisite.
-// $options['l'] = 'http://example.com/subir';
+$options['uri'] = 'http://127.0.0.1:8080';
+
+// Specify the base_url that should be used when generating links
+# $options['l'] = 'http://example.com/subdir';
 
 // Specify your Drupal core base directory (useful if you use symlinks).
-// $options['r'] = '/home/USER/workspace/drupal-6';
+# $options['r'] = '/home/USER/workspace/drupal-6';
 
 /**
  * Useful shell aliases:
@@ -80,68 +77,33 @@
  *
  * @see https://git.wiki.kernel.org/index.php/Aliases#Advanced
  */
-// @codingStandardsIgnoreStart
-// $options['shell-aliases']['pull'] = '!git pull'; // We've all done it.
-// $options['shell-aliases']['pulldb'] = '!git pull && drush updatedb';
-// $options['shell-aliases']['noncore'] = 'pm-list --no-core';
-// $options['shell-aliases']['wipe'] = 'cache-clear all';
-// $options['shell-aliases']['unsuck'] = 'pm-disable -y overlay,dashboard';
-// $options['shell-aliases']['offline'] = 'variable-set -y --always-set maintenance_mode 1';
-// $options['shell-aliases']['online'] = 'variable-delete -y --exact maintenance_mode';
-// $options['shell-aliases']['dis-all'] = '!drush -y dis `drush pml --status=enabled --type=module --no-core --pipe`';
-// $options['shell-aliases']['self-alias'] = 'site-alias @self --with-db --alias-name=new';
-
+# $options['shell-aliases']['pull'] = '!git pull'; // We've all done it.
+# $options['shell-aliases']['pulldb'] = '!git pull && drush updatedb';
+# $options['shell-aliases']['cpull'] = 'config-pull @example.prod @self --label=vcs';
+# $options['shell-aliases']['noncore'] = 'pm-list --no-core';
+# $options['shell-aliases']['wipe'] = 'cache-clear all';
+# $options['shell-aliases']['unsuck'] = 'pm-disable -y overlay,dashboard';
+# $options['shell-aliases']['offline'] = 'variable-set -y --always-set maintenance_mode 1';
+# $options['shell-aliases']['online'] = 'variable-delete -y --exact maintenance_mode';
+# $options['shell-aliases']['dis-all'] = '!drush -y dis `drush pml --status=enabled --type=module --no-core --pipe`';
+# $options['shell-aliases']['self-alias'] = 'site-alias @self --with-db --alias-name=new';
+# $options['shell-aliases']['site-get'] = '@none php-eval "return drush_sitealias_site_get();"';
 // Add a 'pm-clone' to simplify git cloning from drupal.org.
-// $options['shell-aliases']['pm-clone'] = 'pm-download --gitusername=YOURUSERNAME --package-handler=git_drupalorg';
-
-// You can create a local cache of all projects checked out using
-// --package-handler=git_drupalorg; this can be faster for repeated
-// downloads, but can be dangerous. See: http://randyfay.com/node/119
-// $options['cache'] = TRUE;
-// @codingStandardsIgnoreEnd
-
-/**
- * Historical (deprecated) aliases:
- *
- * The following aliases were supported in Drush 4, but removed in Drush 5.  To
- * keep using them, uncomment the following lines or copy them to your drushrc
- * file.
- */
-// $options['shell-aliases']['script'] = 'php-script';
-// $options['shell-aliases']['sync'] = 'core-rsync';
-// $options['shell-aliases']['installsite'] = 'site-install';
-// $options['shell-aliases']['is'] = 'site-install';
-// $options['shell-aliases']['wd'] = 'watchdog-delete';
-// $options['shell-aliases']['enable'] = 'pm-enable';
-// $options['shell-aliases']['disable'] = 'pm-disable';
-// $options['shell-aliases']['uninstall'] = 'pm-uninstall';
-// $options['shell-aliases']['sm'] = 'pm-list';
-// $options['shell-aliases']['refresh'] = 'pm-refresh';
-// $options['shell-aliases']['updatecode'] = 'pm-updatecode';
-// $options['shell-aliases']['update'] = 'pm-update';
-// $options['shell-aliases']['download'] = 'pm-download';
+# $options['shell-aliases']['pm-clone'] = 'pm-download --gitusername=YOURUSERNAME --package-handler=git_drupalorg';
 
 // Load a drushrc.php configuration file from the current working directory.
-// $options['config'][] = '.';
-
-/**
- * Enable logging and periodic upload of anonymized usage statistics. The Drush
- * maintainers use this data to learn which commands and options are most
- * See the usage-show and usage-send commands.
- */
-// $options['drush_usage_log'] = TRUE;
-// $options['drush_usage_send'] = TRUE;
+# $options['config'][] = './drushrc.php';
 
 /**
  * By default, Drush will download projects compatible with the current
- * version of Drupal, or, if no Drupal site is specified, then the Drupal-7
+ * version of Drupal, or, if no Drupal site is specified, then the Drupal-8
  * version of the project is downloaded.  Set default-major to select a
  * different default version.
  */
-// $options['default-major'] = 6;
+# $options['default-major'] = 7;
 
 // Clone extensions (modules, themes, etc.) from drupal.org via 'pm-download'.
-// $options['package-handler'] = 'git_drupalorg';
+# $options['package-handler'] = 'git_drupalorg';
 
 /**
  * Specify folders to search for Drush command files (*.drush.inc).  These
@@ -149,13 +111,13 @@
  * in other configuration files.  On the command line, paths may be separated
  * by a colon (:) on Unix-based systems or a semi-colon (;) on Windows.
  */
-// $options['include'] = array('/path/to/commands','/path2/to/more/commands');
+# $options['include'] = array('/path/to/commands','/path2/to/more/commands');
 
 /**
  * Specify the modules to ignore when searching for command files (*.drush.inc)
  * inside a Drupal site.
  */
-// $options['ignored-modules'] = array('module1', 'module2');
+# $options['ignored-modules'] = array('module1', 'module2');
 
 /**
  * Specify the folders to search for Drush alias files (*.alias.drushrc.php and
@@ -164,15 +126,7 @@
  * line, paths may be separated by a colon (:) on Unix-based systems or a
  * semi-colon (;) on Windows.
  */
-// $options['alias-path'] = array('/path/to/aliases','/path2/to/more/aliases');
-
-/**
- * Specify the folder where 'sql-sync' should store persistent dump files.
- * Keeping the dump files around improves the performance of rsync when the
- * database is rsync'ed to a remote system.  If a dump directory is not
- * specified, then 'sql-sync' will store dumps in temporary files.
- */
-// $options['dump-dir'] = '/path/to/dumpdir';
+# $options['alias-path'] = array('/path/to/aliases','/path2/to/more/aliases');
 
 /**
  * Specify the filename and path where 'sql-dump' should store backups of
@@ -185,15 +139,18 @@
  * on the command line) will cause 'sql-dump' to use the same temporary backup
  * location as 'pm-updatecode'.
  */
-// $options['result-file'] = TRUE;
-// $options['result-file'] = '/path/to/backup/dir/@DATABASE_@DATE.sql';
+# $options['result-file'] = TRUE;
+# $options['result-file'] = '/path/to/backup/dir/@DATABASE_@DATE.sql';
 
+// Notify user via Notification Center (OSX) or libnotify (Linux) when command
+// takes more than 30 seconds. See global options for more configuration.
+# $options['notify'] = 30;
 
 // Enable verbose mode.
-// $options['v'] = 1;
+# $options['v'] = 1;
 
 // Show database passwords in 'status' and 'sql-conf' commands.
-// $options['show-passwords'] = 1;
+# $options['show-passwords'] = 1;
 
 /**
  * Specify the logging level for PHP notices.  Defaults to "notice".  Set to
@@ -201,25 +158,32 @@
  * is set to E_ALL in your php configuration file.  See `drush status` for the
  * path to your php.ini file.
  */
-// $options['php-notices'] = 'warning';
+# $options['php-notices'] = 'warning';
+
+/**
+ * Specify the error handling of recoverable errors (E_RECOVERABLE_ERROR).
+ * Defaults to 1 and will stop execution of Drush.
+ * When set to 0, execution will continue.
+ */
+# $options['halt-on-error'] = 0;
 
 /**
  * Specify options to pass to ssh in backend invoke.  The default is to prohibit
  * password authentication, and is included here, so you may add additional
  * parameters without losing the default configuration.
  */
-// $options['ssh-options'] = '-o PasswordAuthentication=no';
+# $options['ssh-options'] = '-o PasswordAuthentication=no';
 
 // Set 'remote-os' to 'Windows' to make Drush use Windows shell escape rules
 // for remote sites that do not have an 'os' item set.
-// $options['remote-os'] = 'Linux';
+# $options['remote-os'] = 'Linux';
 
 // By default, unknown options are disallowed and result in an error.  Change
 // them to issue only a warning and let command proceed.
-// $options['strict'] = FALSE;
+# $options['strict'] = FALSE;
 
 /**
- * Drush requires at least rsync version 2.6.4 for some functions to work
+ * Drush requires at least rsync version 2.6.9 for some functions to work
  * correctly.  rsync version 2.6.8 or earlier may give the following error
  * message: "--remove-source-files: unknown option".  To fix this, set
  * $options['rsync-version'] = '2.6.8'; (replace with the lowest version of
@@ -228,7 +192,7 @@
  * newer versions of rsync are available on some of the systems you use.
  * See: http://drupal.org/node/955092
  */
-// $options['rsync-version'] = '2.6.9';
+# $options['rsync-version'] = '2.6.9';
 
 /**
  * The output charset suitable to pass to the iconv PHP function's out_charset
@@ -238,9 +202,9 @@
  * is possible to use //TRANSLIT and //IGNORE charset name suffixes (see iconv
  * documentation).  If not defined, conversion will not be performed.
  */
-// $options['output_charset'] = 'ISO-8859-1';
-// $options['output_charset'] = 'KOI8-R//IGNORE';
-// $options['output_charset'] = 'ISO-8859-1//TRANSLIT';
+# $options['output_charset'] = 'ISO-8859-1';
+# $options['output_charset'] = 'KOI8-R//IGNORE';
+# $options['output_charset'] = 'ISO-8859-1//TRANSLIT';
 
 /**
  * Multiple-site execution options:
@@ -255,34 +219,19 @@
  * multiple-site command execution.  To disable this behavior, set the
  * "--no-label" option.
  */
-// $options['no-label'] = TRUE;
+# $options['no-label'] = TRUE;
 
 /**
  * An explicit list of tables which should be included in sql-dump and sql-sync.
  */
-// @codingStandardsIgnoreStart
-// $options['tables']['common'] = array('user', 'permissions', 'role_permission', 'role');
-// @codingStandardsIgnoreEnd
-
+# $options['tables']['common'] = array('user', 'permissions', 'role_permission', 'role');
 
 /**
  * List of tables whose *data* is skipped by the 'sql-dump' and 'sql-sync'
  * commands when the "--structure-tables-key=common" option is provided.
  * You may add specific tables to the existing array or add a new element.
  */
-$options['structure-tables']['lightweight'] = array(
-  'cache',
-  'cache_*',
-  'history',
-  'linkchecker_*',
-  'migrate_*',
-  'redirect',
-  'search_*',
-  'sessions',
-  'watchdog',
-  'webform_submissions',
-  'webform_submitted_data',
-);
+# $options['structure-tables']['common'] = array('cache', 'cache_*', 'history', 'search_*', 'sessions', 'watchdog');
 
 /**
  * List of tables to be omitted entirely from SQL dumps made by the 'sql-dump'
@@ -291,16 +240,14 @@ $options['structure-tables']['lightweight'] = array(
  * non-Drupal tables used by some other application or during a migration for
  * example.  You may add new tables to the existing array or add a new element.
  */
-// @codingStandardsIgnoreStart
-// $options['skip-tables']['common'] = array('migration_data1', 'migration_data2');
-// @codingStandardsIgnoreEnd
+# $options['skip-tables']['common'] = array('migration_*');
 
 /**
- * Override specific entries in Drupal's 'variable' table or settings.php
+ * Override specific entries in Drupal's variable system or settings.php (D6/D7 only).
  */
-// $options['variables']['site_name'] = 'My Drupal site';
-// $options['variables']['theme_default'] = 'minnelli';
-// $options['variables']['anonymous'] = 'Visitor';
+# $options['variables']['site_name'] = 'My Drupal site';
+# $options['variables']['theme_default'] = 'minnelli';
+# $options['variables']['anonymous'] = 'Visitor';
 
 /**
  * Command-specific execution options:
@@ -323,46 +270,22 @@ $options['structure-tables']['lightweight'] = array(
  * cleared by '--no-verbose', not '--no-v', and visa-versa.
  */
 
-// @codingStandardsIgnoreStart
 // Ensure all rsync commands use verbose output.
-// $command_specific['rsync'] = array('verbose' => TRUE);
+# $command_specific['rsync'] = array('verbose' => TRUE);
+
+// Prevent drush ssh command from adding a cd to Drupal root before provided command.
+# $command_specific['ssh'] = array('cd' => FALSE);
 
 // Additional folders to search for scripts.
 // Separate by : (Unix-based systems) or ; (Windows).
-// $command_specific['script']['script-path'] = 'sites/all/scripts:profiles/myprofile/scripts';
+# $command_specific['script']['script-path'] = 'sites/all/scripts:profiles/myprofile/scripts';
 
 // Always show release notes when running pm-update or pm-updatecode.
-// $command_specific['pm-update'] = array('notes' => TRUE);
-// $command_specific['pm-updatecode'] = array('notes' => TRUE);
+# $command_specific['pm-update'] = array('notes' => TRUE);
+# $command_specific['pm-updatecode'] = array('notes' => TRUE);
 
 // Set a predetermined username and password when using site-install.
-// $command_specific['site-install'] = array('account-name' => 'alice', 'account-pass' => 'secret');
-// @codingStandardsIgnoreEnd
+# $command_specific['site-install'] = array('account-name' => 'alice', 'account-pass' => 'secret');
 
-/**
- * List of Drush commands or aliases that should override built-in shell
- * functions and commands; otherwise, built-ins override Drush commands. Default
- * is 'help,dd,sa'.  Warning: bad things can happen if you put the wrong thing
- * here (e.g. eval, grep), so be cautious.  If a Drush command overrides a
- * built-in command (e.g. bash help), then you can use the `builtin` operator
- * to run the built-in version (e.g. `builtin help` to show bash help instead of
- * Drush help.) If a Drush command overrides a shell command (e.g. grep), then
- * you can use the regular shell command by typing in the full path to the
- * command (e.g. /bin/grep).
- */
-// $command_specific['core-cli'] = array('override' => 'help,dd,sa');
-
-/**
- * Load a drushrc file from the 'drush' folder at the root of the current
- * git repository.  Example script below by grayside.  Customize as desired.
- * @see: http://grayside.org/node/93.
- */
-// @codingStandardsIgnoreStart
-//  exec('git rev-parse --show-toplevel 2> /dev/null', $output);
-//  if (!empty($output)) {
-//    $repo = $output[0];
-//    $options['config'] = $repo . '/drush/drushrc.php';
-//    $options['include'] = $repo . '/drush/commands';
-//    $options['alias-path'] = $repo . '/drush/aliases';
-//  }
-// @codingStandardsIgnoreEnd
+// Use Drupal version specific CLI history instead of per site.
+# $command_specific['core-cli'] = array('version-history' => TRUE);
