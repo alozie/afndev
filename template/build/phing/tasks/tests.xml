@@ -52,7 +52,7 @@
     <delete dir="${reports.localDir}/phpunit" quiet="true"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 
-    <phpunit printsummary="true" failureproperty="phpunit.failures" errorproperty="phpunit.errors" configuration="${repo.root}/tests/phpunit/phpunit.xml">
+    <phpunit printsummary="true" failureproperty="phpunit.failures" errorproperty="phpunit.errors">
       <formatter type="plain" usefile="false"/>
       <formatter type="xml" todir="${reports.localDir}/phpunit"/>
       <batchtest>
