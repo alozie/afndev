@@ -70,7 +70,7 @@
 
     <!-- Symlink the multisite related configuration. -->
     <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
-    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:settings">
+    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:multisite">
       <fileset dir="${repo.root}/sites/">
         <exclude name="default"></exclude>
         <type type="dir" />
@@ -79,7 +79,7 @@
     </foreach>
   </target>
 
-  <target name="setup:build:symlinks:settings">
+  <target name="setup:build:symlinks:multisite">
     <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
   </target>
 
