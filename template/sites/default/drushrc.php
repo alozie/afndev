@@ -59,7 +59,9 @@
  * affects the loading of Drush configuration files.
  */
 
-$options['uri'] = 'http://127.0.0.1:8080';
+if (file_exists(__DIR__ . '/local.drushrc.php')) {
+  require_once __DIR__ . '/local.drushrc.php';
+}
 
 // Specify the base_url that should be used when generating links
 # $options['l'] = 'http://example.com/subdir';
