@@ -49,20 +49,20 @@ The following is an overview of the purpose of each top level directory in the
 project template:
 
     root
-      ├── bin     - Contains binaries built by Composer, as well as installation binaries.
-      ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
-      ├── docroot - The drupal docroot; is .gitignored. Created only during builds.
-      ├── readme  - Contains high level project documentation.
-      ├── git     - Contains configuration files that will be copied into a new project's .git directory upon installation.
-      ├── hooks   - Contains Acquia Cloud hooks.
-      ├── install - Contains Bolt configuration files. Removed from child projects.
-      ├── modules - Contains custom and contrib modules. Symlinked to docroot/modules.
-      ├── patches - Contains private patches to be used by make.yml.
-      ├── reports - Contains output of automated tests; is .gitignored.
-      ├── scripts - Contains a variety of utility scripts that are not part of the build process.
-      ├── tests   - Contains all test files and configuration.
-      ├── themes  - Contains custom and contrib themes. Symlinked to docroot/themes.
-      ├── vendor  - Contains built composer dependencies; is .gitignored.
+      ├── build    - Contains build config files for CI solutions. E.g., Phing configuration.
+      ├── drush    - Contain drush configuration that is not site or environment specific.
+      ├── docroot  - The drupal docroot; is .gitignored. Created only during builds.
+      ├── hooks    - Contains Acquia Cloud hooks.
+      ├── modules  - Contains custom and contrib modules; symlinked to docroot/modules.
+      ├── patches  - Contains private patches to be used by make.yml.
+      ├── profiles - Contains contrib and custom profiles; symlinked to docroot/profiles.
+      ├── readme   - Contains high level project documentation.
+      ├── reports  - Contains output of automated tests; is .gitignored.
+      ├── scripts  - Contains a variety of utility scripts that are not part of the build process.
+      ├── sites    - Contains sites; subdirectories are symlinked to docroot/sites.
+      ├── tests    - Contains all test files and configuration.
+      ├── themes   - Contains custom and contrib themes. Symlinked to docroot/themes.
+      ├── vendor   - Contains built composer dependencies; is .gitignored.
 
 ## Development Standards and Best Practices
 
