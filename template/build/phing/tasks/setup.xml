@@ -7,6 +7,14 @@
     <echo></echo>
   </target>
 
+  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
+    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
+      <filterchain>
+        <expandproperties />
+      </filterchain>
+    </copy>
+  </target>
+
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
       depends="setup:behat, setup:build:make, setup:build:symlinks, frontend:build">
@@ -70,7 +78,7 @@
 
     <!-- Symlink the multisite related configuration. -->
     <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
-    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:settings">
+    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:multisite">
       <fileset dir="${repo.root}/sites/">
         <exclude name="default"></exclude>
         <type type="dir" />
@@ -79,7 +87,7 @@
     </foreach>
   </target>
 
-  <target name="setup:build:symlinks:settings">
+  <target name="setup:build:symlinks:multisite">
     <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
   </target>
 
@@ -137,14 +145,6 @@
         <exclude name="**/README.md" />
       </fileset>
     </chmod>
-  </target>
-
-  <target name="setup:behat" description="Generates tests/behat/local.yml file for executing Behat tests locally.">
-    <copy file="${repo.root}/tests/behat/example.local.yml" tofile="${repo.root}/tests/behat/local.yml">
-      <filterchain>
-        <expandproperties />
-      </filterchain>
-    </copy>
   </target>
 
 </project>
