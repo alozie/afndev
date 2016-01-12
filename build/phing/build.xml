@@ -19,14 +19,14 @@
   <target name="bolt:new-project" description="Runs all targets required to spin up new project from Bolt." depends="bolt:configure, bolt:create"></target>
 
   <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
-    <delete file="${bolt.root}/project.yml"/>
-    <delete file="${bolt.root}/make.yml"/>
-    <delete file="${bolt.root}/local.settings.php"/>
-    <delete file="${bolt.root}/drushrc.php"/>
-    <delete file="${bolt.root}/template/project.yml"/>
-    <delete file="${bolt.root}/template/make.yml"/>
-    <delete file="${bolt.root}/template/sites/default/settings/local.settings.php"/>
-    <delete file="${bolt.root}/template/tests/behat/local.yml"/>
+    <delete file="${bolt.root}/project.yml" quiet="true"/>
+    <delete file="${bolt.root}/make.yml" quiet="true"/>
+    <delete file="${bolt.root}/local.settings.php" quiet="true"/>
+    <delete file="${bolt.root}/local.drushrc.php" quiet="true"/>
+    <delete file="${bolt.root}/template/project.yml" quiet="true"/>
+    <delete file="${bolt.root}/template/make.yml" quiet="true"/>
+    <delete file="${bolt.root}/template/sites/default/settings/local.settings.php" quiet="true"/>
+    <delete file="${bolt.root}/template/tests/behat/local.yml" quiet="true"/>
   </target>
 
   <!-- Creates new configuration files from example.*.yml files.
@@ -48,14 +48,14 @@
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
     <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
-    <copy file="${bolt.root}/template/sites/default/drushrc.php" tofile="${bolt.root}/drushrc.php" />
+    <copy file="${bolt.root}/template/sites/default/default.local.drushrc.php" tofile="${bolt.root}/local.drushrc.php" />
 
     <echo></echo>
     <echo>The following files have been generated:</echo>
     <echo>${bolt.root}/make.yml</echo>
     <echo>${bolt.root}/project.yml</echo>
     <echo>${bolt.root}/local.settings.php</echo>
-    <echo>${bolt.root}/drushrc.php</echo>
+    <echo>${bolt.root}/local.drushrc.php</echo>
     <echo></echo>
     <echo>Modify these files and then run "./task.sh bolt:create" to generate a new project.</echo>
   </target>
@@ -94,7 +94,7 @@
     <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
     <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" overwrite="true" />
-    <copy file="${bolt.root}/drushrc.php" tofile="${bolt.new.dir}/sites/default/drushrc.php" overwrite="true" />
+    <copy file="${bolt.root}/local.drushrc.php" tofile="${bolt.new.dir}/sites/default/local.drushrc.php" overwrite="true" />
 
     <!-- Rename minimal profile in new project. -->
     <if>

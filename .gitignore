@@ -2,7 +2,6 @@
 project.yml
 make.yml
 local.*
-/drushrc.php
 
 # Ignore build artifacts
 bin/*
