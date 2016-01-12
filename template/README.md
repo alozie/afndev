@@ -49,17 +49,17 @@ The following is an overview of the purpose of each top level directory in
 this project:
 
     root
-      ├── bin     - Contains binaries built by Composer, as well as installation binaries.
-      ├── build   - Contains build config files for CI solutions. E.g., Phing configuration.
-      ├── docroot - The drupal docroot. Intentionally .gitignored. Created only during builds.
-      ├── hooks   - Contains Acquia Cloud hooks.
-      ├── patches - Contains private patches to be used by make.yml.
-      ├── readme  - Contains high level project documentation.
-      ├── reports - Contains output of automated tests; is .gitignored.
-      ├── scripts - Contains a variety of utility scripts that are not part of the build process.
-      ├── sites   - Subdirectories within sites are symlinked to /docroot/sites.
-      ├── tests   - Contains all test files and configuration.
-      ├── vendor  - Contains built composer dependencies; is .gitignored.
+      ├── build    - Contains build config files for CI solutions. E.g., Phing configuration.
+      ├── docroot  - The drupal docroot. Intentionally .gitignored. Created only during builds.
+      ├── hooks    - Contains Acquia Cloud hooks.
+      ├── patches  - Contains private patches to be used by make.yml.
+      ├── profiles - Contains custom profiles; symlinked to docroot/profiles.
+      ├── readme   - Contains high level project documentation.
+      ├── reports  - Contains output of automated tests; is .gitignored.
+      ├── scripts  - Contains a variety of utility scripts that are not part of the build process.
+      ├── sites    - Subdirectories within sites are symlinked to /docroot/sites.
+      ├── tests    - Contains all test files and configuration.
+      ├── vendor   - Contains built composer dependencies; is .gitignored.
 
 ## Development Standards and Best Practices
 
