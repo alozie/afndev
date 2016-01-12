@@ -137,6 +137,19 @@
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
     <delete dir="${docroot}/profiles/${project.profile.name}" quiet="true"/>
     <exec dir="${repo.root}" command="ln -s ../../profiles/${project.profile.name} docroot/profiles/${project.profile.name}"/>
+
+    <!-- Symlink the multisite related configuration. -->
+    <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
+    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:multisite">
+      <fileset dir="${repo.root}/sites/">
+        <exclude name="default"></exclude>
+        <type type="dir" />
+        <depth max="0" min="0" />
+      </fileset>
+    </foreach>
   </target>
 
+  <target name="setup:build:symlinks:multisite" description="Links a specific multisite directory.">
+    <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
+  </target>
 </project>
