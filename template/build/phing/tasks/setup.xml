@@ -43,23 +43,6 @@
 
   </target>
 
-  <!-- Check for docroot. -->
-  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
-    <if>
-      <not>
-        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
-      </not>
-      <then>
-        <fail message="The docroot is missing. Please run setup:build:all." />
-      </then>
-    </if>
-  </target>
-
-  <target name="setup:drupal:settings" description="Create local settings files using default settings files.">
-    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php"/>
-    <copy file="${repo.root}/sites/default/default.local.drushrc.php" tofile="${repo.root}/sites/default/local.drushrc.php"/>
-  </target>
-
   <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
     <!-- Symlink modules and themes. -->
     <delete dir="${docroot}/modules/custom" quiet="true"/>
@@ -89,6 +72,23 @@
 
   <target name="setup:build:symlinks:multisite">
     <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
+  </target>
+
+  <!-- Check for docroot. -->
+  <target name="setup:check:docroot" description="Checks to see if docroot exists. Fails if it does not.">
+    <if>
+      <not>
+        <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
+      </not>
+      <then>
+        <fail message="The docroot is missing. Please run setup:build:all." />
+      </then>
+    </if>
+  </target>
+
+  <target name="setup:drupal:settings" description="Create local settings files using default settings files.">
+    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php"/>
+    <copy file="${repo.root}/sites/default/default.local.drushrc.php" tofile="${repo.root}/sites/default/local.drushrc.php"/>
   </target>
 
   <target name="setup:drupal:install"
