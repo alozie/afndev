@@ -20,19 +20,24 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # will not trigger deployment unless DEPLOY_PR is true.
 if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]] || [[ "${DEPLOY_PR}" = "true" ]];
   then
-    echo "Deployments will be triggered only for the \"${build_job}\" test suite on the \"${source_branch}\" branch."
+    echo "Deployments will be triggered only for the \"${build_job}\" test suite on the \"${source_branch}\" branch or on any tag."
     echo "Checking to see if this branch and build job should trigger deployment..."
 
-    # Trigger deployment only if $build_job and $source_branch parameters match
-    # current build variables.
-    if [[ "${TRAVIS_BRANCH}" = $source_branch ]] && [[ "${TEST_SUITE}" = $build_job ]]
+    # Trigger deployment if $source_branch parameters matches or this is a tag,
+    # and only if $build_job matches.
+    if [[ "${TRAVIS_BRANCH}" = $source_branch ]] || [[ "-z $TRAVIS_TAG" ]];
       then
-        echo "Build artifact will be deployed."
-        commit_msg="Automated commit by Travis CI for Build #${TRAVIS_BUILD_ID}";
-        # Call the `deploy` Phing target, passing in required parameters.
-        ${DIR}/../../task.sh deploy:artifact -Ddeploy.branch="${dest_branch}" -Ddeploy.commitMsg="${commit_msg}";
+        if [[ "${TEST_SUITE}" = $build_job ]];
+          then
+            echo "Build artifact will be deployed."
+            commit_msg="Automated commit by Travis CI for Build #${TRAVIS_BUILD_ID}";
+            # Call the `deploy` Phing target, passing in required parameters.
+            ${DIR}/../../task.sh deploy:artifact -Ddeploy.branch="${dest_branch}" -Ddeploy.commitMsg="${commit_msg}";
+          else
+            echo "Build artifact will NOT be deployed for this build job."
+        fi
       else
-        echo "Build artifact will NOT be deployed."
+        echo "Build artifact will NOT be deployed for this branch."
     fi
   else
     echo "Build artifacts are not deployed for Pull Requests."
