@@ -92,7 +92,7 @@ function process_github() {
         continue;
       }
 
-      print_pr($pr['title'], $pr['body'], $closed_date, $pr['html_url']);
+      print_pr_compact($pr['title'], $pr['body'], $closed_date, $pr['html_url']);
     }
   }
 }
@@ -156,6 +156,11 @@ function print_pr($title, $description, $date, $link) {
   print date("F j, Y", $date) . ' ([' . $link . ']' . '(' . $link . '))' . PHP_EOL . PHP_EOL;
   // Print the PR Body.
   print $description . PHP_EOL . PHP_EOL;
+}
+
+function print_pr_compact($title, $description, $date, $link) {
+  $date_formatted =  date("F j, Y", $date);
+  print "* $date_formatted: [$title]($link) \n";
 }
 
 ?>
