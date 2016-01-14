@@ -76,9 +76,12 @@ class DeployTest extends \PHPUnit_Framework_TestCase
             }
 
             // We expect the remote git log to contain a commit message matching
-            // the syntax specified in deploy:build. I.e.,
+            // the current build number, unless this build has not introduced
+            // any new changes. Example message:
             // "Automated commit by Travis CI for Build #$travis_build_id".
-            $this->assertContains('#' . $_ENV['TRAVIS_BUILD_ID'], $log);
+            if (!empty($_ENV['DEPLOY_UPTODATE'])) {
+                $this->assertContains('#' . $_ENV['TRAVIS_BUILD_ID'], $log);
+            }
         }
     }
 }
