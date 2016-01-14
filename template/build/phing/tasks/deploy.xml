@@ -91,7 +91,6 @@
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${deploy.dir}/docroot"</param>
       <option name="concurrency">8</option>
-      <option name="no-gitinfofile"/>
       <option name="no-patch-txt"/>
     </drush>
   </target>
