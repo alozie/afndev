@@ -67,8 +67,13 @@
     <!-- Symlink modules, themes, and profiles. -->
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/modules/custom docroot/sites/all/modules/custom"/>
     <exec dir="${repo.root}" command="ln -s ../../../../sites/all/themes/custom docroot/sites/all/themes/custom"/>
-    <delete dir="${docroot}/profiles/${project.profile.name}" quiet="true"/>
-    <exec dir="${repo.root}" command="ln -s ../../profiles/${project.profile.name} docroot/profiles/${project.profile.name}"/>
+    <if>
+      <isfalse value="${project.profile.contrib}"/>
+      <then>
+        <delete dir="${docroot}/profiles/${project.profile.name}" quiet="true"/>
+        <exec dir="${repo.root}" command="ln -s ../../profiles/${project.profile.name} docroot/profiles/${project.profile.name}"/>
+      </then>
+    </if>
 
     <!-- Symlink the multisite related configuration. -->
     <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
