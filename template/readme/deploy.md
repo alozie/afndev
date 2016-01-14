@@ -19,21 +19,16 @@ repositories for source code (Github) and production code (ACE).
 You should have your Github repository (where this document is stored) checked 
 out locally. Your ACE repository should be empty, or nearly empty.
 
-In the root of this repository, clone your ACE repository into `/deploy`, i.e.:
-```
-git clone [user]@svn-12800.prod.hosting.acquia.com:[user].git deploy
-```
-This may seem like repo inception, but don't worry—the `/deploy` directory 
-should be ignored by the Github repo.
-
 Check out a new branch to match whatever branch you are working on in Github 
 (typically `develop`).
+
+Ensure your ACE remote is listed in project.yml under git:remotes.
 
 ## Creating the build artifact
 
 In order to create the build artifact in `/deploy`, simply run
 ```
-./task.sh deploy:build:all
+./task.sh deploy:build:artifact
 ```
 
 This task is analogous to `setup:build:all` but with a few critical differences:
@@ -46,13 +41,18 @@ being symlinked.
 
 ## Deploying the build artifact
 
-After the build artifact is created, you can simply cd into `/deploy` and use 
-standard Git commands to push the changes to ACE, i.e.:
-```
-git add -A
-git commit -m "Tracking Github commit [hash]."
-git push
-```
+After the build artifact is created, you can simply run:
+````
+./task.sh deploy:artifact -Ddeploy.branch=develop-build -Ddeploy.commitMsg='BLT-123: The commit message.'
+````
+
+This command will commit the artifact to the `develop-build` branch with the
+specified commit message and push it to the remotes defined in project.yml.
+
+## Build + Deploy
+
+You can build and deploy an artifact in a single command:
+
 
 ## Continuous integration
 
