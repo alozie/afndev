@@ -11,6 +11,15 @@
     <exclude name="**/vendor/**/*"/>
   </patternset>
 
+  <patternset id="files.frontend">
+    <include name="**/*.css"/>
+    <include name="**/*.js"/>
+    <exclude name="**/vendor/**/*"/>
+    <exclude name="**/node_modules/**/*"/>
+    <exclude name="**/bower/**/*"/>
+  </patternset>
+
+
   <fileset dir="${repo.root}" id="files.php.all">
     <patternset refid="files.php"/>
   </fileset>
@@ -31,7 +40,7 @@
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}" id="custom.themes">
-    <include name="sites/all/themes/custom/**"/>
+  <fileset dir="${repo.root}/sites/all/themes/custom" id="files.frontend.custom.themes" expandsymboliclinks="true">
+    <patternset refid="files.frontend"/>
   </fileset>
 </project>
