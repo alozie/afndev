@@ -9,6 +9,10 @@ projects:
   drupal:
     type: core
     version: ~
+    patch:
+      # Ignore front end vendor folders to improve directory search performance.
+      # https://www.drupal.org/node/2329453#comment-10658826
+      - https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch
   # For all projects, always specify the exact version that is to be used.
   # For any project using a dev branch, always specify the revision id.
   acquia_connector:
