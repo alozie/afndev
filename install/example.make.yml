@@ -30,6 +30,10 @@ projects:
       # https://www.drupal.org/node/1460766
       - https://www.drupal.org/files/issues/d7-block-cache-1460766-34.patch
 
+      # Ignore front end vendor folders to improve directory search performance
+      # https://www.drupal.org/node/2329453#comment-10622208
+      - https://www.drupal.org/files/issues/ignore_frontend_folders-2329453-101-7.x.patch
+
   # For all projects, always specify the exact version that is to be used.
   # For any project using a dev branch, always specify the revision id.
   acquia_purge:
