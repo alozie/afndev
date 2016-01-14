@@ -76,7 +76,7 @@
     <!-- Copy configuration files to new project. -->
     <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
-    <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" />
+    <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" overwrite="true"/>
 
     <!-- Rename minimal profile in new project. -->
     <if>
