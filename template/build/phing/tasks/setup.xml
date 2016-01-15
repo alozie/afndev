@@ -79,6 +79,7 @@
     <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
     <foreach param="dirname" absparam="absname" target="setup:build:symlinks:multisite">
       <fileset dir="${repo.root}/sites/">
+        <exclude name="all"></exclude>
         <exclude name="default"></exclude>
         <type type="dir" />
         <depth max="0" min="0" />
