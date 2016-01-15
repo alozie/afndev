@@ -1,8 +1,13 @@
 # Ignore configuration files that may contain sensitive information.
-docroot
 sites/*/*/local.settings.php
 build/phing/build.properties
 local.*
+drush/contrib
+docroot
+docroot/core
+docroot/modules/contrib
+docroot/themes/contrib
+docroot/profiles/contrib
 
 # Ignore paths that contain user-generated content.
 sites/*/files

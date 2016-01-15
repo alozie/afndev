@@ -16,8 +16,8 @@
   </target>
 
   <!-- This is run when a project is cloned to a new environment. -->
-  <target name="setup:build:all" description="Generates all required files for a full build. E.g., removes docroot, builds via `drush make`, restores symlinks, etc."
-      depends="setup:behat, setup:build:make, setup:build:symlinks, frontend:build">
+  <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, restores symlinks, etc."
+      depends="setup:behat, setup:composer:install, setup:build:symlinks, frontend:build">
   </target>
 
   <!-- Delete the docroot directory. Used prior to running Drush make. -->
@@ -31,16 +31,8 @@
     <delete dir="${docroot}" failonerror="false" quiet="true" />
   </target>
 
-  <!-- Drush make the build using a recursive strategy. -->
-  <target name="setup:build:make" description="Downloads core and contrib based on project's make.yml." depends="setup:build:rm-docroot">
-
-    <drush command="make" assume="yes">
-      <param>"${repo.root}/${project.make_file}"</param>
-      <param>"${docroot}"</param>
-      <option name="concurrency">8</option>
-      <option name="no-gitinfofile"></option>
-    </drush>
-
+  <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib." depends="setup:build:rm-docroot">
+    <exec dir="${repo.root}" command="composer install" logoutput="true" passthru="true"/>
   </target>
 
   <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">

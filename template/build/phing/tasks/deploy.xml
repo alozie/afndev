@@ -46,7 +46,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
+          depends="deploy:artifact:composer:install, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
   </target>
 
   <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
@@ -86,13 +86,8 @@
     <copy file="${repo.root}/build/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
   </target>
 
-  <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
-    <drush command="make" assume="yes">
-      <param>"${repo.root}/${project.make_file}"</param>
-      <param>"${deploy.dir}/docroot"</param>
-      <option name="concurrency">8</option>
-      <option name="no-patch-txt"/>
-    </drush>
+  <target name="deploy:artifact:composer:install" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
+    <exec dir="${deploy.dir" command="composer install --no-dev" />
   </target>
 
   <target name="deploy:artifact:push" description="Pushes to a git remote.">

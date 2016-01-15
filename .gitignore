@@ -1,6 +1,5 @@
 # Ignore config files
-project.yml
-make.yml
+/project.yml
 local.*
 
 # Ignore build artifacts
