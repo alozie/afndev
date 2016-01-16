@@ -7,19 +7,19 @@
   <!-- Load the root project.yml file for this project. -->
   <property file="${repo.root}/project.yml" override="true"/>
 
+  <!-- Load file directory and binary locations. -->
+  <property file="${project.basedir}/build.yml" override="true"/>
+
   <!-- Extract PHP variable values from local.settings.php. -->
-  <property name="local.settings.file" value="${repo.root}/sites/default/settings/local.settings.php" />
-  <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${local.settings.file}" overwrite="false" />
+  <property name="local.settings.file" value="${docroot}/sites/default/settings/local.settings.php" />
+  <copy file="${docroot}/sites/default/settings/default.local.settings.php" tofile="${local.settings.file}" overwrite="false" />
   <!-- Extracts value of $base_url and outputs to local_url property in Phing. -->
-  <phpVariable file="${repo.root}/sites/default/drushrc.php" variable="options[uri]" outputProperty="local_url" />
+  <phpVariable file="${docroot}/sites/default/drushrc.php" variable="options[uri]" outputProperty="local_url" />
   <!-- Extracts values from the $databases array and outputs to db.* properties. -->
   <phpVariable file="${local.settings.file}" variable="databases[default][default][database]" outputProperty="db.database" />
   <phpVariable file="${local.settings.file}" variable="databases[default][default][username]" outputProperty="db.username" />
   <phpVariable file="${local.settings.file}" variable="databases[default][default][password]" outputProperty="db.password" />
   <phpVariable file="${local.settings.file}" variable="databases[default][default][host]" outputProperty="db.host" />
   <phpVariable file="${local.settings.file}" variable="databases[default][default][port]" outputProperty="db.port" />
-
-  <!-- Load file directory and binary locations. -->
-  <property file="${project.basedir}/build.yml" override="true"/>
 
 </project>

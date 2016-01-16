@@ -1,7 +1,7 @@
 <project name="setup" default="setup">
 
   <target name="setup" description="Install dependencies, builds docroot, installs Drupal."
-        depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
+          depends="setup:build:all, setup:git-hooks, setup:behat, setup:drupal:install">
     <echo>For a full list of available Phing targets, run:</echo>
     <echo>./task.sh -l</echo>
     <echo></echo>
@@ -17,7 +17,7 @@
 
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, etc."
-      depends="setup:behat, setup:composer:install, frontend:build">
+          depends="setup:behat, setup:composer:install, frontend:build">
   </target>
 
   <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib.">
@@ -37,15 +37,13 @@
   </target>
 
   <target name="setup:drupal:settings" description="Create local settings files using default settings files.">
-    <copy file="${repo.root}/sites/default/settings/default.local.settings.php" tofile="${repo.root}/sites/default/settings/local.settings.php"/>
-    <copy file="${repo.root}/sites/default/default.local.drushrc.php" tofile="${repo.root}/sites/default/local.drushrc.php"/>
+    <copy file="${docroot}/sites/default/settings/default.local.settings.php" tofile="${docroot}/sites/default/settings/local.settings.php"/>
+    <copy file="${docroot}/sites/default/default.local.drushrc.php" tofile="${docroot}/sites/default/local.drushrc.php"/>
   </target>
 
   <target name="setup:drupal:install"
           description="Installs Drupal using credentials from local.settings.php."
           depends="setup:drupal:settings, setup:check:docroot">
-
-    <copy file="${repo.root}/sites/default/settings.php" tofile="${repo.root}/sites/default/settings.php.bak"/>
 
     <drush command="site-install" assume="yes" verbose="TRUE">
       <option name="site-name">"${project.human_name}"</option>
@@ -67,9 +65,6 @@
     </if>
 
     <drush command="cache-rebuild" verbose="TRUE"/>
-
-    <!-- Restore original settings.php, wiped out by Drupal installation. -->
-    <copy file="${repo.root}/sites/default/settings.php.bak" tofile="${repo.root}/sites/default/settings.php"/>
   </target>
 
   <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
