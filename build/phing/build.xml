@@ -89,8 +89,8 @@
     <if>
       <isfalse value="${project.profile.contrib}"/>
       <then>
-        <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/custom/${project.profile.name}"/>
-        <move file="${bolt.new.dir}/profiles/custom/minimal" tofile="${bolt.profile.dir}"/>
+        <property name="bolt.profile.dir" value="${bolt.new.dir}/docroot/profiles/custom/${project.profile.name}"/>
+        <move file="${bolt.new.dir}/docroot/profiles/custom/minimal" tofile="${bolt.profile.dir}"/>
         <move file="${bolt.profile.dir}/minimal.info.yml" tofile="${bolt.profile.dir}/${project.profile.name}.info.yml"/>
         <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.profile.name}.install"/>
       </then>

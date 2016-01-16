@@ -16,55 +16,12 @@
   </target>
 
   <!-- This is run when a project is cloned to a new environment. -->
-  <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, restores symlinks, etc."
-      depends="setup:behat, setup:composer:install, setup:build:symlinks, frontend:build">
+  <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, etc."
+      depends="setup:behat, setup:composer:install, frontend:build">
   </target>
 
-  <!-- Delete the docroot directory. Used prior to running Drush make. -->
-  <target name="setup:build:rm-docroot" description="Removes the docroot folder.">
-    <if>
-      <available property="sites.exists" file="${docroot}/sites/default" type="dir"/>
-      <then>
-        <chmod file="${docroot}/sites/default" mode="0775"/>
-      </then>
-    </if>
-    <delete dir="${docroot}" failonerror="false" quiet="true" />
-  </target>
-
-  <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib." depends="setup:build:rm-docroot">
+  <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib.">
     <exec dir="${repo.root}" command="composer install" logoutput="true" passthru="true"/>
-  </target>
-
-  <target name="setup:build:symlinks" description="Symlinks required files from /sites to /docroot/sites.">
-    <!-- Symlink modules and themes. -->
-    <delete dir="${docroot}/modules/custom" quiet="true"/>
-    <delete dir="${docroot}/themes/custom" quiet="true"/>
-    <delete dir="${docroot}/profiles/custom" quiet="true"/>
-    <exec dir="${repo.root}" command="ln -s ../../modules/custom docroot/modules/custom"/>
-    <exec dir="${repo.root}" command="ln -s ../../themes/custom docroot/themes/custom"/>
-    <exec dir="${repo.root}" command="ln -s ../../profiles/custom docroot/profiles/custom"/>
-
-    <!-- Symlink settings. -->
-    <exec dir="${repo.root}" command="ln -s ../../../drush docroot/sites/default/drush"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/drushrc.php docroot/sites/default/drushrc.php"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings docroot/sites/default/settings"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/settings.php docroot/sites/default/settings.php"/>
-    <exec dir="${repo.root}" command="ln -s ../../../sites/default/files docroot/sites/default/files"/>
-
-    <!-- Symlink the multisite related configuration. -->
-    <exec dir="${repo.root}" command="ln -s ../../sites/sites.php docroot/sites/sites.php" />
-    <foreach param="dirname" absparam="absname" target="setup:build:symlinks:multisite">
-      <fileset dir="${repo.root}/sites/">
-        <exclude name="all"></exclude>
-        <exclude name="default"></exclude>
-        <type type="dir" />
-        <depth max="0" min="0" />
-      </fileset>
-    </foreach>
-  </target>
-
-  <target name="setup:build:symlinks:multisite">
-    <exec dir="${repo.root}" command="ln -s ../../sites/${dirname} docroot/sites/${dirname}"/>
   </target>
 
   <!-- Check for docroot. -->
