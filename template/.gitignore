@@ -3,7 +3,6 @@ sites/*/*/local.settings.php
 build/phing/build.properties
 local.*
 drush/contrib
-docroot
 docroot/core
 docroot/modules/contrib
 docroot/themes/contrib
