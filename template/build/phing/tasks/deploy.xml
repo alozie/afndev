@@ -58,24 +58,24 @@
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
     <!-- Copy modules and themes into deploy directory. -->
     <copy todir="${deploy.dir}/docroot/modules/custom" overwrite="true">
-      <fileset dir="${repo.root}/modules/custom"/>
+      <fileset dir="${docroot}/modules/custom"/>
     </copy>
     <copy todir="${deploy.dir}/docroot/themes/custom" overwrite="true">
-      <fileset dir="${repo.root}/themes/custom">
+      <fileset dir="${docroot}/themes/custom">
         <include name="**"></include>
         <exclude name="**/node_modules/**"></exclude>
         <exclude name="**/bower_components/**"></exclude>
       </fileset>
     </copy>
     <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
-      <fileset dir="${repo.root}/profiles"/>
+      <fileset dir="${docroot}/profiles"/>
     </copy>
     <copy todir="${deploy.dir}/docroot/sites/default/settings" overwrite="true">
-      <fileset dir="${repo.root}/sites/default/settings">
+      <fileset dir="${docroot}/sites/default/settings">
         <exclude name="**/local.settings.php"/>
       </fileset>
     </copy>
-    <copy file="${repo.root}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
+    <copy file="${docroot}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
     <copy todir="${deploy.dir}/hooks" overwrite="true">
       <fileset dir="${repo.root}/hooks"/>
     </copy>
@@ -87,7 +87,12 @@
   </target>
 
   <target name="deploy:artifact:composer:install" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
-    <exec dir="${deploy.dir" command="composer install --no-dev" />
+    <copy todir="${deploy.dir}" overwrite="true">
+      <fileset dir="${repo.root}">
+        <include name="composer.*"/>
+      </fileset>
+    </copy>
+    <exec dir="${deploy.dir}" command="composer install --no-dev" />
   </target>
 
   <target name="deploy:artifact:push" description="Pushes to a git remote.">

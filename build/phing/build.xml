@@ -38,8 +38,8 @@
         <expandproperties />
       </filterchain>
     </copy>
-    <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
-    <copy file="${bolt.root}/template/sites/default/default.local.drushrc.php" tofile="${bolt.root}/local.drushrc.php" />
+    <copy file="${bolt.root}/template/docroot/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
+    <copy file="${bolt.root}/template/docroot/sites/default/default.local.drushrc.php" tofile="${bolt.root}/local.drushrc.php" />
 
     <echo></echo>
     <echo>The following files have been generated:</echo>
@@ -89,13 +89,14 @@
     <if>
       <isfalse value="${project.profile.contrib}"/>
       <then>
-        <property name="bolt.profile.dir" value="${bolt.new.dir}/docroot/profiles/custom/${project.profile.name}"/>
-        <move file="${bolt.new.dir}/docroot/profiles/custom/minimal" tofile="${bolt.profile.dir}"/>
-        <move file="${bolt.profile.dir}/minimal.info.yml" tofile="${bolt.profile.dir}/${project.profile.name}.info.yml"/>
-        <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.profile.name}.install"/>
+        <property name="bolt.new.profile.dir" value="${bolt.new.dir}/docroot/profiles/custom/${project.profile.name}"/>
+        <move file="${bolt.new.dir}/docroot/profiles/custom/minimal" tofile="${bolt.new.profile.dir}"/>
+        <move file="${bolt.new.profile.dir}/minimal.info.yml" tofile="${bolt.new.profile.dir}/${project.profile.name}.info.yml"/>
+        <move file="${bolt.new.profile.dir}/minimal.install" tofile="${bolt.new.profile.dir}/${project.profile.name}.install"/>
       </then>
       <else>
         <delete dir="${bolt.new.dir}/profiles/custom/minimal"/>
+        <exec dir="${bolt.new.dir}" command="composer require drupal/${project.profile.name}:8.x" logoutput="true" passthru="true"/>
       </else>
     </if>
 
