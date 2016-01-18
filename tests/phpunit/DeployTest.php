@@ -39,18 +39,22 @@ class DeployTest extends \PHPUnit_Framework_TestCase
 
         // Ensure docroot was built into to deploy directory.
         $this->assertFileExists($this->deploy_dir . '/docroot');
-        $this->assertFileExists($this->deploy_dir . '/docroot/index.php');
         $this->assertFileExists($this->deploy_dir . '/docroot/core');
         $this->assertFileExists($this->deploy_dir . '/docroot/modules/contrib');
 
         // Ensure settings files were copied to deploy directory.
+        $this->assertFileExists($this->deploy_dir . '/docroot/index.php');
+        $this->assertFileExists($this->deploy_dir . '/docroot/autoload.php');
+        $this->assertFileExists($this->deploy_dir . '/composer.lock');
         $this->assertFileExists($this->deploy_dir . '/docroot/sites/default/settings.php');
-        $this->assertFileExists($this->deploy_dir . '/docroot/sites/default/settings');
         $this->assertFileNotExists($this->deploy_dir . '/docroot/sites/default/settings/local.settings.php');
 
         // Ensure hooks were copied to deploy directory.
         $this->assertFileExists($this->deploy_dir . '/hooks');
         $this->assertFileExists($this->deploy_dir . '/hooks/README.md');
+
+        // Ensure deploy directory was sanitized.
+        $this->assertFileNotExists($this->deploy_dir . '/docroot/LICENSE.txt');
     }
 
     /**
