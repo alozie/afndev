@@ -3,6 +3,8 @@
 Bolt will create a new Professional Services project using the project template
 located in /template.
 
+It is proprietary software. Copyright 2016. Acquia, Inc.
+
 ## Table of Contents
 
 * [Installation](#installation)
