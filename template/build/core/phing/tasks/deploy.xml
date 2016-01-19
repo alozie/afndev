@@ -106,7 +106,7 @@
     </copy>
 
     <!-- Use our own .gitignore -->
-    <copy file="${repo.root}/build/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
+    <copy file="${repo.root}/build/core/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
 
     <!-- Set sites/default back to 755 permissions. -->
     <chmod file="${docroot}/sites/default" mode="0755" />
