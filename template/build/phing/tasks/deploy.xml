@@ -16,21 +16,19 @@
     </if>
 
     <!-- Delete the existing deploy directory and re-initialize as an empty git repository. -->
-    <delete dir="${deploy.dir}/.git" failonerror="false" quiet="true" />
-    <exec command="git init ${deploy.dir}" logoutput="true"/>
+    <phingcall target="deploy:artifact:prepare-dir"/>
 
     <!-- Add remotes and fetch upstream refs. Checkout local branch tracking
          tracking upstream branch, if it exists. Otherwise create new branch
          locally. -->
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
+    <phingcall target="deploy:artifact:add-remotes"/>
 
     <!-- Build artifact and commit locally. -->
     <phingcall target="deploy:artifact:build"/>
-    <exec command="git add -A" dir="${deploy.dir}" logoutput="true" passthru="true"/>
-    <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <phingcall target="deploy:artifact:commit"/>
 
     <!-- Push up changes to remotes. -->
-    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:push"/>
+    <phingcall target="deploy:artifact:push-all"/>
   </target>
 
   <target name="deploy:artifact:add-remote" description="Adds a git remote and checks out deploy branch from upstream.">
@@ -45,6 +43,10 @@
     <exec command="git merge ${remoteName}/${deploy.branch}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
+  <target name="deploy:artifact:add-remotes" description="Add remotes and fetch upstream refs.">
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
+  </target>
+
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir." depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
   </target>
 
@@ -52,6 +54,11 @@
   <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
     <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
     <delete dir="${deploy.dir}/hooks" failonerror="false" quiet="true" />
+  </target>
+
+  <target name="deploy:artifact:commit">
+    <exec command="git add -A" dir="${deploy.dir}" logoutput="true" passthru="true"/>
+    <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
@@ -92,7 +99,16 @@
     </drush>
   </target>
 
-  <target name="deploy:artifact:push" description="Pushes to a git remote.">
+  <target name="deploy:artifact:prepare-dir" description="Delete the existing deploy directory and re-initialize as an empty git repository.">
+    <delete dir="${deploy.dir}/.git" failonerror="false" quiet="true" />
+    <exec command="git init ${deploy.dir}" logoutput="true"/>
+  </target>
+
+  <target name="deploy:artifact:push-all">
+    <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:push-remote"/>
+  </target>
+
+  <target name="deploy:artifact:push-remote" description="Pushes to a git remote.">
     <exec command="echo ${deploy.remote} | openssl md5 | cut -d' ' -f 2" outputProperty="remoteName"/>
     <exec command="git push ${remoteName} ${deploy.branch}" dir="${deploy.dir}" logoutput="true" outputProperty="deploy.push.output"/>
     <exec command="export DEPLOY_UPTODATE=$(echo '${deploy.push.output}' | grep --quiet 'Everything up-to-date')"/>
