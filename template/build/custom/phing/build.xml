@@ -1,0 +1,11 @@
+<project name="project" default="build" phingVersion="2.8.2">
+
+  <!-- Include bolt core classes and tasks. -->
+  <property name="core.phing.dir.relative" value="${phing.dir}/../../core/phing" />
+  <resolvepath propertyName="core.phing.dir" file="${core.phing.dir.relative}"/>
+  <import file="${core.phing.dir}/build.xml"/>
+
+  <!-- Load custom property values. -->
+  <property file="${project.basedir}/build.yml" override="true"/>
+
+</project>
