@@ -44,14 +44,6 @@ class BoltTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertFileNotExists($this->new_project_dir . '/build/tasks/bolt.xml');
         $this->assertNotContains(
-            'bolt',
-            file_get_contents($this->new_project_dir . '/build/phing/build.xml')
-        );
-        $this->assertNotContains(
-            'Bolt',
-            file_get_contents($this->new_project_dir . '/build/phing/build.xml')
-        );
-        $this->assertNotContains(
             '${project.acquia_subname}',
             file_get_contents($this->new_project_dir . '/sites/default/settings.php')
         );

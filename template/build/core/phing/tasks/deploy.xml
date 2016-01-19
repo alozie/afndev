@@ -86,7 +86,7 @@
       <fileset dir="${repo.root}/hooks"/>
     </copy>
     <!-- Use our own .gitignore -->
-    <copy file="${repo.root}/build/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
+    <copy file="${repo.root}/build/core/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
