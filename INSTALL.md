@@ -30,16 +30,18 @@ _Note:_ There are additional development environment-specific build instructions
 
 1. `composer install`
 1. Run `./task.sh bolt:configure` to create your project-specific
-   configuration files. After running, `project.yml`, `make.yml`,
-   and `local.settings.php` should exist in the Bolt root directory.
-1. Modify aforementioned .yml files with values for your new project.
+   configuration files. After running, the following files should exist in the 
+   Bolt root directory:
+     * `project.yml`
+     * `local.drushrc.php`
+     * `local.settings.php`
+1. Modify aforementioned files with values for your new project.
 1. Run `./task.sh bolt:create`. This will create a new directory for your new
    project.
 1. Change directories to your new project directory.
    E.g., `cd /path/to/my/new/project`.
 1. In your new project directory, run `./task.sh setup`.
-   This will build dependencies in your make file and create required
-   symlinks.
+   This will build dependencies and install drupal locally.
 1. To read a full list of available tasks, run `./task.sh -list`.
 
 ## Next Steps
@@ -47,39 +49,29 @@ _Note:_ There are additional development environment-specific build instructions
 After Bolt has installed, there are several key activities to perform for your
 project:
 
-1. Update your project's make file.
-  * Add contributed modules and themes to `make.yml`
-  * Re-build docroot via `./task.sh setup:build:all`
+1. Update your project's contrib dependencies in composer.json.
 1. Update your project README.md.
 1. Update the project documentation (in `readme`).
 1. Set up your local \*AMP stack using. See [Local Environment]
    (/readme/local-development.md). documentation.
-1. Optionally, you may install Drupal locally via Phing. To do this, verify
-   correct credentials in `local.yml` and then run:
-   `./task.sh setup:drupal:install`
 
 ### Configure your CI solution
 
 Travis CI is used for both automated testing and for deploying to Acquia Cloud.
 
-Best practices dictate that the docroot should not be committed to the
+Best practices dictate that contributed projects should not be committed to the
 repository. This allows the deployed site to have complete parity with the
-project's make.yml, and avoids undocumented modifications to core and contrib.
-As such, Travis is always used for deploying a built-docroot to the cloud.
+project's upstream dependencies, and avoids undocumented modifications to core 
+and contrib. As such, Travis is always used for deploying a built-docroot to 
+the cloud.
 
 Your GitHub repository should have Travis CI enabled when it is created. If it
 is not enabled, contact your Technical Team Lead and have him/her enable it.
 
 Once it is enabled, follow the steps under
 "Setting Up Travis CI for automated deployments" in [build/README.md](/build/README.md)
+For more information on the 
 
 ### Visit the site!
 
-  1. To visit the site locally via browser.
-    * If you have a locally maintained LAMP stack (E.g., MAMP), do the following:
-      * Verify correct db creds in `sites/default/settings/local.settings.php`
-      * Configure your local LAMP stack such that the docroot is associated with
-        the $base_url
-      * Visit the local_url that you set in project.yml
-    * If you used a different local development environment, visit the
-      configured `local_url` for the site.
+Executing `drush uli` should log you into the site. 

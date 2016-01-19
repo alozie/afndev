@@ -92,3 +92,6 @@ to work together. Step-by-step instructions are provided below.
     ssh_known_hosts:
     - svn-14671.prod.hosting.acquia.com
   ````
+1. Commits or merges to the develop branch on GitHub should now trigger a fully
+   built artifact to be deployed to your specified remotes.
+1. For information on manually deploying your project, read [readme/deploy.md](readme/deploy.md)
