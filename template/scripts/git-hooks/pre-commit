@@ -137,7 +137,7 @@ do
       elif [ "$PHPCS_CODE" == "$PHPCS_FAILED" ]; then
         echo "Failed validation against ${PHPCS_STANDARD} standard"
         echo "You may be able to automatically fix these errors by running:"
-        echo "${ROOT_DIR}bin/phpcbf --standard=${PHPCS_STANDARD} ${file}"
+        echo "${ROOT_DIR}vendor/bin/phpcbf --standard=${PHPCS_STANDARD} ${file}"
         RETVAL=1
 
       # Search for debugging function only if PHP Codesniffer validation passed
