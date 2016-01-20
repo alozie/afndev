@@ -12,6 +12,15 @@ use PHPUnit_Framework_TestCase;
 class SettingsTest extends PHPUnit_Framework_TestCase
 {
 
+   /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        $this->projectDirectory = dirname(dirname(__DIR__));
+        $this->drupalRoot = $this->projectDirectory . '/docroot';
+    }
+
     /**
      * Sets up require parameters for tests to run.
      *
@@ -20,8 +29,6 @@ class SettingsTest extends PHPUnit_Framework_TestCase
      */
     public function setupParams($env)
     {
-        $this->projectRoot = dirname(dirname(__DIR__));
-        $this->drupalRoot = $this->projectRoot . '/docroot';
         $_ENV['AH_SITE_ENVIRONMENT'] = $env;
         $_ENV['AH_SITE_NAME'] = $_ENV['AH_SITE_GROUP'] = 'bolt';
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
@@ -47,6 +54,6 @@ class SettingsTest extends PHPUnit_Framework_TestCase
      */
     public function testSetupLocalSettings()
     {
-        $this->assertFileExists($this->projectRoot . '/docroot/sites/default/settings/local.settings.php');
+        $this->assertFileExists($this->projectDirectory . '/docroot/sites/default/settings/local.settings.php');
     }
 }
