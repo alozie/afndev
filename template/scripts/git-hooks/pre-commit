@@ -100,8 +100,10 @@ PHPCS_ERROR=2
 PHPCS_PASSED=0
 
 if [ ! -f $PHPCS_BIN ];
-then
-   echo "PHP Code Sniffer was not found in this project's bin directory. Please run composer install. "
+  then
+    echo "PHP Code Sniffer was not found in this project's bin directory. Please run composer install. "
+  else
+    echo "Sniffing staged files via PHP Code Sniffer."
 fi
 
 for file in $LIST
