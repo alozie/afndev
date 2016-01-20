@@ -59,8 +59,8 @@
  * affects the loading of Drush configuration files.
  */
 
-if (file_exists(__DIR__ . '/local.drushrc.php')) {
-  require_once __DIR__ . '/local.drushrc.php';
+if (file_exists(__DIR__ . '/../docroot/sites/default/local.drushrc.php')) {
+  require_once __DIR__ . '/../docroot/sites/default/local.drushrc.php';
 }
 
 // Specify the base_url that should be used when generating links
