@@ -703,7 +703,7 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
 require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
 
 // Includes caching configuration.
-// require DRUPAL_ROOT . '/sites/default/settings/cache.settings.php';
+require DRUPAL_ROOT . '/sites/default/settings/cache.settings.php';
 
 /**
  * Acquia Cloud settings.

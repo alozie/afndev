@@ -37,30 +37,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase
         $this->setupParams('prod');
         require $this->drupalRoot . '/sites/default/settings.php';
 
-        // Base_url
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
-    }
 
-  /**
-   * Test configuration for test/stg environment on ACE.
-   */
-    public function testTest()
-    {
-        $this->setupParams('test');
-        require $this->drupalRoot . '/sites/default/settings.php';
-
-        // Base_url
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
-    }
-
-  /**
-   * Test configuration for dev environment on ACE.
-   */
-    public function testDev()
-    {
-        $this->setupParams('dev');
-        require $this->drupalRoot . '/sites/default/settings.php';
-
-        $this->assertContains($_ENV['AH_SITE_NAME'] . '.prod.acquia-sites.com', $base_url);
+        $this->assertContains($config['system.logging']['error_level'], 'hide');
     }
 }
