@@ -148,4 +148,19 @@ class BoltTest extends \PHPUnit_Framework_TestCase
             $this->assertNotContains('Invalid commit message', $output);
         }
     }
+
+    /**
+     * Tests operation of scripts/git-hooks/pre-commit.
+     *
+     * Should assert that code validation via phpcs is functioning.
+     */
+    public function testGitPreCommitHook()
+    {
+        // Commits must be executed inside of new project directory.
+        chdir($this->new_project_dir);
+        $command = "git commit --amend -m 'BLT-123: This is a good commit.' 2>&1";
+        $output = shell_exec($command);
+        $this->assertNotContains('PHP Code Sniffer was not found', $output);
+        $this->assertContains('Sniffing staged files via PHP Code Sniffer.', $output);
+    }
 }
