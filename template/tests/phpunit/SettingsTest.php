@@ -11,6 +11,7 @@ use PHPUnit_Framework_TestCase;
 
 class SettingsTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * Sets up require parameters for tests to run.
      *
@@ -39,5 +40,13 @@ class SettingsTest extends PHPUnit_Framework_TestCase
 
 
         $this->assertContains($config['system.logging']['error_level'], 'hide');
+    }
+
+      /**
+     * Tests Phing setup:drupal:settings target.
+     */
+    public function testSetupLocalSettings()
+    {
+        $this->assertFileExists($this->projectRoot . '/docroot/sites/default/settings/local.settings.php');
     }
 }
