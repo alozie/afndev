@@ -63,8 +63,6 @@
         </drush>
       </then>
     </if>
-
-    <drush command="cache-rebuild" verbose="TRUE"/>
   </target>
 
   <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
