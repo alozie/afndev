@@ -22,7 +22,7 @@ class BuildTest extends TestBase
     public function testSetupMake()
     {
         $this->assertFileExists($this->projectDirectory . '/docroot/index.php');
-        $this->assertFileExists($this->projectDirectory . '/docroot/modules/contrib');
-        $this->assertFileExists($this->projectDirectory . '/docroot/themes/custom');
+        $this->assertFileExists($this->projectDirectory . '/docroot/sites/all/modules/contrib');
+        $this->assertFileExists($this->projectDirectory . '/docroot/sites/all/themes/custom');
     }
 }
