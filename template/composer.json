@@ -39,6 +39,11 @@
     "jakoch/phantomjs-installer":   "1.9.8",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Drupal\\Tests\\PHPUnit\\": "tests/phpunit/src/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
