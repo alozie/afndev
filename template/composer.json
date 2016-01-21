@@ -23,6 +23,11 @@
     "drush/drush":                  "7.*",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Drupal\\Tests\\PHPUnit\\": "tests/phpunit/src/"
+    }
+  },
   "scripts": {
     "post-install-cmd": [
       "PhantomInstaller\\Installer::installPhantomJS"
