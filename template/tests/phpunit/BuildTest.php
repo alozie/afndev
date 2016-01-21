@@ -5,26 +5,16 @@
  * Test build tasks. E.g. setup:build:all.
  */
 
-namespace Drupal;
+namespace Drupal\Tests\PHPUnit;
 
 /**
  * Class BuildTest.
  *
  * Verifies that build tasks work as expected.
  */
-class BuildTest extends \PHPUnit_Framework_TestCase
+class BuildTest extends TestBase
 {
-
-    /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
-    }
-
-
-    /**
+   /**
      * Tests Phing setup:make target.
      *
      * This should build /make.yml.

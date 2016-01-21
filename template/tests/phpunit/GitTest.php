@@ -5,23 +5,15 @@
  * Test git hooks.
  */
 
-namespace Drupal;
+namespace Drupal\Tests\PHPUnit;
 
 /**
  * Class GitTasksTest.
  *
  * Verifies that git related tasks work as expected.
  */
-class GitTasksTest extends \PHPUnit_Framework_TestCase
+class GitTasksTest extends TestBase
 {
-
-    /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
-    }
 
     /**
      * Tests Phing setup:git-hooks target.
