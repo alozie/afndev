@@ -5,23 +5,15 @@
  * Test drush integration.
  */
 
-namespace Drupal;
+namespace Drupal\Tests\PHPUnit;
 
 /**
  * Class DrushTest.
  *
  * Verifies that git related tasks work as expected.
  */
-class DrushTest extends \PHPUnit_Framework_TestCase
+class DrushTest extends TestBase
 {
-
-    /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
-    }
 
     /**
      * Tests that correct drush configuration is loaded.

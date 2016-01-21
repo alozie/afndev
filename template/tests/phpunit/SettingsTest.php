@@ -5,21 +5,12 @@
  * Test configuration in settings.php.
  */
 
-namespace Drupal;
+namespace Drupal\Tests\PHPUnit;
 
 use PHPUnit_Framework_TestCase;
 
-class SettingsTest extends PHPUnit_Framework_TestCase
+class SettingsTest extends TestBase
 {
-
-   /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->projectDirectory = dirname(dirname(__DIR__));
-        $this->drupalRoot = $this->projectDirectory . '/docroot';
-    }
 
     /**
      * Sets up require parameters for tests to run.

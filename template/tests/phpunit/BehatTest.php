@@ -5,23 +5,15 @@
  * Test behat configuration.
  */
 
-namespace Drupal;
+namespace Drupal\Tests\PHPUnit;
 
 /**
  * Class BehatTest.
  *
  * Verifies that behat configuration is as expected.
  */
-class BehatTest extends \PHPUnit_Framework_TestCase
+class BehatTest extends TestBase
 {
-
-   /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->projectDirectory = realpath(dirname(__FILE__) . '/../../');
-    }
 
     /**
      * Tests Phing setup:behat target.
