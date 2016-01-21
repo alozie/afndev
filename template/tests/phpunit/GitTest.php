@@ -36,14 +36,14 @@ class GitTasksTest extends TestBase
     {
         // Commits must be executed inside of new project directory.
         chdir($this->projectDirectory);
-
+        $prefix = $this->config['project']['prefix'];
         $bad_commit_msgs = array(
             "This is a bad commit.", // Missing prefix and ticket number.
             "123: This is a bad commit.", // Missing project prefix.
-            "BLT: This is a bad commit.", // Missing ticket number.
-            "BLT-123 This is a bad commit.", // Missing colon.
-            "BLT-123: This is a bad commit", // Missing period.
-            "BLT-123: Hello.", // Too short.
+            "$prefix: This is a bad commit.", // Missing ticket number.
+            "$prefix-123 This is a bad commit.", // Missing colon.
+            "$prefix-123: This is a bad commit", // Missing period.
+            "$prefix-123: Hello.", // Too short.
         );
         foreach ($bad_commit_msgs as $bad_commit_msg) {
             // "2>&1" redirects standard error output to standard output.
@@ -74,7 +74,8 @@ class GitTasksTest extends TestBase
     {
         // Commits must be executed inside of new project directory.
         chdir($this->projectDirectory);
-        $command = "git commit --amend -m 'BLT-123: This is a good commit.' 2>&1";
+        $prefix = $this->config['project']['prefix'];
+        $command = "git commit --amend -m '$prefix-123: This is a good commit.' 2>&1";
         $output = shell_exec($command);
         $this->assertNotContains('PHP Code Sniffer was not found', $output);
         $this->assertContains('Sniffing staged files via PHP Code Sniffer.', $output);
