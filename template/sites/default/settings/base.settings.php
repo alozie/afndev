@@ -25,7 +25,7 @@ $ah_env = isset($_ENV['AH_SITE_ENVIRONMENT']) ? $_ENV['AH_SITE_ENVIRONMENT'] : N
 $is_ah_env = (bool) $ah_env;
 $is_ah_prod_env = ($ah_env == 'prod');
 $is_ah_stage_env = ($ah_env == 'test');
-$is_ah_free_tier = (!empty($_ENV['ACQUIA_HOSTING_DRUPAL_LOG']) && strstr($_ENV['ACQUIA_HOSTING_DRUPAL_LOG'], 'free'));
+$is_ah_dev_cloud = (!empty($_SERVER['HTTP_HOST']) && strstr($_SERVER['HTTP_HOST'], 'devcloud'));
 $is_ah_dev_env = (preg_match('/^dev[0-9]*$/', $ah_env) == TRUE);
 $is_local_env = !$is_ah_env;
 
@@ -33,7 +33,7 @@ if ($ah_env) {
   switch ($_ENV['AH_SITE_ENVIRONMENT']) {
     default:
       // Dynamically set base url based on Acquia environment variable.
-      $domain_prefix = $is_ah_free_tier ? 'devcloud' : 'prod';
+      $domain_prefix = $is_ah_dev_cloud ? 'devcloud' : 'prod';
       $domain = "{$_ENV['AH_SITE_NAME']}.$domain_prefix.acquia-sites.com";
       break;
   }
