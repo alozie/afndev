@@ -17,7 +17,18 @@
 
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, etc."
-          depends="setup:behat, setup:composer:install, frontend:build">
+          depends="setup:behat, setup:composer:install, setup:build:profile, frontend:build">
+  </target>
+
+  <target name="setup:build:profile" description="Build a subsidiary makefile shipped with profile">
+    <if>
+      <equals arg1="${project.profile.contrib}" arg2="true"/>
+      <then>
+        <echo message="Building make file for ${project.profile.name}"/>
+        <property name="profile.dir" value="${docroot}/profiles/contrib/${project.profile.name}"/>
+        <exec dir="${repo.root}" command="drush make ${profile.dir}/drupal-org.make ${profile.dir} --no-core -y" logoutput="true" passthru="true"/>
+      </then>
+    </if>
   </target>
 
   <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib.">
