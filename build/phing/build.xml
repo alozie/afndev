@@ -26,6 +26,7 @@
     <delete file="${bolt.root}/local.drushrc.php" quiet="true"/>
     <delete file="${bolt.root}/template/sites/default/settings/local.settings.php" quiet="true"/>
     <delete file="${bolt.root}/template/tests/behat/local.yml" quiet="true"/>
+    <delete dir="${bolt.root}/template/vendor" quiet="true"/>
   </target>
 
   <!-- Creates new configuration files to be used for new project generation.
@@ -67,6 +68,7 @@
             <chmod file="${bolt.new.dir}/docroot/sites/default" mode="0777" quiet="true" failonerror="false" />
           </then>
         </if>
+        <chmod file="${bolt.new.dir}" mode="0777" quiet="true" failonerror="false" />
         <delete dir="${bolt.new.dir}" />
       </then>
     </if>
@@ -95,8 +97,8 @@
         <move file="${bolt.new.profile.dir}/minimal.install" tofile="${bolt.new.profile.dir}/${project.profile.name}.install"/>
       </then>
       <else>
-        <delete dir="${bolt.new.dir}/profiles/custom/minimal"/>
-        <exec dir="${bolt.new.dir}" command="composer require drupal/${project.profile.name}:8.x" logoutput="true" passthru="true"/>
+        <delete dir="${bolt.new.dir}/docroot/profiles/custom/minimal"/>
+        <exec dir="${bolt.new.dir}" command="composer require drupal/${project.profile.name}:8.*" logoutput="true" passthru="true"/>
       </else>
     </if>
 
