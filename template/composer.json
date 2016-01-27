@@ -1,13 +1,10 @@
 {
-  "name": "acquia-pso/bolt",
+  "name": "acquia/${project.acquia_subname}",
   "license": "proprietary",
-  "repositories": [
-    {
-      "type": "pear",
-      "url": "http://pear.php.net"
-    }
-  ],
   "require": {
+    "drush/drush":                  "7.*"
+  },
+  "require-dev": {
     "behat/behat":                  "3.0.*",
     "behat/mink":                   "1.6@stable",
     "behat/mink-extension":         "*",
@@ -20,7 +17,6 @@
     "squizlabs/php_codesniffer":    "2.*",
     "phing/phing":                  "2.*",
     "jakoch/phantomjs-installer":   "1.9.8",
-    "drush/drush":                  "7.*",
     "jarnaiz/behat-junit-formatter": "^1.2"
   },
   "autoload-dev": {
