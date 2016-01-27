@@ -68,7 +68,7 @@
         <include name="composer.*"/>
       </fileset>
     </copy>
-    <exec dir="${deploy.dir}" command="composer install --no-dev" passthru="true" logoutput="true"/>
+    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source" passthru="true" logoutput="true"/>
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
