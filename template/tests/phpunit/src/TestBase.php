@@ -33,8 +33,9 @@ abstract class TestBase extends \PHPUnit_Framework_TestCase
    /**
      * Class constructor.
      */
-    public function __construct()
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
         $this->projectDirectory = dirname(dirname(dirname(__DIR__)));
         $this->drupalRoot = $this->projectDirectory . '/docroot';
         $this->config = Yaml::parse(file_get_contents("{$this->projectDirectory}/project.yml"));
