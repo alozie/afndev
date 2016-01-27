@@ -1,12 +1,6 @@
 {
   "name": "acquia/bolt",
   "license": "proprietary",
-  "repositories": [
-    {
-      "type": "pear",
-      "url": "http://pear.php.net"
-    }
-  ],
   "require": {
     "phing/phing": "2.*",
     "symfony/yaml": "~2.7",
