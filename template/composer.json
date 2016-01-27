@@ -4,10 +4,6 @@
   "type": "project",
   "repositories": [
     {
-      "type": "pear",
-      "url": "http://pear.php.net"
-    },
-    {
       "type": "composer",
       "url": "https://packagist.drupal-composer.org"
     }
