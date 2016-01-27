@@ -1,6 +1,6 @@
 <project name="deploy" default="deploy:artifact">
 
-  <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml." depends="deploy:artifact:clean">
+  <target name="deploy:artifact" description="Builds separate artifact and pushes to git.remotes defined project.yml.">
 
     <!-- deploy.branch and deploy.commitMsg must be passed as params at runtime. -->
     <if>
@@ -48,13 +48,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:composer:install, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
-  </target>
-
-  <target name="deploy:artifact:clean" description="Cleans the deploy directory.">
-    <delete dir="${deploy.dir}/docroot" failonerror="false" quiet="true" />
-    <delete dir="${deploy.dir}/hooks" failonerror="false" quiet="true" />
-    <delete dir="${deploy.dir}/config" failonerror="false" quiet="true" />
+          depends="deploy:artifact:prepare-dir, deploy:artifact:copy, deploy:artifact:composer:install, deploy:artifact:profile:make, deploy:artifact:sanitize, frontend:build">
   </target>
 
   <target name="deploy:artifact:commit">
@@ -62,13 +56,24 @@
     <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
-  <target name="deploy:artifact:composer:install" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
+  <target name="deploy:artifact:composer:install" description="Downloads core and contrib to deploy folder.">
     <copy todir="${deploy.dir}" overwrite="true">
       <fileset dir="${repo.root}">
         <include name="composer.*"/>
       </fileset>
     </copy>
     <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source" passthru="true" logoutput="true"/>
+  </target>
+
+  <target name="deploy:artifact:profile:make" description="Build a subsidiary makefile shipped with profile.">
+    <if>
+      <equals arg1="${project.profile.contrib}" arg2="true"/>
+      <then>
+        <echo message="Building make file for ${project.profile.name}"/>
+        <property name="profile.dir" value="${deploy.dir}/docroot/profiles/contrib/${project.profile.name}"/>
+        <exec dir="${repo.root}" command="drush make ${profile.dir}/drupal-org.make ${profile.dir} --no-core -y" logoutput="true" passthru="true"/>
+      </then>
+    </if>
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
