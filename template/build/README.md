@@ -27,7 +27,7 @@ are built by running `composer install` in the project root.
   For example `./task.sh validate:all`
 * To run Phing directly from the binary, simply run `./bin/phing -f build/phing/build.xml <arguments>`
 
-## Continuous Integration
+## <a name="ci"></a> Continuous Integration
 
 Integration with Travis CI is included, although Phing tasks can be used with
  any CI tool. The default Travis CI build process is as follows:
