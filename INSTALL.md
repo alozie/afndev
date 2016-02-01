@@ -1,77 +1,120 @@
-## Overview
+## Creating a new project with Bolt
 
-Bolt has an installer which will do the following:
+The following high-level steps will be required to generate a new, fully functioning site using Bolt:
 
+1. Ensure your native OS meets minimum requirements
+1. Clone Bolt to your local machine
+1. Generate and modify configuration files for your new project
+1. Use Bolt’s “installer” to generate a new site
+1. Setup a local *AMP stack
+1. Build your new project’s dependencies and install locally
+
+## System Requirements
+
+You should be able to use the following tools on the command line of your native
+operating system:
+
+* [Git](https://git-scm.com/)
+* [Composer](https://getcomposer.org/download/)
+* PHP 5.3.9+ (PHP 5.6 recommended). PHP installation instructions:
+    * [OSX](http://justinhileman.info/article/reinstalling-php-on-mac-os-x/)
+    * [Windows](http://php.net/manual/en/install.windows.php)
+    * [Linux](http://php.net/manual/en/install.unix.debian.php)
+
+## Prepare Bolt installer
+
+* Clone Bolt to your local machine on your native OS: 
+  `git clone https://github.com/acquia/bolt.git`
+* From the Bolt repository’s root directory, run `composer install`. This will
+  build the dependencies required for Bolt’s “installer”. 
+
+# Generate and modify configuration files
+
+From the Bolt repository’s root directory, run `./task.sh bolt:configure`. This 
+will create your project-specific configuration files. After running, the 
+following files should exist in the Bolt root directory:
+project.yml
+
+* local.drushrc.php
+* local.settings.php
+
+You will need to open these files and modify their values with settings for your
+project. At a minimum, you must set the following configuration items:
+
+* Local site URL: `$options[‘uri’]` in local.drushrc.php
+* Local site DB credentials: `$databases` in local.settings.php
+
+At this point, you likely have not configured your local *AMP stack for your new
+site. That’s ok. Simply enter the local URL and local DB credentials that you
+intend to use when your *AMP stack is up and running.
+
+## Create a new project
+
+Bolt’s “installer” will do the following:
 * Create new project directory (sibling of the Bolt repository)
-* Copies Bolt files to new directory, including:
-  * Git Hooks
-  * Acquia Cloud Hooks
-  * Project documentation
-  * Testing frameworks
-  * CI configuration
-  * Custom settings.php files
+* Copies Bolt template files to the new directory
 * Replaces tokens in copied files with project-specific strings
 * Removes installation artifacts
 
-## Installer Requirements
+Run `./task.sh bolt:create` to do all the things! Once it’s completed, change 
+directories to your new project directory. E.g., cd /path/to/my/new/project. 
+All subsequent steps will happen inside your new project. You have left the Bolt
+repository behind.
 
-* Composer [Install](https://getcomposer.org/doc/00-intro.md#globally)
-* PHP 5.3.9+ (PHP 5.5 recommended)
-  * [Homebrew Install](https://lastzero.net/2013/08/howto-install-php-5-5-and-phpunit-on-os-x-via-homebrew/)
+## Modifying project files
 
-## Create new project
+This is an optional step. Important files that you may want to modify include:
 
-To create a new repository using Bolt's installer, run the
-following from this repository's root directory:
+* composer.json. Note that Drupal core, contrib, and third party dependencies 
+  are all managed here.
+* Project’s root README.md.
+* Other project documentation in the readme directory.
 
-### Create a new project, build all dependencies.
+Note that all of the steps from this point forward are the same steps that would
+be used by a newly onboarded developer setting up your existing project on their
+local machine for the first time.
 
-_Note:_ There are additional development environment-specific build instructions in the [local development documentation](/template/readme/local-development.md).
+## Set up your \*AMP stack
 
-1. `composer install`
-1. Run `./task.sh bolt:configure` to create your project-specific
-   configuration files. After running, the following files should exist in the 
-   Bolt root directory:
-     * `project.yml`
-     * `local.drushrc.php`
-     * `local.settings.php`
-1. Modify aforementioned files with values for your new project.
-1. Run `./task.sh bolt:create`. This will create a new directory for your new
-   project.
-1. Change directories to your new project directory.
-   E.g., `cd /path/to/my/new/project`.
-1. In your new project directory, run `./task.sh setup`.
-   This will build dependencies and install drupal locally.
-1. To read a full list of available tasks, run `./task.sh -list`.
+Before building your project dependencies and installing Drupal, you must have a
+fully functional \*AMP stack on your local machine. Bolt intentionally does not
+provide this local development environment--that is outside of the scope of 
+Bolt’s intended responsibilities. It does, however, make recommendations for 
+which tools you should use to manage your stack.
+
+Please see [Local Development](template/readme/local-development.md) for more 
+information on setting up your \*AMP stack.
+
+When you have completed setting up your local \*AMP stack, double check that the
+following pieces of information are still correct:
+
+* Local site URL: `$options[‘uri’]` in docroot/sites/default/local.drushrc.php
+* Local site DB credentials: `$databases` in docroot/sites/default/settings/local.settings.php
+
+## Build your project’s dependencies and install Drupal
+
+Run the following command from the project root: `./task setup`. This will do a
+lot of things for you, including:
+
+* Building dependencies
+* Installing local git hooks
+* Generating local.yml for Behat
+* Installing Drupal locally
+
+When this task is complete, you should have a fully functioning Drupal site on 
+your local machine. You can login to the site by running `drush uli`.
+
+Note that all common project tasks are executed through `task.sh` in your 
+project’s root directory. This file simply passes arguments through to Phing, 
+which manages all task automation. For a full list of available tasks, 
+run `./task.sh -l`.
 
 ## Next Steps
 
-After Bolt has installed, there are several key activities to perform for your
-project:
+Now that your new project works locally, you’ll want to integrate with with your
+SAAS tools (GitHub, TravisCI, Jenkins, etc.) and your Acquia Cloud subscription. 
 
-1. Update your project's contrib dependencies in composer.json.
-1. Update your project README.md.
-1. Update the project documentation (in `readme`).
-1. Set up your local \*AMP stack using. See [Local Environment]
-   (/readme/local-development.md). documentation.
+See the following documents for more detailed instructions on those tasks:
 
-### Configure your CI solution
-
-Travis CI is used for both automated testing and for deploying to Acquia Cloud.
-
-Best practices dictate that contributed projects should not be committed to the
-repository. This allows the deployed site to have complete parity with the
-project's upstream dependencies, and avoids undocumented modifications to core 
-and contrib. As such, Travis is always used for deploying a built-docroot to 
-the cloud.
-
-Your GitHub repository should have Travis CI enabled when it is created. If it
-is not enabled, contact your Technical Team Lead and have him/her enable it.
-
-Once it is enabled, follow the steps under
-"Setting Up Travis CI for automated deployments" in [build/README.md](/build/README.md)
-For more information on the 
-
-### Visit the site!
-
-Executing `drush uli` should log you into the site. 
+* Configure your CI solution @todo link
+* Deploy to Acquia Cloud @todo link

@@ -60,14 +60,14 @@ CI tool such as Travis or Jenkins.
 ### Travis CI
 
 Access to Travis is already provided by Acquia PS, which makes this option 
-appealing on a cost basis. It will automtically deploy new commits after they 
+appealing on a cost basis. It will automatically deploy new commits after they 
 are merged and tests pass. However, it's somewhat insecure (you have to create 
 an SSH key for deployments that can be accessed by any developer), and it's 
 impossible to schedule regular deployments or perform more advanced 
 integrations.
 
 For more information on configuring Travis CI, see "Setting Up Travis CI for 
-automated deployments" in [build/README.md](build/README.md).
+automated deployments" in [build/README.md](build /README.md).
 
 ### Jenkins (Cloudbees)
 

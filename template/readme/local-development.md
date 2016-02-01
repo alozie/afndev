@@ -1,12 +1,6 @@
 # Local Development
 
-All development for a Drupal site should be done locally, then once complete,
-it should be committed to a repository and deployed to other environments
-(eventually to production, if it passes all tests and acceptance criteria).
-
-It's important that developers have a reliable and functional local development
-environment, and there are many options to choose from. Acquia currently
-recommends the use of either:
+Acquia currently recommends the use of either:
 
   * [Drupal VM](http://www.drupalvm.com/). An isolated virtual machine,
   managed by Virtual Box, Vagrant, and Ansible.
@@ -88,17 +82,10 @@ environment, and then access the site via the configured `drupal_domain`.
 
 ### Project creation and installation changes
 
-When performing the initial build of your site's code base, you will need to
-slightly alter the steps in the [install README](/install/README.md). After
-running `./task.sh bolt:create`, do not run `./task.sh setup`. Instead:
-
-1. Run `./task.sh setup:build:all` to build your site's code base, download
-   dependecies, etc.
-1. Add a new site in Dev Desktop by selecting _Import local Drupal site_. Point
-   it at the `docroot` folder inside your new code base. Your
-   `/sites/default/settings.php` file will be modified automatically to include
-   theDev Desktop database connection information.
-1. Run `./task.sh setup:drupal:install` to perform the site installation.
+Add a new site in Dev Desktop by selecting _Import local Drupal site_. Point
+it at the `docroot` folder inside your new code base. Your
+`/sites/default/settings.php` file will be modified automatically to include
+the Dev Desktop database connection information.
 
 ## Alternative local development environments
 
