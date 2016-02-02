@@ -57,25 +57,24 @@ following information ready and available:
 
 ## Initial Setup
 
-Each developer should [fork](https://help.github.com/articles/fork-a-repo) the 
-primary Git repository for their work. All developers should then checkout a 
-local copy of the `develop` branch to begin work -
-
+1. [Fork](https://help.github.com/articles/fork-a-repo) the primary GitHub 
+   repository
+1. Clone your fork to your local machine:
+    ````
     git clone git@github.com:username/project-repo.git -b develop
     git remote add upstream git@github.com:acquia-pso/project-repo.git
-
-1. Clone your fork to your local machine.
-1. Make sure you are on the `develop` branch for most work.
+    ````
+1. Checkout the `develop` branch. `git checkout develop`
 1. Run `composer install` (you must already have Composer installed).
 1. Run `./task.sh setup:drupal:settings` This will generate 
   `docroot/sites/default/settings/local.settings.php` and
   `docroot/sites/default/local.drushrc.php`. Update these with your local 
   database credentials and your local site URL.
 1. Run `./task.sh setup`. This will build all project dependencies and install
-   drupal
+   drupal.
 
 After this initial setup, you should only need to run `./task.sh setup:build:all`
-when the make file is updated, and `./task.sh setup:drupal:install` when you
+when composer.json is updated, and `./task.sh setup:drupal:install` when you
 need to reinstall the site.
 
 For a full list of available project tasks, run `./task.sh -l`. See
@@ -83,16 +82,13 @@ For a full list of available project tasks, run `./task.sh -l`. See
 
 ### Local Git Configuration
 
-For readability of commit history, set your name properly -
+For readability of commit history, set your name and email address properly:
 
-    git config user.name "Developer"
+    git config user.name "Your Name"
+    git config user.email your-email-address@example.com
 
-*You likely want to do this globally using `git config --global`.*
-
-Ensure that your local email address correctly matches the email address for
- your Jira account -
-
-    git config user.email developer@example.com
+Ensure that your local email address correctly matches the email address for 
+your Jira account.
 
 ## GitHub Configuration
 
@@ -108,7 +104,7 @@ on your local environment, so please follow the [installation instructions]
 
 Review review the following documentation:
 
-* [Repository architecture](readme/repo-architecture.md): “how is the code organized, and why?”
-* [Running project tasks](readme/project-tasks.md): “how do I _____ on my local machine?”
-* [Workflow](readme/dev-workflow.md): “I wrote code, how does it get from here to there?”
-* [Automated testing](readme/testing.md): “how do I write / run them, and why should care?”
+* [Repository architecture](repo-architecture.md): “how is the code organized, and why?”
+* [Running project tasks](project-tasks.md): “how do I _____ on my local machine?”
+* [Workflow](dev-workflow.md): “I wrote code, how does it get from here to there?”
+* [Automated testing](testing.md): “how do I write / run them, and why should care?”

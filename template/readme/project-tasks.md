@@ -2,13 +2,13 @@
 
 “how do I _____ on my local machine?”
 
-* [(re)Installing Drupal](#install-drupal)
-* [Updating dependencies (module, theme, core, etc.)](#update-dependency)
-* [Patching a project](#patch)
-* [Deploying to Cloud](#deploy)
-* [Tests * code validation](#tests)
+* [(re)Install Drupal](#install-drupal)
+* [Update dependencies (module, theme, core, etc.)](#update-dependency)
+* [Patch a project](#patch)
+* [Deploy to cloud](#deploy)
+* [Run tests & code validation](#tests)
 
-## <a name="install-drupal"></a>(re)Installing Drupal
+## <a name="install-drupal"></a>(re)Install Drupal
 
 Pre-requisites to installation:
 
@@ -22,7 +22,7 @@ Pre-requisites to installation:
 To re-install Drupal, execute: `./task.sh setup:drupal:install`. Note that this
 will drop the existing database tables and install Drupal from scratch!
 
-## <a name="update-dependency"></a>Updating dependencies (module, theme, core, etc.)
+## <a name="update-dependency"></a>Update dependencies (module, theme, core, etc.)
 
 To install or update contributed dependencies, simply update the dependency 
 version(s) in composer.json and run `composer install` or `composer update`.
@@ -41,7 +41,7 @@ To update drupal core:
 4. Use git to review changes to committed files. E.g., changes to .htaccess, robots.txt, etc. 
 5. Add and commit desired changes.
 
-## <a name="patch"></a>Patching a project
+## <a name="patch"></a>Patch a project
 
 Drupal core and contrib can be patched in `composer.json` using 
 `cweagans/composer-patches`, which is required by default. Patch information
@@ -55,12 +55,12 @@ should be specified in the JSON array in accordance with the following schema:
       }
     },
 
-## <a name="deploy"></a>Deploying to Cloud
+## <a name="deploy"></a>Deploy to cloud
 
 Please see [Deploy](deploy.md) for a detailed description of how to deploy to
  Acquia Cloud.
 
-## <a name="tests"></a>Tests & code Validation
+## <a name="tests"></a>Run tests & code validation
 
 Please see [tests/README.md](../tests/README.md) for information on running
 tests.
