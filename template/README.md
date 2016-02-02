@@ -7,11 +7,13 @@ Replace this with a brief description of the ${project.human_name} project.
     * [Repository architecture](readme/repo-architecture.md): “how is the code organized, and why?”
     * [Running project tasks](readme/project-tasks.md): “how do I _____ on my local machine?”
     * [Workflow](readme/dev-workflow.md): “I wrote code, how does it get from here to there?”
-    * [Automated testing](testing/README.md): “how do I write / run them, and why should care?”
+    * [Automated testing](tests/README.md): “how do I write / run them, and why should care?”
 * Technical Architect
     * [Project Architecture document](readme/architecture.md)
-    * [Deploying to the cloud](readme/release-process.md)
+    * [Deploying to cloud](readme/deploy.md)
+    * [Release process](readme/release-process.md)
     * [Setting up continuous integration](build/README.md#ci)
+    * [Open source contribution](os-contribution.md)
 
 ## Resources
 

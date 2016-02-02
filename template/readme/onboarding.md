@@ -27,12 +27,13 @@ operating system:
 ### Operating Systems
 
 We highly recommend that you *do not use Windows* directly for development. 
-Most of the tools in the Drupal universe are not built or tested for Windows
-compatibility.
+Many development tools (e.g., drush, gulp, etc.) are not built or tested for 
+Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI, 
+Drupal CI, etc.) do not permit testing on Windows OS.
 
-If you must use Windows as the host system for running a Virtual Machine, we 
-recommend that you execute the necessary command line functions using [Git Bash]
-(https://git-for-windows.github.io/).
+If you must use Windows, we recommend that:
+* You have administrator access to your machine
+* You execute the necessary command line functions using [Git Bash](https://git-for-windows.github.io/).
 
 ### Networking considerations
 
@@ -46,7 +47,7 @@ requests made by Composer.
 
 ## Configure Local Environment
 
-Please see [Local Development](/local-development.md) for detailed information 
+Please see [Local Development](local-development.md) for detailed information 
 on setting up a local \*AMP stack.
 
 When you have completed setting up your local \*AMP stack, please have the
