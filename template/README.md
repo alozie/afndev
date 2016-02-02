@@ -2,6 +2,8 @@
 
 Replace this with a brief description of the ${project.human_name} project.
 
+Documentation by role:
+
 * Developer
     * [Onboarding](readme/onboarding.md): “how do I get up and running on project work?”
     * [Repository architecture](readme/repo-architecture.md): “how is the code organized, and why?”
@@ -13,7 +15,7 @@ Replace this with a brief description of the ${project.human_name} project.
     * [Deploying to cloud](readme/deploy.md)
     * [Release process](readme/release-process.md)
     * [Setting up continuous integration](build/README.md#ci)
-    * [Open source contribution](os-contribution.md)
+    * [Open source contribution](readme/os-contribution.md)
 
 ## Resources
 
