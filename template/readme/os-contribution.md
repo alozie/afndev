@@ -1,50 +1,63 @@
-# What not to release
-- Use-case specific functionality (i.e., stuff no one else will really care about)
-    - when in doubt, release
-- Confidential or security sensitive information
-    - definitions will depend upon applicable NDA or security agreements
+# Open Source Contributions
 
-# What to release
+##  What not to release
+* Use-case specific functionality (i.e., stuff no one else will really care about)
+    * When in doubt, release
+* Confidential or security sensitive information
+    * Definitions will depend upon applicable NDA or security agreements
 
-## Patches to core or contrib
-- should always be contributed, if appropriate for public release
-- make use of organization crediting
+## What to release
 
-## Modules (or other)
+* Patches to core or contrib
+    * Should always be contributed, if appropriate for public release
+    * Make use of organization crediting
+* Modules
+    * Ensure that these are propery generalized / abstracted
+    * Ensure that client information is removed from code
 
-### recommendation
-- release to d.o
-- team should select who should own the module based on contribution to it's creation and abiilty/interest in on-going ownership
-    + ensure that maintainer transitioning is included in the process for off-boarding of staff
-- make use of organization crediting
-- benefits
-    + greater community visibility 
-    + able to make use of D.O packaging and testing bots
-- drawbacks
-    + organization does not have ownership of the module
+## Recommendation
 
-### alternatives
+Individual user (e.g., TA or developer) releases to drupal.org.
 
-#### organization ownership on D.O
-- benefits
-    + organization cannot loose control of the module
-    + can serve NDA processes
-- drawbacks
-    + organization users are not really supported on D.O; requires assistance from Drupal Association staff
+* Team should select who should own the module based on contribution to its 
+  creation and abilty/interest in on-going ownership
+* Ensure that maintainer transitioning is included in the process for 
+      off-boarding of staff
+* Make use of organization crediting
+* Benefits
+    * Greater community visibility 
+    * Able to make use of D.O packaging and testing bots
+* Drawbacks
+    * organization does not have ownership of the module
 
-#### releasing on GitHub with D.O project page
-- benefits
-    + organization ownership is guaranteed
-    + GitHub project flows (Pull Requests, etc.)
-- drawbacks
-    + frowned upon by D.O and part of community
-- conderations
-    + should issues be handled on D.O, GitHub, or both?
-        * recommendation: issues should be tracked on GitHub to integrate best with the workfow
+### Alternatives
 
+#### Organization ownership on D.O
 
-# Other factors
-## Organization credit on d.o
-- Engagement Managers should organizational credit participation with the client
-- If the client is participating, client organization should be credited for all issues and modules released
-- Otherwise, credit Acquia
+Create a drupal.org account to represent the organization. Use this account to
+maintain the project.
+
+* Benefits
+    * Organization cannot lose control of the module
+    * Can serve NDA processes
+* drawbacks
+    * Organization users are not really supported on D.O; requires assistance from Drupal Association staff
+
+#### Releasing on GitHub with D.O project page
+
+* Benefits
+    * Organization ownership is guaranteed
+    * GitHub project flows (Pull Requests, etc.)
+* Drawbacks
+    * Frowned upon by D.O and part of community
+- Considerations
+    * should issues be handled on D.O, GitHub, or both?
+        * recommendation: issues should be tracked on GitHub to integrate best with the workflow
+
+## Other factors
+
+### Organization credit on d.o
+
+* Engagement Managers should discuss organizational credit participation with the client
+* If the client is participating, both client organization and Acquia should be credited with all issues, projects, etc. 
+* Otherwise, give sole credit to Acquia

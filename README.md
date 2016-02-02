@@ -43,7 +43,7 @@ using Bolt.
 * [Git Hooks](template/scripts/git-hooks)
     * pre-commit: Checks for Drupal coding standards compliance
     * commit-msg: Check for proper formatting and syntax
-* [Acquia Cloud Hooks](template/hooks). Example integrations for third party services such as
+* [Acquia Cloud Hooks](template/hooks). Example integrations for third party services such as:
     * Slack
     * New Relic
     * HipChat

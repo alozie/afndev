@@ -19,6 +19,17 @@ recommend it for local development environments. Acquia has written [several
 articles](https://docs.acquia.com/search/site/phpstorm) on effectively using
 PHPStorm for Drupal development.
 
+### Operating Systems
+
+We highly recommend that you *do not use Windows* directly for development. 
+Many development tools (e.g., drush, gulp, etc.) are not built or tested for 
+Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI, 
+Drupal CI, etc.) do not permit testing on Windows OS.
+
+If you must use Windows, we recommend that:
+* You have administrator access to your machine
+* You execute the necessary command line functions using [Git Bash](https://git-for-windows.github.io/).
+
 ## Using Drupal VM for Bolt-generated projects
 
 To use Drupal VM with a Drupal project that is generated with Bolt, first place
