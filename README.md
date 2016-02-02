@@ -59,6 +59,36 @@ using Bolt.
     * Travis CI
     * GitHub
 
+## Keeping Bolt projects up-to-date
+
+"How do I pull down upstream changes from Bolt to my Bolt-generated project?"
+
+This is a popular question, and it's difficult to answer. 
+
+Bolt is designed as a "starter kit" rather than a "distribution". It 
+intentionally began with a "fork it and forget it" approach to updates. This is
+largely due to the fact that Bolt generated files are templates that are meant 
+to be customized, and pulling in upstream updates would wipe out those 
+customizations.
+
+That said, there are components of Bolt that could be treated as dependencies
+that receive upstream updates. Those components include:
+
+* Project tasks
+* Scripts
+* Acquia Cloud hooks
+
+The ideal approach would be to split each of these into a separate, versioned
+projects that could be treated as formal composer.json dependencies, but we 
+don't currently have the resources to maintain all of those projects.
+
+As a stopgap, you can run the following command to pull in upstream updates to 
+specific files and directories in your Bolt generated project:
+
+`./task.sh setup:bolt:update`
+
+After running, you can review changes via `git diff` and decide what should be
+committed.
 
 # Contributing to Bolt
 
