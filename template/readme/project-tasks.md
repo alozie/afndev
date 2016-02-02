@@ -7,6 +7,7 @@
 * [Patch a project](#patch)
 * [Deploy to cloud](#deploy)
 * [Run tests & code validation](#tests)
+* [Build frontend assets](#frontend)
 
 ## <a name="install-drupal"></a>(re)Install Drupal
 
@@ -68,6 +69,21 @@ tests.
 To execute PHP codesniffer and PHP lint against the project codebase, run:
 `./task.sh validate:all`
 
-## Build front end assets
+## <a name="frontend"></a>Build front end assets
 
-@todo document this!
+Ideally, you will be using a theme that uses SASS/SCSS, a styleguide, and other
+tools that require compilation. Like dependencies, the compiled assets should
+not be directly committed to the project repository. Instead, they should be 
+built during the creation of a production-ready build artifact.
+
+Bolt only natively supports the [Acquia PS Thunder](https://github.com/acquia-pso/thunder)
+base theme.
+
+To install Thunder's dependencies:
+
+1. See [Acquia PS Thunder](https://github.com/acquia-pso/thunder) for system requirements. 
+1. Execute `/.task frontend:install`.
+
+To build Thunder's assets, execute:
+
+`/.task frontend:build`.
