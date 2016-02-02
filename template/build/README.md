@@ -34,6 +34,15 @@ Integration with Travis CI is included, although Phing tasks can be used with
   by installing composer dependencies.
 1. Travis CI begins a a build and calls various Phing targets.
 
+### Creating your own custom tasks
+
+You may add your own custom tasks to the build engine by defining new [Phing]
+(https://www.phing.info/) targets in [build/custom/phing/build.xml]
+(custom/phing/build.xml).
+
+You may override or define custom Phing properties in 
+[build/custom/phing/build.yml](custom/phing/build.yml)
+
 ### Setting Up Travis CI for automated deployments
 
 Travis CI can be used to deploy a fully built site artifact (with the docroot)
