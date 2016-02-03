@@ -29,7 +29,8 @@ operating system:
 We highly recommend that you *do not use Windows* directly for development. 
 Many development tools (e.g., drush, gulp, etc.) are not built or tested for 
 Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI, 
-Drupal CI, etc.) do not permit testing on Windows OS.
+Drupal CI, etc.) do not permit testing on Windows OS. Similarly, Bolt cannot be 
+fully tested on Windows and is unsupported on this platform.
 
 If you must use Windows, we recommend that:
 * You have administrator access to your machine
@@ -37,6 +38,7 @@ If you must use Windows, we recommend that:
     * [Git Bash](https://git-for-windows.github.io/)
     * [cmder](http://cmder.net/)
     * [cygwin](https://www.cygwin.com/)
+* Run Bolt inside of a Drupal-VM instance
 
 ### Networking considerations
 
