@@ -1,5 +1,10 @@
 # Deployment workflow
 
+"How do I deploy code from my local machine, or GitHub, to the Acquia Cloud?"
+
+For information on how to deploy to production, see [release-process.md]
+(release-process.md).
+
 This document outlines the workflow to build a complete Drupal docroot (plus 
 supporting features, such as Cloud Hooks) which can be deployed directly to 
 Acquia Cloud. Collectively, this bundle of code is referred to as the "build 
