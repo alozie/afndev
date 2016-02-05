@@ -23,16 +23,23 @@ Pre-requisites to installation:
 To re-install Drupal, execute: `./task.sh setup:drupal:install`. Note that this
 will drop the existing database tables and install Drupal from scratch!
 
-## <a name="update-dependency"></a>Update dependencies (module, theme, core, etc.)
+## <a name="update-dependency"></a>Update dependencies (core, profile, module, theme, librarires)
 
 To install or update contributed dependencies, simply update the dependency 
 version(s) in composer.json and run `composer install` or `composer update`.
+
+All contributed projects hosted on drupal.org, including Drupal core, profiles,
+ modules, and themes, can be found on [Drupal packagist]
+ (https://packagist.drupal-composer.org/).
+non-Drupal libraries (hosted on Packagist). 
 
 Note that Composer versioning is not identical to drupal.org versioning. See:
 
 * [Composer Versions](https://getcomposer.org/doc/articles/versions.md) - Read up on how to specify versions.
 * [Drupal packagist site](https://packagist.drupal-composer.org/) - Find packages and their current versions.
 * [Drupal packagist project](https://github.com/drupal-composer/drupal-packagist) - Submit issues and pull requests to the engine that runs Drupal packagist.
+* [Drupal packagist project](https://github.com/drupal-composer/drupal-packagist) - Submit issues and pull requests to the engine that runs Drupal packagist.
+* [Packagist](http://packagist.com/) - Find non-drupal libraries and their current versions.
 
 To update drupal core: 
 
