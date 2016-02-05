@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f162e69eb7b6baf96ea059d378b5d01e",
-    "content-hash": "dc1c6fd02403ffb6a585ce95119efd8c",
+    "hash": "fda324f7eb48b187f6095838a3f68999",
+    "content-hash": "5679119ccf4be3b745085c2d17ae2b8a",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -60,6 +60,57 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "hirak/prestissimo",
+            "version": "0.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hirak/prestissimo.git",
+                "reference": "f3bb1e2916720bf0be24f65411f34b00260cdf94"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hirak/prestissimo/zipball/f3bb1e2916720bf0be24f65411f34b00260cdf94",
+                "reference": "f3bb1e2916720bf0be24f65411f34b00260cdf94",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "~1.0.0-alpha10",
+                "ext-curl": "*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.0-alpha10",
+                "pdepend/pdepend": "^2.2",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Hirak\\Prestissimo\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hirak\\Prestissimo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hiraku NAKANO",
+                    "email": "hiraku@tojiru.net"
+                }
+            ],
+            "description": "composer parallel install plugin",
+            "keywords": [
+                "install",
+                "parallel",
+                "speedup"
+            ],
+            "time": "2016-02-02 15:13:54"
         },
         {
             "name": "phing/phing",
