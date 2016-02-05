@@ -29,3 +29,15 @@ $is_ah_stage_env = ($ah_env == 'test');
 $is_ah_dev_cloud = (!empty($_SERVER['HTTP_HOST']) && strstr($_SERVER['HTTP_HOST'], 'devcloud'));
 $is_ah_dev_env = (preg_match('/^dev[0-9]*$/', $ah_env) == TRUE);
 $is_local_env = !$is_ah_env;
+
+/**
+ * Display all errors for all but tests and prod envs.
+ */
+if ($is_local_env || $is_ah_dev_env) {
+  // Ultimately, EVERY compiler message represents a mistake in the code.
+  // Acquia Cloud isn't quite ready for E_STRICT yet.
+  error_reporting(E_ALL);
+  // Print errors on WSOD.
+  ini_set('display_errors', TRUE);
+  ini_set('display_startup_errors', TRUE);
+}
