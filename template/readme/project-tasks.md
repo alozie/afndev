@@ -23,15 +23,26 @@ Pre-requisites to installation:
 To re-install Drupal, execute: `./task.sh setup:drupal:install`. Note that this
 will drop the existing database tables and install Drupal from scratch!
 
-## <a name="update-dependency"></a>Update dependencies (core, profile, module, theme, librarires)
+## <a name="update-dependency"></a>Update dependencies (core, profile, module, theme, libraries)
 
-To install or update contributed dependencies, simply update the dependency 
-version(s) in composer.json and run `composer install` or `composer update`.
+Composer should be used to manage Drupal core, all contributed dependencies, and
+most third party libraries. The primary exception to this is front end libraries
+that may be managed via a front-end specific dependency manager, such as 
+[Bower](http://bower.io/) or [NPM](https://www.npmjs.com/).
+
+### Contributed projects and third party libraries
+
+To install or update contributed dependencies or third party libraries, simply 
+update the dependency version(s) in composer.json and run `composer install` or 
+`composer update`.
 
 All contributed projects hosted on drupal.org, including Drupal core, profiles,
- modules, and themes, can be found on [Drupal packagist]
- (https://packagist.drupal-composer.org/).
-non-Drupal libraries (hosted on Packagist). 
+modules, and themes, can be found on [Drupal packagist]
+(https://packagist.drupal-composer.org/). Most non-Drupal libraries can be 
+found on [Packagist](http://packagist.com/). For any required packaged not 
+hosted on one of those two sites, you can define your own array of [custom
+repositories](https://getcomposer.org/doc/05-repositories.md#repository) for 
+Composer to search.
 
 Note that Composer versioning is not identical to drupal.org versioning. See:
 
@@ -39,7 +50,10 @@ Note that Composer versioning is not identical to drupal.org versioning. See:
 * [Drupal packagist site](https://packagist.drupal-composer.org/) - Find packages and their current versions.
 * [Drupal packagist project](https://github.com/drupal-composer/drupal-packagist) - Submit issues and pull requests to the engine that runs Drupal packagist.
 * [Drupal packagist project](https://github.com/drupal-composer/drupal-packagist) - Submit issues and pull requests to the engine that runs Drupal packagist.
+* [Drupal Composer package naming conventions](https://www.drupal.org/node/2471927)
 * [Packagist](http://packagist.com/) - Find non-drupal libraries and their current versions.
+
+### Drupal core
 
 To update drupal core: 
 

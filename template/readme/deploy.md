@@ -45,7 +45,7 @@ This task is analogous to `setup:build:all` but with a few critical differences:
 After the artifact is created, you can inspect it or even run it as a website
 locally. You may also manually commit and push it to ACE.
 
-## Create and deploy the build artifact
+## <a name="build-artifact"></a>Create and deploy the build artifact
 
 To both create and deploy the build artifact in a single command, run the
 following command
