@@ -2,30 +2,35 @@
 
 This document is a work in progress.
 
-* [Generating a build artifact](deploy.md)
-* Branching strategies
-* Tagging
-* Release Notes - Each release should be accompanied by a set of release notes, 
-  which can be easily generated using the [Release Notes Script]
-  (../scripts/release-notes/README.md)
+* [Generating a build artifact](#build-artifact)
+* [Branching strategies](#branching)
+* [Tagging](#tagging)
+* [Release Notes](#release-notes)
 * [Deploying tag and executing updates](#deploy-tag)
-* Notifications (slack, hipchat, etc) - @todo
+* [Notifications](#notifications) (slack, hipchat, etc)
 
-## Branching strategies
-
-@todo Document this!
-
-## Generating a build artifact
-
-@todo Document this! [Generating a build artifact](deploy.md)
-
-## Tagging
+## <a name="branching"></a>Branching strategies
 
 @todo Document this!
 
-## Release notes
+## <a name="build-artifact"></a>Generating a build artifact
+
+See [Create and deploy the build artifact](deploy.md#build-artifact) in 
+[deploy.md](deploy.md).
+
+## <a name="tagging"></a>Tagging
 
 @todo Document this!
+
+## <a name="release-notes"></a>Release notes
+
+Each release should be accompanied by a set of release notes, which can be 
+easily generated using the 
+[Release Notes Script](../scripts/release-notes/README.md).
+
+This script will automatically aggregate all of the descriptions from Pull
+Requests since a specified date. The generated tet aggregate can then be
+copied and pasted into release notes on GitHub.
 
 ## <a name="deploy-tag"></a>Deploying tag and executing updates
 
@@ -58,6 +63,18 @@ There might be some extra steps depending on the infrastructure and the extent
 of site changes. For example, a major application change might require a flush 
 of other caches in the system such as Varnish or Memcached. 
 
-# Notifications
+# <a name="notifications">Notifications
 
-@todo Document this!
+You can configure various tools to provide notifications of deployment
+related events. For instance:
+
+* [Travis CI](https://docs.travis-ci.com/user/notifications/) can notify you about your build results through email, IRC and/or webhooks.
+* Jenkins has plugins to provide build notifications via [Slack](https://wiki.jenkins-ci.org/display/JENKINS/Slack+Plugin), [IRC](https://wiki.jenkins-ci.org/display/JENKINS/IRC+Plugin), and many more services.
+* You can use [Acquia Cloud Hooks](https://docs.acquia.com/cloud/manage/cloud-hooks#animated) to provide deployment, db, or code related notification to service such as:
+    * [New Relic](../hooks/samples/newrelic)
+    * [Slack](../hooks/samples/slack)
+    * [HipChat](../hooks/samples/hipchat)
+ 
+## Resources:
+
+* [Connecting the Tubes: JIRA, GitHub, Jenkins, and Slack](https://dev.acquia.com/blog/connecting-tubes-jira-github-jenkins-and-slack)

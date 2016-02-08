@@ -2,22 +2,8 @@
 
 “How do I contribute code to this project?”
 
-First off, let’s review what our standards are for code.
-
-## Standards
-
-* All work must conform to established best practices and coding standards. 
-  Code quality is ensured in a variety of ways:
-* All code must conform to Drupal Coding Standards. This is enforced via local 
-  git hooks and code checks performed during continuous integration.
-* All front end code must follow Drupal Theming Best Practices.
-* All code must be reviewed by a peer or established integrator before being 
-  merged into the master branch.
-* All new features must covered by an automated test that mirrors the ticket 
-  acceptance criteria.
-
-Please peruse the examples directory for examples of various coding best 
-practices.
+First off, take a moment to review our [Best Practices](best-practices.md) 
+before writing or submitting any code.
 
 ## Git Workflow
 
