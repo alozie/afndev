@@ -51,17 +51,8 @@ To update drupal core:
 
 ## <a name="patch"></a>Patch a project
 
-Drupal core and contrib can be patched in `composer.json` using 
-`cweagans/composer-patches`, which is required by default. Patch information
-should be specified in the JSON array in accordance with the following schema:
-
-    "extra": {
-      "patches": {
-        "drupal/core": {
-          "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch"
-        }
-      }
-    },
+Please see [patches/README.md](../patches/README.md) for information on patch 
+naming, patch application, and patch contribution guidance.
 
 ## <a name="deploy"></a>Deploy to cloud
 

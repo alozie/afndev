@@ -1,6 +1,6 @@
 # Development Workflow
 
-“I wrote code, how does it get from here to there?”
+“How do I contribute code to this project?”
 
 First off, let’s review what our standards are for code.
 
