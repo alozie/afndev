@@ -26,6 +26,8 @@ before_install:
   - phpenv config-rm xdebug.ini
   # Enable $_ENV variables in PHP.
   - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Ensure that always_populate_raw_post_data PHP setting: Not set to -1 does not happen.
+  - echo "always_populate_raw_post_data = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer selfupdate
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
