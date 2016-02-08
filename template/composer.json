@@ -2,7 +2,8 @@
   "name": "acquia/${project.acquia_subname}",
   "license": "proprietary",
   "require": {
-    "drush/drush":                  "7.*"
+    "drush/drush":                  "7.*",
+    "hirak/prestissimo": "^0.1.9"
   },
   "require-dev": {
     "behat/behat":                  "3.0.*",

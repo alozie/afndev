@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e188aaa9e7d5b8bb0d62dc18374d3892",
-    "content-hash": "1d49716ece95acf286d136933b21edf7",
+    "hash": "921aa7233eee808b6d724174fe6ae7a4",
+    "content-hash": "91e2535d51c47b026c69b967dde6a66a",
     "packages": [
         {
             "name": "d11wtq/boris",
@@ -124,6 +124,57 @@
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
             "time": "2015-10-23 12:48:00"
+        },
+        {
+            "name": "hirak/prestissimo",
+            "version": "0.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hirak/prestissimo.git",
+                "reference": "cf526eee464e93dcb13c8d3521bad2ea0111bbfd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hirak/prestissimo/zipball/cf526eee464e93dcb13c8d3521bad2ea0111bbfd",
+                "reference": "cf526eee464e93dcb13c8d3521bad2ea0111bbfd",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "~1.0.0-alpha10",
+                "ext-curl": "*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.0-alpha10",
+                "pdepend/pdepend": "^2.2",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Hirak\\Prestissimo\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hirak\\Prestissimo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hiraku NAKANO",
+                    "email": "hiraku@tojiru.net"
+                }
+            ],
+            "description": "composer parallel install plugin",
+            "keywords": [
+                "install",
+                "parallel",
+                "speedup"
+            ],
+            "time": "2016-02-06 06:13:10"
         },
         {
             "name": "pear/console_table",
