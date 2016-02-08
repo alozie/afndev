@@ -7,7 +7,7 @@ _This document is a work in progress._ Unlinked items are planned topics, feel
 
 * [Exporting configuration](#exporting-config)
 * [Configuration updates](#config-updates)
-* Cache strategies
+* [Caching strategies](#caching)
 * [Patching](#patching)
 * [Building Views](#views)
 * [Logging](#logging)
