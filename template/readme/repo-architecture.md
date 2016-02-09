@@ -28,11 +28,22 @@ workflow that may be unfamiliar to you.
 The following is an overview of the purpose of each top level directory in the
 project template:
 
-@todo Add directory structure.
+    root
+      ├── build    - Contains build config files for CI solutions. E.g., Phing configuration.
+      ├── docroot  - The drupal docroot. Intentionally .gitignored. Created only during builds.
+      ├── hooks    - Contains Acquia Cloud hooks.
+      ├── patches  - Contains private patches to be used by make.yml.
+      ├── profiles - Contains custom profiles; symlinked to docroot/profiles.
+      ├── readme   - Contains high level project documentation.
+      ├── reports  - Contains output of automated tests; is .gitignored.
+      ├── scripts  - Contains a variety of utility scripts that are not part of the build process.
+      ├── sites    - Subdirectories within sites are symlinked to /docroot/sites.
+      ├── tests    - Contains all test files and configuration.
+      ├── vendor   - Contains built composer dependencies; is .gitignored.
 
 ## Dependency Management
 
-@todo Document this.
+All dependencies are managed via [Drush Make](http://www.drush.org/en/master/make/).
 
 For step-by-step instructions on how to update dependencies, see [Project Tasks]
-(project-tasks.md).
+(project-tasks.md#update-dependency).

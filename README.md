@@ -96,7 +96,8 @@ Bolt work is currently being tracked in the Bolt GitHub issue queue.
 
 ## Status:
 
-* Bolt: [![Bolt Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=8.x)](https://magnum.travis-ci.com/acquia/bolt)
-* Bolted8: [![Bolted8 Build Status](https://travis-ci.com/acquia-pso/bolted8.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=8.x-build)](https://magnum.travis-ci.com/acquia-pso/bolted7)
+* Bolt: [![Bolt Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x)](https://magnum.travis-ci.com/acquia/bolt)
+* Bolted7: [![Bolted7 Build Status](https://travis-ci.com/acquia-pso/bolted7.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x-build)](https://magnum.travis-ci.com/acquia-pso/bolted7)
+
 
 See [build/README.md](build) for more information on Bolt's CI process.

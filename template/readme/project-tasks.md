@@ -25,7 +25,13 @@ will drop the existing database tables and install Drupal from scratch!
 
 ## <a name="update-dependency"></a>Update dependencies (core, profile, module, theme, librarires)
 
-@todo Document this.
+All dependencies are managed in `make.yml`. To update a dependency, change the
+version number in `make.yml` and execute `./task setup:build:all` to rebuild
+the docroot with the updated dependencies. 
+
+If you are using a dev version of a given module, you should specify a specific
+revision id in addition to the version. See [Drush Make docs](http://www.drush.org/en/master/make/)
+for more information.
 
 ## <a name="patch"></a>Patch a project
 
