@@ -1,5 +1,10 @@
 # Deployment workflow
 
+"How do I deploy code from my local machine, or GitHub, to the Acquia Cloud?"
+
+For information on how to deploy to production, see [release-process.md]
+(release-process.md).
+
 This document outlines the workflow to build a complete Drupal docroot (plus 
 supporting features, such as Cloud Hooks) which can be deployed directly to 
 Acquia Cloud. Collectively, this bundle of code is referred to as the "build 
@@ -33,26 +38,24 @@ In order to create the build artifact in `/deploy`, simply run
 
 This task is analogous to `setup:build:all` but with a few critical differences:
 * The docroot is created at `/deploy/docroot`.
-* Custom files (settings, modules, themes) are copied into place instead of
-being symlinked.
-* The hooks directory is copied from the repo root into `deploy`.
+* Only production required to the docroot 
 * (planned) CSS / JS are compiled in production mode (compressed / minified)
 * (planned) Sensitive files, such as CHANGELOG.txt, are removed.
 
-## Deploying the build artifact
+After the artifact is created, you can inspect it or even run it as a website
+locally. You may also manually commit and push it to ACE.
 
-After the build artifact is created, you can simply run:
+## Create and deploy the build artifact
+  
+To both create and deploy the build artifact in a single command, run the
+following command
+ 
 ````
 ./task.sh deploy:artifact -Ddeploy.branch=develop-build -Ddeploy.commitMsg='BLT-123: The commit message.'
 ````
 
 This command will commit the artifact to the `develop-build` branch with the
 specified commit message and push it to the remotes defined in project.yml.
-
-## Build + Deploy
-
-You can build and deploy an artifact in a single command:
-
 
 ## Continuous integration
 
@@ -62,11 +65,14 @@ CI tool such as Travis or Jenkins.
 ### Travis CI
 
 Access to Travis is already provided by Acquia PS, which makes this option 
-appealing on a cost basis. It will automtically deploy new commits after they 
+appealing on a cost basis. It will automatically deploy new commits after they 
 are merged and tests pass. However, it's somewhat insecure (you have to create 
 an SSH key for deployments that can be accessed by any developer), and it's 
 impossible to schedule regular deployments or perform more advanced 
 integrations.
+
+For more information on configuring Travis CI, see "Setting Up Travis CI for 
+automated deployments" in [build/README.md](build/README.md).
 
 ### Jenkins (Cloudbees)
 

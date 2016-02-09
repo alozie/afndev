@@ -12,52 +12,89 @@ services:
 * GitHub repository
 * Acquia Cloud subscription
 
-## Initial Setup
+## System Requirements
 
-Each developer should [fork](https://help.github.com/articles/fork-a-repo) the 
-primary Git repository for their work. All developers should then checkout a 
-local copy of the master branch to begin work -
+You should be able to use the following tools on the command line of your native
+operating system:
 
-    git clone git@github.com:username/project-repo.git -b master
-    git remote add upstream git@github.com:acquia-pso/project-repo.git
+* [Git](https://git-scm.com/)
+* [Composer](https://getcomposer.org/download/)
+* PHP 5.3.9+ (PHP 5.6 recommended). PHP installation instructions:
+    * [OSX](http://justinhileman.info/article/reinstalling-php-on-mac-os-x/)
+    * [Windows](http://php.net/manual/en/install.windows.php)
+    * [Linux](http://php.net/manual/en/install.unix.debian.php)
 
-1. Clone your fork to your local machine.
-1. Make sure you are on the `develop` branch for most work.
-1. Run `composer install` (you must already have Composer installed).
-1. Run `./task.sh setup:git-hooks`. This will install hooks that validate code
-standards and commit message format prior to commiting.
-1. Copy `sites/default/settings/default.local.settings.php` to 
-`sites/default/settings/local.settings.php` and update the values with local 
-database credentials.
-1. Run `./task.sh setup:build:all`. This will run Drush make and place the built
-site platform into `/docroot`. It will also symlink custom modules and themes
-into place, so that changes you make will be reflected immediately on the site
-and in Git.
-1. Run `./task.sh setup:drupal:install`. This will create use values defined in
-`local.settings.php`.
+### Operating Systems
 
-After this initial setup, you should only need to run `./task.sh setup:build:all`
-when the make file is updated, and `./task.sh setup:drupal:install` when you
-need to reinstall the site.
+We highly recommend that you *do not use Windows* directly for development. 
+Many development tools (e.g., drush, gulp, etc.) are not built or tested for 
+Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI, 
+Drupal CI, etc.) do not permit testing on Windows OS. Similarly, Bolt cannot be 
+fully tested on Windows and is unsupported on this platform.
+
+If you must use Windows, we recommend that:
+* You have administrator access to your machine
+* You execute the necessary command line functions a bash emulator such as:
+    * [Git Bash](https://git-for-windows.github.io/)
+    * [cmder](http://cmder.net/)
+    * [cygwin](https://www.cygwin.com/)
+* Run Bolt inside of a Drupal-VM instance
+
+### Networking considerations
+
+Building project dependencies requires that your local machine make HTTP and
+HTTPS requests to various software providers on the internet. Please ensure
+that your local and network level security settings permit this to happen.
+
+If you need to make requests via a proxy server, please [configure git to use
+a proxy](http://stackoverflow.com/a/19213999). This will cover all git based
+requests made by Composer.
 
 ## Configure Local Environment
 
-Please see [Local Development](/local-development.md) for detailed 
-information on setting up a local LAMP stack. In addition to this, please
-ensure also perform the configurations listed below.
+Please see [Local Development](local-development.md) for detailed information 
+on setting up a local \*AMP stack.
+
+When you have completed setting up your local \*AMP stack, please have the
+following information ready and available:
+
+* The intended local URL of the site
+* The local database credentials
+
+## Initial Setup
+
+1. [Fork](https://help.github.com/articles/fork-a-repo) the primary GitHub 
+   repository
+1. Clone your fork to your local machine:
+    ````
+    git clone git@github.com:username/project-repo.git -b develop
+    git remote add upstream git@github.com:acquia-pso/project-repo.git
+    ````
+1. Checkout the `develop` branch. `git checkout develop`
+1. Run `composer install` (you must already have Composer installed).
+1. Run `./task.sh setup:drupal:settings` This will generate 
+  `docroot/sites/default/settings/local.settings.php` and
+  `docroot/sites/default/local.drushrc.php`. Update these with your local 
+  database credentials and your local site URL.
+1. Run `./task.sh setup`. This will build all project dependencies and install
+   drupal.
+
+After this initial setup, you should only need to run `./task.sh setup:build:all`
+when composer.json is updated, and `./task.sh setup:drupal:install` when you
+need to reinstall the site.
+
+For a full list of available project tasks, run `./task.sh -l`. See
+[Project Tasks](project-tasks.md) for more information.
 
 ### Local Git Configuration
 
-For readability of commit history, set your name properly -
+For readability of commit history, set your name and email address properly:
 
-    git config user.name "Developer"
+    git config user.name "Your Name"
+    git config user.email your-email-address@example.com
 
-*You likely want to do this globally using `git config --global`.*
-
-Ensure that your local email address correctly matches the email address for
- your Jira account -
-
-    git config user.email developer@example.com
+Ensure that your local email address correctly matches the email address for 
+your Jira account.
 
 ## GitHub Configuration
 
@@ -71,5 +108,9 @@ on your local environment, so please follow the [installation instructions]
 
 ## Next steps
 
-Review the [Agile Guide](agile-guide.md) and [Developer Workflow]
-(developer-guide.md) for information on workflows and code standards.
+Review review the following documentation:
+
+* [Repository architecture](repo-architecture.md): “how is the code organized, and why?”
+* [Running project tasks](project-tasks.md): “how do I _____ on my local machine?”
+* [Workflow](dev-workflow.md): “I wrote code, how does it get from here to there?”
+* [Automated testing](testing.md): “how do I write / run them, and why should care?”

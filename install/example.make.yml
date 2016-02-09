@@ -22,10 +22,6 @@ projects:
       # https://www.drupal.org/node/2211429#comment-10033677
       - https://www.drupal.org/files/issues/drupal-image-style-not-found-2211429-4.patch
 
-      # Mitigate performance bottleneck causes by having too many blocks.
-      # https://www.drupal.org/node/2411917
-      - https://www.drupal.org/files/issues/2411917_block_rehash.patch
-
       # Save and restore css/js/head with block cache.
       # https://www.drupal.org/node/1460766
       - https://www.drupal.org/files/issues/d7-block-cache-1460766-34.patch

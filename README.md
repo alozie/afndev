@@ -1,94 +1,94 @@
 # Bolt
 
-Bolt will create a new Professional Services project using the project template
-located in /template.
+Bolt will create a new Professional Services project using the project template 
+located in `/template`.
 
 It is proprietary software. Copyright 2016. Acquia, Inc.
 
-## Table of Contents
+## Philosophy and Purpose
 
-* [Installation](#installation)
-* [Features](#features)
-  * [Documentation Templates](#documentation-templates)
-  * [Git Hooks](#git-hooks)
-  * [Acquia Cloud Hooks](#acquia-cloud-hooks)
-  * [Testing Framework](#testing-framework)
-  * [Continuous Integration](#continuous-integration)
-* [Contributing to Bolt](#contributing-to-bolt)
+Bolt is designed to improve efficiency and collaboration across Drupal projects 
+by providing a common set of tools and standardized structure. It was born out 
+of the need to reduce re-work, project set up time, and developer onboarding 
+time.
 
-## Installation
+Its explicit goals are to:
 
-When beginning a new Drupal project, do the following:
+* Provide a standard project template for Drupal based projects
+* Provide tools that automate much of the setup and maintenance work for 
+  projects
+* Document and enforce Drupal standards and best practices via default 
+  configuration, automated testing, and continuous integration
 
-* Clone this Bolt repository to a local directory.
-* Follow the instructions in [/install/README.md](/install/README.md).
+It scope is discretely defined. It is *not* intended to provide:
+
+* Drupal application features (e.g., workflow, media, layout, pre-fabbed content
+  types, etc.)
+* A local hosting environment
+* A replacement for good judgement (as with Drupal, it leaves you the freedom to
+  make mistakes)
+
+## Creating a new project with Bolt
+
+It isn’t accurate to say that you can “install” Bolt. Rather, you can use Bolt 
+to generate a new project. Within that project, you can then perform common 
+project tasks like build dependencies, install Drupal, run tests, etc.
+
+Follow the instructions in [INSTALL.md](INSTALL.md) to generate a new project 
+using Bolt.
 
 ## Features
 
-### Documentation Templates
+* [Documentation templates](template/README.md)
+* [Git Hooks](template/scripts/git-hooks)
+    * pre-commit: Checks for Drupal coding standards compliance
+    * commit-msg: Check for proper formatting and syntax
+* [Acquia Cloud Hooks](template/hooks). Example integrations for third party services such as:
+    * Slack
+    * New Relic
+    * HipChat
+* [Testing Framework](template/testing). 
+    * Behat: default `local.yml` configuration, example tests, `FeatureContext.php`
+    * PHPUnit: default tests for ensuring proper functioning of Bolt provided components
+* [Project tasks](template/readme/project-tasks.md)
+    * Executing tests and validating code
+    * Building dependencies
+    * (Re)installation of Drupal
+    * Production-safe artifact generation and deployment
+* [Continuous Integration](template/build/README.md)
+    * Travis CI
+    * GitHub
 
-The following default documentation is included in the project template:
-* [Onboarding](/template/readme/onboarding.md)
-* [Developer Guide](/template/readme/dev-workflow.md)
-* [Architecture Template](/template/readme/architecture.md)
-* [Open Source Contribution Guide](/template/readme/os-contribution.md)
-* [Project Readme](/template/README.md)
-* [Theming Guide](/template/readme/theming.md)
-* [Local Development](/template/readme/local-development.md)
+## Keeping Bolt projects up-to-date
 
-### Git Hooks
+"How do I pull down upstream changes from Bolt to my Bolt-generated project?"
 
-Default [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
-are included with Bolt. These should be symlinked into your local repository's 
-`.git` directory using the `setup:git-hooks` task during the 
-[onboarding process](/template/readme/onboarding.md). 
+This is a popular question, and it's difficult to answer. 
 
-Please see the [Git Hooks Readme](/template/scripts/git-hooks/README.md) for
-more information.
+Bolt is designed as a "starter kit" rather than a "distribution". It 
+intentionally began with a "fork it and forget it" approach to updates. This is
+largely due to the fact that Bolt generated files are templates that are meant 
+to be customized, and pulling in upstream updates would wipe out those 
+customizations.
 
-### Acquia Cloud Hooks
+That said, there are components of Bolt that could be treated as dependencies
+that receive upstream updates. Those components include:
 
-Sample Acquia Cloud Hooks are included in the [hooks directory](/template/hooks). These
-include example integrations for third party services such as Slack, New Relic,
-and HipChat. See [hooks](/template/hooks/README.md) for more information.
+* Project tasks
+* Scripts
+* Acquia Cloud hooks
 
-### Testing Framework
+The ideal approach would be to split each of these into a separate, versioned
+projects that could be treated as formal composer.json dependencies, but we 
+don't currently have the resources to maintain all of those projects.
 
-Bolt includes example tests and configurations for various testing tools,
-including Behat and PHPUnit. See [tests directory](/template/tests) for more 
-information. Tasks for executing these tests are included in the 
-[continuous integration](#continuous-integration) tools.
+As a stopgap, you can run the following command to pull in upstream updates to 
+specific files and directories in your Bolt generated project:
 
-### Continuous Integration
+`./task.sh setup:bolt:update`
 
-A large number of common build tasks are provided via Phing targets. These 
-include tasks for things like code sniffing, executing tests, building 
-dependencies, installing Drupal, etc.
-
-A starter configuration for running builds on Travis CI is included. The
-configuration lives in [.travis.yml](/template/.travis.yml) and [build](/template/build). 
-At a high level, the default CI build will do the following:
-* Execute a Travis CI build when a Pull Request is submitted to GitHub.
-  * Build dependencies (e.g., composer)
-  * Run phing targets. Phing targets include:
-    * validate:all         - runs code validation (e.g., code sniffer)
-    * setup:build:all      - executes drush make on [make.yml](/install/example.make.yml)
-    * setup:drupal:install - installs Drupal to Travis environment via `drush si`
-    * tests:all            - executes Behat and PHPUnit tests against installed Drupal instance
-    * deploy:*             - commits and pushed build artifact to Acquia Cloud for deployment
-
-### Local Development
-
-Bolt does not ship with any local development environment configuration, but 
-there are two recommended solutions, both of which can be used with 
-Bolt-generated Drupal projects:
-
-  - [Drupal VM](http://www.drupalvm.com/)
-  - [Acquia Dev Desktop](https://www.acquia.com/products-services/dev-desktop)
-
-Please read the included [Local Development](/template/readme/local-development.md)
-documentation for instructions for using Drupal VM with a Bolt-generated Drupal 
-project.
+After running, you can review changes via `git diff` and decide what should be
+committed.
 
 # Contributing to Bolt
 
@@ -99,4 +99,5 @@ Bolt work is currently being tracked in the Bolt GitHub issue queue.
 * Bolt: [![Bolt Build Status](https://magnum.travis-ci.com/acquia/bolt.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x)](https://magnum.travis-ci.com/acquia/bolt)
 * Bolted7: [![Bolted7 Build Status](https://travis-ci.com/acquia-pso/bolted7.svg?token=eFBAT6vQ9cqDh1Sed5Mw&branch=7.x-build)](https://magnum.travis-ci.com/acquia-pso/bolted7)
 
-See [build README.md](/build) for more information on Bolt's CI process.
+
+See [build/README.md](build) for more information on Bolt's CI process.

@@ -158,4 +158,15 @@
       </fileset>
     </chmod>
   </target>
+
+  <target name="setup:bolt:update" description="Pulls in upstream changes to project template from Bolt respository.">
+    <echo>You may be prompted to trust GitHub's SSL certification and to enter your GitHub password.</echo>
+    <echo>If you have two factor authentication enabled for GitHub, you must use an access token in lieu of a password.</echo>
+    <echo>GitHub access tokens can be generated here: https://github.com/settings/tokens</echo>
+
+    <input message="Press any key to continue" propertyName="continue" />
+
+    <exec dir="${repo.root}" command="./scripts/bolt/update-scaffold" logoutput="true" passthru="true"/>
+  </target>
+
 </project>
