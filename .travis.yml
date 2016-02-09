@@ -54,5 +54,5 @@ script:
   - export DEPLOY_PR=true
   - ../bolted8/scripts/deploy/travis-deploy.sh bolt 8.x 8.x-build
   # Validate and run 'bolt' phpunit tests.
-  - phpcs --standard=PSR2 tests
+  - phpcs --standard=../bolted8/vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml tests
   - phpunit tests
