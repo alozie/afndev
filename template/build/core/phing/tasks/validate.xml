@@ -43,7 +43,7 @@
 
     <!-- Sniff tests for PSR2 coding standards compliance. -->
     <phpcodesniffer
-        standard="PSR2"
+        standard="${phpcs.ruleset}"
         showSniffs="false"
         showWarnings="true"
         haltonerror="true"
