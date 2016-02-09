@@ -1,5 +1,26 @@
 # Development Workflow
 
+“How do I contribute code to this project?”
+
+First off, let’s review what our standards are for code.
+
+## Standards
+
+* All work must conform to established best practices and coding standards. 
+  Code quality is ensured in a variety of ways:
+* All code must conform to Drupal Coding Standards. This is enforced via local 
+  git hooks and code checks performed during continuous integration.
+* All front end code must follow Drupal Theming Best Practices.
+* All code must be reviewed by a peer or established integrator before being 
+  merged into the master branch.
+* All new features must covered by an automated test that mirrors the ticket 
+  acceptance criteria.
+
+Please peruse the examples directory for examples of various coding best 
+practices.
+
+## Git Workflow
+
 No direct changes should be pushed to the Acquia repository. The process of 
 syncing these repositories is managed transparently in the background.
 
@@ -16,17 +37,16 @@ specifics -
 * Any hotfixes are merged directly into a `hotfix` branch, which can then be 
   merged to `master`.
 
-## Beginning work
+## Beginning work locally
 
-When you pull a Jira ticket and begin work on a feature, you should create a 
-new feature branch named according to the following pattern: 
-`abc-123-short-desc`.
-
-All commits to the branch should have commit messages following the pattern:
-"ABC-123 A gramatically correct sentence ending within punctiation."
-
-Where "ABC" is the Jira prefix of your Jira project and "123" is the ticket
-number for which the work is being performed.
+1. Pull a ticket in JIRA
+1. Create a new local feature branch named according to the following pattern: 
+  `abc-123-short-desc` Where "ABC" is the Jira prefix of your Jira project and 
+  "123" is the ticket number for which the work is being performed.
+1. Make your code changes.
+1. Commit your changes. Each commit should be logically atomic, and your commit
+  messages should follow the pattern: "ABC-123 A grammatically correct sentence 
+  ending within punctuation."
 
 ## Creating a Pull Request
 
@@ -40,8 +60,18 @@ branch -
     git push origin develop
     git checkout -b XXX-<new-issue-branch> develop
 
-Using [Hub](https://github.com/github/hub), it is very easy to create a new PR 
-based on the current feature -
+If you created many small commits locally while working through a ticket, you 
+should clean the history so that it can be easily reviewed. You can combine 
+these commits using `git rebase`.
+
+    git rebase -i upstream/master
+
+Pull requests should never contain merge commits from upstream changes.
+
+Push your feature branch to your fork of the upstream repository, and submit a 
+Pull Request from your-fork/feature-branch to canonical-repo/develop. You may 
+optionally use [Hub](https://github.com/github/hub) to submit your pull request
+from the command line.
 
     hub pull-request
 
@@ -50,15 +80,6 @@ be configured using `hub` -
 
     git config --global --add hub.pull-request-template-path ~/.pr-template
 
-## Cleaning a Pull Request
-
-If you created many small commits locally while working through a ticket, you 
-should clean the history so that it can be easily reviewed. You can combine 
-these commits using `git rebase`.
-
-    git rebase -i upstream/master
-
-Pull requests should never contain merge commits from upstream changes.
 
 ## Integration (merging pull requests)
 
@@ -88,11 +109,21 @@ reviewed by a developer other than the one submitting the original commit.
 
 ## Continuous Integration
 
-After a Pull Request has been submitted or merged, our continous integration
+After a Pull Request has been submitted or merged, our continuous integration
 solution will automatically build a site artifact, install an ephemeral instance
 of Drupal, and execute tests against it. For more information on the build 
 process, please see the [build directory](../build/README.md).
 
+## Deployment on Cloud
+
+Once work has been merged on GitHub and tested via the CI solution, a separate
+production-ready built artifact will be built and deployed to Acquia Cloud.
+This can be done either manually or automatically. 
+
+Please see (deploy.md)[deploy.md] for more information.
+
 ## Release Process
 
-See the [Release Process document](release-process.md) for detailed information.
+A designated Release Master will perform the release to production. This is 
+typically the project’s Technical Architect. See the 
+[Release Process document](release-process.md) for detailed information.

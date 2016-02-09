@@ -1,7 +1,6 @@
 # Build files
 
 This directory contains configuration files for running common project tasks. 
-
 These may be used for running tasks locally, or for running automated builds via 
 continuous integration solutions.
 
@@ -14,10 +13,8 @@ A large number of common build tasks are provided via Phing targets. These
 include tasks for things like code sniffing, executing tests, building 
 dependencies, installing Drupal, etc.
 
-For a full list of available Phing tasks, run `./task.sh -list`.
-
-Before attempting to execute any tasks, verify that composer dependencies
-are built by running `composer install` in the project root.
+For a full list of available Phing tasks, run `./task.sh -list` from the
+project's root directory.
 
 ### Executing Tasks
 
@@ -27,28 +24,36 @@ are built by running `composer install` in the project root.
   For example `./task.sh validate:all`
 * To run Phing directly from the binary, simply run `./bin/phing -f build/phing/build.xml <arguments>`
 
-## Continuous Integration
+## <a name="ci"></a> Continuous Integration
 
 Integration with Travis CI is included, although Phing tasks can be used with
  any CI tool. The default Travis CI build process is as follows:
 
 1. Pull request or commit to GitHub triggers Travis CI.
 1. `.travis.yml` is read and executed by Travis CI. The environment is built
-  by installing composer dependencies. Notable files involved in this step are:
-  * `.travis.yml`
-  * `composer.json`
+  by installing composer dependencies.
 1. Travis CI begins a a build and calls various Phing targets.
+
+### Creating your own custom tasks
+
+You may add your own custom tasks to the build engine by defining new [Phing]
+(https://www.phing.info/) targets in [build/custom/phing/build.xml]
+(custom/phing/build.xml).
+
+You may override or define custom Phing properties in 
+[build/custom/phing/build.yml](custom/phing/build.yml)
 
 ### Setting Up Travis CI for automated deployments
 
 Travis CI can be used to deploy a fully built site artifact (with the docroot)
 in the following manner:
+
 1. A pull request is merged into the GitHub repository
 2. Travis builds the docroot
-3. Travis commits the docroot to a specific "build" branch and pushed to Acquia
+3. Travis commits the docroot to a specific "build" branch and pushes to Acquia
    Cloud
    
-To set up with workflow, you must configure Acquia Cloud, GitHub, and Travis
+To set up this workflow, you must configure Acquia Cloud, GitHub, and Travis CI
 to work together. Step-by-step instructions are provided below.
 
 
@@ -92,3 +97,8 @@ to work together. Step-by-step instructions are provided below.
     ssh_known_hosts:
     - svn-14671.prod.hosting.acquia.com
   ````
+1. Commits or merges to the develop branch on GitHub should now trigger a fully
+   built artifact to be deployed to your specified remotes.
+
+For information on manually deploying your project, read [readme/deploy.md]
+(readme/deploy.md)
