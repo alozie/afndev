@@ -14,35 +14,21 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Verifies that behat configuration is as expected.
  */
-abstract class TestBase extends \PHPUnit_Framework_TestCase
-{
+abstract class TestBase extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * @var string
-     *   The project root directory on the local machine.
-     */
-    protected $projectDirectory;
+  protected $projectDirectory;
+  protected $drupalRoot;
+  protected $config;
 
-    /**
-     * @var string
-     *   The docroot directory on the local machine.
-     */
-    protected $drupalRoot;
+  /**
+   * Class constructor.
+   */
+  public function __construct($name = NULL, array $data = array(), $data_name = '') {
+    parent::__construct($name, $data, $data_name);
 
-    /**
-     * @var array
-     *   The yaml configuration from project.yml.
-     */
-    protected $config;
+    $this->projectDirectory = dirname(dirname(dirname(__DIR__)));
+    $this->drupalRoot = $this->projectDirectory . '/docroot';
+    $this->config = Yaml::parse(file_get_contents("{$this->projectDirectory}/project.yml"));
+  }
 
-   /**
-     * Class constructor.
-     */
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->projectDirectory = dirname(dirname(dirname(__DIR__)));
-        $this->drupalRoot = $this->projectDirectory . '/docroot';
-        $this->config = Yaml::parse(file_get_contents("{$this->projectDirectory}/project.yml"));
-    }
 }
