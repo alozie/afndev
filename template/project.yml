@@ -6,9 +6,9 @@ project:
   prefix: 'BLT'
   human_name: 'Bolted 8'
   profile:
-    name: 'bolted8'
+    name: 'lightning'
     # Please ensure contrib profiles are also in your composer.json file.
-    contrib: false
+    contrib: true
   # This is used to build front end artifacts. E.g., SASS compilation.
   theme_name: 'thunder'
   # These are random strings used to configure the hash salt.

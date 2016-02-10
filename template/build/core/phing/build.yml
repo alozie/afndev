@@ -33,6 +33,6 @@ behat:
   launch-phantom: true
   # An array of paths with behat tests that should be executed.
   paths:
-    # - ${docroot}/profiles
     # - ${docroot}/modules
+    - ${docroot}/profiles
     - ${repo.root}/tests/behat

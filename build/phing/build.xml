@@ -54,6 +54,13 @@
   <!-- Create a new project directory based on current repository. -->
   <target name="bolt:create" description="Create a new project based on local repository.">
     <if>
+      <not><available file="${repo.root}/project.yml"/></not>
+      <then>
+        <fail>Please run "./task.sh bolt:configure" before running "./task.sh bolt:create."</fail>
+      </then>
+    </if>
+
+    <if>
       <available file="${bolt.new.dir}" type="dir" />
       <then>
         <input message="The following directory will be permanently deleted. Continue?${line.separator}${bolt.new.dir} " validargs="y,n" propertyname="do.delete" />

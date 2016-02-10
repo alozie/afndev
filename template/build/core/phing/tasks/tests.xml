@@ -12,24 +12,35 @@
   </target>
 
   <target name="tests:behat:execute" description="Executes behat tests against specific path.">
-    <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
-    <behat executable="${composer.bin}/behat"
-           config="${behat.config}"
-           profile="${behat.profile}"
-           verbose="true"
-           strict="true"
-           haltonerror="false"
-           returnProperty="behatPass"
-           out="std,${reports.localDir}"
-           format="pretty,junit"
-           path="${behat.path}"
-    />
+    <!-- Check to see if any behat tests exist in this directory. If not,
+         behat will throw fatal error. -->
+    <exec command="find ${behat.path} -name *.feature -print -quit" logoutput="true" outputProperty="behat.tests.found"/>
 
     <if>
-      <isfalse value="${behatPass}"/>
+      <istrue value="${behat.tests.found}"/>
       <then>
-        <fail message="One ore more Behat tests failed." />
+        <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
+        <behat executable="${composer.bin}/behat"
+               config="${behat.config}"
+               profile="${behat.profile}"
+               verbose="true"
+               strict="true"
+               haltonerror="false"
+               returnProperty="behatPass"
+               out="std,${reports.localDir}"
+               format="pretty,junit"
+               path="${behat.path}"
+        />
+        <if>
+          <isfalse value="${BehatPass}"/>
+          <then>
+            <fail message="One ore more Behat tests failed." />
+          </then>
+        </if>
       </then>
+      <else>
+        <echo message="No Behat tests were found in ${behat.path}"/>
+      </else>
     </if>
   </target>
 
