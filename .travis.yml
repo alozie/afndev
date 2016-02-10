@@ -30,7 +30,7 @@ before_install:
   - mysql -e 'CREATE DATABASE drupal;'
 
 install:
-  - composer install
+  - composer install --prefer-source
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/vendor/bin
 
 before_script:
