@@ -106,7 +106,10 @@
       </then>
       <else>
         <delete dir="${bolt.new.dir}/docroot/profiles/custom/minimal"/>
-        <exec dir="${bolt.new.dir}" command="composer require drupal/${project.profile.name}:8.*" logoutput="true" passthru="true"/>
+        <!--@todo Change this to stable version, e.g., 8.* !-->
+        <property name="project.profile.package.name" value="drupal/${project.profile.name}:8.1.x-dev"/>
+        <echo>Requiring ${project.profile.package.name} via composer.</echo>
+        <exec dir="${bolt.new.dir}" command="composer require ${project.profile.package.name}" logoutput="true" passthru="true"/>
       </else>
     </if>
 
