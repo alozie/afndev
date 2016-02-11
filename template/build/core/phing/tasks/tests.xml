@@ -31,7 +31,6 @@
                format="pretty,junit"
                path="${behat.path}"
         />
-        <echo>behatPass is ${behatPass}</echo>
         <if>
           <isfalse value="${behatPass}"/>
           <then>
