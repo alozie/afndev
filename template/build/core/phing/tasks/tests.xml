@@ -31,11 +31,15 @@
                format="pretty,junit"
                path="${behat.path}"
         />
+        <echo>behatPass is ${behatPass}</echo>
         <if>
           <isfalse value="${behatPass}"/>
           <then>
             <fail message="One ore more Behat tests failed." />
           </then>
+          <else>
+            <echo>All Behat tests in ${behat.path} have passed.</echo>
+          </else>
         </if>
       </then>
       <else>
