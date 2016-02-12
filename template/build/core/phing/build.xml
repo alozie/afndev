@@ -35,12 +35,12 @@
   -->
   <target name="build:test"
           description="Builds, tests, and deploys an artifact."
-          depends="setup:build:all, setup:drupal:install, tests:all">
+          depends="setup, tests:all">
   </target>
 
   <target name="build:validate:test"
           description="Builds, validates, tests, and deploys an artifact."
-          depends="validate:all, setup:build:all, setup:drupal:install, tests:all">
+          depends="validate:all, setup, tests:all">
   </target>
 
 </project>
