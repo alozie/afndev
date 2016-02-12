@@ -17,7 +17,7 @@
 
   <!-- This is run when a project is cloned to a new environment. -->
   <target name="setup:build:all" description="Generates all required files for a full build. E.g., (re)builds docroot, etc."
-          depends="setup:behat, setup:composer:install, setup:build:profile, frontend:build">
+          depends="setup:git-hooks, setup:behat, setup:composer:install, setup:build:profile, frontend:build">
   </target>
 
   <target name="setup:build:profile" description="Build a subsidiary makefile shipped with profile">
