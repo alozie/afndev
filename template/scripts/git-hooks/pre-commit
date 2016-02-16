@@ -65,22 +65,21 @@ filters_include[4]='\.php'
 filters_include[5]='\.profile'
 filters_include[6]='\.test'
 
-# Join filters_include array into a single string for grep -e
-sep="\\|"
-grep_include=$(printf "${sep}%s" "${filters_include[@]}")
+# Join filters_include array into a single string for egrep
+sep="|"
+egrep_include=$(printf "${sep}%s" "${filters_include[@]}")
 # Remove the separator from the start of the string
-grep_include=${grep_include:${#sep}}
-grep_include=".*\($grep_include\)"
+egrep_include=${egrep_include:${#sep}}
+egrep_include="($egrep_include)"
 
-# Join filters_exclude array into a single string for grep -v
-# We use egrep for the exclude since it combines better with -v.
+# Join filters_exclude array into a single string for egrep -v
 sep="|"
 egrep_exclude=$(printf "${sep}%s" "${filters_exclude[@]}")
 # Remove the separator from the start of the string
 egrep_exclude=${egrep_exclude:${#sep}}
-egrep_exclude=".*\($egrep_exclude\)"
+egrep_exclude="($egrep_exclude)"
 
-LIST=$( git diff --name-only --cached --diff-filter=ACM | grep -e "$grep_include" | egrep -v "$egrep_exclude" )
+LIST=$( git diff --name-only --cached --diff-filter=ACM | egrep "$egrep_include" | egrep -v "$egrep_exclude" )
 
 # PHP syntax-error free code
 NO_SYNTAX_ERROR=0
