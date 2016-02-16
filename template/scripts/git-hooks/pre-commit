@@ -47,6 +47,7 @@ RETVAL=0
 # Exclude contribs modules because they should not be modified.
 # Exclude devel module because they contain debugging functions
 # Exclude libraries because they should not be modified
+# Exclude docroot because Drupal core should not be modified
 filters_exclude[1]='features'
 filters_exclude[2]='contrib'
 filters_exclude[3]='devel'
@@ -55,6 +56,7 @@ filters_exclude[5]='development'
 filters_exclude[6]='scripts'
 filters_exclude[7]='git'
 filters_exclude[8]='featurized'
+filters_exclude[9]='docroot'
 
 # Include extensions that should be checked.
 filters_include[0]='\.inc'
