@@ -33,7 +33,7 @@ Ensure your ACE remote is listed in project.yml under git:remotes.
 
 In order to create the build artifact in `/deploy`, simply run
 ```
-./task.sh deploy:build:artifact
+./task.sh deploy:artifact:build
 ```
 
 This task is analogous to `setup:build:all` but with a few critical differences:
