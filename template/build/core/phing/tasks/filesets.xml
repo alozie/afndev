@@ -8,6 +8,7 @@
     <include name="**/*.profile"/>
     <include name="**/*.test"/>
     <include name="**/*.theme"/>
+    <exclude name="**/*.features.*"/>
     <exclude name="**/vendor/**/*"/>
   </patternset>
 
