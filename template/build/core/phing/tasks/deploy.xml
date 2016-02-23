@@ -62,7 +62,7 @@
         <include name="composer.*"/>
       </fileset>
     </copy>
-    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source" passthru="true" logoutput="true"/>
+    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source" passthru="true" logoutput="true" checkreturn="true"/>
   </target>
 
   <target name="deploy:artifact:profile:make" description="Build a subsidiary makefile shipped with profile.">
