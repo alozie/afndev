@@ -5,7 +5,7 @@ set up and getting oriented with the project standards and workflows.
 
 ## Required SAAS Access:
 
-Please ask the project's engagement manager for access to the following SAAS 
+Please ask the project's engagement manager for access to the following SAAS
 services:
 
 * JIRA
@@ -26,10 +26,10 @@ operating system:
 
 ### Operating Systems
 
-We highly recommend that you *do not use Windows* directly for development. 
-Many development tools (e.g., drush, gulp, etc.) are not built or tested for 
-Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI, 
-Drupal CI, etc.) do not permit testing on Windows OS. Similarly, Bolt cannot be 
+We highly recommend that you *do not use Windows* directly for development.
+Many development tools (e.g., drush, gulp, etc.) are not built or tested for
+Windows compatibility. Furthermore, most CI solutions (e.g., Travis CI,
+Drupal CI, etc.) do not permit testing on Windows OS. Similarly, Bolt cannot be
 fully tested on Windows and is unsupported on this platform.
 
 If you must use Windows, we recommend that:
@@ -50,31 +50,22 @@ If you need to make requests via a proxy server, please [configure git to use
 a proxy](http://stackoverflow.com/a/19213999). This will cover all git based
 requests made by Composer.
 
-## Configure Local Environment
-
-Please see [Local Development](local-development.md) for detailed information 
-on setting up a local \*AMP stack.
-
-When you have completed setting up your local \*AMP stack, please have the
-following information ready and available:
-
-* The intended local URL of the site
-* The local database credentials
-
 ## Initial Setup
 
-1. [Fork](https://help.github.com/articles/fork-a-repo) the primary GitHub 
+1. [Fork](https://help.github.com/articles/fork-a-repo) the primary GitHub
    repository
 1. Clone your fork to your local machine:
-    ````
-    git clone git@github.com:username/project-repo.git -b develop
-    git remote add upstream git@github.com:acquia-pso/project-repo.git
-    ````
+
+       ```
+       git clone git@github.com:username/project-repo.git -b develop
+       git remote add upstream git@github.com:acquia-pso/project-repo.git
+       ```
+
 1. Checkout the `develop` branch. `git checkout develop`
 1. Run `composer install` (you must already have Composer installed).
-1. Run `./task.sh setup:drupal:settings` This will generate 
+1. Run `./task.sh setup:drupal:settings` This will generate
   `docroot/sites/default/settings/local.settings.php` and
-  `docroot/sites/default/local.drushrc.php`. Update these with your local 
+  `docroot/sites/default/local.drushrc.php`. Update these with your local
   database credentials and your local site URL.
 1. Run `./task.sh setup`. This will build all project dependencies and install
    drupal.
@@ -93,7 +84,7 @@ For readability of commit history, set your name and email address properly:
     git config user.name "Your Name"
     git config user.email your-email-address@example.com
 
-Ensure that your local email address correctly matches the email address for 
+Ensure that your local email address correctly matches the email address for
 your Jira account.
 
 ## GitHub Configuration
@@ -101,10 +92,21 @@ your Jira account.
 In order to more easily identify developers in a project, please be sure to set
 a name and profile picture in your GitHub profile.
 
-When working with GitHub, the [hub](https://github.com/github/hub) utility can 
+When working with GitHub, the [hub](https://github.com/github/hub) utility can
 be helpful when managing forks and pull requests. Installing hub largely depends
 on your local environment, so please follow the [installation instructions]
 (https://github.com/github/hub#installation) accordingly.
+
+## Configure Local Environment
+
+Please see [Local Development](local-development.md) for detailed information
+on setting up a local \*AMP stack.
+
+When you have completed setting up your local \*AMP stack, please have the
+following information ready and available:
+
+* The intended local URL of the site
+* The local database credentials
 
 ## Next steps
 
