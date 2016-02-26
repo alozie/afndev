@@ -43,7 +43,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase {
     $this->assertFileNotExists($this->new_project_dir . '/build/tasks/bolt.xml');
     $this->assertNotContains(
           '${project.acquia_subname}',
-          file_get_contents($this->new_project_dir . '/sites/default/settings.php')
+          file_get_contents($this->new_project_dir . '/docroot/sites/default/settings.php')
       );
     $this->assertNotContains(
           '${project.acquia_subname}',
@@ -54,7 +54,7 @@ class BoltTest extends \PHPUnit_Framework_TestCase {
           file_get_contents($this->new_project_dir . '/readme/architecture.md')
       );
 
-    $profile_dir = $this->new_project_dir . '/profiles/' . $this->config['project']['profile']['name'];
+    $profile_dir = $this->new_project_dir . '/docroot/profiles/' . $this->config['project']['profile']['name'];
     // Test new installation profile.
     $this->assertFileExists($profile_dir . '/' . $this->config['project']['profile']['name'] . '.info');
     $this->assertFileExists($profile_dir . '/' . $this->config['project']['profile']['name'] . '.profile');

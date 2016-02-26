@@ -64,24 +64,24 @@
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
     <!-- Copy modules and themes into deploy directory. -->
     <copy todir="${deploy.dir}/docroot/sites/all/modules/custom" overwrite="true">
-      <fileset dir="${repo.root}/sites/all/modules/custom"/>
+      <fileset dir="${docroot}/sites/all/modules/custom"/>
     </copy>
     <copy todir="${deploy.dir}/docroot/sites/all/themes/custom" overwrite="true">
-      <fileset dir="${repo.root}/sites/all/themes/custom">
+      <fileset dir="${docroot}/sites/all/themes/custom">
         <include name="**"></include>
         <exclude name="**/node_modules/**"></exclude>
         <exclude name="**/bower_components/**"></exclude>
       </fileset>
     </copy>
     <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
-      <fileset dir="${repo.root}/profiles"/>
+      <fileset dir="${docroot}/profiles"/>
     </copy>
     <copy todir="${deploy.dir}/docroot/sites/default/settings" overwrite="true">
-      <fileset dir="${repo.root}/sites/default/settings">
+      <fileset dir="${docroot}/sites/default/settings">
         <exclude name="**/local.settings.php"/>
       </fileset>
     </copy>
-    <copy file="${repo.root}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
+    <copy file="${docroot}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
     <copy todir="${deploy.dir}/hooks" overwrite="true">
       <fileset dir="${repo.root}/hooks"/>
     </copy>
