@@ -43,7 +43,7 @@ before_script:
   - rm -f ~/.drush/cache/download/*---updates.drupal.org-release-history-*
 
 script:
-  - ./task.sh -Dbehat:run-server=true -Dbehat.launch-phantom=true build:validate:test
+  - ./task.sh -Dbehat.run-server=true -Dbehat.launch-phantom=true build:validate:test
 
 after_success:
   # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master`.
