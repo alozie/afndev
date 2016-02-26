@@ -1,17 +1,15 @@
 # Ignore configuration files that may contain sensitive information.
-docroot
-sites/*/*/local.settings.php
 build/phing/build.properties
 local.*
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
+docroot/sites/*/files
+docroot/sites/*/private
 
 # Ignore contrib modules. These should be created during build process.
-sites/*/*/contrib
-sites/default/*/contrib
-sites/*/libraries
+docroot/sites/*/*/contrib
+docroot/sites/*/libraries
+docroot/profiles/contrib
 
 # Ignore build artifacts
 /deploy
@@ -19,11 +17,6 @@ bin/*
 tmp
 install/bin
 reports
-
-# Local testing config
-tests/behat/local.yml
-sites/*/local.settings.php
-sites/local.sites.php
 
 # Drush FirePHP files
 docroot/FirePHPCore

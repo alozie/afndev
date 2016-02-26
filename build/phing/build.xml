@@ -31,7 +31,7 @@
     <!-- Rename files by removing "example" prefix. -->
     <move file="${bolt.root}/example.make.yml" tofile="${bolt.root}/make.yml" />
     <move file="${bolt.root}/example.project.yml" tofile="${bolt.root}/project.yml" />
-    <copy file="${bolt.root}/template/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
+    <copy file="${bolt.root}/template/docroot/sites/default/settings/default.local.settings.php" tofile="${bolt.root}/local.settings.php" />
   </target>
 
   <target name="bolt:clean" description="Removes generated configuration files from Bolt directory.">
@@ -76,20 +76,20 @@
     <!-- Copy configuration files to new project. -->
     <copy file="${bolt.root}/make.yml" tofile="${bolt.new.dir}/make.yml" />
     <copy file="${bolt.root}/project.yml" tofile="${bolt.new.dir}/project.yml" />
-    <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/sites/default/settings/local.settings.php" overwrite="true"/>
+    <copy file="${bolt.root}/local.settings.php" tofile="${bolt.new.dir}/docroot/sites/default/settings/local.settings.php" overwrite="true"/>
 
     <!-- Rename minimal profile in new project. -->
     <if>
       <isfalse value="${project.profile.contrib}"/>
       <then>
-        <property name="bolt.profile.dir" value="${bolt.new.dir}/profiles/${project.profile.name}"/>
-        <move file="${bolt.new.dir}/profiles/minimal" tofile="${bolt.profile.dir}"/>
+        <property name="bolt.profile.dir" value="${bolt.new.dir}/docroot/profiles/${project.profile.name}"/>
+        <move file="${bolt.new.dir}/docroot/profiles/minimal" tofile="${bolt.profile.dir}"/>
         <move file="${bolt.profile.dir}/minimal.info" tofile="${bolt.profile.dir}/${project.profile.name}.info"/>
         <move file="${bolt.profile.dir}/minimal.install" tofile="${bolt.profile.dir}/${project.profile.name}.install"/>
         <move file="${bolt.profile.dir}/minimal.profile" tofile="${bolt.profile.dir}/${project.profile.name}.profile"/>
       </then>
       <else>
-        <delete dir="${bolt.new.dir}/profiles/minimal"/>
+        <delete dir="${bolt.new.dir}/docroot/profiles/minimal"/>
       </else>
     </if>
 
@@ -98,10 +98,10 @@
       <fileset dir="${bolt.new.dir}">
         <include name="README.md" />
         <include name="readme/**/*" />
-        <include name="profiles/**/*" />
+        <include name="docroot/profiles/**/*" />
         <include name="scripts/git-hooks/*" />
-        <include name="sites/default/settings.php" />
-        <include name="sites/default/settings/**/*" />
+        <include name="docroot/sites/default/settings.php" />
+        <include name="docroot/sites/default/settings/**/*" />
         <include name="tests/phpunit/SettingsTest.php" />
       </fileset>
       <filterchain>
