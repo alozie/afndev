@@ -24,5 +24,6 @@ git:
   default_branch: master
   remotes:
     # Defining git remotes allows builds deployed via CI.
+    # Only add git repositories that you would like to deploy to!
     - bolted@svn-4702.devcloud.hosting.acquia.com:bolted.git
     - git@github.com:acquia-pso/psproject.git
