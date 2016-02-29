@@ -22,9 +22,9 @@ addons:
   - svn-4702.devcloud.hosting.acquia.com
 
 before_install:
+  - composer selfupdate
   - phpenv config-rm xdebug.ini
   - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  - composer selfupdate
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
   - mysql -e 'CREATE DATABASE drupal;'

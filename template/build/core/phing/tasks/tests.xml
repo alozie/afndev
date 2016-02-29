@@ -26,7 +26,7 @@
     />
 
     <if>
-      <isfalse value="${BehatPass}"/>
+      <isfalse value="${behatPass}"/>
       <then>
         <fail message="One ore more Behat tests failed." />
       </then>

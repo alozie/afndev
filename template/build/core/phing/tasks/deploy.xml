@@ -32,6 +32,8 @@
   </target>
 
   <target name="deploy:artifact:add-remote" description="Adds a git remote and checks out deploy branch from upstream.">
+    <echo message="Fetching from git remote ${deploy.remote}"/>
+
     <!-- Generate and md5 sum of the remote URL to use as remote name. -->
     <exec command="echo ${deploy.remote} | openssl md5 | cut -d' ' -f 2" outputProperty="remoteName"/>
     <exec command="git remote add ${remoteName} ${deploy.remote}" dir="${deploy.dir}" logoutput="true" passthru="true"/>
@@ -48,7 +50,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:prepare-dir, deploy:artifact:copy, deploy:artifact:composer:install, deploy:artifact:profile:make, deploy:artifact:sanitize, frontend:build">
+          depends="deploy:artifact:copy, deploy:artifact:composer:install, deploy:artifact:profile:make, deploy:artifact:sanitize, frontend:build">
   </target>
 
   <target name="deploy:artifact:commit">
@@ -57,12 +59,14 @@
   </target>
 
   <target name="deploy:artifact:composer:install" description="Downloads core and contrib to deploy folder.">
+    <delete dir="${deploy.dir}/vendor"/>
     <copy todir="${deploy.dir}" overwrite="true">
       <fileset dir="${repo.root}">
-        <include name="composer.*"/>
+        <include name="composer.json"/>
+        <include name="composer.lock"/>
       </fileset>
     </copy>
-    <exec dir="${deploy.dir}" command="composer install --no-dev" passthru="true" logoutput="true" checkreturn="true"/>
+    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source --no-interaction" passthru="true" logoutput="true" checkreturn="true"/>
   </target>
 
   <target name="deploy:artifact:profile:make" description="Build a subsidiary makefile shipped with profile.">
@@ -100,6 +104,7 @@
         <exclude name="**/bower_components/**"></exclude>
       </fileset>
     </copy>
+
     <!-- Copy Acquia Cloud hooks. -->
     <copy todir="${deploy.dir}/hooks" overwrite="true">
       <fileset dir="${repo.root}/hooks"/>
