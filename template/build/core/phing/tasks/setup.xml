@@ -59,24 +59,32 @@
           description="Installs Drupal using credentials from local.settings.php."
           depends="setup:drupal:settings, setup:check:docroot">
 
-    <drush command="site-install" assume="yes" verbose="TRUE">
-      <option name="site-name">"${project.human_name}"</option>
-      <option name="site-mail">"${drupal.account.mail}"</option>
-      <option name="account-name">"${drupal.account.name}"</option>
-      <option name="account-pass">"${drupal.account.password}"</option>
-      <option name="account-mail">"${drupal.account.mail}"</option>
-      <param>"${project.profile.name}"</param>
-      <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
-    </drush>
-
     <if>
       <available property="config.exists" file="${repo.root}/config/default/system.site.yml"/>
       <then>
-        <drush command="config-import" assume="yes" verbose="TRUE">
-          <param>sync</param>
+        <drush command="site-install" assume="yes" verbose="TRUE">
+          <option name="site-name">"${project.human_name}"</option>
+          <option name="site-mail">"${drupal.account.mail}"</option>
+          <option name="account-name">"${drupal.account.name}"</option>
+          <option name="account-pass">"${drupal.account.password}"</option>
+          <option name="account-mail">"${drupal.account.mail}"</option>
+          <option name="config-dir">"${repo.root}/config/default"</option>
+          <param>"${project.profile.name}"</param>
+          <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
         </drush>
       </then>
-    </if>
+      <else>
+        <drush command="site-install" assume="yes" verbose="TRUE">
+          <option name="site-name">"${project.human_name}"</option>
+          <option name="site-mail">"${drupal.account.mail}"</option>
+          <option name="account-name">"${drupal.account.name}"</option>
+          <option name="account-pass">"${drupal.account.password}"</option>
+          <option name="account-mail">"${drupal.account.mail}"</option>
+          <param>"${project.profile.name}"</param>
+          <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
+        </drush>
+      </else>
+      </if>
   </target>
 
   <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
