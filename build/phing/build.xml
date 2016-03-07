@@ -125,7 +125,7 @@
     <exec command="git commit -m 'Initial commit of default files from Bolt.'" dir="${bolt.new.dir}" logoutput="false" passthru="false" />
 
     <!-- Build composer dependencies. -->
-    <exec dir="${bolt.new.dir}" command="composer install" logoutput="true" passthru="true" />
+    <exec dir="${bolt.new.dir}" command="composer install" logoutput="true" passthru="true" checkreturn="true" />
 
     <echo></echo>
     <echo>New project was created in ${bolt.new.dir}</echo>
