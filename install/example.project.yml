@@ -25,5 +25,5 @@ git:
   remotes:
     # Defining git remotes allows builds deployed via CI.
     # Only add git repositories that you would like to deploy to!
-    - bolted@svn-4702.devcloud.hosting.acquia.com:bolted.git
+    - bolted7@svn-5159.devcloud.hosting.acquia.com:bolted7.git
     - git@github.com:acquia-pso/psproject.git
