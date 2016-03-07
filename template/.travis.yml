@@ -46,7 +46,7 @@ script:
   - ./task.sh -Dbehat.run-server=true -Dbehat.launch-phantom=true build:validate:test
 
 after_success:
-  # Watch for successful `build:validate:test` build job on `master` branch; deploy to `master`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test master master-build
-  # Watch for successful `build:validate:test` build job on `develop` branch; deploy to `develop`.
-  # - scripts/deploy/travis-deploy.sh build:validate:test develop develop-build
+  # Watch for successful build job on `master` branch; deploy to `master`.
+  # - scripts/deploy/travis-deploy.sh master master-build
+  # Watch for successful build job on `develop` branch; deploy to `develop`.
+  # - scripts/deploy/travis-deploy.sh develop develop-build
