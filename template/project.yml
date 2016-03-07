@@ -19,5 +19,5 @@ git:
   default_branch: master
   remotes:
     # Defining git remotes allows builds deployed via CI.
-    - bolted8@svn-4702.devcloud.hosting.acquia.com:bolted8.git
+    - bolt8@svn-5223.devcloud.hosting.acquia.com:bolt8.git
     - git@github.com:acquia-pso/bolted8.git

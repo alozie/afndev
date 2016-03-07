@@ -19,7 +19,7 @@ notifications:
 
 addons:
   ssh_known_hosts:
-  - svn-4702.devcloud.hosting.acquia.com
+  - svn-5223.devcloud.hosting.acquia.com
 
 before_install:
   - composer selfupdate
