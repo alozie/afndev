@@ -31,6 +31,23 @@ $is_ah_dev_env = (preg_match('/^dev[0-9]*$/', $ah_env) == TRUE);
 $is_local_env = !$is_ah_env;
 
 /**
+ * Trusted host patterns.
+ *
+ * Protects your site from HTTP HOST header attacks.
+ */
+/**
+ * if ($ah_env) {
+ *   switch ($ah_env) {
+ *     case 'prod':
+ *       $settings['trusted_host_patterns'] = array(
+ *         '^your\.domain\.here\.com$',
+ *       );
+ *     break;
+ *   }
+ * }
+**/
+
+/**
  * Display all errors for all but tests and prod envs.
  */
 if ($is_local_env || $is_ah_dev_env) {
