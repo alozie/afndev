@@ -322,18 +322,6 @@ class BehatTask extends Task
   }
 
   /**
-   * The Phing property output should be assigned to.
-   *
-   * @param string $str The Phing property.
-   *
-   * @return void
-   */
-  public function setOutputProperty($str)
-  {
-    $this->output_property = $str;
-  }
-
-  /**
    * The Phing property the return code should be assigned to.
    *
    * @param string $str The Phing property.
@@ -485,14 +473,7 @@ class BehatTask extends Task
     $this->log("Running '$command'");
 
     // Run Behat.
-    $output = array();
-    $return = system($command, $output);
-
-    // Return the output into a Phing property if specified.
-    if (!empty($this->output_property)) {
-      $this->getProject()
-        ->setProperty($this->output_property, implode("\n", $output));
-    }
+    $last_line = system($command, $return);
 
     // Return the Behat exit value to a Phing property if specified.
     if (!empty($this->return_property)) {

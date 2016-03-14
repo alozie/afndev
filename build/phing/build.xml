@@ -53,10 +53,18 @@
 
   <!-- Create a new project directory based on current repository. -->
   <target name="bolt:create" description="Create a new project based on local repository.">
+    <available file="${bolt.root}/project.yml" property="project.yml.exists" value="true"/>
+    <if>
+      <not><istrue value="${project.yml.exists}"/></not>
+      <then>
+        <fail>Please run "./task.sh bolt:configure" before running "./task.sh bolt:create."</fail>
+      </then>
+    </if>
+
     <if>
       <available file="${bolt.new.dir}" type="dir" />
       <then>
-        <input message="The following directory will be permanently deleted. Continue?${line.separator}${bolt.new.dir} " validargs="y,n" propertyname="do.delete" />
+        <input message="The following directory will be permanently deleted. Continue?${line.separator}${bolt.new.dir} " validArgs="y,n" propertyName="do.delete" />
         <condition property="do.abort">
           <equals arg1="n" arg2="${do.delete}"/>
         </condition>
@@ -98,7 +106,6 @@
       </then>
       <else>
         <delete dir="${bolt.new.dir}/docroot/profiles/custom/minimal"/>
-        <exec dir="${bolt.new.dir}" command="composer require drupal/${project.profile.name}:8.*" logoutput="true" passthru="true"/>
       </else>
     </if>
 

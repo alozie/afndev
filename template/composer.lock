@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cdbd708d385d82619c82f42b902a3532",
-    "content-hash": "5f01e4c8f806598dd5fae157ca06491a",
+    "hash": "a429b9b4e87040360965466410894493",
+    "content-hash": "bcaf29752986ad634eb21c1598b6eda6",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -231,21 +231,21 @@
         },
         {
             "name": "cweagans/composer-patches",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweagans/composer-patches.git",
-                "reference": "1d50068f48f1a727c9baf96ae48959f3d3428a77"
+                "reference": "0d75c63b6de66144517a1da9084422b78c2ff251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/1d50068f48f1a727c9baf96ae48959f3d3428a77",
-                "reference": "1d50068f48f1a727c9baf96ae48959f3d3428a77",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/0d75c63b6de66144517a1da9084422b78c2ff251",
+                "reference": "0d75c63b6de66144517a1da9084422b78c2ff251",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "~1.0",
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "require-dev": {
                 "composer/composer": "~1.0",
@@ -271,7 +271,7 @@
                 }
             ],
             "description": "Provides a way to patch Composer packages.",
-            "time": "2015-07-09 18:27:46"
+            "time": "2016-02-29 03:45:02"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -766,6 +766,41 @@
             "homepage": "https://www.drupal.org/project/acquia_connector"
         },
         {
+            "name": "drupal/config_update",
+            "version": "8.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/config_update.git",
+                "reference": "ac1526df5836a611f04bb421945beddb6306b7f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "drupal/config": "8.*",
+                "drupal/core": "8.*"
+            },
+            "replace": {
+                "drupal/config_update_ui": "self.version"
+            },
+            "suggest": {
+                "drupal/config": "Required by drupal/config_update_ui",
+                "drupal/core": "Required by drupal/config_update_ui"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x-1.x": "8.1.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.drupal-composer.org/downloads/",
+            "description": "Provides basic revert and update functionality for other modules",
+            "homepage": "https://www.drupal.org/project/config_update"
+        },
+        {
             "name": "drupal/console",
             "version": "0.10.12",
             "source": {
@@ -991,7 +1026,8 @@
             "type": "drupal-core",
             "extra": {
                 "patches_applied": {
-                    "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch"
+                    "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch",
+                    "Drupal.Ajax.execute() should return underlying Deferred object": "https://www.drupal.org/files/issues/2637194-12.patch"
                 }
             },
             "autoload": {
@@ -1018,6 +1054,134 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "time": "2016-03-02 10:31:56"
+        },
+        {
+            "name": "drupal/features",
+            "version": "8.3.0-alpha6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/features",
+                "reference": "a188dcbda9afcd42652eef966b222a694f7df861"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/features-8.x-3.0-alpha6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "drupal/config": "8.*",
+                "drupal/config_update": "8.*",
+                "drupal/core": "8.*"
+            },
+            "replace": {
+                "drupal/features_ui": "self.version"
+            },
+            "suggest": {
+                "drupal/core": "Required by drupal/features_ui"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x-3.x": "8.3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.drupal-composer.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Enables administrators to package configuration into modules.",
+            "homepage": "https://www.drupal.org/project/features",
+            "time": "2016-01-28 20:05:18"
+        },
+        {
+            "name": "drupal/lightning",
+            "version": "8.1.0-beta4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/lightning.git",
+                "reference": "a829684919a3f15ca265eee57a577d2b17138523"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/lightning-8.x-1.0-beta4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "drupal/block_content": "8.*",
+                "drupal/breakpoint": "8.*",
+                "drupal/ckeditor": "8.*",
+                "drupal/config": "8.*",
+                "drupal/contact": "8.*",
+                "drupal/contextual": "8.*",
+                "drupal/core": "8.*",
+                "drupal/datetime": "8.*",
+                "drupal/dblog": "8.*",
+                "drupal/editor": "8.*",
+                "drupal/entity_reference": "8.*",
+                "drupal/field_ui": "8.*",
+                "drupal/file": "8.*",
+                "drupal/help": "8.*",
+                "drupal/history": "8.*",
+                "drupal/image": "8.*",
+                "drupal/menu_link_content": "8.*",
+                "drupal/menu_ui": "8.*",
+                "drupal/metatag": "8.*",
+                "drupal/node": "8.*",
+                "drupal/options": "8.*",
+                "drupal/page_cache": "8.*",
+                "drupal/path": "8.*",
+                "drupal/quickedit": "8.*",
+                "drupal/rdf": "8.*",
+                "drupal/shortcut": "8.*",
+                "drupal/taxonomy": "8.*",
+                "drupal/text": "8.*",
+                "drupal/toolbar": "8.*",
+                "drupal/views": "8.*",
+                "drupal/views_ui": "8.*"
+            },
+            "replace": {
+                "drupal/lightning_layout": "self.version",
+                "drupal/lightning_media": "self.version",
+                "drupal/lightning_media_image": "self.version",
+                "drupal/lightning_media_instagram": "self.version",
+                "drupal/lightning_media_twitter": "self.version",
+                "drupal/lightning_media_video": "self.version",
+                "drupal/lightning_workflow": "self.version"
+            },
+            "suggest": {
+                "drupal/core": "Required by drupal/lightning_layout, drupal/lightning_media, drupal/lightning_media_image, drupal/lightning_media_instagram, drupal/lightning_media_twitter, drupal/lightning_media_video, drupal/lightning_workflow",
+                "drupal/entity_embed": "Required by drupal/lightning_media",
+                "drupal/image": "Required by drupal/lightning_media, drupal/lightning_media_image, drupal/lightning_media_instagram, drupal/lightning_media_twitter, drupal/lightning_media_video",
+                "drupal/inline_entity_form": "Required by drupal/lightning_workflow",
+                "drupal/lightning_media": "Required by drupal/lightning_media_image, drupal/lightning_media_instagram, drupal/lightning_media_twitter, drupal/lightning_media_video",
+                "drupal/media_entity": "Required by drupal/lightning_media",
+                "drupal/media_entity_embeddable_video": "Required by drupal/lightning_media_video",
+                "drupal/media_entity_image": "Required by drupal/lightning_media_image",
+                "drupal/media_entity_instagram": "Required by drupal/lightning_media_instagram",
+                "drupal/media_entity_twitter": "Required by drupal/lightning_media_twitter",
+                "drupal/page_manager": "Required by drupal/lightning_layout",
+                "drupal/panelizer": "Required by drupal/lightning_layout",
+                "drupal/rest": "Required by drupal/lightning_media",
+                "drupal/scheduled_updates": "Required by drupal/lightning_workflow",
+                "drupal/services": "Required by drupal/lightning_media",
+                "drupal/user": "Required by drupal/lightning_media",
+                "drupal/workbench_moderation": "Required by drupal/lightning_workflow"
+            },
+            "type": "drupal-profile",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x-1.x": "8.1.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.drupal-composer.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "A fast and feature-rich Drupal distribution.",
+            "homepage": "https://www.drupal.org/project/lightning",
+            "time": "2016-03-03 20:07:33"
         },
         {
             "name": "drupal/memcache",
@@ -1047,6 +1211,55 @@
             "homepage": "https://www.drupal.org/project/memcache"
         },
         {
+            "name": "drupal/metatag",
+            "version": "8.1.0-beta4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/metatag",
+                "reference": "2311377196e20a828fe8d1a59b179114698e0eee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.0-beta4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "drupal/core": "8.*",
+                "drupal/field": "8.*"
+            },
+            "replace": {
+                "drupal/metatag_open_graph": "self.version"
+            },
+            "suggest": {
+                "drupal/core": "Required by drupal/metatag_open_graph"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x-1.x": "8.1.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.drupal-composer.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "See contributors",
+                    "homepage": "https://www.drupal.org/node/640498/committers",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Manage meta tags for all entities.",
+            "homepage": "https://www.drupal.org/project/metatag",
+            "keywords": [
+                "php",
+                "seo"
+            ],
+            "time": "2016-02-06 17:42:11"
+        },
+        {
             "name": "drupal/security_review",
             "version": "dev-8.x-1.x",
             "source": {
@@ -1070,16 +1283,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "8.0.3",
+            "version": "8.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "ee77dc526aa9fb26611ded18b5caef801b29aca7"
+                "reference": "1f53daa63505f18286791e899de614e27d4cfdc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/ee77dc526aa9fb26611ded18b5caef801b29aca7",
-                "reference": "ee77dc526aa9fb26611ded18b5caef801b29aca7",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/1f53daa63505f18286791e899de614e27d4cfdc9",
+                "reference": "1f53daa63505f18286791e899de614e27d4cfdc9",
                 "shasum": ""
             },
             "require": {
@@ -1087,8 +1300,8 @@
                 "php": ">=5.4.5",
                 "psr/log": "~1.0",
                 "psy/psysh": "~0.6",
-                "symfony/var-dumper": "^2.6.3",
-                "symfony/yaml": "2.7.*"
+                "symfony/var-dumper": "~2.7|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.*",
@@ -1164,7 +1377,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2016-02-03 20:52:22"
+            "time": "2016-03-08 21:00:41"
         },
         {
             "name": "easyrdf/easyrdf",
@@ -1440,16 +1653,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "b1e1c0d55f8083c71eda2c28c12a228d708294ea"
+                "reference": "bb9024c526b22f3fe6ae55a561fd70653d470aa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/b1e1c0d55f8083c71eda2c28c12a228d708294ea",
-                "reference": "b1e1c0d55f8083c71eda2c28c12a228d708294ea",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/bb9024c526b22f3fe6ae55a561fd70653d470aa8",
+                "reference": "bb9024c526b22f3fe6ae55a561fd70653d470aa8",
                 "shasum": ""
             },
             "require": {
@@ -1487,7 +1700,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2015-10-15 22:28:00"
+            "time": "2016-03-08 01:15:46"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2138,16 +2351,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.7.1",
+            "version": "v0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "5e8cedbe0a3681f18782594eefc78423f8401fc8"
+                "reference": "e64e10b20f8d229cac76399e1f3edddb57a0f280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5e8cedbe0a3681f18782594eefc78423f8401fc8",
-                "reference": "5e8cedbe0a3681f18782594eefc78423f8401fc8",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/e64e10b20f8d229cac76399e1f3edddb57a0f280",
+                "reference": "e64e10b20f8d229cac76399e1f3edddb57a0f280",
                 "shasum": ""
             },
             "require": {
@@ -2206,7 +2419,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2016-02-27 18:59:18"
+            "time": "2016-03-09 05:03:14"
         },
         {
             "name": "roave/security-advisories",
@@ -2214,12 +2427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "c18abc6df90257ddbbe2654a98cc5cc7be804411"
+                "reference": "dcdeb1d923b981a55f0a4ce6c2ceac14cb8476f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c18abc6df90257ddbbe2654a98cc5cc7be804411",
-                "reference": "c18abc6df90257ddbbe2654a98cc5cc7be804411",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/dcdeb1d923b981a55f0a4ce6c2ceac14cb8476f8",
+                "reference": "dcdeb1d923b981a55f0a4ce6c2ceac14cb8476f8",
                 "shasum": ""
             },
             "conflict": {
@@ -2250,11 +2463,12 @@
                 "namshi/jose": "<2.2",
                 "oro/crm": ">=1.7,<1.7.4",
                 "oro/platform": ">=1.7,<1.7.4",
+                "phpmailer/phpmailer": ">=5,<5.2.14",
                 "pusher/pusher-php-server": "<2.2.1",
                 "sabre/dav": ">=1.6,<1.6.99|>=1.7,<1.7.11|>=1.8,<1.8.9",
                 "silverstripe/cms": ">=3.1,<3.1.11|>=3,<=3.0.11",
                 "silverstripe/forum": "<=0.6.1|>=0.7,<=0.7.3",
-                "silverstripe/framework": ">=3,<3.1|>=3.1,<3.2|>=3.2,<3.2.1",
+                "silverstripe/framework": ">=3,<3.1|>=3.1,<3.2|>=3.2,<3.3",
                 "silverstripe/userforms": "<3",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "swiftmailer/swiftmailer": ">=4,<4.99.99|>=5,<5.2.1",
@@ -2322,7 +2536,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2016-02-14 18:50:07"
+            "time": "2016-03-09 12:43:58"
         },
         {
             "name": "stack/builder",
@@ -3164,16 +3378,16 @@
         },
         {
             "name": "symfony/polyfill-apcu",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-apcu.git",
-                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c"
+                "reference": "0c901e4e65a2f7ece68f0fd249b56d6ad3adc214"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
-                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
+                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/0c901e4e65a2f7ece68f0fd249b56d6ad3adc214",
+                "reference": "0c901e4e65a2f7ece68f0fd249b56d6ad3adc214",
                 "shasum": ""
             },
             "require": {
@@ -3188,9 +3402,6 @@
             "autoload": {
                 "files": [
                     "bootstrap.php"
-                ],
-                "classmap": [
-                    "Resources/stubs"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3216,11 +3427,11 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-20 09:13:37"
+            "time": "2016-03-03 16:49:40"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -3655,20 +3866,20 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v2.8.3",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "19b697abe08833ddf38c3ab0cb1bfad236b13bde"
+                "reference": "9a6a883c48acb215d4825ce9de61dccf93d62074"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/19b697abe08833ddf38c3ab0cb1bfad236b13bde",
-                "reference": "19b697abe08833ddf38c3ab0cb1bfad236b13bde",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9a6a883c48acb215d4825ce9de61dccf93d62074",
+                "reference": "9a6a883c48acb215d4825ce9de61dccf93d62074",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
+                "php": ">=5.5.9",
                 "symfony/polyfill-mbstring": "~1.0"
             },
             "require-dev": {
@@ -3680,7 +3891,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -3714,7 +3925,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-02-13 09:21:29"
+            "time": "2016-02-13 09:23:44"
         },
         {
             "name": "symfony/yaml",
@@ -4338,16 +4549,16 @@
         },
         {
             "name": "behat/mink-goutte-driver",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/minkphp/MinkGoutteDriver.git",
-                "reference": "c8e254f127d6f2242b994afd4339fb62d471df3f"
+                "reference": "8b9ad6d2d95bc70b840d15323365f52fcdaea6ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/minkphp/MinkGoutteDriver/zipball/c8e254f127d6f2242b994afd4339fb62d471df3f",
-                "reference": "c8e254f127d6f2242b994afd4339fb62d471df3f",
+                "url": "https://api.github.com/repos/minkphp/MinkGoutteDriver/zipball/8b9ad6d2d95bc70b840d15323365f52fcdaea6ca",
+                "reference": "8b9ad6d2d95bc70b840d15323365f52fcdaea6ca",
                 "shasum": ""
             },
             "require": {
@@ -4357,7 +4568,7 @@
                 "php": ">=5.3.1"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~2.7|~3.0"
             },
             "type": "mink-driver",
             "extra": {
@@ -4389,7 +4600,7 @@
                 "headless",
                 "testing"
             ],
-            "time": "2015-09-21 21:31:11"
+            "time": "2016-03-05 09:04:22"
         },
         {
             "name": "behat/mink-selenium2-driver",

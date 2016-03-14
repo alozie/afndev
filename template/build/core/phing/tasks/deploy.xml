@@ -81,7 +81,11 @@
       <then>
         <echo message="Building make file for ${project.profile.name}"/>
         <property name="profile.dir" value="${deploy.dir}/docroot/profiles/contrib/${project.profile.name}"/>
-        <exec dir="${repo.root}" command="drush make ${profile.dir}/drupal-org.make ${profile.dir} --no-core -y" logoutput="true" passthru="true"/>
+        <drush command="make" assume="yes" verbose="TRUE">
+          <param>"${profile.dir}/drupal-org.make"</param>
+          <param>"${profile.dir}"</param>
+          <option name="no-core"></option>
+        </drush>
       </then>
     </if>
   </target>
