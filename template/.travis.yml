@@ -22,9 +22,10 @@ addons:
   ssh_known_hosts:
   # - svn-4786.devcloud.hosting.acquia.com
 
+# @see https://docs.travis-ci.com/user/notifications
 notifications:
-  # Replace this with project slack token.
-  # slack: acquia:KKfgpOkDhcO26Erv5uoZMfdP4
+# - hipchat: [api token]@[room id or name]
+# - slack: '<account>:<token>#[channel]'
 
 before_install:
   - composer selfupdate
