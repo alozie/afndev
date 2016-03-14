@@ -25,15 +25,15 @@
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}/sites/all/modules/custom" id="files.php.custom.modules">
+  <fileset dir="${docroot}/sites/all/modules/custom" id="files.php.custom.modules">
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}/sites/all/themes/custom" id="files.php.custom.themes">
+  <fileset dir="${docroot}/sites/all/themes/custom" id="files.php.custom.themes">
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}/sites/default/settings" id="files.php.custom.settings">
+  <fileset dir="${docroot}/sites/default/settings" id="files.php.custom.settings">
     <patternset refid="files.php"/>
   </fileset>
 
@@ -41,7 +41,7 @@
     <patternset refid="files.php"/>
   </fileset>
 
-  <fileset dir="${repo.root}/sites/all/themes/custom" id="files.frontend.custom.themes" expandsymboliclinks="true">
+  <fileset dir="${docroot}/sites/all/themes/custom" id="files.frontend.custom.themes" expandsymboliclinks="true">
     <patternset refid="files.frontend"/>
   </fileset>
 </project>

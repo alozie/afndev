@@ -54,7 +54,7 @@
   </target>
 
   <!-- Execute PHPUnit tests. -->
-  <target name="tests:phpunit" description="Executes PHPUnit tests against custom code." depends="setup:check:docroot">
+  <target name="tests:phpunit" description="Executes PHPUnit tests against custom code.">
     <delete dir="${reports.localDir}/phpunit" quiet="true"/>
     <mkdir dir="${reports.localDir}/phpunit"/>
 

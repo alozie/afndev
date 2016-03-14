@@ -1,0 +1,9 @@
+.htaccess
+robots.txt
+INSTALL.txt
+LICENSE.txt
+README.txt
+UPGRADE.txt
+simplesaml
+sites
+profiles
