@@ -32,7 +32,8 @@
                path="${behat.path}"
         />
         <if>
-          <isfalse value="${behatPass}"/>
+          <!-- A non-zero returns status indicates failure. -->
+          <not><equals arg1="${behatPass}" arg2="0"/></not>
           <then>
             <fail message="One ore more Behat tests failed." />
           </then>
