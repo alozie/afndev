@@ -20,7 +20,7 @@ notifications:
 
 addons:
   ssh_known_hosts:
-  - svn-4702.devcloud.hosting.acquia.com
+  - svn-5159.devcloud.hosting.acquia.com
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -50,7 +50,7 @@ script:
   # Deploy in-place repo build.
   - export TEST_SUITE=bolt
   - export DEPLOY_PR=true
-  - ../bolted/scripts/deploy/travis-deploy.sh bolt 7.x 7.x-build
+  - ../bolted/scripts/deploy/travis-deploy.sh 7.x 7.x-build
   # Validate and run 'bolt' phpunit tests.
   - phpcs --standard=../bolted/vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml tests
   - phpunit tests

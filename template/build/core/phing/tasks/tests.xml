@@ -8,6 +8,7 @@
   <target name="tests:behat" depends="tests:run-server, tests:phantomjs:launch" description="Executes Behat all behat tests in behat.paths.">
     <mkdir dir="${reports.localDir}/behat"/>
     <foreach list="${behat.paths}" target="tests:behat:execute" param="behat.path"/>
+    <phingcall target="tests:phantomjs:kill"/>
   </target>
 
   <target name="tests:behat:execute" description="Executes behat tests against specific path.">
@@ -39,12 +40,17 @@
       <equals arg1="${behat.launch-phantom}" arg2="true"/>
       <then>
         <echo message="Launching PhantomJS GhostDriver." />
-        <exec command="${composer.bin}/phantomjs --webdriver=4444"
+        <exec command="${composer.bin}/phantomjs --webdriver=4444 --ignore-ssl-errors=true"
               passthru="true"
               spawn="true"
               checkreturn="true" />
       </then>
     </if>
+  </target>
+
+  <target name="tests:phantomjs:kill"
+          description="Launches a GhostDriver.">
+    <exec command="pgrep phantomjs | xargs kill" logoutput="true" passthru="true" />
   </target>
 
   <!-- Execute PHPUnit tests. -->
