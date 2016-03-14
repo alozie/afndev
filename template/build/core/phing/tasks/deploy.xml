@@ -72,7 +72,7 @@
         <include name="composer.lock"/>
       </fileset>
     </copy>
-    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-source --no-interaction" passthru="true" logoutput="true" checkreturn="true"/>
+    <exec dir="${deploy.dir}" command="composer install --no-dev --prefer-dist --no-interaction" passthru="true" logoutput="true" checkreturn="true"/>
   </target>
 
   <target name="deploy:artifact:profile:make" description="Build a subsidiary makefile shipped with profile.">
@@ -148,7 +148,6 @@
       <fileset dir="${deploy.dir}/docroot">
         <include name="core/*.txt"/>
         <include name="**/CHANGELOG.txt"/>
-        <include name="**/.git"/>
       </fileset>
     </delete>
   </target>
