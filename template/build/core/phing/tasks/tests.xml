@@ -12,7 +12,7 @@
   </target>
 
   <target name="tests:behat:execute" description="Executes behat tests against specific path.">
-    <!-- Run behat. Any settings in behat.yml or behat.local.yml will be used. -->
+    <!-- Run behat. Any settings in behat.yml or local.yml will be used. -->
     <behat executable="${composer.bin}/behat"
            config="${behat.config}"
            profile="${behat.profile}"
@@ -23,6 +23,7 @@
            out="std,${reports.localDir}"
            format="pretty,junit"
            path="${behat.path}"
+           tags="${behat.tags}"
     />
 
     <if>
@@ -99,14 +100,14 @@
       <equals arg1="${behat.run-server}" arg2="true"/>
       <then>
         <echo message="Using drush runserver for tests." />
-        <!-- Note that Behat's base_url must match php-server-url. -->
-        <property name="behat:server-url" value="http://127.0.0.1:8080/" />
-
-        <exec executable="${composer.bin}/drush" dir="${docroot}" spawn="true">
-          <arg line="runserver ${behat:server-url}"/>
+        <echo message="Running server at ${behat.server-url}"/>
+        <exec command="pkill -f runserver" logoutput="true"/>
+        <exec executable="${composer.bin}/drush" dir="${docroot}" spawn="true" logoutput="true">
+          <arg line="runserver ${behat.server-url} -l ${multisite.name}"/>
         </exec>
+        <echo message="Waiting 10 seconds for ${behat.server-url} to become available."/>
         <waitfor maxwait="10" maxwaitunit="second" checkevery="1" checkeveryunit="second">
-          <http url="${behat:server-url}"/>
+          <http url="${behat.server-url}"/>
         </waitfor>
       </then>
       <else>

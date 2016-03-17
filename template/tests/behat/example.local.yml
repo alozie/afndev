@@ -53,3 +53,21 @@ local:
         drupal_root: ${docroot}
       drush:
         alias: '@self'
+
+example-multisite:
+  extensions:
+    Behat\MinkExtension:
+      javascript_session: selenium2
+      # configure the base url for your site
+      base_url: http://127.0.0.1:8889
+      # set default command for "Show last response" step.
+      show_cmd: "open %s"
+      selenium2:
+        wd_host: http://127.0.0.1:4444/wd/hub
+        browser: chrome
+    Drupal\DrupalExtension:
+      drupal:
+        # This must be an absolute path.
+        drupal_root: ${docroot}
+      drush:
+        alias: '@self'

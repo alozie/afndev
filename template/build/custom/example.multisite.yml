@@ -1,0 +1,26 @@
+# @todo Add example phing call using this file.
+
+behat:
+  # @see http://docs.behat.org/en/v2.5/guides/6.cli.html#gherkin-filters
+  tags: ~@hub
+  profile: local
+  # This is used for ad-hoc creation of a server via `drush rs`.
+  # This needs to match a site entry in docroot/sites/sites.php.
+  server-url: http://127.0.0.1:8888
+
+# deploy:
+  # includes-file: ${core.phing.dir}/../files/deploy-include-files.txt
+
+multisite:
+  name: default
+
+# Settings for local environment.
+perms:
+  user: ''
+  httpd_group: ''
+
+project:
+  profile:
+    name: bos_profile
+  cloud_alias: @boston
+

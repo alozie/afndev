@@ -1,6 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
 build/phing/build.properties
-local.*
+local\.*
 
 # Ignore paths that contain user-generated content.
 docroot/sites/*/files
@@ -10,6 +10,27 @@ docroot/sites/*/private
 docroot/sites/*/*/contrib
 docroot/sites/*/libraries
 docroot/profiles/contrib
+
+# Ignore drupal core dirs
+/docroot/includes
+/docroot/misc
+/docroot/modules
+/docroot/profiles/minimal
+/docroot/profiles/standard
+/docroot/profiles/testing
+/docroot/scripts
+/docroot/themes
+# Ignore drupal core files
+docroot/**/*.txt
+!docroot/robots.txt
+/docroot/.gitignore
+/docroot/authorize.php
+/docroot/cron.php
+/docroot/index.php
+/docroot/install.php
+/docroot/update.php
+/docroot/web.config
+/docroot/xmlrpc.php
 
 # Ignore build artifacts
 /deploy
