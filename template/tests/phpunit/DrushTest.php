@@ -35,7 +35,7 @@ class DrushTest extends TestBase {
       print "Executing \"$command\" in $dir \n";
       // If it contains the local URI, we know it is correctly loading
       // drushrc.php.
-      $this->assertContains('http://127.0.0.1:8080', shell_exec($command));
+      $this->assertContains('http://127.0.0.1:8888', shell_exec($command));
     }
   }
 

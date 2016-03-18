@@ -53,14 +53,15 @@
 
   <target name="setup:drupal:settings" description="Create local settings files using default settings files.">
     <chmod mode="0755" file="${docroot}/sites/default"/>
-    <copy file="${docroot}/sites/default/settings/default.local.settings.php" tofile="${docroot}/sites/default/settings/local.settings.php"/>
-    <copy file="${docroot}/sites/default/default.local.drushrc.php" tofile="${docroot}/sites/default/local.drushrc.php"/>
+    <copy file="${docroot}/sites/${multisite.name}/settings/default.local.settings.php" tofile="${docroot}/sites/${multisite.name}/settings/local.settings.php"/>
+    <copy file="${docroot}/sites/${multisite.name}/default.local.drushrc.php" tofile="${docroot}/sites/${multisite.name}/local.drushrc.php"/>
     <!-- Re-extract value of $options['uri'] in case it was not yet set. -->
+    <!-- @todo Add multisite support. -->
     <phpVariable file="${repo.root}/drush/drushrc.php" variable="options[uri]" outputProperty="local_url" />
   </target>
 
   <target name="setup:drupal:install"
-          description="Installs Drupal using credentials from local.settings.php."
+          description="Installs a specific Drupal site."
           depends="setup:drupal:settings, setup:check:docroot">
 
     <if>
@@ -73,6 +74,7 @@
           <option name="account-pass">"${drupal.account.password}"</option>
           <option name="account-mail">"${drupal.account.mail}"</option>
           <option name="config-dir">"${repo.root}/config/default"</option>
+          <option name="l">"${multisite.name}"</option>
           <param>"${project.profile.name}"</param>
           <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
         </drush>
@@ -84,22 +86,12 @@
           <option name="account-name">"${drupal.account.name}"</option>
           <option name="account-pass">"${drupal.account.password}"</option>
           <option name="account-mail">"${drupal.account.mail}"</option>
+          <option name="l">"${multisite.name}"</option>
           <param>"${project.profile.name}"</param>
           <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
         </drush>
       </else>
       </if>
-  </target>
-
-  <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
-    <property name="db.source" value="@test" />
-    <drush command="sql-drop" assume="yes"></drush>
-    <drush command="sql-sync" assume="yes">
-      <param>"${db.source}"</param>
-      <param>"@self"</param>
-      <!-- This key is defined in /drush/drushrc.php. -->
-      <option name="structure-tables-key">"lightweight"</option>
-    </drush>
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">
