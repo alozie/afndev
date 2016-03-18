@@ -47,7 +47,7 @@
     <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
   </target>
 
-  <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir." depends="deploy:artifact:make, deploy:artifact:sanitize, frontend:build, deploy:artifact:copy">
+  <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir." depends="deploy:artifact:make, frontend:build, deploy:artifact:copy, deploy:artifact:sanitize">
   </target>
 
   <!-- Clean the deploy directory. -->
@@ -62,45 +62,22 @@
   </target>
 
   <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
-    <!-- Copy modules and themes into deploy directory. -->
-    <copy todir="${deploy.dir}/docroot/sites/all/modules/custom" overwrite="true">
-      <fileset dir="${docroot}/sites/all/modules/custom"/>
-    </copy>
-    <copy todir="${deploy.dir}/docroot/sites/all/themes/custom" overwrite="true">
-      <fileset dir="${docroot}/sites/all/themes/custom">
-        <include name="**"></include>
-        <exclude name="**/node_modules/**"></exclude>
-        <exclude name="**/bower_components/**"></exclude>
-      </fileset>
-    </copy>
-    <copy todir="${deploy.dir}/docroot/profiles" overwrite="true">
-      <fileset dir="${docroot}/profiles"/>
-    </copy>
-    <copy todir="${deploy.dir}/docroot/sites/default/settings" overwrite="true">
-      <fileset dir="${docroot}/sites/default/settings">
-        <exclude name="**/local.settings.php"/>
-      </fileset>
-    </copy>
-    <copy file="${docroot}/sites/default/settings.php" tofile="${deploy.dir}/docroot/sites/default/settings.php" overwrite="true"/>
-    <copy todir="${deploy.dir}/hooks" overwrite="true">
-      <fileset dir="${repo.root}/hooks"/>
-    </copy>
-    <!-- Use our own .gitignore -->
-    <copy file="${repo.root}/build/core/files/.gitignore" tofile="${deploy.dir}/docroot/.gitignore" overwrite="true"/>
+    <!-- @todo Replace with -include-from=<file> with file defining patterns rather than specific files. -->
+    <exec command="rsync -rlvDW --inplace --delete --exclude-from=${deploy.excludes-file} --files-from=${deploy.includes-file} ${repo.root}/ ${deploy.dir}/" logoutput="true"/>
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">
     <drush command="make" assume="yes">
       <param>"${repo.root}/${project.make_file}"</param>
       <param>"${deploy.dir}/docroot"</param>
-      <option name="concurrency">8</option>
+      <option name="concurrency">10</option>
       <option name="no-gitinfofile"/>
       <option name="no-patch-txt"/>
     </drush>
   </target>
 
   <target name="deploy:artifact:prepare-dir" description="Delete the existing deploy directory and re-initialize as an empty git repository.">
-    <delete dir="${deploy.dir}/.git" failonerror="false" quiet="true" />
+    <delete dir="${deploy.dir}" failonerror="false" quiet="true" />
     <exec command="git init ${deploy.dir}" logoutput="true"/>
   </target>
 
@@ -122,6 +99,7 @@
         <include name="INSTALL.txt"/>
         <include name="INSTALL.*.txt"/>
         <include name="LICENSE.txt"/>
+        <include name="MAINTAINERS.txt"/>
         <include name="PATCHES.txt"/>
         <include name="README.txt"/>
         <include name="UPGRADE.txt"/>

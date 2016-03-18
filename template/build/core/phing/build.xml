@@ -6,7 +6,9 @@
   <taskdef name="drush" classname="phingcludes.DrushTask"/>
   <taskdef name="phpVariable" classname="phingcludes.PhpVariableTask"/>
 
-  <!-- Include task partials -->
+  <!--
+  Include task partials
+  -->
 
   <!-- Defines a list of default properties, available to all targets. -->
   <import file="${core.phing.dir}/tasks/properties.xml"/>
@@ -26,8 +28,11 @@
   <!-- E.g., commit build artifacts, push to remote. -->
   <import file="${core.phing.dir}/tasks/deploy.xml"/>
 
-  <!-- Contains frontend tasks. -->
+  <!-- Load front end tasks. -->
   <import file="${core.phing.dir}/tasks/frontend.xml"/>
+
+  <!-- Load custom property values. -->
+  <property file="${project.basedir}/build.yml" override="true"/>
 
   <!--
   The follow targets are intended to be wrapper targets that bundle
@@ -35,7 +40,7 @@
   -->
   <target name="build:test"
           description="Builds, tests, and deploys an artifact."
-          depends="setup:build:all, setup, tests:all">
+          depends="setup, tests:all">
   </target>
 
   <target name="build:validate:test"

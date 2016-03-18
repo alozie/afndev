@@ -40,14 +40,20 @@ class DeployTest extends \PHPUnit_Framework_TestCase {
     $this->assertFileExists($this->deploy_dir . '/docroot/index.php');
     $this->assertFileExists($this->deploy_dir . '/docroot/sites/all/modules/contrib');
 
-    // Ensure settings files were copied to deploy directory.
+    // Ensure subdirectories of docroot/sites were correctly copied.
     $this->assertFileExists($this->deploy_dir . '/docroot/sites/default/settings.php');
     $this->assertFileExists($this->deploy_dir . '/docroot/sites/default/settings');
+    $this->assertFileExists($this->deploy_dir . '/docroot/sites/all/modules/custom');
+    $this->assertFileExists($this->deploy_dir . '/docroot/sites/default/settings');
+    $this->assertFileExists($this->deploy_dir . '/docroot/sites/all/themes/custom');
     $this->assertFileNotExists($this->deploy_dir . '/docroot/sites/default/settings/local.settings.php');
 
     // Ensure hooks were copied to deploy directory.
     $this->assertFileExists($this->deploy_dir . '/hooks');
     $this->assertFileExists($this->deploy_dir . '/hooks/README.md');
+
+    // Ensure deployment artifact was sanitized correctly.
+    $this->assertFileNotExists($this->deploy_dir . '/docroot/CHANGELOG.txt');
   }
 
   /**

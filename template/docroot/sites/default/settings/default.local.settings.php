@@ -19,7 +19,7 @@ $databases = array (
     ),
 );
 
-$base_url = 'http://127.0.0.1:8080';
+$base_url = 'http://127.0.0.1:8888';
 
 // Disable virus scanning on uploaded files.
 $conf['clamav_enabled'] = 0;

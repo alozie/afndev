@@ -36,45 +36,37 @@
     </drush>
   </target>
 
-  <target name="setup:drupal:install"
-          description="Installs Drupal using credentials from local.settings.php.">
+  <target name="setup:drupal:install" description="Installs a specific Drupal site.">
+    <!-- Temporarily move setting.php so it is not simply overwritten during install -->
+    <copy file="${docroot}/sites/${multisite.name}/settings.php" tofile="${docroot}/sites/${multisite.name}/settings.php.bak"/>
 
-    <copy file="${docroot}/sites/default/settings.php" tofile="${docroot}/sites/default/settings.php.bak"/>
-
-    <drush command="site-install" assume="yes" verbose="TRUE">
-      <!--<option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}"</option>-->
+    <drush command="sql-drop" assume="yes" verbose="TRUE">
+      <!--<option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}"</option>-->
+      <option name="l">"${multisite.name}"</option>
+    </drush>
+    <drush command="site-install" assume="yes">
+      <!--<option name="db-url">"mysql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}"</option>-->
       <option name="site-name">"${project.human_name}"</option>
-      <option name="debug" />
       <option name="site-mail">"${drupal.account.mail}"</option>
       <option name="account-name">"${drupal.account.name}"</option>
       <option name="account-pass">"${drupal.account.password}"</option>
       <option name="account-mail">"${drupal.account.mail}"</option>
+      <option name="l">"${multisite.name}"</option>
       <param>"${project.profile.name}"</param>
       <param>"install_configure_form.update_status_module='array(FALSE,FALSE)'"</param>
     </drush>
 
     <!-- Restore original settings.php, wiped out by Drupal installation. -->
-    <chmod mode="0755" file="${docroot}/sites/default"/>
-    <copy file="${docroot}/sites/default/settings.php.bak" tofile="${docroot}/sites/default/settings.php"/>
+    <chmod mode="0755" file="${docroot}/sites/${multisite.name}"/>
+    <copy file="${docroot}/sites/${multisite.name}/settings.php.bak" tofile="${docroot}/sites/${multisite.name}/settings.php"/>
   </target>
 
   <target name="setup:drupal:settings" description="Create a local.settings.php with local db creds from local.yml.">
-    <copy file="${docroot}/sites/default/settings/default.local.settings.php" tofile="${docroot}/sites/default/settings/local.settings.php">
+    <copy file="${docroot}/sites/${multisite.name}/settings/default.local.settings.php" tofile="${docroot}/sites/${multisite.name}/settings/local.settings.php" overwrite="false" verbose="true">
       <filterchain>
         <expandproperties />
       </filterchain>
     </copy>
-  </target>
-
-  <target name="setup:db:sync" description="Overwrites local database with upstream database from Acquia Cloud.">
-    <property name="db.source" value="@test" />
-    <drush command="sql-drop" assume="yes"></drush>
-    <drush command="sql-sync" assume="yes">
-      <param>"${db.source}"</param>
-      <param>"@self"</param>
-      <!-- This key is defined in /sites/all/drush/drushrc.php. -->
-      <option name="structure-tables-key">"lightweight"</option>
-    </drush>
   </target>
 
   <target name="setup:git-hooks" description="Installs git hooks to local .git/hooks directory from version controlled scripts/git-hooks directory.">

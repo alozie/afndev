@@ -23,6 +23,8 @@ addons:
   - svn-5159.devcloud.hosting.acquia.com
 
 before_install:
+  - nvm install 0.12
+  - nvm use 0.12
   - phpenv config-rm xdebug.ini
   # Enable $_ENV variables in PHP.
   - echo 'variables_order = "EGPCS"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
