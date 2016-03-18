@@ -1,6 +1,0 @@
-<project name="classes" default="load-classes">
-  <!-- Include custom task classes -->
-  <taskdef name="behat" classname="${core.phing.dir}/phingcludes.BehatTask"/>
-  <taskdef name="drush" classname="${core.phing.dir}/phingcludes.DrushTask"/>
-  <taskdef name="phpVariable" classname="${core.phing.dir}/phingcludes.PhpVariableTask"/>
-</project>

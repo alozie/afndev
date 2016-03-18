@@ -30,7 +30,6 @@
     </phpcodesniffer>
 
     <!-- Sniff JS and CSS in custom themes. -->
-    <!--
     <phpcodesniffer
         standard="${phpcs.ruleset}"
         showSniffs="false"
@@ -41,7 +40,6 @@
       <fileset refid="files.frontend.custom.themes"/>
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
-    -->
 
     <!-- Sniff tests for PSR2 coding standards compliance. -->
     <phpcodesniffer

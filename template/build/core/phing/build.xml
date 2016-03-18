@@ -29,7 +29,7 @@
   <import file="${core.phing.dir}/tasks/deploy.xml"/>
 
   <!-- Load front end tasks. -->
-  <import file="${project.basedir}/tasks/frontend.xml"/>
+  <import file="${core.phing.dir}/tasks/frontend.xml"/>
 
   <!-- Load custom property values. -->
   <property file="${project.basedir}/build.yml" override="true"/>
