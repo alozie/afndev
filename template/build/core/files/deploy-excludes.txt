@@ -34,4 +34,4 @@ docroot/update.php
 docroot/UPGRADE.txt
 docroot/web.config
 docroot/xmlrpc.php
-*local.php
+local\.*
