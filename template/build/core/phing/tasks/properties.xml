@@ -11,8 +11,12 @@
   <property file="${core.phing.dir}/build.yml" override="true"/>
 
   <!-- Extract PHP variable values from local.settings.php. -->
-  <property name="local.settings.file" value="${docroot}/sites/default/settings/local.settings.php" />
-  <copy file="${docroot}/sites/default/settings/default.local.settings.php" tofile="${local.settings.file}" overwrite="false" />
+  <property name="local.settings.file" value="${docroot}/sites/${multisite.name}/settings/local.settings.php" />
+  <copy file="${docroot}/sites/${multisite.name}/settings/default.local.settings.php" tofile="${local.settings.file}" overwrite="false" verbose="true"/>
+
+  <echo>Executing commands against multisite "${multisite.name}"</echo>
+  <echo>Using settings file ${local.settings.file}</echo>
+
   <!-- Extracts value of $options['uri'] and outputs to local_url property in Phing. -->
   <phpVariable file="${repo.root}/drush/drushrc.php" variable="options[uri]" outputProperty="local_url" />
   <!-- Extracts values from the $databases array and outputs to db.* properties. -->
@@ -22,4 +26,5 @@
   <phpVariable file="${local.settings.file}" variable="databases[default][default][host]" outputProperty="db.host" />
   <phpVariable file="${local.settings.file}" variable="databases[default][default][port]" outputProperty="db.port" />
 
+  <echo>Using "${db.database}" database</echo>
 </project>

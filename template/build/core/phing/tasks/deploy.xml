@@ -50,7 +50,7 @@
   </target>
 
   <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir."
-          depends="deploy:artifact:clean, deploy:artifact:copy, deploy:artifact:composer:install, deploy:artifact:profile:make, deploy:artifact:sanitize, frontend:build">
+          depends="deploy:artifact:clean, deploy:artifact:copy, deploy:artifact:composer:install, deploy:artifact:profile:make, frontend:build, deploy:artifact:sanitize">
   </target>
 
   <target name="deploy:artifact:clean" description="Deletes the contents of the deploy dir.">

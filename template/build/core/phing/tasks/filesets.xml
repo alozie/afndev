@@ -12,11 +12,13 @@
   </patternset>
 
   <patternset id="files.frontend">
-    <include name="**/*.css"/>
     <include name="**/*.js"/>
+    <!-- Ignore CSS. SASS usage is expected. CSS should be compiled. -->
+    <exclude name="**/*.css"/>
     <exclude name="**/vendor/**/*"/>
     <exclude name="**/node_modules/**/*"/>
     <exclude name="**/bower_components/**/*"/>
+    <exclude name="**/dist/**/*"/>
     <exclude name="**/styleguide/**"/>
     <exclude name="**/css/**"/>
   </patternset>
@@ -33,6 +35,7 @@
     <patternset refid="files.php"/>
   </fileset>
 
+  <!-- @todo Add multisite subdirs. -->
   <fileset dir="${docroot}/sites/default/settings" id="files.php.custom.settings" expandsymboliclinks="true">
     <patternset refid="files.php"/>
   </fileset>
