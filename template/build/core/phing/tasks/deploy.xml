@@ -28,7 +28,15 @@
     <phingcall target="deploy:artifact:commit"/>
 
     <!-- Push up changes to remotes. -->
-    <phingcall target="deploy:artifact:push-all"/>
+    <if>
+      <isset property="deploy.dry-run"/>
+      <then>
+        <echo message="DRY RUN: Creating build artifact, will not be deployed."/>
+      </then>
+      <else>
+        <phingcall target="deploy:artifact:push-all"/>
+      </else>
+    </if>
   </target>
 
   <target name="deploy:artifact:add-remote" description="Adds a git remote and checks out deploy branch from upstream.">
@@ -61,9 +69,9 @@
     <exec command="git commit -m '${deploy.commitMsg}' --quiet" dir="${deploy.dir}" logoutput="true" passthru="true"/>
   </target>
 
-  <target name="deploy:artifact:copy" description="Copy required files from /sites to /docroot/sites.">
+  <target name="deploy:artifact:copy" description="Copy required files from docroot/sites to deploy/docroot/sites.">
     <!-- @todo Replace with -include-from=<file> with file defining patterns rather than specific files. -->
-    <exec command="rsync -rlvDW --inplace --delete --exclude-from=${deploy.excludes-file} --files-from=${deploy.includes-file} ${repo.root}/ ${deploy.dir}/" logoutput="true"/>
+    <exec command="rsync -rlDW --inplace --delete --exclude-from=${deploy.excludes-file} --files-from=${deploy.includes-file} ${repo.root}/ ${deploy.dir}/" logoutput="true"/>
   </target>
 
   <target name="deploy:artifact:make" description="Downloads core and contrib to deploy folder." depends="deploy:artifact:clean">

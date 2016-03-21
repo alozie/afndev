@@ -1,4 +1,5 @@
 # These files will be included if they do not yet exist. They will not overwrite
 # existing files.
+.gitignore
 .htaccess
 robots.txt
