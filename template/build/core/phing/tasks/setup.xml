@@ -36,7 +36,7 @@
   </target>
 
   <target name="setup:composer:install" description="Installs project dependencies, including drupal core and contrib.">
-    <exec dir="${repo.root}" command="composer install --prefer-source" logoutput="true" passthru="true"/>
+    <exec dir="${repo.root}" command="composer install" logoutput="true" passthru="true"/>
   </target>
 
   <!-- Check for docroot. -->
