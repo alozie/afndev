@@ -1,5 +1,6 @@
 # These files and their children will be ignored unless otherwise specified in
-# rsync-include-always.txt or rsync-include-if-does-not-exist.txt
+# rsync-include.txt or rsync-include-if-does-not-exist.txt
+.gitignore
 .htaccess
 robots.txt
 simplesaml
