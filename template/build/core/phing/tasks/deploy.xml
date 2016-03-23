@@ -55,7 +55,7 @@
     <foreach list="${git.remotes}" param="deploy.remote" target="deploy:artifact:add-remote"/>
   </target>
 
-  <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir." depends="deploy:artifact:make, frontend:build, deploy:artifact:copy, deploy:artifact:sanitize">
+  <target name="deploy:artifact:build" description="Generates a deploy-ready build in deploy.dir." depends="deploy:artifact:make, deploy:artifact:copy, frontend:build, deploy:artifact:sanitize">
   </target>
 
   <!-- Clean the deploy directory. -->
