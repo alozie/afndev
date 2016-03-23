@@ -55,6 +55,7 @@ filters_exclude[5]='development'
 filters_exclude[6]='scripts'
 filters_exclude[7]='git'
 filters_exclude[8]='featurized'
+filters_exclude[9]='build'
 
 # Include extensions that should be checked.
 filters_include[0]='\.inc'
