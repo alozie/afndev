@@ -83,7 +83,7 @@ class SettingsTest extends TestBase {
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
     // Fast 404.
-    $this->fast_404_tests();
+    $this->fast404Tests();
   }
 
   /**
@@ -123,7 +123,7 @@ class SettingsTest extends TestBase {
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
     // Fast 404 tests.
-    $this->fast_404_tests();
+    $this->fast404Tests();
   }
 
   /**
@@ -162,7 +162,7 @@ class SettingsTest extends TestBase {
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
     // Fast 404 tests.
-    $this->fast_404_tests();
+    $this->fast404Tests();
   }
 
   /**
