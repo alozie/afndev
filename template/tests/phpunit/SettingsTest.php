@@ -31,7 +31,7 @@ class SettingsTest extends TestBase {
       define('DRUPAL_ROOT', $this->drupalRoot);
     }
 
-    //Adds settings.php and make global variables accessible to this class.
+    // Adds settings.php and make global variables accessible to this class.
     require $this->drupalRoot . '/sites/default/settings.php';
 
     $this->conf = $conf;
@@ -82,7 +82,7 @@ class SettingsTest extends TestBase {
     // Testing.
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
-    //Fast 404
+    // Fast 404.
     $this->fast_404_tests();
   }
 
@@ -122,7 +122,7 @@ class SettingsTest extends TestBase {
     // Testing.
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
-    //Fast 404
+    // Fast 404 tests.
     $this->fast_404_tests();
   }
 
@@ -161,7 +161,7 @@ class SettingsTest extends TestBase {
     // Testing.
     $this->assertEquals(FALSE, $this->conf['admin_menu_cache_client']);
 
-    //Fast 404
+    // Fast 404 tests.
     $this->fast_404_tests();
   }
 
@@ -193,7 +193,10 @@ class SettingsTest extends TestBase {
     $this->assertFileExists($this->projectDirectory . '/docroot/sites/default/settings/local.settings.php');
   }
 
-  private function fast_404_tests(){
+  /**
+   * Tests for the Fast 404 module settings.
+   */
+  private function fast_404_tests() {
 
     $this->assertEquals($this->conf['fast_404_exts'], '/[^robots]\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i');
 
