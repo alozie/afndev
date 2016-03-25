@@ -211,7 +211,7 @@ class SettingsTest extends TestBase {
       'install.php',
       'cron.php',
       'update.php',
-      'xmlrpc.php'
+      'xmlrpc.php',
     ));
 
     $this->assertEquals($this->conf['fast_404_string_whitelisting'], array('cdn/farfuture', '/advagg_'));
