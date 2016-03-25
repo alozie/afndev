@@ -457,6 +457,9 @@ require DRUPAL_ROOT . '/sites/default/settings/cache.settings.php';
 // Includes default cron configuration.
 require DRUPAL_ROOT . '/sites/default/settings/cron.settings.php';
 
+// Includes advanced configuration for Fast 404 module.
+require DRUPAL_ROOT . '/sites/default/settings/fast-404.settings.php';
+
 // Includes configuration for public and private file systems, composer_manager.
 require DRUPAL_ROOT . '/sites/default/settings/files.settings.php';
 
