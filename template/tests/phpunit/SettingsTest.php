@@ -196,7 +196,7 @@ class SettingsTest extends TestBase {
   /**
    * Tests for the Fast 404 module settings.
    */
-  private function fast_404_tests() {
+  private function fast404Tests() {
 
     $this->assertEquals($this->conf['fast_404_exts'], '/[^robots]\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i');
 
@@ -205,11 +205,18 @@ class SettingsTest extends TestBase {
     $this->assertEquals($this->conf['fast_404_html'], '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>');
 
     $this->assertEquals($this->conf['fast_404_url_whitelisting'], FALSE);
-    $this->assertEquals($this->conf['fast_404_whitelist'], array('index.php', 'rss.xml', 'install.php', 'cron.php', 'update.php', 'xmlrpc.php'));
+    $this->assertEquals($this->conf['fast_404_whitelist'], array(
+      'index.php',
+      'rss.xml',
+      'install.php',
+      'cron.php',
+      'update.php',
+      'xmlrpc.php'));
 
     $this->assertEquals($this->conf['fast_404_string_whitelisting'], array('cdn/farfuture', '/advagg_'));
 
     $this->assertEquals($this->conf['fast_404_HTML_error_all_paths'], FALSE);
 
   }
+
 }
