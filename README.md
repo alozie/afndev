@@ -92,7 +92,9 @@ committed.
 
 # Contributing to Bolt
 
-Bolt work is currently being tracked in the Bolt GitHub issue queue.
+Bolt work is currently being tracked in the [Bolt GitHub issue queue]
+(https://github.com/acquia/bolt/issues) and organized via a 
+[Waffle.io Kanban Board](https://waffle.io/acquia/bolt).
 
 ## Status:
 

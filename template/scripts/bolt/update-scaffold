@@ -4,7 +4,15 @@ GIT_ROOT=$(git rev-parse --show-toplevel)
 BOLT_BRANCH=8.x
 
 # Upstream directories to pull. These will be prefixed with "template/".
-BOLT_DIRS=( "build/core" "drush.wrapper" "task.sh" )
+BOLT_DIRS=(
+  "build/core"
+  "drush.wrapper"
+  "scripts/bolt"
+  "scripts/deploy"
+  "scripts/release-notes"
+  "scripts/drupal"
+  "task.sh"
+)
 
 # Move into repository root.
 cd $GIT_ROOT
