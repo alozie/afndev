@@ -71,8 +71,8 @@ an SSH key for deployments that can be accessed by any developer), and it's
 impossible to schedule regular deployments or perform more advanced 
 integrations.
 
-For more information on configuring Travis CI, see "Setting Up Travis CI for 
-automated deployments" in [build/README.md](build/README.md).
+For more information on configuring Travis CI, see "Setting Up Travis CI for
+automated deployments" in [build/README.md](../build/README.md).
 
 ### Jenkins (Cloudbees)
 

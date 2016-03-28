@@ -115,4 +115,4 @@ Review review the following documentation:
 * [Repository architecture](repo-architecture.md): “how is the code organized, and why?”
 * [Running project tasks](project-tasks.md): “how do I _____ on my local machine?”
 * [Workflow](dev-workflow.md): “I wrote code, how does it get from here to there?”
-* [Automated testing](testing.md): “how do I write / run them, and why should care?”
+* [Automated testing](../tests/README.md): “how do I write / run them, and why should care?”
