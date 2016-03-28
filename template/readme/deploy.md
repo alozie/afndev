@@ -72,7 +72,7 @@ impossible to schedule regular deployments or perform more advanced
 integrations.
 
 For more information on configuring Travis CI, see "Setting Up Travis CI for
-automated deployments" in [/build/README.md](/build/README.md).
+automated deployments" in [../build/README.md](../build/README.md).
 
 ### Jenkins (Cloudbees)
 
