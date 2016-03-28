@@ -34,7 +34,7 @@ It isn’t accurate to say that you can “install” Bolt. Rather, you can use 
 to generate a new project. Within that project, you can then perform common 
 project tasks like build dependencies, install Drupal, run tests, etc.
 
-Follow the instructions in [INSTALL.md](install/README.md) to generate a new project 
+Follow the instructions in [INSTALL.md](INSTALL.md) to generate a new project
 using Bolt.
 
 ## Features
@@ -47,7 +47,7 @@ using Bolt.
     * Slack
     * New Relic
     * HipChat
-* [Testing Framework](template/testing). 
+* [Testing Framework](template/tests).
     * Behat: default `local.yml` configuration, example tests, `FeatureContext.php`
     * PHPUnit: default tests for ensuring proper functioning of Bolt provided components
 * [Project tasks](template/readme/project-tasks.md)
