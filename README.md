@@ -1,9 +1,21 @@
 # Bolt
 
-Bolt will create a new Professional Services project using the project template 
-located in `/template`.
+Bolt is a tool that generates new Drupal projects using a standardized template
+derived from Acquia Professional Services' best practices.
 
-It is proprietary software. Copyright 2016. Acquia, Inc.
+## License
+
+Copyright (C) 2016 Acquia, Inc.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
 ## Philosophy and Purpose
 
@@ -90,7 +102,22 @@ specific files and directories in your Bolt generated project:
 After running, you can review changes via `git diff` and decide what should be
 committed.
 
-# Contributing to Bolt
+# License, support, and contribution
+
+Bolt is provided as an open source tool in the hope that it will enabled 
+developers to easily generate new Drupal projects that conform to Acquia 
+Professional Services' best practices.
+
+Please feel free to contribute to the project or file issues via the GitHub 
+issue queue. When doing so, please keep the following points in mind:
+ 
+* Bolt is distributed under the GPLv3 license; WITHOUT ANY WARRANTY.
+* The project maintainers make no commitment to respond to support requests, 
+  feature requests, or pull requests.
+* All contributions to Bolt will be reviewed for compliance with Drupal Coding
+  Standards and best practices as defined by the project maintainer.
+* Feature that are part of the [Road Map](https://github.com/acquia/bolt/wiki/Road-Map)
+  will be prioritized for inclusion.
 
 Bolt work is currently being tracked in the [Bolt GitHub issue queue]
 (https://github.com/acquia/bolt/issues) and organized via a 
