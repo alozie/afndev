@@ -15,12 +15,14 @@
     <include name="**/*.js"/>
     <!-- Ignore CSS. SASS usage is expected. CSS should be compiled. -->
     <exclude name="**/*.css"/>
-    <exclude name="**/vendor/**/*"/>
-    <exclude name="**/node_modules/**/*"/>
     <exclude name="**/bower_components/**/*"/>
-    <exclude name="**/dist/**/*"/>
-    <exclude name="**/styleguide/**"/>
     <exclude name="**/css/**"/>
+    <exclude name="**/dist/**/*"/>
+    <exclude name="**/lib/**/*"/>
+    <exclude name="**/node_modules/**/*"/>
+    <exclude name="**/styleguide/**"/>
+    <exclude name="**/vendor/**/*"/>
+
   </patternset>
 
   <fileset dir="${repo.root}" id="files.php.all">
