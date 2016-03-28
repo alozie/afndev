@@ -7,7 +7,16 @@
         <exec dir="${docroot}/sites/all/themes/custom/${project.theme_name}" command="npm run build" logoutput="true" checkreturn="true" />
       </then>
     </if>
+
+    <property name="project.frontend.nvmrc.file" value="${docroot}/sites/all/themes/custom/${project.theme_name}/.nvmrc" />
+    <if>
+      <available file="${project.frontend.nvmrc.file}" />
+      <then>
+        <copy file="${project.frontend.nvmrc.file}" todir="${repo.root}" />
+      </then>
+    </if>
   </target>
+
   <target name="frontend:install" description="Installs front end dependencies for Thunder.">
     <if>
       <!-- We assume that if the theme name is not thunder, then a subtheme of thunder is being used. -->
