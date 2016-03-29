@@ -47,7 +47,7 @@ using Bolt.
     * Slack
     * New Relic
     * HipChat
-* [Testing Framework](template/testing). 
+* [Testing Framework](template/tests).
     * Behat: default `local.yml` configuration, example tests, `FeatureContext.php`
     * PHPUnit: default tests for ensuring proper functioning of Bolt provided components
 * [Project tasks](template/readme/project-tasks.md)

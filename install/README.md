@@ -53,7 +53,7 @@ project:
 1. Update your project README.md.
 1. Update the project documentation (in `readme`).
 1. Set up your local \*AMP stack using. See [Local Environment]
-   (/readme/local-development.md). documentation.
+   (/template/readme/local-development.md). documentation.
 1. Optionally, you may install Drupal locally via Phing. To do this, verify
    correct credentials in `local.yml` and then run:
    `./task.sh setup:drupal:install`
