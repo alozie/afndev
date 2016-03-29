@@ -50,6 +50,8 @@ projects:
     version: ~
   entitycache:
     version: ~
+  fast_404:
+    version: ~
   features:
     version: ~
   genpass:
