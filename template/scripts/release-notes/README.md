@@ -2,8 +2,8 @@
 
 ## Overview
 Use a script compiles PR comments for a project into a Markdown file that can
-be copy and pasted into github release notes. This script is hosted in the 
-Acquia PSO [bolt](https://github.com/acquia-pso/bolt/blob/7.x/scripts/release-notes/generate-release-notes.php) repository.
+be copy and pasted into github release notes. This script is hosted in the
+Acquia PSO [bolt](generate-release-notes.php) repository.
 
 ## Usage
 
