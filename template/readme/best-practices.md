@@ -122,7 +122,7 @@ Please see [views.md](views.md).
 ##<a name="logging"></a>Logging
 
 * Any configuration changes from custom modules should be logged to watchdog
-* User activity should generally be logged ([see Acquia Library recommendations](https://docs.acquia.com/articles/how-audit-authenticated-user-actions-better-risk-management]))
+* User activity should generally be logged ([see Acquia Library recommendations](https://docs.acquia.com/articles/how-audit-authenticated-user-actions-better-risk-management))
 * Any destructive actions **must** be logged
 
 

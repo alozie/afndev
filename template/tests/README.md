@@ -146,5 +146,5 @@ Resources:
 
 * [Drupal's implementation of PHPUnit](https://www.drupal.org/phpunit)
 * [Presentations on PHPUnit](https://phpunit.de/presentations.html)
-* [Test Driven Development: By Example (book)](http://amzn.to/1nNWJ7D)
-* [xUnit Test Patterns: Refactoring Test Code (book for the really serious)](http://amzn.to/1ULsvfD)
+* [Test Driven Development: By Example (book)](http://www.amazon.com/dp/0321146530)
+* [xUnit Test Patterns: Refactoring Test Code (book for the really serious)](http://amazon.com/dp/0131495054)

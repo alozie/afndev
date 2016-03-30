@@ -53,9 +53,9 @@ This requires the following steps for configuration:
 
 ## Resources
 
-* [GitHub Bolt](https://github.com/acquia/bolt/settings/collaboration)
-* [GitHub Bolted7](https://github.com/acquia-pso/bolted7/settings/collaboration)
-* [GitHub Bolted8](https://github.com/acquia-pso/bolted8/settings/collaboration)
+* [GitHub Bolt](https://github.com/acquia/bolt)
+* [GitHub Bolted7](https://github.com/acquia-pso/bolted7)
+* [GitHub Bolted8](https://github.com/acquia-pso/bolted8)
 * [GitHub Dummy User](https://github.com/acquia-pso-ci)
 * [Acquia Bolted 7](https://insight.acquia.com/cloud/workflow?s=2919001)
 * [Acquia Bolted 8](https://insight.acquia.com/cloud/workflow?s=2918916)
