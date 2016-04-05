@@ -19,7 +19,7 @@
            verbose="true"
            strict="true"
            haltonerror="false"
-           returnProperty="behatPass"
+           returnProperty="behatFail"
            out="std,${reports.localDir}"
            format="pretty,junit"
            path="${behat.path}"
@@ -27,7 +27,7 @@
     />
 
     <if>
-      <isfalse value="${BehatPass}"/>
+      <isTrue value="${behatFail}"/>
       <then>
         <fail message="One ore more Behat tests failed." />
       </then>

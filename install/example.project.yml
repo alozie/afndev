@@ -17,7 +17,8 @@ project:
     # Please ensure contrib profiles are also in your make file.
     contrib: false
   # This is used to build front end artifacts. E.g., SASS compilation.
-  theme_name: 'thunder'
+  themes:
+    - thunder
 
 # Configuration settings for new git repository.
 git:
