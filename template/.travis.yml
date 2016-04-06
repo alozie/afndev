@@ -39,8 +39,8 @@ install:
   - composer install
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/vendor/bin
   # Install proper version of node for front end tasks.
-  - nvm install 0.12
-  - nvm use 0.12
+  - nvm install 4.4.1
+  - nvm use 4.4.1
 
 before_script:
   # Clear drush release history cache, to pick up new releases.
