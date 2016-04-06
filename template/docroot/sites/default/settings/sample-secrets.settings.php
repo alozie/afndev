@@ -13,14 +13,14 @@
  */
 
 // Ensure that Acquia Hosting database settings exist.
-if (isset($config['acquia_hosting_site_info']['db'])) {
+if (isset($conf['acquia_hosting_site_info']['db'])) {
 
   /*
    * Some variables we can switch on:
    * - ['db']['role'] is specific to a Drupal site installation.
    * - ['db']['name'] is specific to a Drupal site in a specific environment.
    */
-  switch ($config['acquia_hosting_site_info']['db']['name']) {
+  switch ($conf['acquia_hosting_site_info']['db']['name']) {
     case 'bolted':
       /*
        * Acquia Network Connector
