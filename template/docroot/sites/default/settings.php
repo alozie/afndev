@@ -716,6 +716,7 @@ if ($is_ah_env && file_exists('/var/www/site-php')) {
   $secrets_file = sprintf('/mnt/gfs/%s.%s/secrets.settings.php', $_ENV['AH_SITE_GROUP'], $_ENV['AH_SITE_ENVIRONMENT']);
   if (file_exists($secrets_file)) {
     require $secrets_file;
+  }
 }
 
 /**
