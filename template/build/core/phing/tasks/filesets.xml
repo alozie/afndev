@@ -22,6 +22,7 @@
     <exclude name="**/node_modules/**/*"/>
     <exclude name="**/styleguide/**"/>
     <exclude name="**/vendor/**/*"/>
+    <exclude name="**/gulpfile.js"/>
 
   </patternset>
 
