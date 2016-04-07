@@ -66,6 +66,26 @@ be configured using `hub` -
 
     git config --global --add hub.pull-request-template-path ~/.pr-template
 
+## Resolving merge conflicts
+
+Merge conflicts result when multiple developers submit PRs modifying the same code and Git cannot automatically resolve the conflict. For instance, if two developers add update hooks to the same module at the same time, these will necessarily conflict, because update hooks must be numbered in a defined sequence.
+
+Developers are responsible for fixing merge conflicts on their own PRs. Follow this process to resolve a merge conflict:
+
+1. Fetch upstream history: `git fetch upstream`
+2. Check out the branch against which you opened your PR (e.g. master): `git checkout master`
+3. Make sure it matches upstream: `git  reset --hard upstream/master`
+4. Check out your feature branch: `git checkout feature/foo`
+5. Merge master (this is where the magic happens): `git merge master`
+6. At this point, Git will complain about a merge conflict. Run `git status` to find the conflicting file(s).
+7. Edit the files to fix the conflict. The resources at the end of this section provide more information on this process.
+8. Use `git add` to add all of the files you fixed.
+9. Finally, run `git commit` to finish the merge, and `git push origin feature/foo` to update the PR.
+
+Additional resources:
+
+- https://confluence.atlassian.com/bitbucket/resolve-merge-conflicts-704414003.html
+- https://githowto.com/resolving_conflicts
 
 ## Integration (merging pull requests)
 
