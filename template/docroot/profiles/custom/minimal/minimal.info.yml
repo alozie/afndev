@@ -8,5 +8,7 @@ dependencies:
   - dblog
   - page_cache
   - dynamic_page_cache
+  - help
 themes:
-  - stark
+  - bartik
+  - seven
