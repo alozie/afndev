@@ -119,15 +119,8 @@ do
       # Default PHP error code
       PHP_CODE=0
 
-      # Validate Behat and PHPunit tests against PSR-2
-      if [[ $file = "tests/behat"* || $file = "tests/phpunit"* ]]; then
-        # Run the PHP Codesniffer validation
-        PHPCS_STANDARD=PSR2
-
-      else
-        # Validate all other files against Drupal Coding Standards.
-        PHPCS_STANDARD=vendor/drupal/coder/coder_sniffer/Drupal
-      fi
+      # Validate all files against Drupal Coding Standards.
+      PHPCS_STANDARD=vendor/drupal/coder/coder_sniffer/Drupal
 
       ${PHPCS_BIN} --standard=${PHPCS_STANDARD} $file >&2
 
