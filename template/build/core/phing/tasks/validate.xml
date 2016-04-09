@@ -41,7 +41,7 @@
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
 
-    <!-- Sniff tests for PSR2 coding standards compliance. -->
+    <!-- Sniff tests for drupal coding standards compliance. -->
     <phpcodesniffer
         standard="${phpcs.ruleset}"
         showSniffs="false"
