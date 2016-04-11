@@ -1164,8 +1164,7 @@
             "type": "drupal-core",
             "extra": {
                 "patches_applied": {
-                    "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch",
-                    "2637194 - Drupal.Ajax.execute() should return underlying Deferred object": "https://www.drupal.org/files/issues/2637194-12.patch"
+                    "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch"
                 }
             },
             "autoload": {
@@ -2117,12 +2116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "8169df405d7feb3da41027618005480a4fec3b4c"
+                "reference": "11ac8de2b01a1a8eedd5a3787a27c57da1ac691b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/8169df405d7feb3da41027618005480a4fec3b4c",
-                "reference": "8169df405d7feb3da41027618005480a4fec3b4c",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/11ac8de2b01a1a8eedd5a3787a27c57da1ac691b",
+                "reference": "11ac8de2b01a1a8eedd5a3787a27c57da1ac691b",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2159,7 @@
                 "psr-0": {
                     "Drush": "lib/"
                 },
-                "files": [
+                "classmap": [
                     "lib/Drush.php"
                 ]
             },
@@ -2212,7 +2211,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2016-04-05 04:17:35"
+            "time": "2016-04-10 10:46:10"
         },
         {
             "name": "easyrdf/easyrdf",
