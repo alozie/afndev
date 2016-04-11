@@ -31,4 +31,4 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd "`dirname $0`"
 
-vendor/bin/drush --local --root=${DIR}/docroot "$@"
+vendor/bin/drush.launcher --local --root=${DIR}/docroot "$@"
