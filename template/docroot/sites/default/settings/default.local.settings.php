@@ -48,8 +48,8 @@ $settings['container_yamls'][] = $dir . '/sites/development.services.yml';
  *
  * @see https://wiki.php.net/rfc/expectations
  */
-# assert_options(ASSERT_ACTIVE, TRUE);
-# \Drupal\Component\Assertion\Handle::register();
+assert_options(ASSERT_ACTIVE, TRUE);
+\Drupal\Component\Assertion\Handle::register();
 
 /**
  * Show all error messages, with backtrace information.

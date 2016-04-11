@@ -14,17 +14,14 @@
   ],
   "require": {
     "composer/installers": "^1.0.20",
-    "cweagans/composer-patches": "~1.0",
     "drupal/acquia_connector" : "8.1.*",
     "drupal/core": "8.0.*",
-    "drush/drush": "~8.0",
     "drupal/console": "~0.10",
-    "drupal/features" : "8.*",
     "drupal/memcache" : "8.*",
     "drupal/security_review" : "8.*",
     "roave/security-advisories": "dev-master",
     "drupal-composer/drupal-security-advisories": "8.0.x-dev",
-    "drupal/lightning": "~8.1"
+    "drupal/lightning": "8.1.00-rc2"
   },
   "require-dev": {
     "behat/behat":                  "3.0.*",
@@ -58,8 +55,7 @@
     },
     "patches": {
       "drupal/core": {
-        "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch",
-        "Drupal.Ajax.execute() should return underlying Deferred object" : "https://www.drupal.org/files/issues/2637194-12.patch"
+        "Ignore front end vendor folders to improve directory search performance": "https://www.drupal.org/files/issues/ignore_front_end_vendor-2329453-116.patch"
       }
     }
   },
