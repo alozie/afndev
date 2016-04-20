@@ -32,7 +32,7 @@
       <!-- We assume that if the theme name is not thunder, then a subtheme of thunder is being used. -->
       <not><equals arg1="${frontend.theme}" arg2="thunder" /></not>
       <then>
-        <exec dir="${docroot}/themes/custom/${frontend.theme}" command="npm run install-thunder" logoutput="true" checkreturn="true" />
+        <exec dir="${docroot}/themes/custom/${frontend.theme}" command="npm run install-tools" logoutput="true" checkreturn="true" />
       </then>
     </if>
   </target>
