@@ -712,13 +712,31 @@ require DRUPAL_ROOT . '/sites/default/settings/logging.settings.php';
  * Acquia Cloud settings.
  */
 if ($is_ah_env && file_exists('/var/www/site-php')) {
-  require "/var/www/site-php/{$_ENV['AH_SITE_GROUP']}/{$_ENV['AH_SITE_GROUP']}-settings.inc";
+  if (file_exists("/mnt/files/{$_ENV['AH_SITE_GROUP']}.$ah_env/files-private/sites.json")) {
+    // This is ACSF. Below copied from acsf_init example settings.
 
-  // Store API Keys and things outside of version control.
-  // @see settings/sample-secrets.settings.php for sample code.
-  $secrets_file = sprintf('/mnt/gfs/%s.%s/secrets.settings.php', $_ENV['AH_SITE_GROUP'], $_ENV['AH_SITE_ENVIRONMENT']);
-  if (file_exists($secrets_file)) {
-    require $secrets_file;
+    /**
+     * A user who gets here is trying to visit a site that is not yet registered
+     * with either the Site Factory or Hosting.
+     */
+
+    // Don't run any of this code if we are drush or a CLI script.
+    if (function_exists('drush_main') || !\Drupal::hasContainer() || PHP_SAPI === 'cli') {
+      if (!function_exists('drush_main')) {
+        header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+      }
+      return;
+    }
+  } else {
+    // This is ACE.
+    require "/var/www/site-php/{$_ENV['AH_SITE_GROUP']}/{$_ENV['AH_SITE_GROUP']}-settings.inc";
+
+    // Store API Keys and things outside of version control.
+    // @see settings/sample-secrets.settings.php for sample code.
+    $secrets_file = sprintf('/mnt/gfs/%s.%s/secrets.settings.php', $_ENV['AH_SITE_GROUP'], $_ENV['AH_SITE_ENVIRONMENT']);
+    if (file_exists($secrets_file)) {
+      require $secrets_file;
+    }
   }
 }
 
