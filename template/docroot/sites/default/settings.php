@@ -705,6 +705,9 @@ require DRUPAL_ROOT . '/sites/default/settings/base.settings.php';
 // Includes caching configuration.
 require DRUPAL_ROOT . '/sites/default/settings/cache.settings.php';
 
+// Includes logging configuration.
+require DRUPAL_ROOT . '/sites/default/settings/logging.settings.php';
+
 /**
  * Acquia Cloud settings.
  */
