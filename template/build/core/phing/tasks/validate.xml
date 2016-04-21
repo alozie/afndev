@@ -14,6 +14,34 @@
     </phplint>
   </target>
 
+  <!-- Run code sniffer against specific files. -->
+  <target name="validate:phpcs:file" description="Runs PHP Code Sniffer against a specific file.">
+    <fail unless="file" message="Missing file parameter."/>
+    <property name="file.path" value="${repo.root}/${file}"/>
+    <property name="phpcs.ruleset" value="${repo.root}/vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml"/>
+
+    <if>
+      <fileInFileset file="${file.path}">
+        <fileset refid="files.php.custom.modules"/>
+        <fileset refid="files.php.custom.themes"/>
+        <fileset refid="files.php.tests"/>
+      </fileInFileset>
+      <then>
+        <phpcodesniffer
+            standard="${phpcs.ruleset}"
+            showSniffs="false"
+            showWarnings="true"
+            haltonerror="true"
+            haltonwarning="true"
+            verbosity="1"
+            file="${file.path}">
+          <formatter type="full" usefile="false"/>
+        </phpcodesniffer>
+      </then>
+    </if>
+
+  </target>
+
   <!-- Run code sniffer against all custom code. -->
   <target name="validate:phpcs" description="Runs PHP Code Sniffer against only custom modules.">
     <property name="phpcs.ruleset" value="${repo.root}/vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml"/>
@@ -41,7 +69,7 @@
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
 
-    <!-- Sniff tests for PSR2 coding standards compliance. -->
+    <!-- Sniff tests. -->
     <phpcodesniffer
         standard="${phpcs.ruleset}"
         showSniffs="false"
@@ -52,4 +80,5 @@
       <formatter type="full" usefile="false"/>
     </phpcodesniffer>
   </target>
+
 </project>

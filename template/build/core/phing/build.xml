@@ -5,6 +5,7 @@
   <taskdef name="behat" classname="phingcludes.BehatTask"/>
   <taskdef name="drush" classname="phingcludes.DrushTask"/>
   <taskdef name="phpVariable" classname="phingcludes.PhpVariableTask"/>
+  <typedef name="fileInFileset" classname="phingcludes.FileInFilesetCondition"/>
 
   <!-- Include task partials -->
 
