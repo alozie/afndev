@@ -28,6 +28,7 @@ $is_ah_prod_env = ($ah_env == 'prod');
 $is_ah_stage_env = ($ah_env == 'test');
 $is_ah_dev_cloud = (!empty($_SERVER['HTTP_HOST']) && strstr($_SERVER['HTTP_HOST'], 'devcloud'));
 $is_ah_dev_env = (preg_match('/^dev[0-9]*$/', $ah_env) == TRUE);
+$is_acsf = file_exists("/mnt/files/{$_ENV['AH_SITE_GROUP']}.$ah_env/files-private/sites.json");
 $is_local_env = !$is_ah_env;
 
 /**

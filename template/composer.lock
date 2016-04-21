@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0fa424c388283bf0f49a96c8c452b1e8",
-    "content-hash": "84d4b136ac99f821cb6be5083327d71b",
+    "hash": "90414f683f9dee7d84971e95bb4f3e1e",
+    "content-hash": "8ba418451d165888d765042fe9051593",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -843,7 +843,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/drupal-security-advisories/zipball/c9daca42ea0a9f1d4f5259d11653500b15b6630e",
+                "url": "https://api.github.com/repos/drupal-composer/drupal-security-advisories/zipball/de033c255bce65602a59f57925a5721cda2600dd",
                 "reference": "c9daca42ea0a9f1d4f5259d11653500b15b6630e",
                 "shasum": ""
             },
@@ -897,6 +897,49 @@
             "description": "Allows Drupal to securely communicate with the Acquia Subscription, and checks for updates to Acquia Drupal.",
             "homepage": "https://www.drupal.org/project/acquia_connector",
             "time": "2016-04-05 12:20:31"
+        },
+        {
+            "name": "drupal/acsf",
+            "version": "8.1.22",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/acsf",
+                "reference": "a99e36cd01aa9e7081945cc10d6375ce3cb08d8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/acsf-8.x-1.22.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "drupal/core": "8.*"
+            },
+            "replace": {
+                "drupal/acsf_duplication": "self.version",
+                "drupal/acsf_theme": "self.version",
+                "drupal/acsf_variables": "self.version"
+            },
+            "suggest": {
+                "drupal/acsf_variables": "Required by drupal/acsf_theme",
+                "drupal/core": "Required by drupal/acsf_duplication, drupal/acsf_theme, drupal/acsf_variables"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x-1.x": "8.1.x-dev"
+                },
+                "patches_applied": {
+                    "Allow custom settings.php": "https://www.drupal.org/files/issues/acsf-2706365-2.patch"
+                }
+            },
+            "notification-url": "https://packagist.drupal-composer.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "This is the module that connects a Drupal codebase to Acquia Cloud Site Factory.",
+            "homepage": "https://www.drupal.org/project/acsf",
+            "time": "2016-04-07 14:54:18"
         },
         {
             "name": "drupal/config_update",
@@ -2120,7 +2163,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/11ac8de2b01a1a8eedd5a3787a27c57da1ac691b",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/0f139279184abffbb0a5c7a8a4c2b173d1c018f1",
                 "reference": "11ac8de2b01a1a8eedd5a3787a27c57da1ac691b",
                 "shasum": ""
             },
@@ -3592,7 +3635,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ce4c36bdc9310ba76fdd167f16978f14ab3b8e42",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/438196c8f66647073bcaf99908b543bda7ffd6d4",
                 "reference": "ce4c36bdc9310ba76fdd167f16978f14ab3b8e42",
                 "shasum": ""
             },

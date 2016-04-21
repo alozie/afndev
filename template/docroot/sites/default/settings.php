@@ -712,9 +712,9 @@ require DRUPAL_ROOT . '/sites/default/settings/logging.settings.php';
  * Acquia Cloud settings.
  */
 if ($is_ah_env && file_exists('/var/www/site-php')) {
-  if (file_exists("/mnt/files/{$_ENV['AH_SITE_GROUP']}.$ah_env/files-private/sites.json")) {
-    // This is ACSF. Below copied from acsf_init example settings.
 
+  // This is ACSF. Below copied from acsf_init example settings.
+  if ($is_acsf) {
     /**
      * A user who gets here is trying to visit a site that is not yet registered
      * with either the Site Factory or Hosting.
@@ -727,8 +727,9 @@ if ($is_ah_env && file_exists('/var/www/site-php')) {
       }
       return;
     }
-  } else {
-    // This is ACE.
+  }
+  // This is ACE.
+  else {
     require "/var/www/site-php/{$_ENV['AH_SITE_GROUP']}/{$_ENV['AH_SITE_GROUP']}-settings.inc";
 
     // Store API Keys and things outside of version control.
